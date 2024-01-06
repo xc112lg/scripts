@@ -15,4 +15,12 @@ source scripts/fixes.sh
 lineage_h872-userdebug
 m bacon
 
+count=1
+for file in out/target/product/*/*.zip; do
+    mv "$file" "out/target/product/*/new_filename$count.zip"
+    ((count++))
+done
+source scripts/fixes1.sh
+lineage_h872-userdebug
+m bacon
 
