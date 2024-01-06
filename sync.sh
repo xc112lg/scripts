@@ -13,4 +13,3 @@ source build/envsetup.sh
 
 source scripts/repopick.sh
 source scripts/fixes.sh
-source scripts/extras.sh
