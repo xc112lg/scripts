@@ -16,11 +16,7 @@ source scripts/fixes.sh
 lunch lineage_h872-userdebug
 m bacon
 
-count=1
-for file in out/target/product/*/*.zip; do
-    mv "$file" "out/target/product/*/new_filename$count.zip"
-    ((count++))
-done
+find out/target/product/*/ -type f -name "*.zip" -execdir bash -c 'mv "$1" "${1%.zip}_newname.zip"' bash {} \;
 source scripts/fixes1.sh
 lunch lineage_h872-userdebug
 m bacon
