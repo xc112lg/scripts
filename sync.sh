@@ -12,7 +12,7 @@ repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 source build/envsetup.sh
 
 source scripts/fixes.sh
-lineage_h872-userdebug
+lunch lineage_h870-userdebug
 m bacon
 
 
