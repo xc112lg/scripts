@@ -6,8 +6,8 @@
 
 
 cd frameworks/base/
-git fetch https://github.com/xc112lg/android_frameworks_base-1.git patch-2
-git cherry-pick 5d75f888abf9325092b7f7a34f055db167957614
+git fetch https://github.com/xc112lg/android_frameworks_base-1.git patch-3
+git cherry-pick 61723d6220ad417008c50565bc9212e9cec96450
 cd ../../
 
 
