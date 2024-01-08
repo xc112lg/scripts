@@ -8,7 +8,7 @@ rm -rf kernel/lge/msm8996/
 rm -rf vendor/lge/
 rm -rf vendor/lineage/
 rm out/target/product/*/*.zip
-repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
 source build/envsetup.sh
 
 source scripts/fixes.sh
