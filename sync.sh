@@ -14,9 +14,9 @@ source build/envsetup.sh
 source scripts/fixes.sh
 lunch derp_h870-userdebug
 mka derp
-lunch derp_us997-userdebug
-mka derp
-lunch derp_h872-userdebug
-mka derp
+#lunch derp_us997-userdebug
+#mka derp
+#lunch derp_h872-userdebug
+#mka derp
 
 
