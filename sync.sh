@@ -13,10 +13,10 @@ source build/envsetup.sh
 
 source scripts/fixes.sh
 lunch derp_h870-userdebug
-m derp
+mka derp
 lunch derp_us997-userdebug
-m derp
+mka derp
 lunch derp_h872-userdebug
-m derp
+mka derp
 
 
