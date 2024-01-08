@@ -11,7 +11,7 @@ rm out/target/product/*/*.zip
 repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
 source build/envsetup.sh
 
-make clean
+
 lunch derp_h870-userdebug
 mka derp
 #lunch derp_us997-userdebug
