@@ -12,11 +12,11 @@ repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune 
 source build/envsetup.sh
 
 source scripts/fixes.sh
-lunch lineage_h870-userdebug
-m bacon
-lunch lineage_us997-userdebug
-m bacon
-lunch lineage_h872-userdebug
-m bacon
+lunch derp_h870-userdebug
+m derp
+lunch derp_us997-userdebug
+m derp
+lunch derp_h872-userdebug
+m derp
 
 
