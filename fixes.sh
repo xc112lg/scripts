@@ -14,8 +14,8 @@ cd ../../../
 
 # Mixer: adjust input volume levels
 cd vendor/support
-git fetch https://github.com/xc112lg/vendor_support.git derp
-git cherry-pick 57901e4ac817abd645d4af8d9d684d6a10ae4c52
+git fetch https://github.com/xc112lg/vendor_support.git 13
+git cherry-pick d24bdbe5d3908c991a37e6f168de4ad0811df938
 cd ../../
 
 # remove timekeep
