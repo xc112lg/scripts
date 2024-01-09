@@ -1,6 +1,6 @@
 #!/bin/bash
 
- Cam fix for LG G6
+ #Cam fix for LG G6
 cd frameworks/base/
 git fetch https://github.com/xc112lg/frameworks_base.git patch-1
 git cherry-pick 1b4c75f7870bec9fa9e981c9acd89e76228b972e
