@@ -17,6 +17,8 @@ source scripts/fixes.sh
 #mka derp
 #lunch derp_us997-userdebug
 #mka derp
+mka clean
+make clean
 lunch derp_h872-userdebug
 mka derp
 
