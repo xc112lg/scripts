@@ -6,7 +6,7 @@ rm -rf device/lge/
 rm -rf hardware/lge
 rm -rf kernel/lge/msm8996/
 rm -rf vendor/lge/
-rm -rf vendor/lineage/
+rm -rf vendor/support/
 rm out/target/product/*/*.zip
 repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune -j$(nproc --all)
 source build/envsetup.sh
