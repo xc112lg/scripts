@@ -12,6 +12,12 @@ git fetch https://github.com/LG-G6/android_device_lge_g6-common.git dev/lineage-
 git cherry-pick b3edeba5ac6500c145fec7222ffc696c9b819af0
 cd ../../../
 
+# Mixer: adjust input volume levels
+cd vendor/support
+git fetch https://github.com/xc112lg/vendor_support.git derp
+git cherry-pick 57901e4ac817abd645d4af8d9d684d6a10ae4c52
+cd ../../
+
 # remove timekeep
 
 
