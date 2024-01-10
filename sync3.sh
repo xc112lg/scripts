@@ -1,5 +1,6 @@
 #!/bin/bash
-        git clone https://gitlab.com/dtiven13/scripts.git -b master script
+        rm -rf script
+	git clone https://gitlab.com/dtiven13/scripts.git -b master script
         cd script
         sudo bash setup/android_build_env.sh
 	cd ../
