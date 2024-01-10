@@ -13,7 +13,8 @@
 	rm -rf device/*
 cd bootable/recovery/
 git fetch https://github.com/xc112lg/bootable_recovery.git patch-1
-git cherry-pick 47d7418b2c1d11ce03f5ea99582ae77908be9ac7
+git cherry-pick a872af883cc12e919809e6c3571fdbdba89f2913
+cd ../../
 	git clone https://github.com/xc112lg/twrp_device_lge_h872 -b twrp ./device/lge/h872
 	source build/envsetup.sh
 	export ALLOW_MISSING_DEPENDENCIES=true
