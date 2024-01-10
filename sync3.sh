@@ -1,5 +1,5 @@
 #!/bin/bash
-        git clone https://gitlab.com/OrangeFox/misc/scripts.git -b master ./script
+        git clone https://gitlab.com/OrangeFox/misc/scripts.git -b master script
         cd script
         sudo bash setup/android_build_env.sh
 	cd ../
