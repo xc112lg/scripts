@@ -7,7 +7,7 @@
 	cd shrp
 	rm -rf device/*
 	rm -rf out/.module_paths
-	rm -rf out/*
+	rm -rf bootable/*
 	repo init -u https://github.com/SHRP/manifest.git -b shrp-12.1
 	repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 	rm -rf device/*
