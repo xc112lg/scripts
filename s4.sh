@@ -3,6 +3,7 @@
         cd script
         sudo bash setup/android_build_env.sh
 	cd ../
+	mkdir ./shrp
 	cd shrp
 	repo init -u https://github.com/SHRP/manifest.git -b shrp-12.1
 	repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
