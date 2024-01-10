@@ -1,8 +1,8 @@
 #!/bin/bash
 
 sudo apt install aria2 -y
-git clone https://gitlab.com/OrangeFox/misc/scripts.git -b master
-cd scripts
+git clone https://gitlab.com/OrangeFox/misc/scripts.git -b master ./script
+cd script
 sudo bash setup/android_build_env.sh
 mkdir -p $HOME/OrangeFox
 cd $HOME/OrangeFox
