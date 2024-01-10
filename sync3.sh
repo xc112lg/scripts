@@ -5,6 +5,7 @@
 	#cd ../
 
 cd shrp
+rm -rf *
 repo init -u https://github.com/xc112lg/manifest.git -b shrp-12.1
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 rm -rf device/*
