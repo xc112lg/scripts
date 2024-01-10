@@ -2,7 +2,7 @@
         git clone https://gitlab.com/OrangeFox/misc/scripts.git -b master ./script
         cd script
         sudo bash setup/android_build_env.sh
-	cd ..
+	cd ../
 
 cd shrp
 repo init -u https://github.com/SHRP/manifest.git -b shrp-12.1
