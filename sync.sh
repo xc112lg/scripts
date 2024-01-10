@@ -15,7 +15,7 @@ set +e
 source build/envsetup.sh
 export ALLOW_MISSING_DEPENDENCIES=true
 set -e
-lunch twrp_h872-eng && make clean && mka adbd recoveryimage
+lunch twrp_h872-eng && make clean && mka adbd recoveryimage -jX
 
 
 
