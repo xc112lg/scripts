@@ -5,12 +5,12 @@
         #sudo bash setup/android_build_env.sh
 	#cd ../
 	cd shrp
+	rm -rf *
 	rm -rf device/*
 	rm -rf out/.module_paths
-	repo init -u https://github.com/xc112lg/platform_manifest_twrp_aosp.git.git -b patch-1
+	repo init -u https://github.com/xc112lg/platform_manifest_twrp_aosp.git -b patch-1
 	repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 	rm -rf device/*
-
 	git clone https://github.com/xc112lg/twrp_device_lge_h872 -b twrp ./device/lge/h872
 	source build/envsetup.sh
 	export ALLOW_MISSING_DEPENDENCIES=true
