@@ -5,6 +5,7 @@
         #sudo bash setup/android_build_env.sh
 	#cd ../
 	cd shrp
+	rm -rf *
 	rm -rf device/*
 	rm -rf out/.module_paths
 	rm -rf bootable/*
