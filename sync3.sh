@@ -7,7 +7,6 @@
 	cd shrp
 	rm -rf device/*
 	rm -rf out/.module_paths
-	rm -rf bootable/*
 	repo init -u https://github.com/xc112lg/platform_manifest_twrp_aosp.git.git -b patch-1
 	repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 	rm -rf device/*
