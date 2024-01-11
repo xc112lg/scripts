@@ -1,9 +1,9 @@
 #!/bin/bash
-        rm -rf script
-	git clone https://gitlab.com/dtiven13/scripts.git -b master script
-        cd script
-        sudo bash setup/android_build_env.sh
-	cd ../
+        #rm -rf script
+	#git clone https://gitlab.com/dtiven13/scripts.git -b master script
+        #cd script
+        #sudo bash setup/android_build_env.sh
+	#cd ../
 	cd shrp
 	rm -rf device/*
 	rm -rf out/.module_paths
