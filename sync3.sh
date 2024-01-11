@@ -18,7 +18,7 @@
 	git clone https://github.com/xc112lg/h872 ./device/lge/lucye
 	source build/envsetup.sh
 	export ALLOW_MISSING_DEPENDENCIES=true
-	lunch omni_lucye-eng && make clean && mka recoveryimage -j$(nproc --all)
+	lunch omni_lucye-user && make clean && mka recoveryimage -j$(nproc --all)
 
 
 
