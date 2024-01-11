@@ -5,8 +5,8 @@
         #sudo bash setup/android_build_env.sh
 	#cd ../
 	cd shrp
-	rm -rf *
 	rm -rf device/*
+rm -rf vendor/*
 	rm -rf out/.module_paths
 	repo init -u https://github.com/xc112lg/platform_manifest_twrp_aosp.git -b patch-1
 	repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
