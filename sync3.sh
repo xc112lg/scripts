@@ -8,13 +8,10 @@
 	rm -rf device/*
 	rm -rf out/.module_paths
 	rm -rf bootable/*
-	repo init -u https://github.com/SHRP/manifest.git -b shrp-12.1
+	repo init -u https://github.com/xc112lg/platform_manifest_twrp_aosp.git.git -b patch-1
 	repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 	rm -rf device/*
-cd bootable/recovery/
-git fetch https://github.com/xc112lg/bootable_recovery.git android-12.1
-git cherry-pick 9fa3b065c53620c34e45762e68ce7bf2b86bafdb
-cd ../../
+
 	git clone https://github.com/xc112lg/twrp_device_lge_h872 -b twrp ./device/lge/h872
 	source build/envsetup.sh
 	export ALLOW_MISSING_DEPENDENCIES=true
