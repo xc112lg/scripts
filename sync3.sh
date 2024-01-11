@@ -12,8 +12,8 @@
 	repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 	rm -rf device/*
 cd bootable/recovery/
-git fetch https://github.com/xc112lg/bootable_recovery.git patch-1
-git cherry-pick a872af883cc12e919809e6c3571fdbdba89f2913
+git fetch https://github.com/xc112lg/bootable_recovery.git android-12.1
+git cherry-pick 9fa3b065c53620c34e45762e68ce7bf2b86bafdb
 cd ../../
 	git clone https://github.com/xc112lg/twrp_device_lge_h872 -b twrp ./device/lge/h872
 	source build/envsetup.sh
