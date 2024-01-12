@@ -10,3 +10,10 @@ rm -rf vendor/lineage/
 
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
+source build/envsetup.sh
+
+source scripts/fixes.sh
+make clean
+lunch lineage_h872-userdebug
+m bacon
+
