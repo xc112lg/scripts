@@ -1,7 +1,7 @@
 #!/bin/bash
 source build/envsetup.sh
 
-source scripts/fixes.sh
+#source scripts/fixes.sh
 
 #lunch lineage_h870-userdebug
 #m bacon
