@@ -1,10 +1,9 @@
 #!/bin/bash
-source scripts/sync.sh
-rm -rf out/target/product/*
-brunch h872
-brunch h870
-brunch us997
-brunch h830
-brunch h850
-brunch rs988
-source scripts/upload.sh
+source build/envsetup.sh
+
+source scripts/fixes.sh
+
+lunch lineage_h870-userdebug
+m bacon
+lunch lineage_us997-userdebug
+m bacon
