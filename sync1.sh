@@ -13,7 +13,7 @@ repo sync -c --no-clone-bundle --optimized-fetch --prune --force-sync -j$(nproc 
 source build/envsetup.sh
 
 source scripts/fixes.sh
-make clean
+
 lunch lineage_h870-userdebug
 m bacon
 lunch lineage_us997-userdebug
