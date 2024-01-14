@@ -13,6 +13,6 @@ repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 source build/envsetup.sh
 rm out/target/product/*/*.zip
 source scripts/fixes.sh
-#lunch lineage_h872-userdebug
-#m bacon
+lunch lineage_h872-userdebug
+m bacon
 
