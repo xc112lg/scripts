@@ -16,3 +16,11 @@ git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git cd10
 git cherry-pick 2b2f692beb7e7b23abc5ec45ab1afd3391bafe67
 cd ../../../
 
+# trying to fix time
+cd device/lge/msm8996-common
+git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-3
+git cherry-pick 382a3e30279dc13f6a75d8c20009f826b8727f4f
+cd ../../../
+
+
+
