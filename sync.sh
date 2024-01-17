@@ -1,8 +1,6 @@
 #!/bin/bash
 
-rm -rf build/make/
-rm -rf frameworks/base/
-rm -rf vendor/lineage/
+rm -rf hardware/xiaomi
 
 rm out/target/product/*/*.zip
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
