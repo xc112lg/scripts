@@ -13,7 +13,7 @@ source build/envsetup.sh
 #mka clean
 #make clean
 rm out/target/product/*/*.zip
-source scripts/fixes.sh
+#source scripts/fixes.sh
 lunch lineage_h872-userdebug
 m bacon
 #lunch lineage_us997-userdebug
