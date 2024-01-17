@@ -25,7 +25,7 @@ cd device/lge/msm8996-common
 #git cherry-pick 23f21ced92db1e80dbaf24a78223b918469aa23b b7e99d2fc48112ab23449d282480d834750aed27
 
 git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-3
-git cherry-pick bb77b2ffd254d8084c0c0f7deba764515936ef22
+git cherry-pick fa0f6908ca79cec168338bd7d62909490a010fcd
 
 cd ../../../
 
