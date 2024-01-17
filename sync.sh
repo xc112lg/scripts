@@ -3,7 +3,7 @@
 rm -rf hardware/xiaomi
 
 rm out/target/product/*/*.zip
-repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j8
 source  build/envsetup.sh
 
 lunch afterlife_miatoll-userdebug
