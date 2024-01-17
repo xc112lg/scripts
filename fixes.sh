@@ -19,10 +19,13 @@ cd ../../../
 # trying to fix time
 cd device/lge/msm8996-common
 git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-3
-git cherry-pick 382a3e30279dc13f6a75d8c20009f826b8727f4f 078eea6548009859abe60680aa595c67c8e4fcbc 22de2d3cd01bb71a0774375cacb99a32cfde3699
+git cherry-pick 382a3e30279dc13f6a75d8c20009f826b8727f4f 078eea6548009859abe60680aa595c67c8e4fcbc
 # set selinux to permissive
 #git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-6
 #git cherry-pick 23f21ced92db1e80dbaf24a78223b918469aa23b b7e99d2fc48112ab23449d282480d834750aed27
+
+git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-7
+git cherry-pick 15d75a2184bcb4d97085f87ee61495f3affa79e4
 
 cd ../../../
 
