@@ -9,7 +9,7 @@
 	<project path="vendor/xiaomi/miatoll" name="WAR-DEPT/vendor_xiaomi_miatoll" remote="gh" revision="tiramisu" />
 	<project path="kernel/xiaomi/sm6250" name="clarencelol/kernel_xiaomi_sm6250" remote="gh" revision="kinesis" /> 
 
-        <project path="hardware/xiaomi" name="LineageOS/android_hardware_xiaomi" remote="gh" revision="lineage-20" />
+        
         <project path="vendor/xiaomi/miatoll-fw" name="platform_vendor_xiaomi_miatoll-fw" remote="gitlab" revision="13" />
 
 	<!-- clang -->
