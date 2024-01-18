@@ -14,6 +14,8 @@ git clone https://github.com/xc112lg/android_device_lge_msm8996-common -b patch-
 #cd ../../../
 source build/envsetup.sh
 rm out/target/product/*/*.zip
+m clean
+make clean
 lunch lineage_h872-userdebug
 m bacon
 
