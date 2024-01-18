@@ -10,7 +10,7 @@
 	<project path="kernel/xiaomi/sm6250" name="clarencelol/kernel_xiaomi_sm6250" remote="gh" revision="kinesis" /> 
 
         
-        <project path="vendor/xiaomi/miatoll-fw" name="platform_vendor_xiaomi_miatoll-fw" remote="gitlab" revision="13" />
+        <project path="vendor/xiaomi/miatoll-fw" name="tequilaOS/android/platform_vendor_xiaomi_miatoll-fw" remote="gitlab" revision="13" />
 
 	<!-- clang -->
 	<project path="prebuilts/clang/host/linux-x86/clang-r437112b" name="crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r498229b" remote="gitlab" revision="13.0" />
