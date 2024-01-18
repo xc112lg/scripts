@@ -5,8 +5,8 @@
 rm -rf device/lge/msm8996-common
 git clone https://github.com/LineageOS/android_device_lge_msm8996-common -b lineage-21 device/lge/msm8996-common
 cd device/lge/msm8996-common
-git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-13
-git cherry-pick 0460f215da5c297cd338d478645e537ce709a878
+git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-14
+git cherry-pick d060e11ce803716df3d06748f2c87a4c2fb47364
 cd ../../../
 source build/envsetup.sh
 rm out/target/product/*/*.zip
