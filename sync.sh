@@ -1,5 +1,6 @@
 #!/bin/bash
 
+rm -rf external/libcxx
 rm -rf hardware/xiaomi
 rm -rf vendor/lineage/
 rm -rf vendor/derp
