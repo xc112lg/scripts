@@ -12,7 +12,7 @@ repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 source build/envsetup.sh
 #mka clean
 #make clean
-#rm out/target/product/*/*.zip
+rm out/target/product/*/*.zip
 source scripts/fixes.sh
 lunch lineage_h872-userdebug
 m -j$(nproc --all) bacon
