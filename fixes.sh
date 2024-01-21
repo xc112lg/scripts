@@ -1,4 +1,8 @@
-
+# Cam fix for LG G6 and delete some line cause im stupid
+cd frameworks/base/
+git fetch https://github.com/xc112lg/android_frameworks_base-1.git cd10
+git cherry-pick 5e769f677008161357a8855ed2d606f8a6198de7
+cd ../../
 
 # Mixer: adjust input volume levels
 cd device/lge/g6-common
