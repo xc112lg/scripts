@@ -11,13 +11,13 @@ cd ../../
 #cd ../../../
 
 # added crdroid setting
-cd device/lge/msm8996-common
-git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-32
-git cherry-pick faf6897350805018329a9e39273a11d065ed0fe8
-cd ../../../
-# sepolicy fix
 #cd device/lge/msm8996-common
-#git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-26
-#git cherry-pick 1e6167836b0e070d0e126b35008ac7f79bfb07cd
+#git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-32
+#git cherry-pick faf6897350805018329a9e39273a11d065ed0fe8
 #cd ../../../
+# sepolicy fix
+cd device/lge/msm8996-common
+git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-34
+git cherry-pick d8f52e2c4760ebe2cb6a8e3a7895819b086b4b21
+cd ../../../
 
