@@ -18,6 +18,6 @@ git cherry-pick ae1332f505feb8825950eb9839204e096709be8e
 # sepolicy fix
 #cd device/lge/msm8996-common
 #git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-26
-#git cherry-pick 5c7b28ec79f2b2f147a0319c406ea65af5feb0e7
+git cherry-pick 5c7b28ec79f2b2f147a0319c406ea65af5feb0e7
 cd ../../../
 
