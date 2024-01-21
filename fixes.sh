@@ -15,4 +15,9 @@ cd device/lge/msm8996-common
 git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-32
 git cherry-pick faf6897350805018329a9e39273a11d065ed0fe8
 cd ../../../
+# sepolicy fix
+cd device/lge/msm8996-common
+git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-33
+git cherry-pick f006a4b1af7a3f039e8d446bedd9de8d5549fa5b
+cd ../../../
 
