@@ -11,10 +11,10 @@ cd ../../
 #cd ../../../
 
 # added crdroid setting
-cd device/lge/msm8996-common
-git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git cd10
-git cherry-pick 7b067655ffcdb096a39e9d7a1f41a229c0afc46b
+#cd device/lge/msm8996-common
+#git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git cd10
+#git cherry-pick 7b067655ffcdb096a39e9d7a1f41a229c0afc46b
 # timekeep fix
-git cherry-pick 25e485176b6c35d5963e33448d26f139691ea95e
-cd ../../../
+#git cherry-pick 25e485176b6c35d5963e33448d26f139691ea95e
+#cd ../../../
 
