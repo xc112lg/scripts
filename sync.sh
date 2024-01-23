@@ -1,8 +1,7 @@
 #!/bin/bash
 
 
-rm -rf frameworks/base/
-rm -rf device/lge/
+
 rm -rf .repo/local_manifests
 repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14 --git-lfs
 mkdir .repo/local_manifests
