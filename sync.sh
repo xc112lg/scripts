@@ -1,21 +1,22 @@
 #!/bin/bash
 
-#rm -rf build/make/
-#rm -rf frameworks/base/
-##rm -rf device/lge/
-#rm -rf hardware/lge
-#rm -rf kernel/lge/msm8996/
-#rm -rf vendor/lge/
-#rm -rf vendor/lineage/
 
-rm out/target/product/*/*.zip
+rm -rf frameworks/base/
+rm -rf device/lge/
+rm -rf .repo/local_manifests
+repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14 --git-lfs
+mkdir .repo/local_manifests
+cp scripts/roomservice.xml .repo/local_manifests
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+#repo sync -c --no-clone-bundle --optimized-fetch --prune --force-sync -j$(nproc --all)
 source build/envsetup.sh
-
+#mka clean
+#make clean
+rm out/target/product/*/*.zip
 source scripts/fixes.sh
-#lunch derp_h870-userdebug
-#mka derp
-#lunch derp_us997-userdebug
-#mka derp
-#lunch derp_h872-userdebug
-#mka derp
+lunch lineage_h872-userdebug
+m -j$(nproc --all) bacon
+#lunch lineage_us997-userdebug
+#m -j$(nproc --all) bacon
+#lunch lineage_h870-userdebug
+#m -j$(nproc --all) bacon
