@@ -17,13 +17,10 @@
     android:layout_height="74dp"
     android:clickable="true"
     android:focusable="true"
-    card_view:cardCornerRadius="8dp"
-    card_view:cardElevation="4dp"
     android:layout_marginTop="@dimen/card_margin_top"
     android:layout_marginBottom="@dimen/card_margin_bottom"
     android:layout_marginRight="@dimen/card_margin_right"
     android:layout_marginLeft="@dimen/card_margin_left"
-    card_view:cardBackgroundColor="@color/primary"
     android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
