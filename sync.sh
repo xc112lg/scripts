@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf .repo/local_manifests
+rm -rf .repo .repo/local_manifests
 repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14
 mkdir .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
