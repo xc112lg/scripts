@@ -1,7 +1,5 @@
 #!/bin/bash
 
-mkdir derp14
-cd derp14
 rm -rf .repo/local_manifests
 repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14
 mkdir .repo/local_manifests
@@ -11,7 +9,7 @@ source build/envsetup.sh
 #mka clean
 #make clean
 rm out/target/product/*/*.zip
-source scripts/fixes.sh
+#source scripts/fixes.sh
 lunch derp_h872-userdebug
 m -j$(nproc --all) derp
 #lunch lineage_us997-userdebug
