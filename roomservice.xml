@@ -21,6 +21,11 @@
   <project name="xc112lg/android_device_lge_us997" path="device/lge/us997" remote="github" revision="derp" />
   <project name="xc112lg/android_device_lge_msm8996-common" path="device/lge/msm8996-common" remote="github" revision="derp14" />
 
+ <project path="hardware/qcom-caf/msm8996/audio" name="LineageOS/android_hardware_qcom_audio" gremote="github" revision="lineage-21.0-caf-msm8996" />
+  <project path="hardware/qcom-caf/msm8996/display" name="LineageOS/android_hardware_qcom_display" remote="github" revision="lineage-21.0-caf-msm8996" />
+  <project path="hardware/qcom-caf/msm8996/media" name="LineageOS/android_hardware_qcom_media" remote="github" revision="lineage-21.0-caf-msm8996" />
+  
+
 
 
 
