@@ -12,6 +12,11 @@ PRODUCT_PACKAGE_OVERLAYS += vendor/derp/overlay/dictionaries
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.support_one_handed_mode?=true
 
+# GApps
+WITH_GMS := true
+# Inherit from GMS product config
+$(call inherit-product, vendor/gms/gms_mini.mk)
+
 
 # Pixel Framework
 $(call inherit-product, vendor/pixel-framework/config.mk)
