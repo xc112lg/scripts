@@ -17,6 +17,8 @@
     android:layout_height="74dp"
     android:clickable="true"
     android:focusable="true"
+    card_view:cardCornerRadius="@dimen/card_corner_radius"
+    card_view:cardElevation="@dimen/card_elevation"
     android:layout_marginTop="@dimen/card_margin_top"
     android:layout_marginBottom="@dimen/card_margin_bottom"
     android:layout_marginRight="@dimen/card_margin_right"
