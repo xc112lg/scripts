@@ -1,7 +1,7 @@
 #!/bin/bash
 rm -rf .repo/local_manifests
-#rm -rf .repo/manifests/snippets/lineage.xml
-#cp scripts/lineage.xml .repo/manifests/snippets
+rm -rf .repo/manifests/snippets/lineage.xml
+cp scripts/lineage.xml .repo/manifests/snippets
 
 rm -rf .repo/manifests/default.xml
 cp scripts/default.xml .repo/manifests
