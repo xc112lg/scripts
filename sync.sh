@@ -1,5 +1,8 @@
 #!/bin/bash
 rm -rf .repo/local_manifests
+rm -rf .repo/manifests/snippets/lineage.xml
+cp scripts/lineage.xml .repo/manifests/snippets
+
 repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14 --git-lfs
 mkdir .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
