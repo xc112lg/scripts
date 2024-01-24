@@ -1,6 +1,7 @@
 #!/bin/bash
 
-
+mkdid derp14
+cd derp14
 rm -rf .repo/local_manifests
 repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14
 mkdir .repo/local_manifests
