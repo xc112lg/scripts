@@ -4,6 +4,10 @@ rm -rf .repo/manifests/snippets/lineage.xml
 cp scripts/lineage.xml .repo/manifests/snippets
 rm -rf .repo/manifests/snippets/derp.xml
 cp scripts/derp.xml .repo/manifests/snippets
+rm -rf .repo/manifests/default.xml
+cp scripts/default.xml .repo/manifests
+rm -rf .repo/manifests/snippets/extra.xml
+cp scripts/extra.xml .repo/manifests/snippets
 
 repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 14 --git-lfs
 mkdir .repo/local_manifests
