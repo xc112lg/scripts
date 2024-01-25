@@ -15,7 +15,7 @@ PRODUCT_PRODUCT_PROPERTIES += \
 # GApps
 WITH_GMS := true
 # Inherit from GMS product config
-$(call inherit-product, vendor/gms/gms_mini.mk)
+$(call inherit-product, vendor/gms/gms_pico.mk)
 
 
 # Pixel Framework
