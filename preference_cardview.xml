@@ -23,7 +23,6 @@
     android:layout_marginBottom="@dimen/card_margin_bottom"
     android:layout_marginRight="@dimen/card_margin_right"
     android:layout_marginLeft="@dimen/card_margin_left"
-    card_view:cardBackgroundColor="@android:color/white"
     android:foreground="?android:attr/selectableItemBackground">
 
     <LinearLayout
