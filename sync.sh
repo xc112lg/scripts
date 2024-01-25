@@ -11,7 +11,7 @@ repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 #repo sync -c --no-clone-bundle --optimized-fetch --prune --force-sync -j$(nproc --all)
 source build/envsetup.sh
 #mka clean
-make clean
+#make clean
 rm out/target/product/*/*.zip
 source scripts/fixes.sh
 echo $(nproc --all)
