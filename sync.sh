@@ -16,8 +16,8 @@ rm out/target/product/*/*.zip
 source scripts/fixes.sh
 echo $(nproc --all)
 lunch lineage_us997-userdebug
-m -j$(nproc --all) bacon
+m -j16 bacon
 lunch lineage_h870-userdebug
-m -j$(nproc --all) bacon
+m -j16 bacon
 lunch lineage_h872-userdebug
-m -j$(nproc --all) bacon
+m -j16 bacon
