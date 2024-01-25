@@ -8,11 +8,10 @@ PRODUCT_PRODUCT_PROPERTIES += \
 
 
 PRODUCT_PACKAGES += \
-    DerpLauncherQuickStep
+    DerpLauncherQuickStepGo
 
 PRODUCT_DEXPREOPT_SPEED_APPS += \
-    DerpLauncherQuickStep
-
+    DerpLauncherQuickStepGo
 
 PRODUCT_PACKAGES += \
     DerpLauncherOverlay
