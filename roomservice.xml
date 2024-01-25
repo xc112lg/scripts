@@ -10,7 +10,7 @@
 
 
 	<!-- clang -->
-	<project path="prebuilts/clang/host/linux-x86/clang-playground" name="crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-playground" remote="gitlab" revision="13.0" />
+
 
 
 </manifest> 
