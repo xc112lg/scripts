@@ -6,11 +6,12 @@ PRODUCT_PRODUCT_PROPERTIES += \
     ro.config.notification_sound=Argon.ogg \
     ro.config.alarm_alert=Hassium.ogg
 
+
 PRODUCT_PACKAGES += \
-    DerpLauncherQuickStepGo
+    DerpLauncherQuickStep
 
 PRODUCT_DEXPREOPT_SPEED_APPS += \
-    DerpLauncherQuickStepGo
+    DerpLauncherQuickStep
 
 
 PRODUCT_PACKAGES += \
