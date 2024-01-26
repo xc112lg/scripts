@@ -13,8 +13,7 @@ source build/envsetup.sh
 #mka clean
 #make clean
 rm out/target/product/*/*.zip
-source scripts/fixes.sh
-echo $(nproc --all)
+#source scripts/fixes.sh
 #lunch lineage_us997-userdebug
 #m -j16 bacon
 #lunch lineage_h870-userdebug
