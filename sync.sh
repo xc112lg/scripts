@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-rm -rf frameworks/base/
-rm -rf device/lge/
+#rm -rf frameworks/base/
+rm -rf kernel/lge/msm8996
 rm -rf .repo/local_manifests
 repo init -u https://github.com/crdroidandroid/android.git -b 14.0 --git-lfs
 mkdir .repo/local_manifests
