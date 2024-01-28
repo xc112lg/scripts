@@ -4,12 +4,14 @@
 	<remote name="gh" fetch="https://github.com" />
 	
 	<!-- Trees -->
-	<project path="device/xiaomi/miatoll" name="WAR-DEPT/device_xiaomi_miatoll" remote="gh" revision="fourteen" />
-	<project path="device/xiaomi/sm6250-common" name="WAR-DEPT/device_xiaomi_sm6250-common" remote="gh" revision="fourteen" />
-	<project path="vendor/xiaomi/miatoll" name="WAR-DEPT/vendor_xiaomi_miatoll" remote="gh" revision="udc" />
-	<project path="vendor/xiaomi/sm6250-common" name="WAR-DEPT/vendor_xiaomi_sm6250-common" remote="gh" revision="udc" />
+	<project path="device/xiaomi/miatoll" name="WAR-DEPT/device_xiaomi_miatoll" remote="gh" revision="14" />
+	<project path="device/xiaomi/sm6250-common" name="WAR-DEPT/device_xiaomi_sm6250-common" remote="gh" revision="14" />
+	<project path="vendor/xiaomi/miatoll" name="WAR-DEPT/vendor_xiaomi_miatoll" remote="gh" revision="tiramasu+" />
+	<project path="vendor/xiaomi/sm6250-common" name="WAR-DEPT/vendor_xiaomi_sm6250-common" remote="gh" revision="14" />
 	<project path="kernel/xiaomi/sm6250" name="c0smic-Lab/kernel_xiaomi_sm6250" remote="gh" revision="main" /> 
+	<project path="prebuilts/clang/host/linux-x86/clang-r498229b" name="Xiaomi-SD720G-Devices/AOSP-clang/tree/clang-r498229b" remote="gh" revision="clang-r498229b" /> 
 
+	
 	
 
 </manifest> 
