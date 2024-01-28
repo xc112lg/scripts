@@ -17,7 +17,7 @@
   <project name="TheMuppets/proprietary_vendor_lge_g5-common" path="vendor/lge/g5-common" remote="github" revision="lineage-21" />
   <project name="TheMuppets/proprietary_vendor_lge_g6-common" path="vendor/lge/g6-common" remote="github" revision="lineage-21" />
   <project name="xc112lg/android_device_lge_h870" path="device/lge/h870" remote="github" revision="derp" />
-  <project name="xc112lg/android_device_lge_h872" path="device/lge/h872" remote="github" revision="derp" />
+  <project name="xc112lg/android_device_lge_h872" path="device/lge/h872" remote="github" revision="evo" />
   <project name="xc112lg/android_device_lge_us997" path="device/lge/us997" remote="github" revision="derp" />
   <project name="xc112lg/android_device_lge_msm8996-common" path="device/lge/msm8996-common" remote="github" revision="derp14" />
 
