@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf hardware/google/pixel/kernel_headers
+rm -rf kernel/Xiaomi/sm6250
 
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 source build/envsetup.sh
