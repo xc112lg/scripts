@@ -6,10 +6,10 @@
 	<!-- Trees -->
 	<project path="device/xiaomi/miatoll" name="WAR-DEPT/device_xiaomi_miatoll" remote="gh" revision="14" />
 	<project path="device/xiaomi/sm6250-common" name="WAR-DEPT/device_xiaomi_sm6250-common" remote="gh" revision="14" />
-	<project path="vendor/xiaomi/miatoll" name="WAR-DEPT/vendor_xiaomi_miatoll" remote="gh" revision="tiramasu" />
+	<project path="vendor/xiaomi/miatoll" name="WAR-DEPT/vendor_xiaomi_miatoll" remote="gh" revision="tiramisu" />
 	<project path="vendor/xiaomi/sm6250-common" name="WAR-DEPT/vendor_xiaomi_sm6250-common" remote="gh" revision="14" />
 	<project path="kernel/xiaomi/sm6250" name="c0smic-Lab/kernel_xiaomi_sm6250" remote="gh" revision="main" /> 
-	<project path="prebuilts/clang/host/linux-x86/clang-14.0" name="Panchajanya1999/azure-clang" remote="gh" revision="main" /> 
+	
 
 	
 	
