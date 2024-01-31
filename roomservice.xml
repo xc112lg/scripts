@@ -11,7 +11,8 @@
 	<project path="kernel/xiaomi/sm6250" name="WAR-DEPT/android_kernel_xiaomi_sm6250" remote="gh" revision="RedCherry+" /> 
 
 
-	
+	<project path="packages/apps/ParanoidSense" name="bananadroid/android_packages_apps_ParanoidSense" remote="gh" revision="14" /> 
+
 
 </manifest> 
 
