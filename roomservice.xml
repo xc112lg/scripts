@@ -4,11 +4,10 @@
 	<remote name="gh" fetch="https://github.com" />
 	
 	<!-- Trees -->
-	<!-- <project path="device/xiaomi/miatoll" name="WAR-DEPT/device_xiaomi_miatoll" remote="gh" revision="14.0" /> -->
+	<project path="device/xiaomi/miatoll" name="WAR-DEPT/device_xiaomi_miatoll" remote="gh" revision="14.0" />
 	<project path="vendor/xiaomi/miatoll" name="WAR-DEPT/vendor_xiaomi_miatoll" remote="gh" revision="14.0" />
 	
 	
- <project path="device/xiaomi/miatoll" name="sounddrill31/device_xiaomi_miatoll" remote="gh" revision="14.0-prebuilt" />
 
 </manifest> 
 
