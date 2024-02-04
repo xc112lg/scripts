@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+q<?xml version="1.0" encoding="UTF-8"?>
 <manifest>
 	<remote name="gitlab" fetch="https://gitlab.com" />
 	<remote name="gh" fetch="https://github.com" />
@@ -9,7 +9,6 @@
 	<project path="kernel/xiaomi/miatoll" name="WAR-DEPT/android_kernel_xiaomi_sm6250" remote="gh" revision="RedCherry+" />
 
 	<!-- Hardware  -->
-	<project path="hardware/xiaomi" name="LineageOS/android_hardware_xiaomi" remote="github" revision="lineage-21" />
         <project path="hardware/sony/timekeep"  name="LineageOS/android_hardware_sony_timekeep" remote="github" revision="lineage-21" />
 
 	
