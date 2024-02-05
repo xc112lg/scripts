@@ -13,8 +13,9 @@
 	<!-- Dolby  -->
 	<project path="hardware/dolby"  name="userariii/hardware_dolby" remote="gh" revision="main" />
 
-	
-	
+        <!-- LMC  -->
+	<project path="vendor/xiaomi/LMC-Camera"  name="userariii/vendor_xiaomi_LMC-Camera" remote="gh" revision="LMC" />
+
 
 </manifest> 
 
