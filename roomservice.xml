@@ -10,6 +10,10 @@
 	<!-- Hardware  -->
         <project path="hardware/sony/timekeep"  name="LineageOS/android_hardware_sony_timekeep" remote="gh" revision="lineage-21" />
 
+	<!-- Dolby  -->
+	<project path="hardware/dolby"  name="userariii/hardware_dolby" remote="gh" revision="main" />
+
+	
 	
 
 </manifest> 
