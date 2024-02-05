@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
 	<remote name="gh" fetch="https://github.com" />
+	<remote name="gl" fetch="https://gitlab.com" />
 	
 	<!-- Trees -->
 	<project path="device/xiaomi/miatoll" name="WAR-DEPT/device_xiaomi_miatoll" remote="gh" revision="14.0" />
@@ -15,6 +16,8 @@
 
         <!-- LMC  -->
 	<project path="vendor/xiaomi/LMC-Camera"  name="userariii/vendor_xiaomi_LMC-Camera" remote="gh" revision="LMC" />
+
+	<project path="vendor/gapps"  name="MindTheGapps/vendor_gapps" remote="gl" revision="upsilon" />
 
 
 </manifest> 
