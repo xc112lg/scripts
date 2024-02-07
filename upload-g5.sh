@@ -1,5 +1,7 @@
 #!/bin/bash
 
-cd ~/android/builds/lineage/rs988/ && rm *.*
-cd ~/android/los18/out/target/product/rs988/ && mv *.zip *.md5sum ~/android/builds/lineage/rs988/
-cd ~/android/builds/lineage/rs988/ && rm lineage_rs988-ota*.zip *.md5sum
+cd ~/android/builds/banana/miatoll/ && rm *.*
+cd ~/android/cr/out/target/product/miatoll/ && mv *.zip *.md5sum ~/android/builds/cr/miatoll/
+cd ~/android/builds/cr/miatoll/ && rm banana_miatoll-ota*.zip *.md5sum
+
+sftp itubuild@frs.sourceforge.net:/home/pfs/project/itu/build/miatoll/
