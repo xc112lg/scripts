@@ -1,3 +1,5 @@
+#!/bin/bash
+
 source scripts/upload-g5.sh
 
 
