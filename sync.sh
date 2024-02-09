@@ -1,5 +1,9 @@
 #!/bin/bash
-
+sudo apt-get update -y
+sudo apt-get install -y ccache
+export USE_CCACHE=1
+export CCACHE_EXEC=/tmp/src/android/ccache
+ccache -M 100G
 
 rm -rf frameworks/base/
 rm -rf kernel/lge/msm8996
