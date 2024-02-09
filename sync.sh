@@ -6,6 +6,7 @@ export CCACHE_EXEC=/tmp/src/ccache
 ccache -M 100G
 
 rm -rf frameworks/base/
+rm -rf device/lge
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
