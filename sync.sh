@@ -23,7 +23,7 @@ mkdir .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 repo sync -c -j16 --force-sync --no-clone-bundle --no-tags
 source build/envsetup.sh
-#mka clean
+m clean
 #make clean
 #rm out/target/product/*/*.zip
 source scripts/fixes.sh
