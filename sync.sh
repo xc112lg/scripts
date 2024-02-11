@@ -15,8 +15,8 @@ source build/envsetup.sh
 #rm out/target/product/*/*.zip
 source scripts/fixes.sh
 lunch lineage_us997-userdebug
-m -j16 bacon
+m -j15 bacon
 lunch lineage_h870-userdebug
-m -j16 bacon
+m -j15 bacon
 lunch lineage_h872-userdebug
-m -j16 bacon
+m -j15 bacon
