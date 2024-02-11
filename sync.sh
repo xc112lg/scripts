@@ -16,6 +16,7 @@ fi
 
 # Update and install ccache
 wait_one_second && sudo apt-get update -y
+wait_one_second && sudo apt-get install -y --no-install-recommends apt-utils
 wait_one_second && sudo apt-get install -y ccache
 wait_one_second && export USE_CCACHE=1
 wait_one_second && ccache -M 100G
