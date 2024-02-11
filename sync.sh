@@ -12,9 +12,9 @@ wait_one_second && rm -rf out/target/product/*/*.zip device/lge/msm8996-common
 wait_one_second && sudo apt-get update -y
 wait_one_second && sudo apt-get install -y ccache
 wait_one_second && export USE_CCACHE=1
-wait_one_second && export CCACHE_DIR=/tmp/src/android/cc
 wait_one_second && ccache -M 100G
-
+wait_one_second && export CCACHE_DIR=/tmp/src/android/cc
+ls
 rm -rf frameworks/base/
 rm -rf device/lge
 rm -rf .repo/local_manifests
