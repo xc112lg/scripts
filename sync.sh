@@ -15,6 +15,7 @@ wait_one_second && export USE_CCACHE=1
 wait_one_second && ccache -M 100G
 wait_one_second && export CCACHE_DIR=/tmp/src/android/cc
 ls
+echo $CCACHE_DIR
 rm -rf frameworks/base/
 rm -rf device/lge
 rm -rf .repo/local_manifests
