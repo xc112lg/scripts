@@ -3,14 +3,14 @@
 # Set default values for device and command
 DEVICE="${1:-all}"  # If no value is provided, default to "all"
 COMMAND="${2:-build}"  # If no value is provided, default to "build"
-
+DELZIP="${3}"
 # Function to wait for 1 second
 wait_one_second() {
     sleep 1
 }
 
 # Remove existing build artifacts
-if [ "$COMMAND" == "deletezip" ]; then
+if [ "$DELZIP" == "delzip" ]; then
     wait_one_second && rm -rf out/target/product/*/*.zip
 fi
 
