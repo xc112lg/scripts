@@ -1,5 +1,19 @@
 #!/bin/bash
 
+# Function to wait for 1 second
+wait_one_second() {
+    sleep 1
+}
+
+# Remove existing build artifacts
+wait_one_second && rm -rf out/target/product/*/*.zip device/lge/msm8996-common
+
+# Update and install ccache
+wait_one_second && sudo apt-get update -y
+wait_one_second && sudo apt-get install -y ccache
+wait_one_second && export USE_CCACHE=1
+wait_one_second && export CCACHE_DIR=/tmp/src/android/cc
+wait_one_second && ccache -M 100G
 
 rm -rf frameworks/base/
 rm -rf device/lge
