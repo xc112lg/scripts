@@ -10,9 +10,9 @@ git fetch https://github.com/LG-G6/android_device_lge_g6-common.git dev/lineage-
 git cherry-pick b3edeba5ac6500c145fec7222ffc696c9b819af0
 cd ../../../
 
- added crdroid setting
+# added crdroid setting 023c8bd064969797364a903caf47c599beb1c4f5
 cd device/lge/msm8996-common
 git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git cd10
-git cherry-pick 775580322aec4c7556e389878323f85a02135263 023c8bd064969797364a903caf47c599beb1c4f5
+git cherry-pick 775580322aec4c7556e389878323f85a02135263 
 cd ../../../
 
