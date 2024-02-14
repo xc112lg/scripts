@@ -24,6 +24,7 @@ wait_one_second && export CCACHE_DIR=/tmp/src/android/cc
 echo $CCACHE_DIR
 
 rm -rf frameworks/base/
+rm -rf kernel/lge/msm8996
 rm -rf device/lge
 rm -rf .repo/local_manifests
 mkdir -p .repo/local_manifests
