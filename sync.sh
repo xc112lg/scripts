@@ -53,7 +53,7 @@ elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
 wait_one_second && rm -rf out/target/product/*/*.zip  device/lge/msm8996-common
 git clone https://github.com/xc112lg/android_device_lge_msm8996-common -b cd14 device/lge/msm8996-common
-    lunch lineage_h872-eng
+    lunch lineage_h872-userdebug
     m -j15 bacon
 else
     echo "Building for the specified device: $DEVICE..."
