@@ -27,7 +27,9 @@ rm -rf frameworks/base/
 rm -rf kernel/lge/msm8996
 rm -rf device/lge
 rm -rf .repo/local_manifests
+rm -rf .repo/manifests/snippets/lineage.xml
 mkdir -p .repo/local_manifests
+cp scripts/lineage.xml .repo/manifests/snippets
 cp scripts/roomservice.xml .repo/local_manifests
 repo sync -c -j16 --force-sync --no-clone-bundle --no-tags
 source build/envsetup.sh
