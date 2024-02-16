@@ -25,6 +25,7 @@ echo $CCACHE_DIR
 
 rm -rf frameworks/base/
 rm -rf device/lge
+rm -rf hardware
 rm -rf .repo/local_manifests
 rm -rf .repo/manifests/snippets/crdroid.xml
 rm -rf .repo/manifests/snippets/lineage.xml
