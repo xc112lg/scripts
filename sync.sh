@@ -31,7 +31,7 @@ rm -rf .repo/manifests/snippets/lineage.xml
 mkdir -p .repo/local_manifests
 cp scripts/lineage.xml .repo/manifests/snippets
 cp scripts/roomservice.xml .repo/local_manifests
-repo sync -c -j16 --force-sync --no-clone-bundle --no-tags
+repo sync -c -j16 --force-sync --no-clone-bundle --no-tags --prune
 source build/envsetup.sh
 source scripts/fixes.sh
 
