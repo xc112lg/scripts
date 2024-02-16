@@ -43,8 +43,6 @@ fi
 # Check if device is set to "all"
 if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
-wait_one_second && rm -rf out/target/product/*/*.zip  device/lge/msm8996-common
-git clone https://github.com/xc112lg/android_device_lge_msm8996-common -b cd2 device/lge/msm8996-common
     lunch lineage_us997-userdebug
     m -j15 bacon
     lunch lineage_h870-userdebug
