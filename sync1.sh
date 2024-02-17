@@ -1,26 +1,19 @@
 #!/bin/bash
-
-rm -rf build/make/
 rm -rf frameworks/base/
-rm -rf device/lge/
-rm -rf hardware/lge
-rm -rf kernel/lge/msm8996/
-rm -rf vendor/lge/
-rm -rf vendor/lineage/
-rm out/target/product/*/*.zip
-#repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
-repo sync -c --no-clone-bundle --optimized-fetch --prune --force-sync -j$(nproc --all)
+rm -rf .repo/local_manifests
+# Clone local_manifests repository
+git clone https://github.com/krishnaspeace/local_manifests --depth 1 -b main .repo/local_manifests
+repo init --depth 1 -u https://github.com/crdroidandroid/android.git -b 14.0 --git-lfs
+repo sync -c -j16 --force-sync --no-clone-bundle --no-tags
+# removing non working fingerprint
+rm -rf vendor/fingerprint/opensource/interfaces
+# adding working fingerprint
+git clone https://github.com/aneeshsvha/vendor_fingerprint_opensource_interfaces vendor/fingerprint/opensource/interfaces
+# Set up build environment
 source build/envsetup.sh
-
-source scripts/fixes.sh
-
-
-lunch lineage_us997-userdebug
-m bacon
-lunch lineage_h872-userdebug
-m bacon
-lunch lineage_h870-userdebug
-m bacon
-
+# Lunch configuration
+lunch lineage_ysl-userdebug
+# Build confriguration
+m 15 bacon
 
 
