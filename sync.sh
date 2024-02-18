@@ -26,11 +26,11 @@ echo $CCACHE_DIR
 rm -rf frameworks/base/
 rm -rf device/lge
 rm -rf .repo/local_manifests
-rm -rf .repo/manifests/snippets/crdroid.xml
-rm -rf .repo/manifests/snippets/lineage.xml
+#rm -rf .repo/manifests/snippets/crdroid.xml
+#rm -rf .repo/manifests/snippets/lineage.xml
 mkdir -p .repo/local_manifests
-cp scripts/crdroid.xml .repo/manifests/snippets
-cp scripts/lineage.xml .repo/manifests/snippets
+#cp scripts/crdroid.xml .repo/manifests/snippets
+#cp scripts/lineage.xml .repo/manifests/snippets
 cp scripts/roomservice.xml .repo/local_manifests
 repo sync -c -j16 --force-sync --no-clone-bundle --no-tags
 source build/envsetup.sh
