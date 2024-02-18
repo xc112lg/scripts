@@ -15,12 +15,12 @@ if [ "$DELZIP" == "delzip" ]; then
 fi
 
 # Update and install ccache
-wait_one_second && sudo apt-get update -y
-wait_one_second && sudo apt-get install -y apt-utils
-wait_one_second && sudo apt-get install -y ccache
-wait_one_second && export USE_CCACHE=1
-wait_one_second && ccache -M 100G
-wait_one_second && export CCACHE_DIR=/tmp/src/android/cc
+#wait_one_second && sudo apt-get update -y
+#wait_one_second && sudo apt-get install -y apt-utils
+#wait_one_second && sudo apt-get install -y ccache
+#wait_one_second && export USE_CCACHE=1
+#wait_one_second && ccache -M 100G
+#wait_one_second && export CCACHE_DIR=/tmp/src/android/cc
 echo $CCACHE_DIR
 
 rm -rf frameworks/base/
