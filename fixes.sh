@@ -13,6 +13,6 @@ cd ../../../
 # added crdroid setting 
 cd device/lge/msm8996-common
 git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git cd10
-git cherry-pick c1007196e0b7488877818dda8a07810b2e7292a2
+git cherry-pick c1007196e0b7488877818dda8a07810b2e7292a2 ba6823ded11dcb86474107a6a74e31286d1e84c4
 cd ../../../
 
