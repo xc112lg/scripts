@@ -14,7 +14,7 @@ if [ "$DELZIP" == "delzip" ]; then
     wait_one_second && rm -rf out/target/product/*/*.zip
 fi
 
-
+echo $CCACHE_DIR
 rm -rf frameworks/base/
 rm -rf device/lge
 rm -rf .repo/local_manifests
