@@ -8,7 +8,14 @@ DELZIP="${3}"
 wait_one_second() {
     sleep 1
 }
-
+# Update and install ccache
+wait_one_second && sudo apt-get update -y
+wait_one_second && sudo apt-get install -y apt-utils
+wait_one_second && sudo apt-get install -y ccache
+wait_one_second && export USE_CCACHE=1
+wait_one_second && ccache -M 100G
+wait_one_second && export CCACHE_DIR=/tmp/src/android/cc
+echo $CCACHE_DIR
 ## Remove existing build artifacts
 if [ "$DELZIP" == "delzip" ]; then
     wait_one_second && rm -rf out/target/product/*/*.zip
