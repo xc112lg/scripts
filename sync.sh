@@ -23,7 +23,6 @@ fi
 
 echo $CCACHE_DIR
 rm -rf frameworks/base/
-rm -rf ../cd11
 rm -rf device/lge
 rm -rf .repo/local_manifests
 rm -rf kernel/lge/msm8996
