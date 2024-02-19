@@ -17,5 +17,5 @@ git cherry-pick 52aa9d6c105f0bdd1f550172f839e205e3ee7f8a 14d8171a9d899bf74c3ab84
 cd ../../../
 
 wget -N -P device/lge/msm8996-common/overlay/frameworks/base/core/res/res/values/ https://github.com/crdroidandroid/android_frameworks_base/raw/14.0/core/res/res/values/cr_config.xml
-wget -N -P device/lge/msm8996-common/overlay/frameworks/base/packages/SystemUI/res/values/ https://github.com/crdroidandroid/android_frameworks_base/blob/14.0/packages/SystemUI/res/values/cr_config.xml
+wget -N -P device/lge/msm8996-common/overlay/frameworks/base/packages/SystemUI/res/values/ https://github.com/crdroidandroid/android_frameworks_base/raw/14.0/packages/SystemUI/res/values/cr_config.xml
 
