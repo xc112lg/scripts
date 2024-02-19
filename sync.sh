@@ -9,7 +9,7 @@ wait_one_second() {
     sleep 1
 }
 
-# Remove existing build artifacts
+## Remove existing build artifacts
 if [ "$DELZIP" == "delzip" ]; then
     wait_one_second && rm -rf out/target/product/*/*.zip
 fi
