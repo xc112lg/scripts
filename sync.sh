@@ -47,19 +47,19 @@ if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
 m installclean
     lunch lineage_us997-userdebug
-    m -j15 bacon
+    m -j16 bacon
     lunch lineage_h870-userdebug
-    m -j15 bacon
+    m -j16 bacon
     lunch lineage_h872-userdebug
-    m -j15 bacon
+    m -j16 bacon
  
 elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
     lunch lineage_h872-userdebug
-    m -j15 bacon
+    m -j16 bacon
 else
     echo "Building for the specified device: $DEVICE..."
     # Build for the specified device
     lunch "$DEVICE"
-    m -j15 bacon
+    m -j16 bacon
 fi
