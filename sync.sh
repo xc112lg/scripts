@@ -21,9 +21,8 @@ if [ "$DELZIP" == "delzip" ]; then
     wait_one_second && rm -rf out/target/product/*/*.zip
 fi
 
-echo $CCACHE_DIR
-rm -rf frameworks/base/
-rm -rf device/lge
+
+repo forall -c 'git reset --hard ; git clean -fdx'
 rm -rf .repo/local_manifests
 #rm -rf kernel/lge/msm8996
 #rm -rf .repo/manifests/snippets/crdroid.xml
