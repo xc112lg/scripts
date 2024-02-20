@@ -10,12 +10,12 @@ git fetch https://github.com/LG-G6/android_device_lge_g6-common.git dev/lineage-
 git cherry-pick b3edeba5ac6500c145fec7222ffc696c9b819af0
 cd ../../../
 
-added crdroid setting 
+#some fixes will be push to source fter testing
 cd device/lge/msm8996-common
 git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git cd10
-git cherry-pick 1b9d77ca82184f0d9ea938b7e4df4a11b126fbf8 14d8171a9d899bf74c3ab847f0f57085274e60b7
+git cherry-pick aef6632c220ec671b69ed3564d37f74cca295ce2 7ac9890a15cbf0be818fa00c8374620fb5c737c1
 cd ../../../
-
+#added crdroid setting 
 wget -N -P device/lge/msm8996-common/overlay/frameworks/base/core/res/res/values/ https://github.com/crdroidandroid/android_frameworks_base/raw/14.0/core/res/res/values/cr_config.xml
 wget -N -P device/lge/msm8996-common/overlay/frameworks/base/packages/SystemUI/res/values/ https://github.com/crdroidandroid/android_frameworks_base/raw/14.0/packages/SystemUI/res/values/cr_config.xml
 
