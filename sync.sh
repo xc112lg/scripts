@@ -25,7 +25,7 @@ echo $CCACHE_DIR
 rm -rf frameworks/base/
 rm -rf device/lge
 rm -rf .repo/local_manifests
-rm -rf kernel/lge/msm8996
+#rm -rf kernel/lge/msm8996
 #rm -rf .repo/manifests/snippets/crdroid.xml
 #rm -rf .repo/manifests/snippets/lineage.xml
 mkdir -p .repo/local_manifests
@@ -47,19 +47,19 @@ if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
 m installclean
     lunch lineage_us997-userdebug
-    m -j16 bacon
+    m -j15 bacon
     lunch lineage_h870-userdebug
-    m -j16 bacon
+    m -j15 bacon
     lunch lineage_h872-userdebug
-    m -j16 bacon
+    m -j15 bacon
  
 elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
     lunch lineage_h872-userdebug
-    m -j16 bacon
+    m -j15 bacon
 else
     echo "Building for the specified device: $DEVICE..."
     # Build for the specified device
     lunch "$DEVICE"
-    m -j16 bacon
+    m -j15 bacon
 fi
