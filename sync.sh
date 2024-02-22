@@ -4,21 +4,18 @@ ls out/target/product/*
 DEVICE="${1:-all}"  # If no value is provided, default to "all"
 COMMAND="${2:-build}"  # If no value is provided, default to "build"
 DELZIP="${3}"
-# Function to wait for 1 second
-wait_one_second() {
-    sleep 1
-}
+
 # Update and install ccache
-wait_one_second && sudo apt-get update -y
-wait_one_second && sudo apt-get install -y apt-utils
-wait_one_second && sudo apt-get install -y ccache
-wait_one_second && export USE_CCACHE=1
-wait_one_second && ccache -M 100G
-wait_one_second && export CCACHE_DIR=/tmp/src/manifest/cc
+sudo apt-get update -y
+sudo apt-get install -y apt-utils
+sudo apt-get install -y ccache
+export USE_CCACHE=1
+ccache -M 100G
+export CCACHE_DIR=/tmp/src/manifest/cc
 echo $CCACHE_DIR
 ## Remove existing build artifacts
 if [ "$DELZIP" == "delzip" ]; then
-    wait_one_second && rm -rf out/target/product/*/*.zip
+    rm -rf out/target/product/*/*.zip
 fi
 
 
@@ -44,13 +41,13 @@ fi
 # Check if device is set to "all"
 if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
-#m installclean
+m installclean
     lunch lineage_us997-userdebug
     m -j16 bacon
-#    lunch lineage_h870-userdebug
-##    m -j16 bacon
-#    lunch lineage_h872-userdebug
-#    m -j16 bacon
+    lunch lineage_h870-userdebug
+    m -j16 bacon
+    lunch lineage_h872-userdebug
+    m -j16 bacon
  
 elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
