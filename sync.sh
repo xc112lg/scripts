@@ -45,8 +45,8 @@ fi
 if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
 #m installclean
-    lunch lineage_us997-userdebug
-    m -j16 bacon
+    breakfast h872
+    brunch -j16 h872
 #    lunch lineage_h870-userdebug
 ##    m -j16 bacon
 #    lunch lineage_h872-userdebug
