@@ -21,6 +21,7 @@ fi
 
 repo forall -c 'git reset --hard ; git clean -fdx'
 rm -rf .repo/local_manifests
+rm -rf device/lge/
 #rm -rf kernel/lge/msm8996
 #rm -rf .repo/manifests/snippets/crdroid.xml
 #rm -rf .repo/manifests/snippets/lineage.xml
