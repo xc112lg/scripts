@@ -1,5 +1,7 @@
 #!/bin/bash
-
+ls out
+ls out/target
+ls out/target/product
 # Set default values for device and command
 DEVICE="${1:-all}"  # If no value is provided, default to "all"
 COMMAND="${2:-build}"  # If no value is provided, default to "build"
