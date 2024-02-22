@@ -9,13 +9,13 @@ wait_one_second() {
     sleep 1
 }
 # Update and install ccache
-#wait_one_second && sudo apt-get update -y
-#wait_one_second && sudo apt-get install -y apt-utils
-#wait_one_second && sudo apt-get install -y ccache
-#wait_one_second && export USE_CCACHE=1
-#wait_one_second && ccache -M 100G
-#wait_one_second && export CCACHE_DIR=/tmp/src/manifest/cc
-#echo $CCACHE_DIR
+wait_one_second && sudo apt-get update -y
+wait_one_second && sudo apt-get install -y apt-utils
+wait_one_second && sudo apt-get install -y ccache
+wait_one_second && export USE_CCACHE=1
+wait_one_second && ccache -M 100G
+wait_one_second && export CCACHE_DIR=/tmp/src/manifest/cc
+echo $CCACHE_DIR
 ## Remove existing build artifacts
 if [ "$DELZIP" == "delzip" ]; then
     wait_one_second && rm -rf out/target/product/*/*.zip
@@ -45,8 +45,8 @@ fi
 if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
 #m installclean
-    breakfast h872
-    brunch -j16 h872
+    lunch lineage_us997-userdebug
+    m -j16 bacon
 #    lunch lineage_h870-userdebug
 ##    m -j16 bacon
 #    lunch lineage_h872-userdebug
