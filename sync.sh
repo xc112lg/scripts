@@ -12,4 +12,3 @@ source scripts/fixes.sh
 
 
 
-fi
