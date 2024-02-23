@@ -10,7 +10,7 @@ git fetch https://github.com/LG-G6/android_device_lge_g6-common.git dev/lineage-
 git cherry-pick b3edeba5ac6500c145fec7222ffc696c9b819af0
 cd ../../../
 
-#some fixes will be push to source fter testing
+#some fixes will be push to source fter testingg
 cd device/lge/msm8996-common
 git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git cd10
 git cherry-pick aef6632c220ec671b69ed3564d37f74cca295ce2 7ac9890a15cbf0be818fa00c8374620fb5c737c1
