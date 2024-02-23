@@ -18,15 +18,11 @@ if [ "$DELZIP" == "delzip" ]; then
 fi
 
 
-repo forall -c 'git reset --hard ; git clean -fdx'
+rm -rf frameworks/base/
 rm -rf .repo/local_manifests
 rm -rf device/lge/
 #rm -rf kernel/lge/msm8996
-#rm -rf .repo/manifests/snippets/crdroid.xml
-#rm -rf .repo/manifests/snippets/lineage.xml
 mkdir -p .repo/local_manifests
-#cp scripts/crdroid.xml .repo/manifests/snippets
-#cp scripts/lineage.xml .repo/manifests/snippets
 cp scripts/roomservice.xml .repo/local_manifests
 repo sync -c -j16 --force-sync --no-clone-bundle --no-tags
 source build/envsetup.sh
