@@ -25,8 +25,9 @@ rm -rf device/lge/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 repo sync -c -j16 --force-sync --no-clone-bundle --no-tags
-source build/envsetup.sh
 source scripts/fixes.sh
+source build/envsetup.sh
+
 
 # Check if command is "clean"
 if [ "$COMMAND" == "clean" ]; then
