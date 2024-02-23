@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-repo forall -c 'git reset --hard ; git clean -fdx'
+#repo forall -c 'git reset --hard ; git clean -fdx'
 rm -rf .repo/local_manifests
 rm -rf device/lge/
 mkdir -p .repo/local_manifests
