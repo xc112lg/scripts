@@ -1,5 +1,4 @@
 #!/bin/bash
-ls out/target/product/*
 # Set default values for device and command
 DEVICE="${1:-all}"  # If no value is provided, default to "all"
 COMMAND="${2:-build}"  # If no value is provided, default to "build"
@@ -42,7 +41,7 @@ fi
 # Check if device is set to "all"
 if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
-m installclean
+    m installclean
     lunch lineage_us997-userdebug
     m -j16 bacon
     lunch lineage_h870-userdebug
