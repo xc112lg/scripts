@@ -17,10 +17,10 @@ if [ "$DELZIP" == "delzip" ]; then
     rm -rf out/target/product/*/*.zip
 fi
 
-
-rm -rf frameworks/base/
-rm -rf .repo/local_manifests
-rm -rf device/lge/
+git clean -fdX
+#rm -rf frameworks/base/
+#rm -rf .repo/local_manifests
+#rm -rf device/lge/
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
