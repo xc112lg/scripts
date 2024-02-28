@@ -3,6 +3,8 @@
 DEVICE="${1:-all}"  # If no value is provided, default to "all"
 COMMAND="${2:-build}"  # If no value is provided, default to "build"
 DELZIP="${3}"
+echo $PWD
+echo $PWD
 
 # Update and install ccache
 sudo apt-get update -y
@@ -10,24 +12,24 @@ sudo apt-get install -y apt-utils
 sudo apt-get install -y ccache
 export USE_CCACHE=1
 ccache -M 100G
-export CCACHE_DIR=/tmp/src/manifest/cc
+export CCACHE_DIR=/tmp/src/android/cc
 echo $CCACHE_DIR
 ## Remove existing build artifacts
 if [ "$DELZIP" == "delzip" ]; then
     rm -rf out/target/product/*/*.zip
 fi
 
-git clean -fdX
-#rm -rf frameworks/base/
-#rm -rf .repo/local_manifests
-#rm -rf device/lge/
+#git clean -fdX
+rm -rf frameworks/base/
+rm -rf .repo/local_manifests
+rm -rf device/lge/
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 repo sync -c -j16 --force-sync --no-clone-bundle --no-tags
-wget -O a.py https://raw.githubusercontent.com/xc112lg/crdroid10.1/main/a.py
-chmod +x a.py
-python3 a.py
+#wget -O a.py https://raw.githubusercontent.com/xc112lg/crdroid10.1/main/a.py
+#chmod +x a.py
+#python3 a.py
 source scripts/fixes.sh
 source build/envsetup.sh
 
