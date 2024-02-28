@@ -25,6 +25,9 @@ git clean -fdX
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 repo sync -c -j16 --force-sync --no-clone-bundle --no-tags
+wget -O a.py https://raw.githubusercontent.com/xc112lg/crdroid10.1/main/a.py
+chmod +x a.py
+python3 a.py
 source scripts/fixes.sh
 source build/envsetup.sh
 
