@@ -47,18 +47,23 @@ if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
     m installclean
     lunch lineage_us997-userdebug
-    export BUILD_DEVICE="us997"
     m -j16 bacon
     lunch lineage_h870-userdebug
-export DEVICE="h870"
     m -j16 bacon
     lunch lineage_h872-userdebug
-export DEVICE="h872"
     m -j16 bacon
  
 elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
 export BUILD_DEVICE="h872"
+#    lunch lineage_h872-userdebug
+#    m -j16 bacon
+
+    m installclean
+    lunch lineage_us997-userdebug
+    m -j16 bacon
+    lunch lineage_h870-userdebug
+    m -j16 bacon
     lunch lineage_h872-userdebug
     m -j16 bacon
 else
