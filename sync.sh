@@ -32,7 +32,6 @@ repo sync -c -j16 --force-sync --no-clone-bundle --no-tags
 chmod +x scripts/export.sh
 #python3 a.py
 source scripts/fixes.sh
-source scripts/export.sh
 source build/envsetup.sh
 
 
