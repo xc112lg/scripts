@@ -26,7 +26,7 @@ rm -rf device/lge/
 rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
-repo sync -c -j16 --force-sync --no-clone-bundle --no-tags
+repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 #wget -O a.py https://raw.githubusercontent.com/xc112lg/crdroid10.1/main/a.py
 #chmod +x a.py
 chmod +x scripts/export.sh
@@ -46,11 +46,11 @@ if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
     m installclean
     lunch lineage_us997-userdebug
-    m -j16 bacon
+    m -j$(nproc --all) bacon
     lunch lineage_h870-userdebug
-    m -j16 bacon
+    m -j$(nproc --all) bacon
     lunch lineage_h872-userdebug
-    m -j16 bacon
+    m -j$(nproc --all) bacon
  
 elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
@@ -60,11 +60,11 @@ export BUILD_DEVICE="h872"
 
     m installclean
     lunch lineage_us997-userdebug
-    m -j16 bacon
+    m -j$(nproc --all) bacon
     lunch lineage_h870-userdebug
-    m -j16 bacon
+    m -j$(nproc --all) bacon
     lunch lineage_h872-userdebug
-    m -j16 bacon
+    m -j$(nproc --all) bacon
 else
     echo "Building for the specified device: $DEVICE..."
     # Build for the specified device
