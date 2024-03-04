@@ -23,7 +23,7 @@ fi
 rm -rf frameworks/base/
 rm -rf .repo/local_manifests
 rm -rf device/lge/
-#rm -rf kernel/lge/msm8996
+rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 repo sync -c -j16 --force-sync --no-clone-bundle --no-tags
