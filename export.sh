@@ -2,6 +2,7 @@
 
 export MAINTAINER="xc112lg"
 export OEM="LG"
+export DEVICE="LG G6"
 export BUILDTYPE="userdebug" # Specify the build type
 export FORUM="https://xdaforums.com/t/unofficial-build-crdroid10-1-android-14-for-the-lg-g6.4648250/"
 export GAPPS="https://sourceforge.net/projects/crdroid/files/other/"
