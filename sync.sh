@@ -14,7 +14,7 @@ export USE_CCACHE=1
 ccache -M 100G
 export CCACHE_DIR=/tmp/src/android/cc
 echo $CCACHE_DIR
-## Remove existing build artifacts
+## Remove existing build artifactsa
 if [ "$DELZIP" == "delzip" ]; then
     rm -rf out/target/product/*/*.zip
 fi
