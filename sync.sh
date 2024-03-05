@@ -58,11 +58,11 @@ export BUILD_DEVICE="h872"
 #    lunch lineage_h872-userdebug
 #    m -j16 bacon
 
-    m installclean
-    lunch lineage_us997-userdebug
-    m -j$(nproc --all) bacon
-    lunch lineage_h870-userdebug
-    m -j$(nproc --all) bacon
+#    m installclean
+#    lunch lineage_us997-userdebug
+#    m -j$(nproc --all) bacon
+#    lunch lineage_h870-userdebug
+#    m -j$(nproc --all) bacon
     lunch lineage_h872-userdebug
     m -j$(nproc --all) bacon
 else
