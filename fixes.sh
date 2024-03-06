@@ -28,6 +28,12 @@ sleep 1 &&git fetch https://github.com/xc112lg/android_packages_apps_Updater.git
 sleep 1 &&git cherry-pick af70aa09ee94e7db085cd5777229b82f3abca313
 cd ../../../
 
+cd vendor/lineage/
+sleep 1 &&git fetch https://github.com/xc112lg/android_vendor_crdroid.git patch-1
+sleep 1 &&git cherry-pick 304035c6525ab2757f526d80d25087ffb56aea5c
+cd ../../
+
+
 #added crdroid setting 
 wget -N -P device/lge/msm8996-common/overlay/frameworks/base/core/res/res/values/ https://github.com/crdroidandroid/android_frameworks_base/raw/14.0/core/res/res/values/cr_config.xml
 wget -N -P device/lge/msm8996-common/overlay/frameworks/base/packages/SystemUI/res/values/ https://github.com/crdroidandroid/android_frameworks_base/raw/14.0/packages/SystemUI/res/values/cr_config.xml
