@@ -29,8 +29,8 @@ sleep 1 &&git cherry-pick af70aa09ee94e7db085cd5777229b82f3abca313
 cd ../../../
 
 cd vendor/lineage/
-sleep 1 &&git fetch https://github.com/xc112lg/android_vendor_crdroid.git xc112lg-patch-2
-sleep 1 &&git cherry-pick 2f7cd6428caf87825f5130e4b4ae96f8e91d3971
+sleep 1 &&git fetch https://github.com/xc112lg/android_vendor_crdroid.git patch-1
+sleep 1 &&git cherry-pick be2f71d81e21608f82376fd5266ce95d3266a411
 cd ../../
 
 
