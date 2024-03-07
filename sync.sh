@@ -5,7 +5,7 @@ COMMAND="${2:-build}"  # If no value is provided, default to "build"
 DELZIP="${3}"
 echo $PWD
 echo $PWD
-
+mkdir -p cc
 # Update and install ccache
 sudo apt-get update -y
 sudo apt-get install -y apt-utils
