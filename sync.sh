@@ -45,15 +45,9 @@ fi
 if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
 
-    lunch lineage_us997-userdebug
-    m installclean
-    m -j$(nproc --all) bacon
-    lunch lineage_h870-userdebug
-    m installclean
-    m -j$(nproc --all) bacon
-    lunch lineage_h872-userdebug
-    m installclean
-    m -j$(nproc --all) bacon
+lunch evolution_h872-eng
+
+m -j$(nproc --all) evolution
  
 elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
