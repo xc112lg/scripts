@@ -31,7 +31,7 @@ repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 #chmod +x a.py
 chmod +x scripts/export.sh
 #python3 a.py
-source scripts/fixes.sh
+#source scripts/fixes.sh
 source build/envsetup.sh
 
 
