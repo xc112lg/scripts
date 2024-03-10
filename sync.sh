@@ -13,6 +13,8 @@ sudo apt-get install -y ccache
 export USE_CCACHE=1
 ccache -M 100G
 export CCACHE_DIR=/tmp/src/android/cc
+ccache -o compression=false
+
 echo $CCACHE_DIR
 ## Remove existing build artifactsa
 if [ "$DELZIP" == "delzip" ]; then
