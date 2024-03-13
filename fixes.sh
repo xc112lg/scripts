@@ -22,6 +22,7 @@ sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common
 sleep 1 &&git cherry-pick aef6632c220ec671b69ed3564d37f74cca295ce2 
 sleep 1 &&git cherry-pick 7ac9890a15cbf0be818fa00c8374620fb5c737c1
 sleep 1 &&git cherry-pick 36282e9fdbd512d50f4cfaf04fd980fbcc1d930e
+sleep 1 &&git cherry-pick 19a79dbe838307721e9eaa31585accc64900f447
 cd ../../../
 
 cd packages/apps/Updater
