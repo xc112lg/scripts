@@ -43,8 +43,8 @@ fi
 # Check if device is set to "all"
 if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
-
-lunch evolution_h872-eng
+ rm -rf out/target/product/*/*.zip
+lunch evolution_h872-userdebug
 
 m -j$(nproc --all) evolution
  
