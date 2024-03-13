@@ -34,7 +34,6 @@ if [ "$DELZIP" == "delzip" ]; then
 fi
 
 #git clean -fdX
-rm -rf packages/apps/WallpaperPicker2
 #rm -rf frameworks/base/
 rm -rf .repo/local_manifests
 #rm -rf device/lge/
