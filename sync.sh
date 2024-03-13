@@ -34,15 +34,15 @@ if [ "$DELZIP" == "delzip" ]; then
 fi
 
 #git clean -fdX
-rm -rf frameworks/base/
+rm -rf packages/apps/WallpaperPicker2
+#rm -rf frameworks/base/
 rm -rf .repo/local_manifests
-rm -rf device/lge/
+#rm -rf device/lge/
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
-rm -rf packages/apps/WallpaperPicker2
-git clone https://github.com/LineageOS/android_packages_apps_WallpaperPicker2 packages/apps/WallpaperPicker2
+
 #wget -O a.py https://raw.githubusercontent.com/xc112lg/crdroid10.1/main/a.py
 #chmod +x a.py
 chmod +x scripts/export.sh
