@@ -49,37 +49,3 @@ chmod +x scripts/export.sh
 #python3 a.py
 source scripts/fixes.sh
 source build/envsetup.sh
-
-
-# Check if command is "clean"
-if [ "$COMMAND" == "clean" ]; then
-    echo "Cleaning..."
-    m clean
-fi
-
-# Check if device is set to "all"
-if [ "$DEVICE" == "all" ]; then
-    echo "Building for all devices..."
-
-    lunch lineage_us997-userdebug
-    m installclean
-    m -j$(nproc --all) bacon
-    lunch lineage_h870-userdebug
-    m installclean
-    m -j$(nproc --all) bacon
-    lunch lineage_h872-userdebug
-    m installclean
-    m -j$(nproc --all) bacon
- 
-elif [ "$DEVICE" == "h872" ]; then
-    echo "Building for h872..."
-export BUILD_DEVICE="h872"
-    lunch lineage_h872-userdebug
-    m installclean
-    m -j$(nproc --all) bacon
-else
-    echo "Building for the specified device: $DEVICE..."
-    # Build for the specified device
-    lunch "$DEVICE"
-    m -j16 bacon
-fi
