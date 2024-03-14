@@ -1,31 +1,39 @@
 ## Cam fix for LG G6 and delete some line cause im stupid.
-cd frameworks/base/
-git reset --hard
-cd ../../
+if [ -d "frameworks/base/" ]; then
+    cd frameworks/base/
+    git reset --hard
+    cd ../../
+fi
 
 # Mixer: adjust input volume levelsa
-cd device/lge/g6-common
-git reset --hard
-cd ../../../
+if [ -d "device/lge/g6-common/" ]; then
+    cd device/lge/g6-common/
+    git reset --hard
+    cd ../../../
+fi
 
-cd kernel/lge/msm8996
-# Fix LTO
-git reset --hard
-cd ../../../
+if [ -d "kernel/lge/msm8996/" ]; then
+    cd kernel/lge/msm8996/
+    # Fix LTO
+    git reset --hard
+    cd ../../../
+fi
 
 #some fixes will be push to source fter testingg
-cd device/lge/msm8996-common
-git reset --hard
-cd ../../../
+if [ -d "device/lge/msm8996-common/" ]; then
+    cd device/lge/msm8996-common/
+    git reset --hard
+    cd ../../../
+fi
 
-cd packages/apps/Updater
-git reset --hard
-cd ../../../
+if [ -d "packages/apps/Updater/" ]; then
+    cd packages/apps/Updater/
+    git reset --hard
+    cd ../../../
+fi
 
-cd vendor/lineage/
-git reset --hard @{u}
-cd ../../
-
-
-
-
+if [ -d "vendor/lineage/" ]; then
+    cd vendor/lineage/
+    git reset --hard
+    cd ../../
+fi
