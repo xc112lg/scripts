@@ -40,6 +40,7 @@ rm -rf .repo/local_manifests
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
+source scripts/clean.sh
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
 #wget -O a.py https://raw.githubusercontent.com/xc112lg/crdroid10.1/main/a.py
