@@ -3,6 +3,10 @@
 DEVICE="${1:-all}"  # If no value is provided, default to "all"
 COMMAND="${2:-build}"  # If no value is provided, default to "build"
 DELZIP="${3}"
+MAKEFILE="${4}"  # If no value is provided, default to "all"
+VENDOR="${5}"  # If no value is provided, default to "build"
+COM1="${6}"
+COM2="${7}"
 echo $PWD
 echo $PWD
 mkdir -p cc
@@ -43,9 +47,31 @@ cp scripts/roomservice.xml .repo/local_manifests
 source scripts/clean.sh
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
-#wget -O a.py https://raw.githubusercontent.com/xc112lg/crdroid10.1/main/a.py
-#chmod +x a.py
-chmod +x scripts/export.sh
+if [ -n "$MAKEFILE" ]; then
+    # Perform the replacement using sed
+    cd device/lge/h872
+    sed -i "s/lineage_h872/${MAKEFILE}_h872/g" AndroidProducts.mk
+    sed -i "s/lineage_h872/${MAKEFILE}_h872/g" lineage_h872.mk
+    sed -i "s#vendor/lineage#vendor/${VENDOR}#g" lineage_h872.mk
+    mv lineage_h872.mk "${MAKEFILE}_h872.mk"
+    cd ../../../
+
+    cd device/lge/h870
+    sed -i "s/lineage_h870/${MAKEFILE}_h870/g" AndroidProducts.mk
+    sed -i "s/lineage_h870/${MAKEFILE}_h870/g" lineage_h870.mk
+    sed -i "s#vendor/lineage#vendor/${VENDOR}#g" lineage_h870.mk
+    mv lineage_h870.mk "${MAKEFILE}_h870.mk"
+    cd ../../../
+
+    cd device/lge/us997
+    sed -i "s/lineage_us997/${MAKEFILE}_us997/g" AndroidProducts.mk
+    sed -i "s/lineage_us997/${MAKEFILE}_us997/g" lineage_us997.mk
+    sed -i "s#vendor/lineage#vendor/${VENDOR}#g" lineage_us997.mk
+    mv lineage_us997.mk "${MAKEFILE}_us997.mk"
+    cd ../../../
+fi
+
+
 
 source scripts/fixes.sh
 source build/envsetup.sh
@@ -57,29 +83,4 @@ if [ "$COMMAND" == "clean" ]; then
     m clean
 fi
 
-# Check if device is set to "all"
-if [ "$DEVICE" == "all" ]; then
-    echo "Building for all devices..."
 
-    lunch lineage_us997-userdebug
-    m installclean
-    m -j$(nproc --all) bacon
-    lunch lineage_h870-userdebug
-    m installclean
-    m -j$(nproc --all) bacon
-    lunch lineage_h872-userdebug
-    m installclean
-    m -j$(nproc --all) bacon
- 
-elif [ "$DEVICE" == "h872" ]; then
-    echo "Building for h872..."
-export BUILD_DEVICE="h872"
-    lunch lineage_h872-userdebug
-    m installclean
-    m -j$(nproc --all) bacon
-else
-    echo "Building for the specified device: $DEVICE..."
-    # Build for the specified device
-    lunch "$DEVICE"
-    m -j16 bacon
-fi
