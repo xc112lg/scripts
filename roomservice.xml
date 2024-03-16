@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
+
+ <remote  name="github"
+           fetch="https://github.com"
+/>
   <project name="LineageOS/android_device_lge_h830" path="device/lge/h830" remote="github" revision="lineage-21" />
   <project name="LineageOS/android_device_lge_h850" path="device/lge/h850" remote="github" revision="lineage-21" />
   <project name="LineageOS/android_device_lge_rs988" path="device/lge/rs988" remote="github" revision="lineage-21" />
