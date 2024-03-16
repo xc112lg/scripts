@@ -7,9 +7,6 @@ MAKEFILE="${4}"
 VENDOR="${5}" 
 COM1="${6}"
 COM2="${7}"
-CORE="${8:-"$(nproc --all)"}"
-echo $PWD
-echo $PWD
 mkdir -p cc
 mkdir -p c
 # Update and install ccache
