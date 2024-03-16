@@ -12,9 +12,6 @@ echo $PWD
 echo $PWD
 mkdir -p cc
 mkdir -p c
-cp -f cc/ccache.conf c/ccache.conf 
-time ls -1 cc | xargs -I {} -P 5 -n 1 rsync -au cc/{} c/
-ccache -s
 # Update and install ccache
 sudo apt-get update -y
 sudo apt-get install -y apt-utils
@@ -28,7 +25,6 @@ ccache --show-config | grep compression
 echo $CCACHE_DIR
 echo $CCACHE_EXEC
 time ls -1 c | xargs -I {} -P 5 -n 1 rsync -au c/{} cc/
-cp -f c/ccache.conf cc/ccache.conf 
 ccache -o compression=false
 ccache --show-config | grep compression
 
@@ -110,3 +106,5 @@ else
     lunch "$DEVICE"
     ${COM1} -j16 ${COM2}
 fi
+time ls -1 cc | xargs -I {} -P 5 -n 1 rsync -au cc/{} c/
+ccache -s
