@@ -83,4 +83,29 @@ if [ "$COMMAND" == "clean" ]; then
     m clean
 fi
 
+# Check if device is set to "all"
+if [ "$DEVICE" == "all" ]; then
+    echo "Building for all devices..."
 
+    lunch ${MAKEFILE}_us997-userdebug
+    m installclean
+    ${COM1} -j$(nproc --all) ${COM2}
+    lunch ${MAKEFILE}_h870-userdebug
+    m installclean
+    ${COM1} -j$(nproc --all) ${COM2}
+    lunch ${MAKEFILE}_h872-userdebug
+    m installclean
+    ${COM1} -j$(nproc --all) ${COM2}
+ 
+elif [ "$DEVICE" == "h872" ]; then
+    echo "Building for h872..."
+export BUILD_DEVICE="h872"
+    lunch ${MAKEFILE}_h872-userdebug
+    m installclean
+    ${COM1} -j$(nproc --all) ${COM2}
+else
+    echo "Building for the specified device: $DEVICE..."
+    # Build for the specified device
+    lunch "$DEVICE"
+    ${COM1} -j16 ${COM2}
+fi
