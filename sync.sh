@@ -1,12 +1,13 @@
 #!/bin/bash
 # Set default values for device and command
-DEVICE="${1:-all}"  # If no value is provided, default to "all"
-COMMAND="${2:-build}"  # If no value is provided, default to "build"
+DEVICE="${1:-all}"  
+COMMAND="${2:-build}" 
 DELZIP="${3}"
-MAKEFILE="${4}"  # If no value is provided, default to "all"
-VENDOR="${5}"  # If no value is provided, default to "build"
+MAKEFILE="${4}" 
+VENDOR="${5}" 
 COM1="${6}"
 COM2="${7}"
+CORE="${8:-"$(nproc --all)"}"
 echo $PWD
 echo $PWD
 mkdir -p cc
@@ -89,20 +90,20 @@ if [ "$DEVICE" == "all" ]; then
 
     lunch ${MAKEFILE}_us997-userdebug
     m installclean
-    ${COM1} -j$(nproc --all) ${COM2}
+    ${COM1} -j${CORE} ${COM2}
     lunch ${MAKEFILE}_h870-userdebug
     m installclean
-    ${COM1} -j$(nproc --all) ${COM2}
+    ${COM1} -j${CORE} ${COM2}
     lunch ${MAKEFILE}_h872-userdebug
     m installclean
-    ${COM1} -j$(nproc --all) ${COM2}
+    ${COM1} -j${CORE} ${COM2}
  
 elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
 export BUILD_DEVICE="h872"
     lunch ${MAKEFILE}_h872-userdebug
     m installclean
-    ${COM1} -j$(nproc --all) ${COM2}
+    ${COM1} -j${CORE} ${COM2}
 else
     echo "Building for the specified device: $DEVICE..."
     # Build for the specified device
