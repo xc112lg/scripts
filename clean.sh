@@ -1,39 +1,21 @@
-## Cam fix for LG G6 and delete some line cause im stupid.
-if [ -d "frameworks/base/" ]; then
-    cd frameworks/base/
-    git reset --hard
-    cd ../../
-fi
+# List of directories to check
+directories=("frameworks/base/" "device/lge/h872/" "device/lge/h870/" "device/lge/us997/" "device/lge/g6-common/" "kernel/lge/msm8996/" "device/lge/msm8996-common/" "packages/apps/Updater/" "vendor/lineage/")
 
-# Mixer: adjust input volume levelsa
-if [ -d "device/lge/g6-common/" ]; then
-    cd device/lge/g6-common/
-    git reset --hard
-    cd ../../../
-fi
+# Get the current directory
+current_dir=$(pwd)
 
-if [ -d "kernel/lge/msm8996/" ]; then
-    cd kernel/lge/msm8996/
-    # Fix LTO
-    git reset --hard
-    cd ../../../
-fi
-
-#some fixes will be push to source fter testingg
-if [ -d "device/lge/msm8996-common/" ]; then
-    cd device/lge/msm8996-common/
-    git reset --hard
-    cd ../../../
-fi
-
-if [ -d "packages/apps/Updater/" ]; then
-    cd packages/apps/Updater/
-    git reset --hard
-    cd ../../../
-fi
-
-if [ -d "vendor/lineage/" ]; then
-    cd vendor/lineage/
-    git reset --hard
-    cd ../../
-fi
+# Loop through each directory
+for dir in "${directories[@]}"; do
+    if [ -d "$dir" ]; then
+        # Change to the directory
+        cd "$dir"
+        # Perform the git reset
+        git reset --hard
+        # Count the number of slashes in the directory path
+        num_slashes=$(tr -cd '/' <<< "$dir" | wc -c)
+        # Return to the previous directory accordingly
+        for (( i=0; i<num_slashes; i++ )); do
+            cd ..
+        done
+    fi
+done
