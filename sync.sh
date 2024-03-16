@@ -22,6 +22,7 @@ ccache --show-config | grep compression
 echo $CCACHE_DIR
 echo $CCACHE_EXEC
 time ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
+ls cc
 ccache -o compression=false
 ccache --show-config | grep compression
 
