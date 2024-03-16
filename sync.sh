@@ -46,7 +46,7 @@ rm -rf .repo/local_manifests
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 source scripts/clean.sh
-repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+repo sync -c -j${CORE} --force-sync --no-clone-bundle --no-tags
 
 if [ -n "$MAKEFILE" ]; then
     # Perform the replacement using sed
