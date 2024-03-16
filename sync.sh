@@ -21,7 +21,7 @@ ccache -o compression=false
 ccache --show-config | grep compression
 echo $CCACHE_DIR
 echo $CCACHE_EXEC
-time ls -1 c | xargs -I {} -P 5 -n 1 rsync -au c/{} cc/
+time ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
 ccache -o compression=false
 ccache --show-config | grep compression
 
@@ -103,5 +103,7 @@ else
     lunch "$DEVICE"
     ${COM1} -j16 ${COM2}
 fi
-time ls -1 cc | xargs -I {} -P 5 -n 1 rsync -au cc/{} c/
+
+
+time ls -1 cc | xargs -I {} -P 10 -n 1 rsync -au cc/{} c/
 ccache -s
