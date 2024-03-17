@@ -7,23 +7,29 @@ echo $PWD
 echo $PWD
 mkdir -p cc
 mkdir -p c
-cp -f cc/ccache.conf c/ccache.conf 
-time ls -1 cc | xargs -I {} -P 5 -n 1 rsync -au cc/{} c/
-ccache -s
 # Update and install ccache
 sudo apt-get update -y
 sudo apt-get install -y apt-utils
 sudo apt-get install -y ccache
 export USE_CCACHE=1
+export CCACHE_DIR=${PWD}/cc/
 ccache -M 100G
-export CCACHE_DIR=${PWD}/cc
 ccache -s
 ccache -o compression=false
 ccache --show-config | grep compression
 echo $CCACHE_DIR
+
+if [ -z "$(ls -A c)" ]; then
+  echo "Folder c is empty. Skipping the rsync command."
+else
+  # If folder c is not empty, execute the rsync command
+time ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
+cp -f c/ccache.conf cc
+fi
+echo $CCACHE_DIR
 echo $CCACHE_EXEC
-time ls -1 c | xargs -I {} -P 5 -n 1 rsync -au c/{} cc/
-cp -f c/ccache.conf cc/ccache.conf 
+
+ls cc
 ccache -o compression=false
 ccache --show-config | grep compression
 
@@ -46,8 +52,9 @@ repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 #wget -O a.py https://raw.githubusercontent.com/xc112lg/crdroid10.1/main/a.py
 #chmod +x a.py
 chmod +x scripts/export.sh
-
+export USE_CCACHE=1
 source scripts/fixes.sh
+export USE_CCACHE=1
 source build/envsetup.sh
 
 
@@ -83,3 +90,7 @@ else
     lunch "$DEVICE"
     m -j16 bacon
 fi
+
+time ls -1 cc | xargs -I {} -P 10 -n 1 rsync -au cc/{} c/
+cp -f cc/ccache.conf c
+ccache -s
