@@ -3,19 +3,17 @@
 DEVICE="${1:-all}"  # If no value is provided, default to "all"
 COMMAND="${2:-build}"  # If no value is provided, default to "build"
 DELZIP="${3}"
-echo $PWD
-echo $PWD
+
 mkdir -p cc
 mkdir -p c
-# Update and install ccache
 sudo apt-get update -y
 sudo apt-get install -y apt-utils
 sudo apt-get install -y ccache
 export USE_CCACHE=1
-export CCACHE_DIR=${PWD}/cc/
 ccache -M 100G
+export CCACHE_DIR=${PWD}/cc
 ccache -s
-ccache -o compression=false
+ccache --set-config=compression=false
 ccache --show-config | grep compression
 echo $CCACHE_DIR
 
@@ -26,14 +24,7 @@ else
 time ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
 cp -f c/ccache.conf cc
 fi
-echo $CCACHE_DIR
-echo $CCACHE_EXEC
 
-ls cc
-ccache -o compression=false
-ccache --show-config | grep compression
-
-ccache -s
 ## Remove existing build artifactsa
 if [ "$DELZIP" == "delzip" ]; then
     rm -rf out/target/product/*/*.zip
