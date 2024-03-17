@@ -22,7 +22,15 @@ ccache -o compression=false
 ccache --show-config | grep compression
 echo $CCACHE_DIR
 echo $CCACHE_EXEC
+
+if [ -z "$(ls -A c)" ]; then
+  echo "Folder c is empty. Skipping the rsync command."
+else
+  # If folder c is not empty, execute the rsync command
 time ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
+fi
+
+
 ls cc
 ccache -o compression=false
 ccache --show-config | grep compression
