@@ -9,13 +9,17 @@ mkdir -p c
 sudo apt-get update -y
 sudo apt-get install -y apt-utils
 sudo apt-get install -y ccache
+sleep 1
 export USE_CCACHE=1
+sleep 1
+export CCACHE_DIR=$PWD/cc
+sleep 1 
 ccache -M 100G
-export CCACHE_DIR=${PWD}/cc
 ccache -s
 ccache --set-config=compression=false
 ccache --show-config | grep compression
 echo $CCACHE_DIR
+ccache -s
 
 if [ -z "$(ls -A c)" ]; then
   echo "Folder c is empty. Skipping the rsync command."
