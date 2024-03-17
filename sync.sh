@@ -14,9 +14,8 @@ mkdir -p c
 sudo apt-get update -y
 sudo apt-get install -y apt-utils
 sudo apt-get install -y ccache
-
-export CCACHE_DIR=${PWD}/cc
 export USE_CCACHE=1
+export CCACHE_DIR=${PWD}/cc
 ccache -M 100G
 ccache -s
 ccache -o compression=false
