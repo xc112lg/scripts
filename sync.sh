@@ -15,8 +15,8 @@ sudo apt-get update -y
 sudo apt-get install -y apt-utils
 sudo apt-get install -y ccache
 export USE_CCACHE=1
-export CCACHE_DIR=${PWD}/cc
-ccache -M 100G
+export CCACHE_DIR=${PWD}/cc/
+ccache -M 50G
 ccache -s
 ccache -o compression=false
 ccache --show-config | grep compression
