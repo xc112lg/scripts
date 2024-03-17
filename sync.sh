@@ -29,7 +29,8 @@ else
   # If folder c is not empty, execute the rsync command
 time ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
 fi
-
+echo $CCACHE_DIR
+echo $CCACHE_EXEC
 
 ls cc
 ccache -o compression=false
