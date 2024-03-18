@@ -2,12 +2,8 @@
 
 
 
-repo init -u https://github.com/CipherOS/android_manifest.git -b thirteen
+repo init -u https://github.com/crdroidandroid/android.git -b 14.0 --git-lfs
 
-
-
-
-#!/bin/bash
 
 # Define the log file path
 log_file="deleted_repos.log"
