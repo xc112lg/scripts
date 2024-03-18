@@ -5,7 +5,7 @@ COMMAND="${2:-build}"  # If no value is provided, default to "build"
 DELZIP="${3}"
 echo $PWD
 echo $PWD
-repo init -u https://github.com/LineageOS/android.git -b lineage-18.1 --git-lfs
+repo init -u https://github.com/crdroidandroid/android.git -b 14.0 --git-lfs
 
 # Define the log file path
 log_file="deleted_repos.log"
