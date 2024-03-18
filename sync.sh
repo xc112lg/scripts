@@ -27,4 +27,5 @@ if echo "$output" | grep -q "Failing repos:"; then
     repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 else
     echo "All repositories synchronized successfully."
+echo "Deleted repository: $repo_info"
 fi
