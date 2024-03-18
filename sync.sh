@@ -1,11 +1,13 @@
 #!/bin/bash
-# Set default values for device and command
-DEVICE="${1:-all}"  # If no value is provided, default to "all"
-COMMAND="${2:-build}"  # If no value is provided, default to "build"
-DELZIP="${3}"
-echo $PWD
-echo $PWD
+
+
+
 repo init -u https://github.com/crdroidandroid/android.git -b 14.0 --git-lfs
+
+
+
+
+#!/bin/bash
 
 # Define the log file path
 log_file="deleted_repos.log"
@@ -14,32 +16,24 @@ log_file="deleted_repos.log"
 output=$(repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags 2>&1)
 
 # Check if there are any failing repositories
-if echo "$output" | grep -q "error:"; then
+if echo "$output" | grep -q "Failing repos:"; then
     echo "Deleting failing repositories..."
     # Extract failing repositories from the error message and log the deletion
     while IFS= read -r line; do
-        repo_name=$(echo "$line" | awk '{print $NF}')
-        echo "Deleted repository: $repo_name" >> "$log_file"
-        rm -rf "$repo_name"
-    done <<< "$(echo "$output" | grep "error:")"
-    
+        # Extract repository name and path from the error message
+        repo_info=$(echo "$line" | awk -F': ' '{print $NF}')
+        repo_path=$(dirname "$repo_info")
+        repo_name=$(basename "$repo_info")
+        # Log the deletion
+        echo "Deleted repository: $repo_info" >> "$log_file"
+        # Delete the repository
+        rm -rf "$repo_path/$repo_name"
+    done <<< "$(echo "$output" | awk '/Failing repos:/ {flag=1; next} /Repo command failed due to the following `SyncError` errors:/ {flag=0} flag')"
+
     # Re-sync all repositories after deletion
     echo "Re-syncing all repositories..."
     repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 else
     echo "All repositories synchronized successfully."
 fi
-
-
-
-
-repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 13
-while true; do
-    errors=$(repo sync -j64 --fail-fast --force-sync --no-clone-bundle --no-tags 2>&1 | awk '/^error: Exited sync due to errors/,/^error: Cannot fetch .* in/ {print $0}' | tee /dev/tty)
-    if [ -z "$errors" ]; then
-        echo "No errors found. Exiting loop."
-        break
-    fi
-    echo "$errors" | awk '/^error: Exited sync due to errors/,/^error: Cannot fetch .* in/ {print "rm -rf " $NF}' | bash
-done
 
