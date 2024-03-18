@@ -30,4 +30,16 @@ else
     echo "All repositories synchronized successfully."
 fi
 
-source build/envsetup.sh
+
+
+
+repo init -u https://github.com/DerpFest-AOSP/manifest.git -b 13
+while true; do
+    errors=$(repo sync -j64 --fail-fast --force-sync --no-clone-bundle --no-tags 2>&1 | awk '/^error: Exited sync due to errors/,/^error: Cannot fetch .* in/ {print $0}' | tee /dev/tty)
+    if [ -z "$errors" ]; then
+        echo "No errors found. Exiting loop."
+        break
+    fi
+    echo "$errors" | awk '/^error: Exited sync due to errors/,/^error: Cannot fetch .* in/ {print "rm -rf " $NF}' | bash
+done
+
