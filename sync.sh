@@ -10,19 +10,19 @@ COM2="${7}"
 CORE="${8:-"$(nproc --all)"}"
 mkdir -p cc
 mkdir -p c
-sudo apt-get update -y
-sudo apt-get install -y apt-utils
-sudo apt-get install -y ccache
+sudo apt update -y
+sudo apt install -y apt-utils
+sudo apt install -y ccache
+sudo /usr/sbin/update-ccache-symlinks
+echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
 sleep 1
 export USE_CCACHE=1
 sleep 1
 export CCACHE_DIR=$PWD/cc
 sleep 1 
 ccache -s
-ccache --set-config=compression=false
-sleep 1 
-ccache -M 100G
-ccache --show-config | grep compression
+ccache -F 0
+ccache -F 0
 echo $CCACHE_DIR
 ccache -s
 
