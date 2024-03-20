@@ -12,7 +12,7 @@ mkdir -p cc
 mkdir -p c
 sudo apt update -y
 sudo apt install -y apt-utils
-sudo apt install -y ccache
+sudo apt upgrade -y ccache
 sudo /usr/sbin/update-ccache-symlinks
 echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
 sleep 1
