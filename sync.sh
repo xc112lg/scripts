@@ -18,9 +18,10 @@ export USE_CCACHE=1
 sleep 1
 export CCACHE_DIR=$PWD/cc
 sleep 1 
-ccache -M 100G
 ccache -s
 ccache --set-config=compression=false
+sleep 1 
+ccache -M 100G
 ccache --show-config | grep compression
 echo $CCACHE_DIR
 ccache -s
