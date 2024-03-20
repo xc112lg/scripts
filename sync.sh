@@ -55,6 +55,7 @@ if [ -n "$MAKEFILE" ]; then
     sed -i "s/lineage_h872/${MAKEFILE}_h872/g" lineage_h872.mk
     sed -i "s#vendor/lineage#vendor/${VENDOR}#g" lineage_h872.mk
     mv lineage_h872.mk "${MAKEFILE}_h872.mk"
+    ls
     cd ../../../
 
     cd device/lge/h870
@@ -62,6 +63,7 @@ if [ -n "$MAKEFILE" ]; then
     sed -i "s/lineage_h870/${MAKEFILE}_h870/g" lineage_h870.mk
     sed -i "s#vendor/lineage#vendor/${VENDOR}#g" lineage_h870.mk
     mv lineage_h870.mk "${MAKEFILE}_h870.mk"
+    ls
     cd ../../../
 
     cd device/lge/us997
@@ -69,6 +71,7 @@ if [ -n "$MAKEFILE" ]; then
     sed -i "s/lineage_us997/${MAKEFILE}_us997/g" lineage_us997.mk
     sed -i "s#vendor/lineage#vendor/${VENDOR}#g" lineage_us997.mk
     mv lineage_us997.mk "${MAKEFILE}_us997.mk"
+    ls
     cd ../../../
 fi
 
