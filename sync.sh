@@ -10,17 +10,20 @@ COM2="${7}"
 CORE="${8:-"$(nproc --all)"}"
 mkdir -p cc
 mkdir -p c
-# Update and install ccache
 sudo apt-get update -y
 sudo apt-get install -y apt-utils
 sudo apt-get install -y ccache
+sleep 1
 export USE_CCACHE=1
-export CCACHE_DIR=${PWD}/cc/
-ccache -M 50G
+sleep 1
+export CCACHE_DIR=$PWD/cc
+sleep 1 
+ccache -M 100G
 ccache -s
-ccache -o compression=false
+ccache --set-config=compression=false
 ccache --show-config | grep compression
 echo $CCACHE_DIR
+ccache -s
 
 if [ -z "$(ls -A c)" ]; then
   echo "Folder c is empty. Skipping the rsync command."
@@ -29,14 +32,7 @@ else
 time ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
 cp -f c/ccache.conf cc
 fi
-echo $CCACHE_DIR
-echo $CCACHE_EXEC
 
-ls cc
-ccache -o compression=false
-ccache --show-config | grep compression
-
-ccache -s
 ## Remove existing build artifactsa
 if [ "$DELZIP" == "delzip" ]; then
     rm -rf out/target/product/*/*.zip
