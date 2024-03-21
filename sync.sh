@@ -99,13 +99,13 @@ if [ "$DEVICE" == "all" ]; then
 
     lunch ${MAKEFILE}_us997-userdebug
     m installclean
-    ccache ${COM1} -j$(nproc --all) ${COM2}
+    ${COM1} -j$(nproc --all) ${COM2}
     lunch ${MAKEFILE}_h870-userdebug
     m installclean
-    ccache ${COM1} -j$(nproc --all) ${COM2}
+    ${COM1} -j$(nproc --all) ${COM2}
     lunch ${MAKEFILE}_h872-userdebug
     m installclean
-    ccache ${COM1} -j$(nproc --all) ${COM2}
+    ${COM1} -j$(nproc --all) ${COM2}
  
 elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
