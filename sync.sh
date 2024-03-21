@@ -16,7 +16,6 @@ wget https://github.com/ccache/ccache/releases/download/v4.9.1/ccache-4.9.1-linu
 tar -xf ccache-4.9.1-linux-x86_64.tar.xz
 cd ccache-4.9.1-linux-x86_64
 sudo cp ccache /usr/bin/
-ls /usr/bin/
 sudo ln -sf ccache /usr/bin/gcc
 sudo ln -sf ccache /usr/bin/g++
 cd ..
