@@ -54,7 +54,7 @@ if [ -n "$CLEAR" ]; then
 source scripts/clean.sh
 fi
 
-repo sync -c --no-clone-bundle --no-tags --prune --force-sync
+
 
 main() {
     # Run repo sync command and capture the output
