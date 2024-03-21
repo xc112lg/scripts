@@ -16,8 +16,8 @@ tar -xf ccache-4.9.1-linux-x86_64.tar.xz
 cd ccache-4.9.1-linux-x86_64
 sudo cp ccache /usr/local/bin/
 ls /usr/local/bin/
-ln -s ccache /usr/local/bin/gcc
-ln -s ccache /usr/local/bin/g++
+sudo ln -s ccache /usr/local/bin/gcc
+sudo ln -s ccache /usr/local/bin/g++
 
 export USE_CCACHE=1
 sleep 1
