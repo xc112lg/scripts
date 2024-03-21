@@ -53,8 +53,9 @@ cp scripts/roomservice.xml .repo/local_manifests
 if [ -n "$CLEAR" ]; then
 source scripts/clean.sh
 fi
-/opt/crave/resync.sh
 
+#/opt/crave/resync.sh
+ repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
 
 if [ -n "$MAKEFILE" ]; then
