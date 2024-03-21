@@ -13,10 +13,12 @@ mkdir -p c
 sudo apt update -y
 sudo apt install -y apt-utils
 sudo apt upgrade -y ccache
+ls /usr/sbin/update-ccache-symlinks
 sudo /usr/sbin/update-ccache-symlinks
 echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
 sleep 1
 echo $PATH
+
 export USE_CCACHE=1
 sleep 1
 export CCACHE_DIR=$PWD/cc
