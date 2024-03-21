@@ -52,7 +52,7 @@ mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 source scripts/clean.sh
 
-/opt/crave/resync.sh  
+repo sync -c --no-clone-bundle --no-tags --prune --force-sync
 
 
 
