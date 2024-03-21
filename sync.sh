@@ -8,6 +8,7 @@ VENDOR="${5}"
 COM1="${6}"
 COM2="${7}"
 CORE="${8:-"$(nproc --all)"}"
+CLEAR="${9}"
 mkdir -p cc
 mkdir -p c
 # Set default values for device and command
@@ -50,8 +51,9 @@ rm -rf .repo/local_manifests
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
-#source scripts/clean.sh
-
+if [ -n "$CLEAR" ]; then
+source scripts/clean.sh
+fi
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
 
