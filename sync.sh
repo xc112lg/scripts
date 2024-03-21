@@ -10,24 +10,24 @@ COM2="${7}"
 CORE="${8:-"$(nproc --all)"}"
 mkdir -p cc
 mkdir -p c
-# # Set default values for device and command
-# wget https://github.com/ccache/ccache/releases/download/v4.9.1/ccache-4.9.1-linux-x86_64.tar.xz
-# tar -xf ccache-4.9.1-linux-x86_64.tar.xz
-# cd ccache-4.9.1-linux-x86_64
-# sudo cp ccache /usr/local/bin/
-# ls /usr/local/bin/
-# sudo ln -s ccache /usr/local/bin/gcc
-# sudo ln -s ccache /usr/local/bin/g++
-# cd ..
-# export USE_CCACHE=1
-# sleep 1
-# export CCACHE_DIR=$PWD/cc
-# sleep 1 
-# ccache -s
-# ccache -F 0
-# ccache -M 0
-# echo $CCACHE_DIR
-# ccache -s
+# Set default values for device and command
+wget https://github.com/ccache/ccache/releases/download/v4.9.1/ccache-4.9.1-linux-x86_64.tar.xz
+tar -xf ccache-4.9.1-linux-x86_64.tar.xz
+cd ccache-4.9.1-linux-x86_64
+sudo cp ccache /usr/local/bin/
+ls /usr/local/bin/
+sudo ln -s ccache /usr/local/bin/gcc
+sudo ln -s ccache /usr/local/bin/g++
+cd ..
+export USE_CCACHE=1
+sleep 1
+export CCACHE_DIR=$PWD/cc
+sleep 1 
+ccache -s
+ccache -F 0
+ccache -M 0
+echo $CCACHE_DIR
+ccache -s
 
 
 if [ -z "$(ls -A c)" ]; then
