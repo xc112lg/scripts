@@ -63,7 +63,7 @@ if [ "$DEVICE" == "all" ]; then
  rm -rf out/target/product/*/*.zip
 lunch evolution_h872-userdebug
 
-m -j$(nproc --all) evolution
+ccache m -j$(nproc --all) evolution
  
 elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
