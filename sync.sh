@@ -8,26 +8,26 @@ VENDOR="${5}"
 COM1="${6}"
 COM2="${7}"
 CORE="${8:-"$(nproc --all)"}"
-CLEAR="${9}"
 mkdir -p cc
 mkdir -p c
-# Set default values for device and command
-wget https://github.com/ccache/ccache/releases/download/v4.9.1/ccache-4.9.1-linux-x86_64.tar.xz
-tar -xf ccache-4.9.1-linux-x86_64.tar.xz
-cd ccache-4.9.1-linux-x86_64
-sudo cp ccache /usr/bin/
-sudo ln -sf ccache /usr/bin/gcc
-sudo ln -sf ccache /usr/bin/g++
-cd ..
-export USE_CCACHE=1
-sleep 1
-export CCACHE_DIR=$PWD/cc
-sleep 1 
-ccache -s
-ccache -F 0
-ccache -M 0
-echo $CCACHE_DIR
-ccache -s
+# # Set default values for device and command
+# wget https://github.com/ccache/ccache/releases/download/v4.9.1/ccache-4.9.1-linux-x86_64.tar.xz
+# tar -xf ccache-4.9.1-linux-x86_64.tar.xz
+# cd ccache-4.9.1-linux-x86_64
+# sudo cp ccache /usr/local/bin/
+# ls /usr/local/bin/
+# sudo ln -s ccache /usr/local/bin/gcc
+# sudo ln -s ccache /usr/local/bin/g++
+# cd ..
+# export USE_CCACHE=1
+# sleep 1
+# export CCACHE_DIR=$PWD/cc
+# sleep 1 
+# ccache -s
+# ccache -F 0
+# ccache -M 0
+# echo $CCACHE_DIR
+# ccache -s
 
 
 if [ -z "$(ls -A c)" ]; then
@@ -50,12 +50,10 @@ rm -rf .repo/local_manifests
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
-if [ -n "$CLEAR" ]; then
 source scripts/clean.sh
-fi
 
-#/opt/crave/resync.sh
- repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+/opt/crave/resync.sh  
+
 
 
 if [ -n "$MAKEFILE" ]; then
