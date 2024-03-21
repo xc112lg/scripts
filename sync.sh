@@ -50,9 +50,9 @@ rm -rf .repo/local_manifests
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
-if [ -n "$CLEAR" ]; then
+
 source scripts/clean.sh
-fi
+
 
 
 /opt/crave/resync.sh
