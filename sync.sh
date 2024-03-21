@@ -18,7 +18,7 @@ sudo cp ccache /usr/local/bin/
 ls /usr/local/bin/
 sudo ln -s ccache /usr/local/bin/gcc
 sudo ln -s ccache /usr/local/bin/g++
-
+cd ..
 export USE_CCACHE=1
 sleep 1
 export CCACHE_DIR=$PWD/cc
