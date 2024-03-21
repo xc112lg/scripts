@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Set default values for device and command
 DEVICE="${1:-all}"  
 COMMAND="${2:-build}" 
 DELZIP="${3}"
@@ -10,14 +10,14 @@ COM2="${7}"
 CORE="${8:-"$(nproc --all)"}"
 mkdir -p cc
 mkdir -p c
-# Set default values for device and command
-wget https://github.com/ccache/ccache/releases/download/v4.9.1/ccache-4.9.1-linux-x86_64.tar.xz
-tar -xf ccache-4.9.1-linux-x86_64.tar.xz
-cd ccache-4.9.1-linux-x86_64
-sudo cp ccache /usr/local/bin/
-ls /usr/local/bin/
-ln -s ccache /usr/local/bin/gcc
-ln -s ccache /usr/local/bin/g++
+sudo apt update -y
+sudo apt install -y apt-utils
+sudo apt upgrade -y ccache
+ls /usr/sbin/update-ccache-symlinks
+sudo /usr/sbin/update-ccache-symlinks
+echo 'export PATH="/usr/local/bin:$PATH"' >> ~/.bashrc
+sleep 1
+echo $PATH
 
 export USE_CCACHE=1
 sleep 1
@@ -28,7 +28,6 @@ ccache -F 0
 ccache -M 0
 echo $CCACHE_DIR
 ccache -s
-
 
 if [ -z "$(ls -A c)" ]; then
   echo "Folder c is empty. Skipping the rsync command."
@@ -127,6 +126,3 @@ fi
 time ls -1 cc | xargs -I {} -P 10 -n 1 rsync -au cc/{} c/
 cp -f cc/ccache.conf c
 ccache -s
-
-
-
