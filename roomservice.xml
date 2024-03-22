@@ -21,7 +21,7 @@
   <project name="TheMuppets/proprietary_vendor_lge_h870" path="vendor/lge/h870" remote="github1" revision="lineage-21" />
   <project name="TheMuppets/proprietary_vendor_lge_h872" path="vendor/lge/h872" remote="github1" revision="lineage-21" />
   <project name="TheMuppets/proprietary_vendor_lge_us997" path="vendor/lge/us997" remote="github1" revision="lineage-21" />
-  <project name="TheMuppets/proprietary_vendor_lge_msm8996-common" path="vendor/lge/msm8996-common" remote="github1" revision="lineage-20" />
+  <project name="TheMuppets/proprietary_vendor_lge_msm8996-common" path="vendor/lge/msm8996-common" remote="github1" revision="lineage-21" />
   <project name="TheMuppets/proprietary_vendor_lge_g5-common" path="vendor/lge/g5-common" remote="github1" revision="lineage-21" />
   <project name="TheMuppets/proprietary_vendor_lge_g6-common" path="vendor/lge/g6-common" remote="github1" revision="lineage-21" />
   <project name="LineageOS/android_hardware_sony_timekeep" path="hardware/sony/timekeep" remote="github1" revision="lineage-21" />
