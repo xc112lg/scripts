@@ -62,7 +62,7 @@ source scripts/clean.sh
 
 main() {
     # Run repo sync command and capture the output
-    find .repo -name '*.lock' -delete
+    #find .repo -name '*.lock' -delete
     repo sync -c -j${CORE} --force-sync --no-clone-bundle --no-tags --prune 2>&1 | tee /tmp/output.txt
 
     # Check if there are any failing repositories
@@ -84,7 +84,7 @@ main() {
 
         # Re-sync all repositories after deletion
         echo "Re-syncing all repositories..."
-        find .repo -name '*.lock' -delete
+        #find .repo -name '*.lock' -delete
         repo sync -c -j${CORE} --force-sync --no-clone-bundle --no-tags --prune
     else
         echo "All repositories synchronized successfully."
