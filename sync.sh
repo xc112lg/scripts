@@ -56,7 +56,7 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 source scripts/clean.sh
 
-
+main() {
  # Run repo sync command and capture the output
     find .repo -name '*.lock' -delete
     repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags 2>&1 | tee /tmp/output.txt
