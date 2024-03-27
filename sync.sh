@@ -56,64 +56,39 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 source scripts/clean.sh
 
-  # Enable verbose output based on command line argument
-VERBOSE=0
-if [[ "$1" == "-v" || "$1" == "--verbose" ]]; then
-    VERBOSE=1
-fi
+#!/bin/bash
 
-log_verbose() {
-    if [[ $VERBOSE -eq 1 ]]; then
-        echo "$@"
+main() {
+    local output_file="/tmp/output_$(date +%Y%m%d%H%M%S).txt"
+    local deleted_file="deleted_repositories_$(date +%Y%m%d%H%M%S).txt"
+
+    # Run repo sync command and capture the output
+    if ! repo sync -c -j"$(nproc --all)" --force-sync --no-clone-bundle --no-tags 2>&1 | tee "$output_file"; then
+        echo "repo sync command failed. Check the output file for details: $output_file"
+        return 1
+    fi
+
+    # Check if there are any failing repositories
+    if grep -q "Failing repos:" "$output_file" ; then
+        echo "Deleting failing repositories..."
+        while IFS= read -r line; do
+            repo_info=$(echo "$line" | awk -F': ' '{print $NF}')
+            repo_path=$(dirname "$repo_info")
+            repo_name=$(basename "$repo_info")
+            echo "Deleted repository: $repo_info"
+            echo "Deleted repository: $repo_info" >> "$deleted_file"
+            rm -rf "$repo_path/$repo_name"
+        done <<< "$(grep -A1 "Failing repos:" "$output_file" | tail -n +2)"
+
+        echo "Re-syncing all repositories..."
+        repo sync -c -j"$(nproc --all)" --force-sync --no-clone-bundle --no-tags
+    else
+        echo "All repositories synchronized successfully."
     fi
 }
 
-# Synchronize repositories and capture the output
-repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags 2>&1 | tee /tmp/output.txt
+main "$@"
 
-# Check for success of repo sync
-if [[ ${PIPESTATUS[0]} -ne 0 ]]; then
-    echo "Repo sync command failed. Please check /tmp/output.txt for more details."
-    exit 1
-fi
-
-# Check if there are any failing repositories
-if grep -q "Failing repos:" /tmp/output.txt; then
-    echo "Deleting failing repositories..."
-    >deleted_repositories.txt # Clear or create the file before appending
-
-    # Extract failing repositories from the error message and process them
-    grep "Failing repos:" -A999 /tmp/output.txt | while IFS= read -r line; do
-        # Skip the "Failing repos:" line itself
-        [[ "$line" == "Failing repos:" ]] && continue
-        
-        # Stop processing if we reach the end marker, if one exists in your output
-        [[ "$line" == "Try" ]] && break
-
-        # Extract repository name and path from the error message
-        repo_info=$(echo "$line" | awk -F': ' '{print $NF}')
-        repo_path=$(dirname "$repo_info")
-        repo_name=$(basename "$repo_info")
-
-        # Logging the deletion path
-        log_verbose "Deleting repository: $repo_info"
-        echo "Deleted repository: $repo_info" >> deleted_repositories.txt
-
-        # Delete the repository
-        if ! rm -rf "$repo_path/$repo_name"; then
-            echo "Failed to delete $repo_path/$repo_name"
-        fi
-    done
-
-    # Re-sync all repositories after deletion
-    echo "Re-syncing all repositories..."
-    if ! repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --prune; then
-        echo "Failed to re-sync repositories."
-        exit 1
-    fi
-else
-    echo "All repositories synchronized successfully."
-fi
 
 
 
