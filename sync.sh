@@ -58,7 +58,6 @@ cp scripts/roomservice.xml .repo/local_manifests
 source scripts/clean.sh
 
 #!/bin/bash
-
 main() {
     local output_file="/tmp/output_$(date +%Y%m%d%H%M%S).txt"
     local deleted_file="deleted_repositories_$(date +%Y%m%d%H%M%S).txt"
@@ -72,14 +71,26 @@ main() {
     # Check if there are any failing repositories
     if grep -q "Failing repos:" "$output_file" ; then
         echo "Deleting failing repositories..."
+        # Adjust the parsing logic to better capture and iterate through failing repos
+        # Assuming each failing repo is listed in a new line after "Failing repos:"
+        local parsing=false
         while IFS= read -r line; do
-            repo_info=$(echo "$line" | awk -F': ' '{print $NF}')
-            repo_path=$(dirname "$repo_info")
-            repo_name=$(basename "$repo_info")
-            echo "Deleted repository: $repo_info"
-            echo "Deleted repository: $repo_info" >> "$deleted_file"
-            rm -rf "$repo_path/$repo_name"
-        done <<< "$(grep -A1 "Failing repos:" "$output_file" | tail -n +2)"
+            if [[ $line == "Failing repos:" ]]; then
+                parsing=true
+                continue
+            fi
+            if [[ $parsing == true ]]; then
+                if [[ -z $line ]]; then
+                    # If the line is empty, assume the list of failing repos has ended
+                    break
+                fi
+                local repo_path=$(dirname "$line")
+                local repo_name=$(basename "$line")
+                echo "Deleted repository: $line"
+                echo "Deleted repository: $line" >> "$deleted_file"
+                rm -rf "$repo_path/$repo_name"
+            fi
+        done < "$output_file"
 
         echo "Re-syncing all repositories..."
         repo sync -c -j"$(nproc --all)" --force-sync --no-clone-bundle --no-tags
@@ -89,6 +100,7 @@ main() {
 }
 
 main "$@"
+
 
 
 
