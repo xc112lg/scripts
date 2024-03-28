@@ -57,7 +57,6 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 source scripts/clean.sh
 
-#!/bin/bash
 main() {
     local output_file="/tmp/output_$(date +%Y%m%d%H%M%S).txt"
     local deleted_file="deleted_repositories_$(date +%Y%m%d%H%M%S).txt"
@@ -71,24 +70,25 @@ main() {
     # Check if there are any failing repositories
     if grep -q "Failing repos:" "$output_file" ; then
         echo "Deleting failing repositories..."
-        # Adjust the parsing logic to better capture and iterate through failing repos
-        # Assuming each failing repo is listed in a new line after "Failing repos:"
-        local parsing=false
+        local start_deleting=false
         while IFS= read -r line; do
             if [[ $line == "Failing repos:" ]]; then
-                parsing=true
+                start_deleting=true
                 continue
             fi
-            if [[ $parsing == true ]]; then
-                if [[ -z $line ]]; then
-                    # If the line is empty, assume the list of failing repos has ended
+            if [[ $start_deleting == true ]]; then
+                # Stop if the line starts with "Try"
+                if [[ $line == Try* ]]; then
                     break
                 fi
-                local repo_path=$(dirname "$line")
-                local repo_name=$(basename "$line")
-                echo "Deleted repository: $line"
-                echo "Deleted repository: $line" >> "$deleted_file"
-                rm -rf "$repo_path/$repo_name"
+                # Assuming the format is direct paths, adjust if necessary
+                if [[ -n $line ]]; then
+                    local repo_path=$(dirname "$line")
+                    local repo_name=$(basename "$line")
+                    echo "Deleted repository: $line"
+                    echo "Deleted repository: $line" >> "$deleted_file"
+                    rm -rf "$repo_path/$repo_name"
+                fi
             fi
         done < "$output_file"
 
@@ -100,6 +100,7 @@ main() {
 }
 
 main "$@"
+
 
 
 
