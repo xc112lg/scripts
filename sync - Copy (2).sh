@@ -11,7 +11,7 @@ COM2="${7}"
 CORE="${8:-"$(nproc --all)"}"
 mkdir -p cc
 mkdir -p c
-# Set default values for device and commandd
+# Set default values for device and command
 wget https://github.com/ccache/ccache/releases/download/v4.9.1/ccache-4.9.1-linux-x86_64.tar.xz
 tar -xf ccache-4.9.1-linux-x86_64.tar.xz
 cd ccache-4.9.1-linux-x86_64
