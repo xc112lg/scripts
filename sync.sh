@@ -1,5 +1,5 @@
 #!/bin/bash
-wget -O /tmp/repo https://storage.googleapis.com/git-repo-downloads/repo-2.45 && chmod +x /tmp/repo && sudo mv /usr/bin/repo /usr/bin/repo.old && sudo mv /tmp/repo /usr/bin/repo && repo --version
+
 
 DEVICE="${1:-all}"  
 COMMAND="${2:-build}" 
