@@ -57,49 +57,40 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 source scripts/clean.sh
 
-main() {
-    local output_file="/tmp/output_$(date +%Y%m%d%H%M%S).txt"
-    local deleted_file="deleted_repositories_$(date +%Y%m%d%H%M%S).txt"
+#!/bin/bash
 
+main() {
     # Run repo sync command and capture the output
-    if ! repo sync -c -j"$(nproc --all)" --force-sync --no-clone-bundle --no-tags 2>&1 | tee "$output_file"; then
-        echo "repo sync command failed. Check the output file for details: $output_file"
-        return 1
-    fi
+    find .repo -name '*.lock' -delete
+    repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --prune 2>&1 | tee /tmp/output.txt
 
     # Check if there are any failing repositories
-    if grep -q "Failing repos:" "$output_file" ; then
+    if grep -q "Failing repos:" /tmp/output.txt ; then
         echo "Deleting failing repositories..."
-        local start_deleting=false
+        # Extract failing repositories from the error message and echo the deletion path
         while IFS= read -r line; do
-            if [[ $line == "Failing repos:" ]]; then
-                start_deleting=true
-                continue
-            fi
-            if [[ $start_deleting == true ]]; then
-                # Stop if the line starts with "Try"
-                if [[ $line == Try* ]]; then
-                    break
-                fi
-                # Assuming the format is direct paths, adjust if necessary
-                if [[ -n $line ]]; then
-                    local repo_path=$(dirname "$line")
-                    local repo_name=$(basename "$line")
-                    echo "Deleted repository: $line"
-                    echo "Deleted repository: $line" >> "$deleted_file"
-                    rm -rf "$repo_path/$repo_name"
-                fi
-            fi
-        done < "$output_file"
+            # Extract repository name and path from the error message
+            repo_info=$(echo "$line" | awk -F': ' '{print $NF}')
+            repo_path=$(dirname "$repo_info")
+            repo_name=$(basename "$repo_info")
+            # Echo the deletion path
+            echo "Deleted repository: $repo_info"
+            # Save the deletion path to a text file
+            echo "Deleted repository: $repo_info" > deleted_repositories.txt
+            # Delete the repository
+            rm -rf "$repo_path/$repo_name"
+        done <<< "$(cat /tmp/output.txt | awk '/Failing repos:/ {flag=1; next} /Try/ {flag=0} flag')"
 
+        # Re-sync all repositories after deletion
         echo "Re-syncing all repositories..."
-        repo sync -c -j"$(nproc --all)" --force-sync --no-clone-bundle --no-tags
+        find .repo -name '*.lock' -delete
+        repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --prune
     else
         echo "All repositories synchronized successfully."
     fi
 }
 
-main "$@"
+main $*
 
 
 
