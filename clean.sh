@@ -11,6 +11,7 @@ for dir in "${directories[@]}"; do
         cd "$dir"
         # Perform the git reset
         git reset --hard
+	git clean -fdx
         # Count the number of slashes in the directory path
         num_slashes=$(tr -cd '/' <<< "$dir" | wc -c)
         # Return to the previous directory accordingly
