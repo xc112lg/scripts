@@ -161,7 +161,7 @@ elif [ "$DEVICE" == "h872" ]; then
 export BUILD_DEVICE="h872"
 	echo "${MAKEFILE}_h872${RELEASETYPE1}-userdebug"
 
-    lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
+    lunch ${MAKEFILE}_h872${RELEASETYPE1}-eng
     m installclean
     ${COM1} -j$(nproc --all) ${COM2}
 else
