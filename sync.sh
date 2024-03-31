@@ -102,35 +102,6 @@ fi
 
 
 
-if [ -n "$MAKEFILE" ]; then
-    # Perform the replacement using sed
-    cd device/lge/h872
-    sed -i "s/lineage_h872/${MAKEFILE}_h872${RELEASETYPE1}/g" AndroidProducts.mk
-    sed -i "s/lineage_h872/${MAKEFILE}_h872${RELEASETYPE1}/g" lineage_h872.mk
-    sed -i "s#vendor/lineage#vendor/${VENDOR}#g" lineage_h872.mk
-    mv lineage_h872.mk "${MAKEFILE}_h872${RELEASETYPE1}.mk"
-    ls
-    cd ../../../
-
-    cd device/lge/h870
-    sed -i "s/lineage_h870/${MAKEFILE}_h870${RELEASETYPE1}/g" AndroidProducts.mk
-    sed -i "s/lineage_h870/${MAKEFILE}_h870${RELEASETYPE1}/g" lineage_h870.mk
-    sed -i "s#vendor/lineage#vendor/${VENDOR}#g" lineage_h870.mk
-    mv lineage_h870.mk "${MAKEFILE}_h870${RELEASETYPE1}.mk"
-    ls
-    cd ../../../
-
-    cd device/lge/us997
-    sed -i "s/lineage_us997/${MAKEFILE}_us997${RELEASETYPE1}/g" AndroidProducts.mk
-    sed -i "s/lineage_us997/${MAKEFILE}_us997${RELEASETYPE1}/g" lineage_us997.mk
-    sed -i "s#vendor/lineage#vendor/${VENDOR}#g" lineage_us997.mk
-    mv lineage_us997.mk "${MAKEFILE}_us997${RELEASETYPE1}.mk"
-    ls
-    cd ../../../
-fi
-
-
-
 source scripts/fixes.sh
 export USE_CCACHE=1
 source build/envsetup.sh
