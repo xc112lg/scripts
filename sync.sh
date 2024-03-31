@@ -129,9 +129,10 @@ elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
 export BUILD_DEVICE="h872"
 	echo "${MAKEFILE}_h872${RELEASETYPE1}-userdebug"
-    lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
-    m installclean
-    ${COM1} -j$(nproc --all) ${COM2}
+lunch
+    #lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
+    #m installclean
+    #${COM1} -j$(nproc --all) ${COM2}
 else
     echo "Building for the specified device: $DEVICE..."
     # Build for the specified device
