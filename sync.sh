@@ -62,11 +62,13 @@ source scripts/clean.sh
 
 
 
+
 if [ "$RELEASETYPE" == "none" ]; then
-    $RELEASETYPE1 = ""
+    RELEASETYPE1=""
 else 
-$RELEASETYPE1 = $RELEASETYPE
+    RELEASETYPE1="$RELEASETYPE"
 fi
+
 
 
 if [ -n "$MAKEFILE" ]; then
@@ -80,18 +82,18 @@ if [ -n "$MAKEFILE" ]; then
     cd ../../../
 
     cd device/lge/h870
-    sed -i "s/lineage_h870/${MAKEFILE}_h870/g" AndroidProducts.mk
-    sed -i "s/lineage_h870/${MAKEFILE}_h870/g" lineage_h870.mk
+    sed -i "s/lineage_h870/${MAKEFILE}_h870${RELEASETYPE1}/g" AndroidProducts.mk
+    sed -i "s/lineage_h870/${MAKEFILE}_h870${RELEASETYPE1}/g" lineage_h870.mk
     sed -i "s#vendor/lineage#vendor/${VENDOR}#g" lineage_h870.mk
-    mv lineage_h870.mk "${MAKEFILE}_h870.mk"
+    mv lineage_h870.mk "${MAKEFILE}_h870${RELEASETYPE1}.mk"
     ls
     cd ../../../
 
     cd device/lge/us997
-    sed -i "s/lineage_us997/${MAKEFILE}_us997/g" AndroidProducts.mk
-    sed -i "s/lineage_us997/${MAKEFILE}_us997/g" lineage_us997.mk
+    sed -i "s/lineage_us997/${MAKEFILE}_us997${RELEASETYPE1}/g" AndroidProducts.mk
+    sed -i "s/lineage_us997/${MAKEFILE}_us997${RELEASETYPE1}/g" lineage_us997.mk
     sed -i "s#vendor/lineage#vendor/${VENDOR}#g" lineage_us997.mk
-    mv lineage_us997.mk "${MAKEFILE}_us997.mk"
+    mv lineage_us997.mk "${MAKEFILE}_us997${RELEASETYPE1}.mk"
     ls
     cd ../../../
 fi
@@ -113,20 +115,20 @@ fi
 if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
 
-    lunch ${MAKEFILE}_us997-userdebug
+    lunch ${MAKEFILE}_us997${RELEASETYPE1}-userdebug
     m installclean
     ${COM1} -j$(nproc --all) ${COM2}
-    lunch ${MAKEFILE}_h870-userdebug
+    lunch ${MAKEFILE}_h870${RELEASETYPE1}-userdebug
     m installclean
     ${COM1} -j$(nproc --all) ${COM2}
-    lunch ${MAKEFILE}_h872-userdebug
+    lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
     m installclean
     ${COM1} -j$(nproc --all) ${COM2}
  
 elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
 export BUILD_DEVICE="h872"
-    lunch ${MAKEFILE}_h872-userdebug
+    lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
     m installclean
     ${COM1} -j$(nproc --all) ${COM2}
 else
@@ -135,6 +137,7 @@ else
     lunch "$DEVICE"
     ${COM1} -j16 ${COM2}
 fi
+
 
 
 time ls -1 cc | xargs -I {} -P 10 -n 1 rsync -au cc/{} c/
