@@ -44,6 +44,13 @@ sleep 1 &&git cherry-pick be2f71d81e21608f82376fd5266ce95d3266a411
 cd ../../
 
 
+cd vendor/lge/msm8996-common/
+
+sleep 1 && git fetch https://github.com/xc112lg/proprietary_vendor_lge_msm8996-common.git patch-2
+sleep 1 && git cherry-pick b7ae264df1d799c5d635bada6afbc3714df75cdb
+cd ../../../
+
+
 #added crdroid setting 
 wget -N -P device/lge/msm8996-common/overlay/frameworks/base/core/res/res/values/ https://github.com/crdroidandroid/android_frameworks_base/raw/14.0/core/res/res/values/cr_config.xml
 wget -N -P device/lge/msm8996-common/overlay/frameworks/base/packages/SystemUI/res/values/ https://github.com/crdroidandroid/android_frameworks_base/raw/14.0/packages/SystemUI/res/values/cr_config.xml
