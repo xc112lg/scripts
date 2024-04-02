@@ -131,7 +131,11 @@ elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
 export BUILD_DEVICE="h872"
 	echo "${MAKEFILE}_h872${RELEASETYPE1}-userdebug"
+# Check if command is "clean"
+if [ "$COMMAND" == "clean" ]; then
+    echo "Cleaning..."
     m clean
+fi
     lunch ${MAKEFILE}_h872${RELEASETYPE1}-eng
     m installclean
     ${COM1} -j$(nproc --all) ${COM2}
