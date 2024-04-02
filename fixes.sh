@@ -21,3 +21,10 @@ cd ../../../
 #sleep 1 && git fetch https://github.com/xc112lg/proprietary_vendor_lge_msm8996-common.git patch-1
 #sleep 1 && git cherry-pick bb7e1512b25af2aa66773fd9138b63b560af254c
 #cd ../../../
+
+
+cd device/lge/msm8996-common
+sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-1
+sleep 1 &&git cherry-pick 7ef8ee92f398052a9d6351e4d7157e8474401f5b
+
+cd ../../../
