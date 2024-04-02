@@ -121,7 +121,8 @@ if [ "$DEVICE" == "all" ]; then
 elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
 export BUILD_DEVICE="h872"
-    lunch ${MAKEFILE}_h872-userdebug
+#    lunch ${MAKEFILE}_h872-userdebug
+    lunch ${MAKEFILE}_h872-eng
     m installclean
     ${COM1} -j$(nproc --all) ${COM2}
 else
