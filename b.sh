@@ -19,8 +19,8 @@ mkdir -p workspace && cd workspace
   echo "Done cloning extract-tools."
 
 
-  chmod a+x android/device/ishtar/xiaomi_ultra_13/setup-makefiles.sh
-  cd android/device/ishtar/xiaomi_ultra_13/
+  chmod a+x android/device/ishtar/xiaomi/setup-makefiles.sh
+  cd android/device/ishtar/xiaomi/
   bash extract-files.sh ${GITHUB_WORKSPACE}/workspace/firmware-dump/
   echo "Done extracting and making files."
   echo "Pushing as repository now."
