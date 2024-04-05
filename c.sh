@@ -16,3 +16,10 @@ git clone https://github.com/LineageOS/android_prebuilts_extract-tools android/p
 git clone https://github.com/LineageOS/android_tools_extract-utils android/tools/extract-utils
 git clone https://github.com/LineageOS/android_system_update_engine android/system/update_engine
 ./android/prebuilts/extract-tools/linux-x86/bin/ota_extractor --payload android/system_dump/payload.bin
+mkdir system/
+sudo mount -o ro system.img system/
+sudo mount -o ro vendor.img system/vendor/
+sudo mount -o ro odm.img system/odm/
+sudo mount -o ro product.img system/product/
+sudo mount -o ro system_ext.img system/system_ext/
+
