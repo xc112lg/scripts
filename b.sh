@@ -21,6 +21,6 @@ mkdir -p workspace && cd workspace
 
   chmod a+x android/device/ishtar/xiaomi/setup-makefiles.sh
   cd android/device/ishtar/xiaomi/
-  bash extract-files.sh firmware-dump/
+  bash extract-files.sh ../../../../firmware-dump/
   echo "Done extracting and making files."
   echo "Pushing as repository now."
