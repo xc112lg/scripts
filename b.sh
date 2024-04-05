@@ -7,7 +7,7 @@
   && sudo apt update \
   && sudo apt install gh -y
 
-mkdi -p workspace && cd workspace
+mkdir -p workspace && cd workspace
   git clone --depth=1 https://github.com/Jiovanni-dump/xiaomi_ishtar_dump -b missi_phone_global-user-13-TKQ1.221114.001-V14.0.1.0.TMAMIXM-release-keys ./firmware-dump
 
   git clone --depth=1 https://github.com/jacksproject/device_xiaomi_ishtar -b 13.0 ./android/device/ishtar/xiaomi_ultra_13
