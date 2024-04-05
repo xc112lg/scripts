@@ -1,12 +1,15 @@
 #!/bin/bash
 
-rm -rf h870/* h872/* us997/* 
-rm Releases/*.zip
-crave pull out/target/product/*/*.zip
-crave pull out/target/product/*/recovery.img
-mv h870/recovery.img h870/recoveryh870.img
-mv h872/recovery.img h872/recoveryh872.img
-mv us997/recovery.img us997/recoveryus997.img
-mv h870/* h872/* us997/* ./Releases/ 
-cd Releases 
-./multi_upload.sh
+sudo apt-get update
+sudo apt-get install python python3-pip wget git 
+pip3 install payload_dumper
+mkdir rom
+cd rom
+wget -O archive.zip https://bn.d.miui.com/V14.0.5.0.TMAMIXM/miui_ISHTARGlobal_V14.0.5.0.TMAMIXM_6f43e09971_13.0.zip
+unzip -j archive.zip  -d .
+payload_dumper payload.bin --out .
+ls -lah *
+rm archive.zip
+wget https://github.com/kelexine/rom-dumper/releases/download/v1.o/compress.sh
+chmod 777 compress.sh
+bash compress.sh
