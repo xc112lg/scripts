@@ -10,7 +10,7 @@
 mkdir -p workspace && cd workspace
   git clone --depth=1 https://github.com/Jiovanni-dump/xiaomi_ishtar_dump -b missi_phone_global-user-13-TKQ1.221114.001-V14.0.1.0.TMAMIXM-release-keys ./firmware-dump
 
-  git clone --depth=1 https://github.com/jacksproject/device_xiaomi_ishtar -b 13.0 ./android/device/ishtar/xiaomi_ultra_13
+  git clone --depth=1 https://github.com/jacksproject/device_xiaomi_ishtar -b 13.0 ./android/device/ishtar/xiaomi
 
 
   git clone --depth=1 https://github.com/LineageOS/android_tools_extract-utils -b lineage-20.0 ./android/tools/extract-utils
