@@ -46,9 +46,9 @@ cd ../../
 
 cd vendor/lge/msm8996-common/
 
-sleep 1 && git fetch https://github.com/xc112lg/proprietary_vendor_lge_msm8996-common.git patch-2
-sleep 1 && git cherry-pick b7ae264df1d799c5d635bada6afbc3714df75cdb 
-sleep 1 && git cherry-pick 1efc7fd60e02b78c0ce03b184b1c0f485100cd18
+#sleep 1 && git fetch https://github.com/xc112lg/proprietary_vendor_lge_msm8996-common.git patch-2
+#sleep 1 && git cherry-pick b7ae264df1d799c5d635bada6afbc3714df75cdb 
+#sleep 1 && git cherry-pick 1efc7fd60e02b78c0ce03b184b1c0f485100cd18
 cd ../../../
 
 
