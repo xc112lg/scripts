@@ -3,6 +3,7 @@ rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests/
 cp scripts/local_manifests.xml .repo/local_manifests/
+cp scripts/eureka_deps.xml .repo/local_manifests/
 
 
 git clone https://github.com/krishnaspeace/local_manifests.git --depth 1 -b main .repo/local_manifests
@@ -15,4 +16,6 @@ source build/envsetup.sh
 lunch lineage_ysl-ap1a-userdebug
 m bacon
 lunch lineage_h872-ap1a-userdebug
+m bacon
+lunch lineage_a10-ap1a-userdebug
 m bacon
