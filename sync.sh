@@ -10,8 +10,8 @@ git clone https://github.com/xiaomi-msm8953-devs/android_vendor_fingerprint_open
 
 /opt/crave/resync.sh
 source build/envsetup.sh
-
-lineage_ysl-ap1a-userdebug
-m bacon
-lunch lineage_h872-ap1a-userdebug
-m bacon
+lunch
+# lunch lineage_ysl-ap1a-userdebug
+# m bacon
+# lunch lineage_h872-ap1a-userdebug
+# m bacon
