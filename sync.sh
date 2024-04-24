@@ -1,4 +1,5 @@
 #!/bin/bash
+rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests/
 cp scripts/local_manifests.xml .repo/local_manifests/
