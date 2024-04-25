@@ -5,6 +5,7 @@ cp scripts/roomservice.xml .repo/local_manifests/
 #cp scripts/local_manifests.xml .repo/local_manifests/
 cp scripts/eureka_deps.xml .repo/local_manifests/
 cp scripts/x.xml .repo/local_manifests/
+cp scripts/X01BD.xml .repo/local_manifests/
 /opt/crave/resync.sh
 
 source build/envsetup.sh
@@ -29,4 +30,6 @@ m bacon
 lunch lineage_a10-ap1a-userdebug
 m bacon
 lunch lineage_X00TD-ap1a-userdebug
+m bacon
+lunch lineage_X01BD-ap1a-userdebug
 m bacon
