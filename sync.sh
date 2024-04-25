@@ -17,21 +17,21 @@ source build/envsetup.sh
 #m bacon
 lineage_gsi_arm64-userdebug
 m bacon
-cd device/lge/msm8996-common
-sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-1
-sleep 1 &&git cherry-pick 7ef8ee92f398052a9d6351e4d7157e8474401f5b
+# cd device/lge/msm8996-common
+# sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-1
+# sleep 1 &&git cherry-pick 7ef8ee92f398052a9d6351e4d7157e8474401f5b
 
-cd ../../../
+# cd ../../../
 
-cd vendor/lge/msm8996-common/
+# cd vendor/lge/msm8996-common/
 
-sleep 1 && git fetch https://github.com/xc112lg/proprietary_vendor_lge_msm8996-common.git patch-2
-sleep 1 && git cherry-pick b7ae264df1d799c5d635bada6afbc3714df75cdb 
-sleep 1 && git cherry-pick 1efc7fd60e02b78c0ce03b184b1c0f485100cd18
-cd ../../../
-lunch lineage_h872-ap1a-userdebug
-m bacon
-lunch lineage_a10-ap1a-userdebug
-m bacon
-lunch lineage_X00TD-ap1a-userdebug
-m bacon
+# sleep 1 && git fetch https://github.com/xc112lg/proprietary_vendor_lge_msm8996-common.git patch-2
+# sleep 1 && git cherry-pick b7ae264df1d799c5d635bada6afbc3714df75cdb 
+# sleep 1 && git cherry-pick 1efc7fd60e02b78c0ce03b184b1c0f485100cd18
+# cd ../../../
+# lunch lineage_h872-ap1a-userdebug
+# m bacon
+# lunch lineage_a10-ap1a-userdebug
+# m bacon
+# lunch lineage_X00TD-ap1a-userdebug
+# m bacon
