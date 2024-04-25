@@ -15,7 +15,7 @@ cp scripts/x.xml .repo/local_manifests/
 source build/envsetup.sh
 #lunch lineage_ysl-ap1a-userdebug
 #m bacon
-lineage_gsi_arm64-ap1a-userdebug
+lineage_gsi_arm64-userdebug
 m bacon
 cd device/lge/msm8996-common
 sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-1
