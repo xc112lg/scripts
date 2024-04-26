@@ -66,7 +66,8 @@ lunch lineage_a10-ap1a-userdebug
 m bacon
 lunch lineage_X00TD-ap1a-userdebug
 m bacon
-
+ls
+cd /tmp/src/android/
 rm -rf .repo/local_manifests
 cp scripts/X01BD.xml .repo/local_manifests/
 main() {
@@ -92,7 +93,7 @@ main() {
 
         # Re-sync all repositories after deletion
         echo "Re-syncing all repositories..."
-        repo sync -c -j${CORE} --force-sync --no-clone-bundle --no-tags
+        repo sync -c -j64 --force-sync --no-clone-bundle --no-tags
     else
         echo "All repositories synchronized successfully."
     fi
