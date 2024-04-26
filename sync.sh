@@ -11,7 +11,7 @@ cp scripts/X01BD.xml .repo/local_manifests/
 
 main() {
     # Run repo sync command and capture the output
-    repo sync -c -j${CORE} --force-sync --no-clone-bundle --no-tags 2>&1 | tee /tmp/output.txt
+    repo sync -c -j64 --force-sync --no-clone-bundle --no-tags 2>&1 | tee /tmp/output.txt
 
     # Check if there are any failing repositories
     if grep -q "Failing repos:" /tmp/output.txt ; then
