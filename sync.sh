@@ -5,7 +5,7 @@ cp scripts/roomservice.xml .repo/local_manifests/
 #cp scripts/local_manifests.xml .repo/local_manifests/
 cp scripts/eureka_deps.xml .repo/local_manifests/
 cp scripts/x.xml .repo/local_manifests/
-cp scripts/X01BD.xml .repo/local_manifests/
+#cp scripts/X01BD.xml .repo/local_manifests/
 
 
 
