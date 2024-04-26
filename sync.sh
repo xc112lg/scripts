@@ -102,3 +102,15 @@ main() {
 main $*
 lunch lineage_X01BD-ap1a-userdebug
 m bacon
+
+
+bash .repo/local_manifests/setup.sh && /opt/crave/resync.sh && bash .repo/local_manifests/rom.sh && 
+# Set up build environment
+export BUILD_USERNAME=EAZYBLACK 
+ export BUILD_HOSTNAME=crave 
+ source build/envsetup.sh && 
+echo Repository: EAZYBLACK/crave_aosp_builder
+ echo Run ID: 8846867174
+ 
+# Build the ROM
+lunch lineage_judypn-ap1a-eng && make installclean && mka bacon
