@@ -65,5 +65,5 @@ lunch lineage_a10-ap1a-userdebug
 m bacon
 lunch lineage_X00TD-ap1a-userdebug
 m bacon
-lunch lineage_X01BD-ap1a-userdebug
-m bacon
+# lunch lineage_X01BD-ap1a-userdebug
+# m bacon
