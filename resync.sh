@@ -21,7 +21,7 @@ main() {
 
         # Re-sync all repositories after deletion
         echo "Re-syncing all repositories..."
-        repo sync -c -j${CORE} --force-sync --no-clone-bundle --no-tags
+        repo sync -c -j64 --force-sync --no-clone-bundle --no-tags
     else
         echo "All repositories synchronized successfully."
     fi
