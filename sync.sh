@@ -69,6 +69,7 @@ m bacon
 ls
 cd /tmp/src/android/
 rm -rf .repo/local_manifests
+mkdir .repo/local_manifests
 cp scripts/X01BD.xml .repo/local_manifests/
 main() {
     # Run repo sync command and capture the output
@@ -102,7 +103,10 @@ main() {
 main $*
 lunch lineage_X01BD-ap1a-userdebug
 m bacon
-
+ls
+cd /tmp/src/android/
+rm -rf .repo/local_manifests
+mkdir .repo/local_manifests
 
 cp scripts/lge_sdm845.xml .repo/local_manifests/
 cp scripts/setup.sh  .repo/local_manifests/
