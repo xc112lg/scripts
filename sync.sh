@@ -1,6 +1,5 @@
 #!/bin/bash
-
- rm -rf .repo/local_manifests
+rm -rf .repo/local_manifests
 #cp scripts/local_manifests.xml .repo/local_manifests/
 
 
