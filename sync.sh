@@ -11,9 +11,9 @@ source build/envsetup.sh
 ls  out/target/product
 #lunch lineage_ysl-ap1a-userdebug
 #m bacon
-breakfast gsi_arm64 userdebug
+# breakfast gsi_arm64 userdebug
 
-time mka
+# time mka
 
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
