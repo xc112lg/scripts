@@ -104,6 +104,12 @@ lunch lineage_X01BD-ap1a-userdebug
 m bacon
 
 
+cp scripts/lge_sdm845.xml .repo/local_manifests/
+cp scripts/setup.sh  .repo/local_manifests/
+cp scripts/rom.sh .repo/local_manifests/
+
+
+
 bash .repo/local_manifests/setup.sh && /opt/crave/resync.sh && bash .repo/local_manifests/rom.sh && 
 # Set up build environment
 export BUILD_USERNAME=EAZYBLACK 
