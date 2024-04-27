@@ -12,7 +12,7 @@ rm -rf .repo/local_manifests
 
 
 source build/envsetup.sh
-make installclean
+#make installclean
  ls  out/target/product
 #lunch lineage_ysl-ap1a-userdebug
 #m bacon
