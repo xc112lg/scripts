@@ -8,36 +8,7 @@
 
 
 
-main() {
-    # Run repo sync command and capture the output
-    repo sync -c -j64 --force-sync --no-clone-bundle --no-tags 2>&1 | tee /tmp/output.txt
 
-    # Check if there are any failing repositories
-    if grep -q "Failing repos:" /tmp/output.txt ; then
-        echo "Deleting failing repositories..."
-        # Extract failing repositories from the error message and echo the deletion path
-        while IFS= read -r line; do
-            # Extract repository name and path from the error message
-            repo_info=$(echo "$line" | awk -F': ' '{print $NF}')
-            repo_path=$(dirname "$repo_info")
-            repo_name=$(basename "$repo_info")
-            # Echo the deletion path
-            echo "Deleted repository: $repo_info"
-            # Save the deletion path to a text file
-            echo "Deleted repository: $repo_info" > deleted_repositories.txt
-            # Delete the repository
-            rm -rf "$repo_path/$repo_name"
-        done <<< "$(cat /tmp/output.txt | awk '/Failing repos:/ {flag=1; next} /Try/ {flag=0} flag')"
-
-        # Re-sync all repositories after deletion
-        echo "Re-syncing all repositories..."
-        repo sync -c -j${CORE} --force-sync --no-clone-bundle --no-tags
-    else
-        echo "All repositories synchronized successfully."
-    fi
-}
-
-main $*
 
 
 
@@ -65,7 +36,7 @@ make installclean
 # rm -rf .repo/local_manifests
 # mkdir .repo/local_manifests
 # cp scripts/roomservice.xml .repo/local_manifests/
-#  /opt/crave/resync.sh
+#  source scripts/resync.sh
 
 
 # lunch lineage_h872-ap1a-userdebug
@@ -74,7 +45,7 @@ make installclean
 # rm -rf .repo/local_manifests
 # mkdir .repo/local_manifests
 # cp scripts/eureka_deps.xml .repo/local_manifests/
-#  /opt/crave/resync.sh
+#  source scripts/resync.sh
 
 # lunch lineage_a10-ap1a-userdebug
 # m bacon
@@ -85,7 +56,7 @@ make installclean
 # rm -rf .repo/local_manifests
 # mkdir .repo/local_manifests
 # cp scripts/x.xml .repo/local_manifests/
-#  /opt/crave/resync.sh
+#  source scripts/resync.sh
 
 
 
@@ -98,7 +69,7 @@ make installclean
 # rm -rf .repo/local_manifests
 # mkdir .repo/local_manifests
 # cp scripts/X01BD.xml .repo/local_manifests/
-#  /opt/crave/resync.sh
+#  source scripts/resync.sh
 # lunch lineage_X01BD-ap1a-userdebug
 # m bacon
 
@@ -112,7 +83,7 @@ make installclean
 
 
 
-# bash .repo/local_manifests/setup.sh && /opt/crave/resync.sh && bash .repo/local_manifests/rom.sh && 
+# bash .repo/local_manifests/setup.sh && source scripts/resync.sh && bash .repo/local_manifests/rom.sh && 
 # # Set up build environment
 # export BUILD_USERNAME=EAZYBLACK 
 #  export BUILD_HOSTNAME=crave 
