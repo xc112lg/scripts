@@ -7,12 +7,12 @@ source scripts/resync.sh
 
 source build/envsetup.sh
 #make installclean
-ls  out/target/product
+#ls  out/target/product
 #lunch lineage_ysl-ap1a-userdebug
 #m bacon
-breakfast gsi_arm64 userdebug
+#breakfast gsi_arm64 userdebug
 
-time mka
+#time mka
 
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
