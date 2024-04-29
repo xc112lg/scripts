@@ -21,7 +21,9 @@ main() {
             echo "Deleted repository: $repo_info" > deleted_repositories.txt
             # Delete the repository
             rm -rf "$repo_path/$repo_name"
-        done <<< "$(cat /tmp/output.txt | awk '/Failing repos:/ {flag=1; next} /Try/ {flag=0} flag')"
+            done <<< "$(cat /tmp/output.txt | awk '/Failing repos:/ || /error: / {flag=1; next} /Try/ {flag=0} flag')"
+
+#        done <<< "$(cat /tmp/output.txt | awk '/Failing repos:/ {flag=1; next} /Try/ {flag=0} flag')"
         # Re-sync all repositories after deletion
         echo "Re-syncing all repositories..."
         repo sync -c -j64 --force-sync --no-clone-bundle --no-tags
