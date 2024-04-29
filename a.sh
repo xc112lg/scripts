@@ -1,17 +1,58 @@
 
+#cp scripts/local_manifests.xml .repo/local_manifests/
 
-echo "$(xmlstarlet sel -t -m "//project[starts-with(@path, 'device')]" -v "@path" -n .repo/local_manifests/*.xml)"
+#source scripts/resync.sh
 
 
-# Extract and echo the paths
-paths=$(xmlstarlet sel -t -m "//project[starts-with(@path, 'device') or starts-with(@path, 'prebuilt')]" -v "@path" -n .repo/local_manifests/*.xml)
 
-echo "Paths to be deleted:"
-echo "$paths"
+#source build/envsetup.sh
+#make installclean
+#ls  out/target/product
+#lunch lineage_ysl-ap1a-userdebug
+#m bacon
+#breakfast gsi_arm64 userdebug
 
-# Remove each file
-for path in $paths; do
-    rm -rf "$path"
-    echo "Deleted: $path"
-done
+#time mka
+source scripts/cleanmanifest.sh
+rm -rf .repo/local_manifests
+mkdir .repo/local_manifests
+cp scripts/roomservice.xml .repo/local_manifests/
 
+source scripts/resync.sh
+
+
+cd device/lge/msm8996-common
+sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-1
+sleep 1 &&git cherry-pick 7ef8ee92f398052a9d6351e4d7157e8474401f5b
+
+cd ../../../
+
+cd vendor/lge/msm8996-common/
+
+sleep 1 && git fetch https://github.com/xc112lg/proprietary_vendor_lge_msm8996-common.git patch-2
+sleep 1 && git cherry-pick b7ae264df1d799c5d635bada6afbc3714df75cdb 
+sleep 1 && git cherry-pick 1efc7fd60e02b78c0ce03b184b1c0f485100cd18
+cd ../../../
+
+
+
+
+source build/envsetup.sh
+
+
+source scripts/cleanmanifest.sh
+rm -rf .repo/local_manifests
+mkdir .repo/local_manifests
+
+cp scripts/lge_sdm845.xml .repo/local_manifests/
+cp scripts/setup.sh  .repo/local_manifests/
+cp scripts/rom.sh .repo/local_manifests/
+
+
+
+
+bash .repo/local_manifests/setup.sh && source scripts/resync.sh && bash .repo/local_manifests/rom.sh
+
+source build/envsetup.sh
+# Build the ROM
+lunch lineage_judypn-ap1a-eng && make installclean &&time  mka bacon
