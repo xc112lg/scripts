@@ -7,7 +7,8 @@ if [ -d .repo/local_manifests ]; then
 
     # Remove each file
     for path in $paths; do
-        sudo find "$path" -delete
+        rm -rf "$path"
+        #sudo find "$path" -delete
         echo "Deleted: $path"
     done
 else
