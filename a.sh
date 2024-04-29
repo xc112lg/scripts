@@ -1,2 +1,2 @@
-echo "$(xmlstarlet sel -t -m "//project" -v "@path" -n .repo/local_manifest/*.xml)"
+echo "$(xmlstarlet sel -t -m "//project" -v "@path" -n .repo/local_manifests/*.xml)"
 
