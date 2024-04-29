@@ -4,7 +4,8 @@ echo "$(xmlstarlet sel -t -m "//project[starts-with(@path, 'device')]" -v "@path
 
 
 # Extract and echo the paths
-paths=$(xmlstarlet sel -t -m "//project[starts-with(@path, 'device' , 'prebuilt')]" -v "@path" -n .repo/local_manifests/*.xml)
+paths=$(xmlstarlet sel -t -m "//project[starts-with(@path, 'device') or starts-with(@path, 'prebuilt')]" -v "@path" -n .repo/local_manifests/*.xml)
+
 echo "Paths to be deleted:"
 echo "$paths"
 
