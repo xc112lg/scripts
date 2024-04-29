@@ -2,7 +2,9 @@
 if [ -d .repo/local_manifests ]; then
 
 # Extract and echo the paths
-paths=$(xmlstarlet sel -t -m "//project[starts-with(@path, 'device') or starts-with(@path, 'prebuilt')]" -v "@path" -n .repo/local_manifests/*.xml)
+echo "$(xmlstarlet sel -t -m "//project" -v "@path" -n .repo/local_manifest/*.xml)"
+
+paths=$(xmlstarlet sel -t -m "//project" -v "@path" -n .repo/local_manifest/*.xml)
 
 echo "Paths to be deleted:"
 echo "$paths"
