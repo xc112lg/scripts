@@ -34,7 +34,11 @@ sleep 1 && git cherry-pick b7ae264df1d799c5d635bada6afbc3714df75cdb
 sleep 1 && git cherry-pick 1efc7fd60e02b78c0ce03b184b1c0f485100cd18
 cd ../../../
 
-
+cd kernel/lge/msm8996
+# Fix LTO
+sleep 1 && git fetch https://github.com/xc112lg/msm8996_lge_kernel.git patch-1
+sleep 1 && git cherry-pick 581d1240a1ac99ebbf172ec95b8d7f4f40ca4d21
+cd ../../../
 
 
 source build/envsetup.sh
