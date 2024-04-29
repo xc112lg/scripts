@@ -17,7 +17,7 @@ if [ "$DEVICE" == "h872" ]; then
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests/
-sudo find device -delete
+
 source scripts/resync.sh
 
 
@@ -47,7 +47,7 @@ if [ "$DEVICE" == "a10" ]; then
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
 cp scripts/eureka_deps.xml .repo/local_manifests/
-sudo find device -delete
+
 source scripts/resync.sh
 source build/envsetup.sh
 lunch lineage_a10-ap1a-userdebug
@@ -62,7 +62,7 @@ mkdir .repo/local_manifests
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
 cp scripts/x.xml .repo/local_manifests/
-sudo find device -delete
+
 source scripts/resync.sh
 
 
@@ -77,7 +77,7 @@ if [ "$DEVICE" == "X01BD" ]; then
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
 cp scripts/X01BD.xml .repo/local_manifests/
-sudo find device -delete
+
 source scripts/resync.sh
 source build/envsetup.sh
 lunch lineage_X01BD-ap1a-userdebug
@@ -93,7 +93,7 @@ mkdir .repo/local_manifests
 cp scripts/lge_sdm845.xml .repo/local_manifests/
 cp scripts/setup.sh  .repo/local_manifests/
 cp scripts/rom.sh .repo/local_manifests/
-sudo find device -delete
+
 
 
 

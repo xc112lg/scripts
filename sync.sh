@@ -1,11 +1,11 @@
-rm -rf .repo/local_manifests 
+
 #cp scripts/local_manifests.xml .repo/local_manifests/
 
-source scripts/resync.sh
+#source scripts/resync.sh
 
 
 
-source build/envsetup.sh
+#source build/envsetup.sh
 #make installclean
 #ls  out/target/product
 #lunch lineage_ysl-ap1a-userdebug
@@ -13,11 +13,11 @@ source build/envsetup.sh
 #breakfast gsi_arm64 userdebug
 
 #time mka
-
+source scripts/cleanmanifest.sh
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests/
-sudo find device -delete
+
 source scripts/resync.sh
 
 
@@ -41,24 +41,23 @@ source build/envsetup.sh
 lunch lineage_h872-ap1a-userdebug
 make installclean
 time m bacon
-
+source scripts/cleanmanifest.sh
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
 cp scripts/eureka_deps.xml .repo/local_manifests/
-sudo find device -delete
+
 source scripts/resync.sh
 source build/envsetup.sh
 lunch lineage_a10-ap1a-userdebug
 make installclean
 time m bacon
 
-rm -rf .repo/local_manifests
-mkdir .repo/local_manifests
 
+source scripts/cleanmanifest.sh
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
 cp scripts/x.xml .repo/local_manifests/
-sudo find device -delete
+
 source scripts/resync.sh
 
 
@@ -69,25 +68,25 @@ time m bacon
 
 
 
-
+source scripts/cleanmanifest.sh
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
 cp scripts/X01BD.xml .repo/local_manifests/
-sudo find device -delete
+
 source scripts/resync.sh
 source build/envsetup.sh
 lunch lineage_X01BD-ap1a-userdebug
 make installclean
 time m bacon
 
-
+source scripts/cleanmanifest.sh
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
 
 cp scripts/lge_sdm845.xml .repo/local_manifests/
 cp scripts/setup.sh  .repo/local_manifests/
 cp scripts/rom.sh .repo/local_manifests/
-sudo find device -delete
+
 
 
 
