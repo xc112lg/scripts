@@ -10,7 +10,7 @@ if [ -d .repo/local_manifests ]; then
 
     # Remove each file except for paths starting with "kernel", "vendor", or "hardware"
     for path in $paths; do
-        if [[ ! "$path" =~ ^(vendor|hardware) ]]; then
+        if [[ ! "$path" =~ ^(vendor|hardware|kernel) ]]; then
             rm -rf "$path"
             echo "Deleted: $path"
         else
