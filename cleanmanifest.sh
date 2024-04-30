@@ -21,7 +21,8 @@ echo "$paths"
 
 # Remove each file
 for path in $paths; do
-    rm -rf "$path"
+    sudo find "$path" -delete
+    #rm -rf "$path"
     echo "Deleted: $path"
 done
 
