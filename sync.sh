@@ -80,18 +80,4 @@ make installclean
 time m bacon
 
 source scripts/cleanmanifest.sh
-rm -rf .repo/local_manifests
-mkdir .repo/local_manifests
-
-cp scripts/lge_sdm845.xml .repo/local_manifests/
-cp scripts/setup.sh  .repo/local_manifests/
-cp scripts/rom.sh .repo/local_manifests/
-
-
-
-
-bash .repo/local_manifests/setup.sh && source scripts/resync.sh && bash .repo/local_manifests/rom.sh
-
-source build/envsetup.sh
-# Build the ROM
-lunch lineage_judypn-ap1a-eng && make installclean &&time  mka bacon
+source scripts/resync.sh 
