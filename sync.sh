@@ -1,4 +1,4 @@
-#can cause issue with other rom if they change it
+#can cause issue with other rom if they change it repo init
 #cp scripts/local_manifests.xml .repo/local_manifests/
 
 #source scripts/resync.sh
