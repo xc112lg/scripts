@@ -20,7 +20,7 @@ cp scripts/roomservice.xml .repo/local_manifests/
 
 source scripts/resync.sh
 
-
+echo "1"
 cd device/lge/msm8996-common
 sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-1
 sleep 1 &&git cherry-pick 7ef8ee92f398052a9d6351e4d7157e8474401f5b
@@ -47,6 +47,7 @@ mkdir .repo/local_manifests
 cp scripts/eureka_deps.xml .repo/local_manifests/
 
 source scripts/resync.sh
+echo "2"
 # source build/envsetup.sh
 # lunch lineage_a10-ap1a-userdebug
 # make installclean
@@ -59,7 +60,7 @@ mkdir .repo/local_manifests
 cp scripts/x.xml .repo/local_manifests/
 
 source scripts/resync.sh
-
+echo "3"
 
 # source build/envsetup.sh
 # lunch lineage_X00TD-ap1a-userdebug
@@ -75,6 +76,7 @@ cp scripts/X01BD.xml .repo/local_manifests/
 
 source scripts/resync.sh
 source build/envsetup.sh
+echo "4"
 # lunch lineage_X01BD-ap1a-userdebug
 # make installclean
 # time m bacon
