@@ -1,18 +1,18 @@
 #can cause issue with other rom if they change it repo init
 #cp scripts/local_manifests.xml .repo/local_manifests/
 
-source scripts/resync.sh
+# source scripts/resync.sh
 
 
 
-source build/envsetup.sh
-make installclean
-ls  out/target/product
-lunch lineage_ysl-ap1a-userdebug
-m bacon
-breakfast gsi_arm64 userdebug
+# source build/envsetup.sh
+# make installclean
+# ls  out/target/product
+# lunch lineage_ysl-ap1a-userdebug
+# m bacon
+# breakfast gsi_arm64 userdebug
 
-time mka
+# time mka
 # source scripts/cleanmanifest.sh
 rm -rf .repo/local_manifests
 mkdir .repo/local_manifests
