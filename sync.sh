@@ -5,8 +5,9 @@ revert_repo_to_february() {
   local repo_path=$1
   cd "$repo_path" || { echo "Error: Could not change directory to $repo_path"; return 1; }
 
-  # Find the last commit made in February
-  commit_hash=$(git rev-list -1 --before="2023-03-01 00:00" --after="2023-02-01 00:00" master)
+  # Find the last commit made in February on the current branch or the default branch
+  default_branch=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+  commit_hash=$(git rev-list -1 --before="2023-03-01 00:00" --after="2023-02-01 00:00" "$default_branch" 2>/dev/null || git rev-list -1 --before="2023-03-01 00:00" --after="2023-02-01 00:00" HEAD)
 
   # Check if a valid commit hash was found
   if [ -z "$commit_hash" ]; then
