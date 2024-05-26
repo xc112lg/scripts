@@ -53,6 +53,6 @@ cd ../../../
 
 
 #added crdroid setting 
-wget -N -P device/lge/msm8996-common/overlay/frameworks/base/core/res/res/values/ https://github.com/crdroidandroid/android_frameworks_base/raw/13.0/core/res/res/values/cr_config.xml
+wget -N -P device/lge/msm8996-common/overlay/frameworks/base/core/res/res/values/ https://raw.githubusercontent.com/xc112lg/scripts/cd9/cr_config.xml
 wget -N -P device/lge/msm8996-common/overlay/frameworks/base/packages/SystemUI/res/values/ https://github.com/crdroidandroid/android_frameworks_base/raw/13.0/packages/SystemUI/res/values/cr_config.xml
 
