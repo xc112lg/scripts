@@ -2,8 +2,8 @@
 
 rm -rf ~/.android-certs/
 mkdir ~/.android-certs
-cd ~/.android-certs/
-ls
+ls ~/.android-certs/
+
 
 
 subject='/C=DE/ST=Germany/L=Berlin/O=Max Mustermann/OU=Max Mustermann/CN=Max Mustermann/emailAddress=max@mustermann.de'
