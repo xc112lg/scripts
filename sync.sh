@@ -10,38 +10,7 @@ VENDOR="${6}"
 COM1="${7}"
 COM2="${8}"
 CORE="${9:-"$(nproc --all)"}"
-mkdir -p cc
-mkdir -p c
-# Set default values for device and commandd
-wget https://github.com/ccache/ccache/releases/download/v4.9.1/ccache-4.9.1-linux-x86_64.tar.xz
-tar -xf ccache-4.9.1-linux-x86_64.tar.xz
-cd ccache-4.9.1-linux-x86_64
-#sudo make install
-#ccache --version
-sudo cp ccache /usr/bin/
-sudo ln -sf ccache /usr/bin/gcc
-sudo ln -sf ccache /usr/bin/g++
-cd ..
-ccache --version
 
-export USE_CCACHE=1
-sleep 1
-export CCACHE_DIR=$PWD/cc
-sleep 1 
-ccache -s
-ccache -F 0
-ccache -M 0
-echo $CCACHE_DIR
-ccache -s
-
-
-if [ -z "$(ls -A c)" ]; then
-  echo "Folder c is empty. Skipping the rsync command.."
-else
-  # If folder c is not empty, execute the rsync command
-time ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
-cp -f c/ccache.conf cc
-fi
 
 ## Remove existing build artifactsa
 if [ "$DELZIP" == "delzip" ]; then
@@ -149,8 +118,5 @@ fi
 
 
 
-time ls -1 cc | xargs -I {} -P 10 -n 1 rsync -au cc/{} c/
-cp -f cc/ccache.conf c
-ccache -s
 
 
