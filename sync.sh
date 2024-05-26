@@ -21,8 +21,20 @@ revert_repo_to_february() {
   cd - > /dev/null || { echo "Error: Failed to change directory back to previous directory"; return 1; }
 }
 
-# Export the function to use it in the repo forall command
+# Export the function to use it recursively
 export -f revert_repo_to_february
 
-# Use repo forall to apply revert_repo_to_february to all repositories
-repo forall -c 'bash -c "revert_repo_to_february \"$(pwd)\""' || { echo "Error: 'repo forall' command failed"; exit 1; }
+# Function to recursively find .repo directories and revert repositories
+find_and_revert_repositories() {
+  local start_dir=$1
+  local repo_dirs=$(find "$start_dir" -type d -name ".repo")
+  for repo_dir in $repo_dirs; do
+    local repo_parent=$(dirname "$repo_dir")
+    echo "Reverting repositories in $repo_parent"
+    cd "$repo_parent" || { echo "Error: Could not change directory to $repo_parent"; return 1; }
+    repo forall -c 'bash -c "revert_repo_to_february \"$(pwd)\""' || { echo "Error: 'repo forall' command failed"; return 1; }
+  done
+}
+
+# Start searching from the current directory
+find_and_revert_repositories "$(pwd)"
