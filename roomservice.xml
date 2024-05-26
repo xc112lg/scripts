@@ -9,7 +9,7 @@
   <project name="LineageOS/android_device_lge_g5-common" path="device/lge/g5-common" remote="github" revision="lineage-20" />
   <project name="LineageOS/android_device_lge_g6-common" path="device/lge/g6-common" remote="github" revision="lineage-20" />
   <project name="LineageOS/android_device_lge_msm8996-common" path="device/lge/msm8996-common" remote="github" revision="lineage-20" />
-  <project name="LineageOS/android_kernel_lge_msm8996" path="kernel/lge/msm8996" remote="github" revision="lineage-20" />
+  <project name="LGE-G5-G6-V20/msm8996_lge_kernel" path="kernel/lge/msm8996" remote="github" revision="Swan2000-lineage-21" />
   <project name="LineageOS/android_hardware_lge" path="hardware/lge" remote="github" revision="lineage-20" />
   <project name="TheMuppets/proprietary_vendor_lge_h830" path="vendor/lge/h830" remote="github" revision="lineage-20" />
   <project name="TheMuppets/proprietary_vendor_lge_h850" path="vendor/lge/h850" remote="github" revision="lineage-20" />
