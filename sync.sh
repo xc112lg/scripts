@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+rm -rf ~/.android-certs/
 
 subject='/C=DE/ST=Germany/L=Berlin/O=Max Mustermann/OU=Max Mustermann/CN=Max Mustermann/emailAddress=max@mustermann.de'
 mkdir ~/.android-certs
