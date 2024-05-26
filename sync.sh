@@ -1,7 +1,7 @@
 #!/bin/bash
 
 rm -rf ~/.android-certs/
-mkdir ~/.android-certs
+
 ls ~/.android-certs/
 
 
