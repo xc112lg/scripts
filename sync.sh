@@ -17,19 +17,24 @@ revert_repo_to_february() {
     echo "Reverted $repo_path to the last commit in February: $commit_hash"
   fi
 
-  # Go back to the root directory
+  # Go back to the previous directory
   cd - > /dev/null || { echo "Error: Failed to change directory back to previous directory"; return 1; }
 }
 
-# Export the function to use it in the repo forall command
+# Export the function to use it recursively
 export -f revert_repo_to_february
 
-# Ensure we are in the root directory
-cd "$(dirname "${BASH_SOURCE[0]}")" || exit
+# Function to recursively find Git repositories and revert them
+find_and_revert_repositories() {
+  local start_dir=$1
+  for dir in "$start_dir"/*/; do
+    if [ -d "$dir/.git" ]; then
+      echo "Reverting repository in $dir"
+      revert_repo_to_february "$dir"
+    fi
+    find_and_revert_repositories "$dir"  # Recursively search subdirectories
+  done
+}
 
-# Iterate over all repositories and revert them
-repo forall -c 'bash -c "revert_repo_to_february \"$(pwd)\""' || exit
-
-# Optional: Force push to the remote for all repositories (use with caution)
-# Uncomment the following lines if you want to push changes to remote
-# repo forall -c 'git push origin master --force'
+# Start searching from the current directory
+find_and_revert_repositories "$(pwd)"
