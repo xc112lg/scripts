@@ -25,8 +25,7 @@ revert_repo_to_february() {
 export -f revert_repo_to_february
 
 # Ensure we are in the root directory
-script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd "$script_dir" || exit
+cd "$(dirname "${BASH_SOURCE[0]}")" || exit
 
 # Iterate over all repositories and revert them
 repo forall -c 'bash -c "revert_repo_to_february \"$(pwd)\""' || exit
