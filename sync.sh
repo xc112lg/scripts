@@ -11,14 +11,6 @@ COM1="${7}"
 COM2="${8}"
 CORE="${9:-"$(nproc --all)"}"
 
-if [ -z "$(ls -A c)" ]; then
-  echo "Folder c is empty. Skipping the rsync command.."
-else
-  # If folder c is not empty, execute the rsync command
-time ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
-cp -f c/ccache.conf cc
-fi
-
 ## Remove existing build artifactsa
 if [ "$DELZIP" == "delzip" ]; then
     rm -rf out/target/product/*/*.zip
@@ -32,7 +24,7 @@ rm -rf .repo/local_manifests
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
-source scripts/clean.sh
+#source scripts/clean.sh
 
 #!/bin/bash
 
