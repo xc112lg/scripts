@@ -1,3 +1,3 @@
 paths=$(xmlstarlet sel -t -v "//project/@path" .repo/manifests/*.xml)
 echo "Paths to be deleted:"
-echo "$paths"
+echo "$paths" | sed 's/$/\/"/' | column -t -s $'\n'
