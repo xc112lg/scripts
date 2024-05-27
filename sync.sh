@@ -11,7 +11,12 @@ COM1="${7}"
 COM2="${8}"
 CORE="${9:-"$(nproc --all)"}"
 
-
+cd external/chromium-webview/prebuilt/arm64
+git lfs install
+git rev-parse --git-dir
+git config --global --add safe.directory external/chromium-webview/prebuilt/arm64/
+git lfs pull
+cd ../../../..
 
 ## Remove existing build artifactsa
 if [ "$DELZIP" == "delzip" ]; then
