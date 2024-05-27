@@ -10,10 +10,8 @@ get_paths() {
 
 
 directories=($(get_paths))
-echo "Contents of directories array:"
-for dir in "${directories[@]}"; do
-    echo "$dir"
-done
+echo "Paths in directories array: ${directories[*]}"
+
 
 
 
