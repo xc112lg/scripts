@@ -6,7 +6,7 @@
 #!/bin/bash
 
 # Define the manifest directory relative to the current directory
-MANIFEST_DIR="./.repo/manifest"
+MANIFEST_DIR="$(pwd)/.repo/manifest"
 
 # Function to extract project paths from XML files
 extract_paths() {
@@ -38,7 +38,7 @@ list_git_directories() {
   echo "Listing .git directories in the specified paths..."
 
   for path in "${paths[@]}"; do
-    local full_path="./$path"
+    local full_path="$(pwd)/$path"
     if [ -d "$full_path/.git" ]; then
       echo "Found .git directory at $full_path"
     else
@@ -55,4 +55,5 @@ IFS=' ' read -r -a paths_array <<< "$project_paths"
 
 # List all .git directories in the extracted paths
 list_git_directories "${paths_array[@]}"
+
 
