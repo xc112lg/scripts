@@ -32,7 +32,7 @@ revert_repo_to_commit() {
   cd "$repo_path" || { echo "Error: Could not change directory to $repo_path"; return 1; }
 
   # Reset the repository to the specified commit
-  git reset --hard "$commit_hash" || { echo "Error: Failed to reset repository $repo_path"; return 1; }
+  git reset --hard "$commit_hash" > /dev/null 2>&1 || { echo "Error: Failed to reset repository $repo_path"; return 1; }
   echo "Reverted $repo_path to commit: $commit_hash"
 
   # Go back to the previous directory
@@ -56,7 +56,7 @@ export -f find_latest_commit_before_date
 export -f revert_repo_to_commit
 export -f extract_paths_from_xml
 
-# Example usage: find the latest commit before March 12, 2024, revert repositories, and then revert back
+# Example usage: find the latest commit before March 12, 2024, revert repositories
 repo_path="$(pwd)"
 date="2024-03-12"
 
@@ -64,27 +64,13 @@ commit_hash=$(find_latest_commit_before_date "$repo_path" "$date")
 if [ -n "$commit_hash" ]; then
   extract_paths_from_xml ".repo/manifests"
 
-  # Save current directory
-  current_dir="$(pwd)"
-
   # Revert repositories at each path
   for path in $paths; do
     if [ -d "$path" ]; then
       echo "Reverting repository at path: $path"
-      echo "Current directory before changing into $path: $(pwd)"  # Print current directory before changing into the target directory
-      cd "$path" || { echo "Error: Could not change directory to $path"; continue; }
       revert_repo_to_commit "$path" "$commit_hash"
-      # Calculate the number of levels to go back
-      num_levels=$(tr -dc '/' <<< "$path" | wc -c)
-      # Revert back
-      for ((i=1; i<=num_levels; i++)); do
-        cd ..
-      done
     else
       echo "Warning: Directory $path does not exist."
     fi
   done
-
-  # Revert back to the original directory
-  cd "$current_dir" || { echo "Error: Could not change directory back to $current_dir"; exit 1; }
 fi
