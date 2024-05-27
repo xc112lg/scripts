@@ -14,7 +14,7 @@ echo_commits_in_february() {
   echo "Commits in February 2024 in $repo_path:"
   
   # Find commits made in February
-  git log --pretty=format:"%H %ad %s" --date=iso --after="2024-01-31" --before="2024-03-01" --reverse
+  git log --pretty=format:"%H %ad %s" --date=iso --after="2024-02-31" --before="2024-03-11" --reverse
 
   # Go back to the previous directory
   cd - > /dev/null || { echo "Error: Failed to change directory back to previous directory"; return 1; }
