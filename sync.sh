@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
-# /opt/crave/resync.sh
+repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+/opt/crave/resync.sh
 cd frameworks/base
 git log --pretty=format:"%H %ad %s" --date=iso --after="2024-01-31" --before="2024-03-01"
 
