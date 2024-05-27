@@ -5,8 +5,8 @@
 
 #!/bin/bash
 
-ROOT_DIR="/tmp/src/android"
-MANIFEST_DIR="$ROOT_DIR/.repo/manifest"
+# Define the manifest directory relative to the current directory
+MANIFEST_DIR="./.repo/manifest"
 
 # Function to extract project paths from XML files
 extract_paths() {
@@ -33,13 +33,12 @@ extract_paths() {
 
 # Function to list all .git directories in the given paths
 list_git_directories() {
-  local base_dir=$1
   local paths=("$@")
 
   echo "Listing .git directories in the specified paths..."
 
-  for path in "${paths[@]:1}"; do
-    local full_path="$base_dir/$path"
+  for path in "${paths[@]}"; do
+    local full_path="./$path"
     if [ -d "$full_path/.git" ]; then
       echo "Found .git directory at $full_path"
     else
@@ -55,5 +54,5 @@ project_paths=$(extract_paths "$MANIFEST_DIR")
 IFS=' ' read -r -a paths_array <<< "$project_paths"
 
 # List all .git directories in the extracted paths
-list_git_directories "$ROOT_DIR" "${paths_array[@]}"
+list_git_directories "${paths_array[@]}"
 
