@@ -1,5 +1,9 @@
 #!/bin/bash
 
+repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+/opt/crave/resync.sh
+
+
 # Function to find the last commit in February and revert the repository
 revert_repo_to_february() {
   local repo_path=$1
