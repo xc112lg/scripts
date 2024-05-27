@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
-# /opt/crave/resync.sh
-#!/bin/bash
-
-#!/bin/bash
-
 # Function to find the latest commit before a specified date
 find_latest_commit_before_date() {
   local repo_path=$1
@@ -78,6 +72,7 @@ if [ -n "$commit_hash" ]; then
     if [ -d "$path" ]; then
       echo "Reverting repository at path: $path"
       cd "$path" || { echo "Error: Could not change directory to $path"; continue; }
+      pwd
       revert_repo_to_commit "$path" "$commit_hash"
       # Calculate the number of levels to go back
       num_levels=$(tr -dc '/' <<< "$path" | wc -c)
