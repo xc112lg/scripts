@@ -5,7 +5,7 @@ repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 main() {
     # Run repo sync command and capture the output
     find .repo -name '*.lock' -delete
-    repo sync -c -j64 --force-sync --no-clone-bundle --no-tags --prune 2>&1 | tee /tmp/output.txt
+    repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune 2>&1 | tee /tmp/output.txt
 
     if ! grep -qe "Failing repos:\|error" /tmp/output.txt ; then
          echo "All repositories synchronized successfully."
@@ -50,7 +50,7 @@ main() {
     # Re-sync all repositories after deletion
     echo "Re-syncing all repositories..."
     find .repo -name '*.lock' -delete
-    repo sync -c -j64 --force-sync --no-clone-bundle --no-tags --prune
+    repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
 }
 
 main $*
