@@ -6,7 +6,7 @@ repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
 
 
 
-ROOT_DIR="/tmp/src/android"
+ROOT_DIR="frameworks/base"
 
 # Function to find the latest commit before March 12, 2024, and revert the repository to that commit
 revert_repo_to_before_march_12() {
