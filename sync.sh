@@ -1,5 +1,8 @@
 #!/bin/bash
-sudo apt-get install git-lfs
+sudo apt update
+sudo apt install git-lfs
+git lfs install --system
+
 
 
 # cd external/chromium-webview/prebuilt/arm64
