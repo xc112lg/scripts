@@ -2,9 +2,9 @@
 
 repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
 /opt/crave/resync.sh
-cd frameworks/base
-git log --pretty=format:"%H %ad %s" --date=iso --after="2024-01-31" --before="2024-03-01"
-cd ../..
+# cd frameworks/base
+# git log --pretty=format:"%H %ad %s" --date=iso --after="2024-01-31" --before="2024-03-01"
+# cd ../..
 
 #!/bin/bash
 
