@@ -4,10 +4,10 @@
 get_paths() {
     paths=$(xmlstarlet sel -t -v "//project/@path" .repo/manifests/*.xml)
     echo "$paths" | sed 's/$/\/"/' | sed 's/^/"/; s/ /" "/g' | tr '\n' ' '
-    echo   # Add a newline for clarity
+
 }
 
-get_paths
+
 
 directories=($(get_paths))
 echo "Contents of directories array:"
