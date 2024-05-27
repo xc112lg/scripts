@@ -68,7 +68,7 @@ date="2024-03-12"
 
 commit_hash=$(find_latest_commit_before_date "$repo_path" "$date")
 if [ -n "$commit_hash" ]; then
-  extract_paths_from_xml ".repo/local_manifests"
+  extract_paths_from_xml ".repo/manifests"
 
   # Revert repositories at each path
   for path in $paths; do
