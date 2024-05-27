@@ -1,17 +1,17 @@
 
 #!/bin/bash
 
-# get_paths() {
-#     paths=$(xmlstarlet sel -t -v "//project/@path" .repo/manifests/*.xml)
-#     echo "$paths" | sed 's/$/\/"/' | sed 's/^/"/; s/ /" "/g' | tr '\n' ' '
-# }
+get_paths() {
+    paths=$(xmlstarlet sel -t -v "//project/@path" .repo/manifests/*.xml)
+    echo "$paths" | sed 's/$/\/"/' | sed 's/^/"/; s/ /" "/g' | tr '\n' ' '
+    echo   # Add a newline for clarity
+}
 
-#get_paths
-
+get_paths
 
 
 # Format the paths and assign to the directories array
-directories=("tools/trebuchet/")
+directories=($(get_paths))
 
 
 # Function to find the commit hash before a specified date
