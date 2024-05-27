@@ -3,78 +3,57 @@
 # repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
 # /opt/crave/resync.sh
 
-
 #!/bin/bash
 
 ROOT_DIR="/tmp/src/android"
+MANIFEST_DIR="$ROOT_DIR/.repo/manifest"
 
-# Function to find the latest commit before March 12, 2024, and revert the repository to that commit
-revert_repo_to_before_march_12() {
-  local repo_path=$1
-  cd "$repo_path" || { echo "Error: Could not change directory to $repo_path"; return 1; }
+# Function to extract project paths from XML files
+extract_paths() {
+  local manifest_dir=$1
+  local paths=()
 
-  echo "Searching for the latest commit before March 12, 2024, in $repo_path..."
+  echo "Scanning XML files in $manifest_dir..."
 
-  # Find the latest commit made before March 12, 2024
-  commit_hash=$(git rev-list -1 --before="2024-03-12 00:00" HEAD)
+  # Find all XML files in the manifest directory
+  find "$manifest_dir" -name "*.xml" | while read -r xml_file; do
+    echo "Processing $xml_file..."
+    # Extract paths from the XML file using xmllint
+    local extracted_paths=$(xmllint --xpath '//project/@path' "$xml_file" 2>/dev/null | sed 's/path="\([^"]*\)"/\1\n/g')
 
-  # Check if a valid commit hash was found
-  if [ -z "$commit_hash" ]; then
-    echo "No commits found before March 12, 2024, in $repo_path"
-  else
-    # Reset the repository to that commit
-    git reset --hard "$commit_hash" || { echo "Error: Failed to reset repository $repo_path"; return 1; }
-    echo "Reverted $repo_path to the latest commit before March 12, 2024: $commit_hash"
-  fi
-
-  # Go back to the previous directory
-  cd - > /dev/null || { echo "Error: Failed to change directory back to previous directory"; return 1; }
-}
-
-# Export the function to use it recursively
-export -f revert_repo_to_before_march_12
-
-# Function to find all git repositories and list them
-list_all_repos() {
-  local base_dir=$1
-  cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
-
-  echo "Scanning for .git directories up to 6 levels deep in $base_dir..."
-
-  # Find all .git directories (excluding .repo folder) and list them, limiting to the fifth subdirectory
-  find . -maxdepth 6 -type d -name ".git" -not -path "*/.repo/*" | while read -r git_dir; do
-    local repo_path=$(dirname "$git_dir")
-    echo "Found repository at $repo_path"
+    # Add the extracted paths to the array
+    for path in $extracted_paths; do
+      paths+=("$path")
+    done
   done
 
-  # Go back to the previous directory
-  cd - > /dev/null || { echo "Error: Failed to change directory back to previous directory"; return 1; }
+  echo "Found paths: ${paths[*]}"
+  echo "${paths[@]}"
 }
 
-# Function to revert all git repositories sequentially
-revert_all_repos() {
+# Function to list all .git directories in the given paths
+list_git_directories() {
   local base_dir=$1
-  cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
+  local paths=("$@")
 
-  echo "Reverting all found repositories..."
+  echo "Listing .git directories in the specified paths..."
 
-  # Find all .git directories (excluding .repo folder) and revert them sequentially, limiting to the fifth subdirectory
-  find . -maxdepth 6 -type d -name ".git" -not -path "*/.repo/*" | while read -r git_dir; do
-    local repo_path=$(dirname "$git_dir")
-    echo "Reverting repository at $repo_path"
-    revert_repo_to_before_march_12 "$repo_path"
+  for path in "${paths[@]:1}"; do
+    local full_path="$base_dir/$path"
+    if [ -d "$full_path/.git" ]; then
+      echo "Found .git directory at $full_path"
+    else
+      echo "No .git directory found at $full_path"
+    fi
   done
-
-  # Go back to the previous directory
-  cd - > /dev/null || { echo "Error: Failed to change directory back to previous directory"; return 1; }
 }
 
-# List all repositories with .git directories
-echo "Listing all repositories with .git directories (excluding .repo folder):"
-list_all_repos "$ROOT_DIR"
+# Extract paths from XML files in the manifest directory
+project_paths=$(extract_paths "$MANIFEST_DIR")
 
-# Revert all repositories sequentially
-echo "Reverting all repositories:"
-revert_all_repos "$ROOT_DIR"
+# Convert the space-separated paths string to an array
+IFS=' ' read -r -a paths_array <<< "$project_paths"
 
+# List all .git directories in the extracted paths
+list_git_directories "$ROOT_DIR" "${paths_array[@]}"
 
