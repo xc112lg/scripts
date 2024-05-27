@@ -4,6 +4,8 @@
 # /opt/crave/resync.sh
 #!/bin/bash
 
+#!/bin/bash
+
 # Function to find the latest commit before a specified date
 find_latest_commit_before_date() {
   local repo_path=$1
@@ -66,6 +68,15 @@ date="2024-03-12"
 
 commit_hash=$(find_latest_commit_before_date "$repo_path" "$date")
 if [ -n "$commit_hash" ]; then
-  revert_repo_to_commit "$repo_path" "$commit_hash"
-  extract_paths_from_xml ".repo/manifests"
+  extract_paths_from_xml ".repo/local_manifests"
+
+  # Revert repositories at each path
+  for path in $paths; do
+    if [ -d "$path" ]; then
+      echo "Reverting repository at path: $path"
+      revert_repo_to_commit "$path" "$commit_hash"
+    else
+      echo "Warning: Directory $path does not exist."
+    fi
+  done
 fi
