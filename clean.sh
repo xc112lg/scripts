@@ -1,5 +1,13 @@
 #!/bin/bash
 
+xml_dir=".repo/manifests"
+paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | sed 's/$/\//')
+
+
+echo "Extracted paths:"
+echo "$paths"
+
+
 # Check if the paths variable is provided
 if [ -z "$paths" ]; then
     echo "Error: No paths provided"
