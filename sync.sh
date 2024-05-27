@@ -5,25 +5,57 @@
 
 #!/bin/bash
 
-# Define the manifests directory relative to the current directory
-MANIFESTS_DIR=".repo/manifests"
+# Define the manifest directory relative to the current directory
+MANIFEST_DIR="$(pwd)/.repo/manifests"
 
-# Function to extract contents from XML files
-extract_contents() {
-  local manifests_dir=$1
+# Function to extract project paths from XML files
+extract_paths() {
+  local manifest_dir=$1
+  local paths=()
 
-  echo "Scanning XML files in $manifests_dir..."
+  echo "Scanning XML files in $manifest_dir..."
 
-  # Find all XML files in the manifests directory
-  find "$manifests_dir" -name "*.xml" | while read -r xml_file; do
-    echo "Contents of $xml_file:"
-    # Output the contents of the XML file
-    cat "$xml_file"
+  # Find all XML files in the manifest directory
+  find "$manifest_dir" -name "*.xml" | while read -r xml_file; do
+    echo "Processing $xml_file..."
+    # Extract paths from the XML file using grep
+    local extracted_paths=$(grep -oP 'path="\K[^"]+' "$xml_file")
+
+    # Add the extracted paths to the array
+    for path in $extracted_paths; do
+      paths+=("$path")
+    done
+  done
+
+  echo "Found paths: ${paths[*]}"
+  echo "${paths[@]}"
+}
+
+# Function to scan directories based on extracted paths
+scan_directories() {
+  local paths=("$@")
+
+  echo "Scanning directories based on extracted paths..."
+
+  for path in "${paths[@]}"; do
+    local full_path="$(pwd)/$path"
+    echo "Scanning directory: $full_path"
+    # Here you can perform any action you want with the directory path
+    # For now, let's just echo the path
+    echo "Directory contents:"
+    ls -l "$full_path"
     echo "--------------------------------------"
   done
 }
 
-# Extract contents from XML files in the manifests directory
-extract_contents "$MANIFESTS_DIR"
+# Extract paths from XML files in the manifest directory
+project_paths=$(extract_paths "$MANIFEST_DIR")
+
+# Convert the space-separated paths string to an array
+IFS=$'\n' read -r -d '' -a paths_array <<< "$project_paths"
+
+# Scan directories based on extracted paths
+scan_directories "${paths_array[@]}"
+
 
 
