@@ -69,8 +69,8 @@ list_all_repos() {
   local base_dir=$1
   cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
 
-  # Find all .git directories and list them
-  find . -type d -name ".git" | while read git_dir; do
+  # Find all .git directories (excluding .repo folder) and list them
+  find . -type d -name ".git" -not -path "./.repo/*" | while read git_dir; do
     local repo_path=$(dirname "$git_dir")
     echo "Found repository at $repo_path"
   done
@@ -84,8 +84,8 @@ revert_all_repos() {
   local base_dir=$1
   cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
 
-  # Find all .git directories and revert them
-  find . -type d -name ".git" | while read git_dir; do
+  # Find all .git directories (excluding .repo folder) and revert them
+  find . -type d -name ".git" -not -path "./.repo/*" | while read git_dir; do
     local repo_path=$(dirname "$git_dir")
     echo "Reverting repository at $repo_path"
     revert_repo_to_before_march_12 "$repo_path"
@@ -96,11 +96,9 @@ revert_all_repos() {
 }
 
 # List all repositories with .git directories
-echo "Listing all repositories with .git directories:"
+echo "Listing all repositories with .git directories (excluding .repo folder):"
 list_all_repos "$(pwd)"
 
 # Revert all repositories
 revert_all_repos "$(pwd)"
-
-
 
