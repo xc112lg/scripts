@@ -5,7 +5,7 @@
 
 #!/bin/bash
 
-# Define the manifest directory relative to the current directory
+# Define the manifest directory
 MANIFEST_DIR=".repo/manifests"
 
 # Function to extract project paths from XML files
@@ -33,12 +33,13 @@ extract_paths() {
 
 # Function to scan directories based on extracted paths
 scan_directories() {
+  local manifest_dir=$1
   local paths=("$@")
 
   echo "Scanning directories based on extracted paths..."
 
   for path in "${paths[@]}"; do
-    local full_path="$(pwd)/$path"
+    local full_path="$manifest_dir/$path"
     echo "Scanning directory: $full_path"
     # Here you can perform any action you want with the directory path
     # For now, let's just echo the path
@@ -52,10 +53,4 @@ scan_directories() {
 project_paths=$(extract_paths "$MANIFEST_DIR")
 
 # Convert the space-separated paths string to an array
-IFS=$'\n' read -r -d '' -a paths_array <<< "$project_paths"
-
-# Scan directories based on extracted paths
-scan_directories "${paths_array[@]}"
-
-
-
+IFS=$'\n' read -r -d '' -a paths_array <<< "
