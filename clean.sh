@@ -7,8 +7,7 @@ get_paths() {
 }
 
 
-# Call the function
-get_paths
+
 
 
 # Format the paths and assign to the directories array
