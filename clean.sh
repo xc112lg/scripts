@@ -25,7 +25,7 @@ echo "$paths"
 # Remove each file
 for path in $paths; do
     #!/bin/bash
-
+cd "$path"
 # Define the target date
 target_date="2024-03-12"
 
