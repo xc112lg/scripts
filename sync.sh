@@ -32,7 +32,7 @@ mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 rm -rf external/chromium-webview
 source scripts/clean.sh
-
+source scripts/extras.sh
 #!/bin/bash
 
 main() {
@@ -76,7 +76,7 @@ else
 fi
 
 
-
+source scripts/extras.sh
 source scripts/fixes.sh
 source scripts/signed.sh
 export USE_CCACHE=1
