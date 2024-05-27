@@ -36,7 +36,7 @@ list_all_repos() {
   cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
 
   # Find all .git directories (excluding .repo folder) and list them, limiting to the fifth subdirectory
-  find . -type d -name ".git" -not -path "./.repo/*" -maxdepth 6 | while read git_dir; do
+  find . -maxdepth 6 -type d -name ".git" -not -path "./.repo/*" | while read git_dir; do
     local repo_path=$(dirname "$git_dir")
     echo "Found repository at $repo_path"
   done
@@ -45,13 +45,13 @@ list_all_repos() {
   cd - > /dev/null || { echo "Error: Failed to change directory back to previous directory"; return 1; }
 }
 
-# Function to revert all git repositories
+# Function to revert all git repositories sequentially
 revert_all_repos() {
   local base_dir=$1
   cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
 
-  # Find all .git directories (excluding .repo folder) and revert them, limiting to the fifth subdirectory
-  find . -type d -name ".git" -not -path "./.repo/*" -maxdepth 6 | while read git_dir; do
+  # Find all .git directories (excluding .repo folder) and revert them sequentially, limiting to the fifth subdirectory
+  find . -maxdepth 6 -type d -name ".git" -not -path "./.repo/*" | while read git_dir; do
     local repo_path=$(dirname "$git_dir")
     echo "Reverting repository at $repo_path"
     revert_repo_to_before_march_12 "$repo_path"
@@ -65,6 +65,7 @@ revert_all_repos() {
 echo "Listing all repositories with .git directories (excluding .repo folder):"
 list_all_repos "$(pwd)"
 
-# Revert all repositories
+# Revert all repositories sequentially
 revert_all_repos "$(pwd)"
+
 
