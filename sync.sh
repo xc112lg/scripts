@@ -6,7 +6,7 @@
 #!/bin/bash
 
 # Define the manifest directory relative to the current directory
-MANIFEST_DIR="$(pwd)/.repo/manifests"
+MANIFEST_DIR=".repo/manifests"
 
 # Function to extract project paths from XML files
 extract_paths() {
