@@ -1,12 +1,12 @@
 #!/bin/bash
 
-repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
-/opt/crave/resync.sh
+# repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
+# /opt/crave/resync.sh
 
 
+#!/bin/bash
 
-
-ROOT_DIR="frameworks/base"
+ROOT_DIR="/tmp/src/android"
 
 # Function to find the latest commit before March 12, 2024, and revert the repository to that commit
 revert_repo_to_before_march_12() {
@@ -39,6 +39,8 @@ list_all_repos() {
   local base_dir=$1
   cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
 
+  echo "Scanning for .git directories up to 6 levels deep in $base_dir..."
+
   # Find all .git directories (excluding .repo folder) and list them, limiting to the fifth subdirectory
   find . -maxdepth 6 -type d -name ".git" -not -path "*/.repo/*" | while read -r git_dir; do
     local repo_path=$(dirname "$git_dir")
@@ -53,6 +55,8 @@ list_all_repos() {
 revert_all_repos() {
   local base_dir=$1
   cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
+
+  echo "Reverting all found repositories..."
 
   # Find all .git directories (excluding .repo folder) and revert them sequentially, limiting to the fifth subdirectory
   find . -maxdepth 6 -type d -name ".git" -not -path "*/.repo/*" | while read -r git_dir; do
@@ -72,6 +76,5 @@ list_all_repos "$ROOT_DIR"
 # Revert all repositories sequentially
 echo "Reverting all repositories:"
 revert_all_repos "$ROOT_DIR"
-
 
 
