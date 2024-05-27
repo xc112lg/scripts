@@ -2,58 +2,70 @@
 
 # repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
 # /opt/crave/resync.sh
-
 #!/bin/bash
 
-# Define the manifest directory
-MANIFEST_DIR=".repo/manifests"
+# Function to find the latest commit before a specified date
+find_latest_commit_before_date() {
+  local repo_path=$1
+  local date=$2
 
-# Function to extract project paths from XML files
-extract_paths() {
-  local manifest_dir=$1
-  local paths=()
+  cd "$repo_path" || { echo "Error: Could not change directory to $repo_path"; return 1; }
 
-  echo "Scanning XML files in $manifest_dir..."
+  # Find the latest commit before the specified date
+  commit_hash=$(git rev-list -1 --before="$date" HEAD)
 
-  # Find all XML files in the manifest directory
-  find "$manifest_dir" -name "*.xml" | while read -r xml_file; do
-    echo "Processing $xml_file..."
-    # Extract paths from the XML file using grep
-    local extracted_paths=$(grep -oP 'path="\K[^"]+' "$xml_file")
+  # Check if a valid commit hash was found
+  if [ -z "$commit_hash" ]; then
+    echo "No commits found before $date in $repo_path"
+  else
+    echo "Latest commit before $date in $repo_path: $commit_hash"
+  fi
 
-    # Add the extracted paths to the array
-    for path in $extracted_paths; do
-      paths+=("$path")
-    done
-  done
+  # Go back to the previous directory
+  cd - > /dev/null || { echo "Error: Failed to change directory back to previous directory"; return 1; }
 
-  echo "Found paths: ${paths[*]}"
-  echo "${paths[@]}"
+  # Return the commit hash
+  echo "$commit_hash"
 }
 
-# Function to scan directories based on extracted paths
-scan_directories() {
-  local manifest_dir=$1
-  local paths=("$@")
+# Function to revert the repository to a specific commit
+revert_repo_to_commit() {
+  local repo_path=$1
+  local commit_hash=$2
 
-  echo "Scanning directories based on extracted paths..."
+  cd "$repo_path" || { echo "Error: Could not change directory to $repo_path"; return 1; }
 
-  for path in "${paths[@]}"; do
-    local full_path="$manifest_dir/$path"
-    echo "Scanning directory: $full_path"
-    # Here you can perform any action you want with the directory path
-    # For now, let's just echo the path
-    echo "Directory contents:"
-    ls -l "$full_path"
-    echo "--------------------------------------"
-  done
+  # Reset the repository to the specified commit
+  git reset --hard "$commit_hash" || { echo "Error: Failed to reset repository $repo_path"; return 1; }
+  echo "Reverted $repo_path to commit: $commit_hash"
+
+  # Go back to the previous directory
+  cd - > /dev/null || { echo "Error: Failed to change directory back to previous directory"; return 1; }
 }
 
-# Extract paths from XML files in the manifest directory
-project_paths=$(extract_paths "$MANIFEST_DIR")
+# Function to extract paths from XML files
+extract_paths_from_xml() {
+  local xml_dir=$1
 
-# Convert the space-separated paths string to an array
-IFS=$'\n' read -r -d '' -a paths_array <<< "$project_paths"
+  echo "Scanning XML files in $xml_dir..."
 
-# Scan directories based on extracted paths
-scan_directories "$MANIFEST_DIR" "${paths_array[@]}"
+  # Extract paths from XML files
+  paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml)
+  echo "Paths to be reverted:"
+  echo "$paths"
+}
+
+# Export the functions to use them recursively
+export -f find_latest_commit_before_date
+export -f revert_repo_to_commit
+export -f extract_paths_from_xml
+
+# Example usage: find the latest commit before March 12, 2024, and revert paths from XML files in .repo/local_manifests directory
+repo_path="$(pwd)"
+date="2024-03-12"
+
+commit_hash=$(find_latest_commit_before_date "$repo_path" "$date")
+if [ -n "$commit_hash" ]; then
+  revert_repo_to_commit "$repo_path" "$commit_hash"
+  extract_paths_from_xml ".repo/manifests"
+fi
