@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Define the directories to revert
 directories=("frameworks/base/" "device/lge/h872/" "device/lge/h870/" "device/lge/us997/" "device/lge/g6-common/" "kernel/lge/msm8996/" "device/lge/msm8996-common/" "packages/apps/Updater/" "vendor/lineage/" "vendor/lge/msm8996-common/")
 
@@ -34,18 +36,15 @@ revert_directory_to_commit() {
 revert_date="2024-03-12"
 
 # Get the commit hash before the revert date
-commit_hash=$(find_commit_before_date "$(pwd)" "$revert_date")
+for dir in "${directories[@]}"; do
+    commit_hash=$(find_commit_before_date "$dir" "$revert_date")
 
-# Check if a valid commit hash was found
-if [ -n "$commit_hash" ]; then
-    echo "Reverting repositories to state before $revert_date..."
-    
-    # Loop through each directory and revert it
-    for dir in "${directories[@]}"; do
+    # Check if a valid commit hash was found
+    if [ -n "$commit_hash" ]; then
+        echo "Reverting $dir to state before $revert_date..."
         revert_directory_to_commit "$dir" "$commit_hash"
-    done
-    
-    echo "Revert completed."
-else
-    echo "Error: No commits found before $revert_date."
-fi
+        echo "Revert completed."
+    else
+        echo "Error: No commits found before $revert_date in $dir."
+    fi
+done
