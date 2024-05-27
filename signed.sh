@@ -20,7 +20,7 @@ for x in releasekey platform shared media networkstack testkey cyngn-priv-app bl
 mkdir vendor/extra
 mkdir vendor/lineage-priv
 
-cp ~/.android-certs vendor/extra/keys
+mv ~/.android-certs vendor/extra/keys
 #For Lineage 21 and newer use the command below if not then use above 
 #cp ~/.android-certs vendor/lineage-priv/keys
 echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/extra/product.mk
