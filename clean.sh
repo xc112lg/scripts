@@ -29,28 +29,17 @@ revert_directory_to_commit() {
     fi
 }
 
-# Function to extract paths from XML files and append a forward slash
-extract_paths_from_xml() {
-    local xml_dir=$1
-
-    echo "Scanning XML files in $xml_dir..."
-
-    # Extract paths from XML files and append a forward slash
-    paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | sed 's/$/\//')
-    echo "Paths extracted from XML files:"
-    echo "$paths"
-}
-
 # Define the date before which to revert (March 12, 2024)
 revert_date="2024-03-12"
 
-# Example usage: extract paths from XML files in .repo/manifests directory
-extract_paths_from_xml ".repo/manifests"
+# Extract directories from XML files and append a forward slash
+xml_dir=".repo/manifests"
+paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | sed 's/$/\//')
 
 # Populate the directories array with the extracted paths
 directories=()
 for path in $paths; do
-    directories+=("\"$path\"")
+    directories+=("$path")
 done
 
 # Get the commit hash before the revert date for each directory
