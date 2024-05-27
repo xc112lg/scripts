@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Define the directories to revert
+directories=("frameworks/base/" "device/lge/h872/" "device/lge/h870/" "device/lge/us997/" "device/lge/g6-common/" "kernel/lge/msm8996/" "device/lge/msm8996-common/" "packages/apps/Updater/" "vendor/lineage/" "vendor/lge/msm8996-common/")
+
 # Function to find the commit hash before a specified date
 find_commit_before_date() {
     local repo_path=$1
@@ -29,28 +32,10 @@ revert_directory_to_commit() {
     fi
 }
 
-# Function to extract paths from XML files
-extract_paths_from_xml() {
-    local xml_dir=$1
-
-    echo "Scanning XML files in $xml_dir..."
-
-    # Extract paths from XML files
-    paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | sed 's/$/\//')
-    echo "Paths extracted from XML files:"
-    echo "$paths"
-}
-
 # Define the date before which to revert (March 12, 2024)
 revert_date="2024-03-12"
 
-# Example usage: extract paths from XML files in .repo/manifests directory
-extract_paths_from_xml ".repo/manifests"
-
-# Populate the directories array with the extracted paths
-directories=($paths)
-
-# Get the commit hash before the revert date for each directory
+# Get the commit hash before the revert date
 for dir in "${directories[@]}"; do
     commit_hash=$(find_commit_before_date "$dir" "$revert_date")
 
