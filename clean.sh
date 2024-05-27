@@ -6,7 +6,7 @@ get_paths() {
     echo "$paths" | sed 's/$/\/"/' | sed 's/^/"/; s/ /" "/g' | tr '\n' ' '
 }
 
-
+get_paths
 
 
 
