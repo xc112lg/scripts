@@ -4,7 +4,7 @@ repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
 /opt/crave/resync.sh
 
 
-#!/bin/bash
+
 
 ROOT_DIR="/tmp/src/android"
 
@@ -40,7 +40,7 @@ list_all_repos() {
   cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
 
   # Find all .git directories (excluding .repo folder) and list them, limiting to the fifth subdirectory
-  find . -maxdepth 6 -type d -name ".git" -not -path "./.repo/*" | while read -r git_dir; do
+  find . -maxdepth 6 -type d -name ".git" -not -path "*/.repo/*" | while read -r git_dir; do
     local repo_path=$(dirname "$git_dir")
     echo "Found repository at $repo_path"
   done
@@ -55,7 +55,7 @@ revert_all_repos() {
   cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
 
   # Find all .git directories (excluding .repo folder) and revert them sequentially, limiting to the fifth subdirectory
-  find . -maxdepth 6 -type d -name ".git" -not -path "./.repo/*" | while read -r git_dir; do
+  find . -maxdepth 6 -type d -name ".git" -not -path "*/.repo/*" | while read -r git_dir; do
     local repo_path=$(dirname "$git_dir")
     echo "Reverting repository at $repo_path"
     revert_repo_to_before_march_12 "$repo_path"
