@@ -24,17 +24,22 @@ revert_repo_to_february() {
 # Export the function to use it recursively
 export -f revert_repo_to_february
 
-# Function to recursively find .repo directories and revert repositories
-find_and_revert_repositories() {
-  local start_dir=$1
-  local repo_dirs=$(find "$start_dir" -type d -name ".repo")
+# Function to revert repositories within frameworks/base directory
+revert_frameworks_base_repositories() {
+  local base_dir=$1
+  cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
+
+  # Find all .git directories within frameworks/base and its subdirectories
+  local repo_dirs=$(find . -type d -name ".git" -printf "%h\n")
+
+  # Iterate over each repository directory
   for repo_dir in $repo_dirs; do
-    local repo_parent=$(dirname "$repo_dir")
-    echo "Reverting repositories in $repo_parent"
-    cd "$repo_parent" || { echo "Error: Could not change directory to $repo_parent"; return 1; }
-    repo forall -c 'bash -c "revert_repo_to_february \"$(pwd)\""' || { echo "Error: 'repo forall' command failed"; return 1; }
+    local parent_dir=$(dirname "$repo_dir")
+    local repo_path=$(realpath "$parent_dir")  # Get the full path
+    echo "Reverting repository in $repo_path"
+    revert_repo_to_february "$repo_path" || return 1
   done
 }
 
-# Start searching from the current directory
-find_and_revert_repositories "$(pwd)"
+# Start reverting repositories within frameworks/base
+revert_frameworks_base_repositories "path/to/frameworks/base"
