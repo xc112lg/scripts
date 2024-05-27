@@ -48,6 +48,8 @@ echo "Reverted to commit before $target_date"
         for (( i=0; i<num_slashes; i++ )); do
             cd ..
         done
+
+        ls
 done
 
 
