@@ -1,9 +1,10 @@
+
+
 paths=$(xmlstarlet sel -t -v "//project/@path" .repo/manifests/*.xml)
 echo "Paths to be deleted:"
 
-# Define the directories to revert
-directories=$(echo "$paths" | sed 's/$/\/"/' | sed 's/^/"/; s/ /" "/g' | tr -d '\n')
-
+# Format the paths and assign to the directories array
+directories=($(echo "$paths" | sed 's/$/\/"/' | sed 's/^/"/; s/ /" "/g' | tr -d '\n'))
 
 # Function to find the commit hash before a specified date
 find_commit_before_date() {
