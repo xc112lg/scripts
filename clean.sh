@@ -1,10 +1,18 @@
 
+#!/bin/bash
 
-paths=$(xmlstarlet sel -t -v "//project/@path" .repo/manifests/*.xml)
-echo "Paths to be deleted:"
+get_paths() {
+    paths=$(xmlstarlet sel -t -v "//project/@path" .repo/manifests/*.xml)
+    echo "$paths" | sed 's/$/\/"/' | sed 's/^/"/; s/ /" "/g' | tr -d '\n'
+}
+
+# Call the function
+get_paths
+
 
 # Format the paths and assign to the directories array
-directories=($(echo "$paths" | sed 's/$/\/"/' | sed 's/^/"/; s/ /" "/g' | tr -d '\n'))
+directories=($(get_paths))
+
 
 # Function to find the commit hash before a specified date
 find_commit_before_date() {
