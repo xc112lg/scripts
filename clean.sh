@@ -3,8 +3,9 @@
 
 get_paths() {
     paths=$(xmlstarlet sel -t -v "//project/@path" .repo/manifests/*.xml)
-    echo "$paths" | sed 's/$/\/"/' | sed 's/^/"/; s/ /" "/g' | tr -d '\n'
+    echo "$paths" | sed 's/$/\/"/' | sed 's/^/"/; s/ /" "/g' | tr '\n' ' '
 }
+
 
 # Call the function
 get_paths
