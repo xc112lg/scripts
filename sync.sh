@@ -31,6 +31,12 @@ revert_repo_to_commit() {
 
   cd "$repo_path" || { echo "Error: Could not change directory to $repo_path"; return 1; }
 
+  # Check if the directory exists
+  if [ ! -d ".git" ]; then
+    echo "Warning: Directory $repo_path does not contain a Git repository."
+    return
+  fi
+
   # Reset the repository to the specified commit
   git reset --hard "$commit_hash" > /dev/null 2>&1 || { echo "Error: Failed to reset repository $repo_path"; return 1; }
   echo "Reverted $repo_path to commit: $commit_hash"
