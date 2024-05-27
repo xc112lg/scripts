@@ -1,20 +1,27 @@
+
 #!/bin/bash
 
-# S_asb_2023-03
-# repopick -t S_asb_2023-03
+# Scan all folders under external/chromium-webview/prebuilt/*
+echo "Scanning folders in external/chromium-webview/prebuilt/*"
+find external/chromium-webview/prebuilt/* -type d
 
-# Charging animation
-cd frameworks/base/
-git cherry-pick 10a30bf4bbee8e98a742338ef89f0a414ff638b9
-cd ../../
+# Install Git LFS
+echo "Installing Git LFS"
+git lfs install
 
-# PixelProps
-cd frameworks/base/
-git cherry-pick 9c542fb2323aae953d9957d320ba8ae1603aaafe
-cd ../../
+# Find the Git directory
+echo "Finding the Git directory"
+GIT_DIR=$(git rev-parse --git-dir)
+echo "Git directory is: $GIT_DIR"
 
-# Updater
-cd vendor/lineage
-git fetch https://github.com/LG-G6/android_vendor_lineage.git lineage-19.1
-git cherry-pick 8246f8702827e7ca209e607dcc17cf4f1dba998f
-cd ../../
+# Get the first subfolder name under external/chromium-webview/prebuilt/
+TARGET_FOLDER=$(find external/chromium-webview/prebuilt/* -type d | head -n 1)
+echo "Target folder is: $TARGET_FOLDER"
+
+# Add the target folder to the list of safe directories
+echo "Adding $TARGET_FOLDER to the list of safe directories"
+git config --global --add safe.directory "$TARGET_FOLDER"
+
+# Pull Git LFS objects
+echo "Pulling Git LFS objects"
+git lfs pull
