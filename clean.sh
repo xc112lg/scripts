@@ -18,6 +18,10 @@
 xml_dir=".repo/manifests"
 paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | sed 's/$/\//')
 
+
+echo "Extracted paths:"
+echo "$paths"
+
 # Remove each file
 for path in $paths; do
     #!/bin/bash
