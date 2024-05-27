@@ -1,68 +1,49 @@
+# Check if the directory exists
 
-#!/bin/bash
+    # Extract and echo the paths
+    # paths=$(xmlstarlet sel -t -m "//project/@path" -v .repo/local_manifests/*.xml)
+    # echo "Paths to be deleted:"
+    # echo "$paths"
 
-get_paths() {
-    paths=$(xmlstarlet sel -t -v "//project/@path" .repo/manifests/*.xml)
-    echo "$paths" | sed 's/$/\/"/' | sed 's/^/"/; s/ /" "/g' | tr '\n' ' '
-
-}
-
-
-
-directories=($(get_paths))
-echo "Paths in directories array: ${directories[*]}"
-
-
+    # # Remove each file
+    # for path in $paths; do
+    #     rm -rf "$path"
+    #     #sudo find "$path" -delete
+    #     echo "Deleted: $path"
+    # done
 
 
 
-# # Format the paths and assign to the directories array
-# directories=($(get_paths))
+    # Extract and echo the paths
+xml_dir=".repo/manifests"
+paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | sed 's/$/\//')
 
+# Remove each file
+for path in $paths; do
+    #!/bin/bash
 
-# # Function to find the commit hash before a specified date
-# find_commit_before_date() {
-#     local repo_path=$1
-#     local date=$2
+# Define the target date
+target_date="2024-03-12"
 
-#     cd "$repo_path" || return 1
+# Find the commit hash or tag before the target date
+commit_hash=$(git rev-list -1 --before="$target_date" HEAD)
 
-#     # Find the commit hash before the specified date
-#     commit_hash=$(git rev-list -1 --before="$date" HEAD)
+if [ -z "$commit_hash" ]; then
+    echo "No commits found before $target_date"
+    exit 1
+fi
 
-#     # Return the commit hash
-#     echo "$commit_hash"
-# }
+# Reset the branch to the commit
+git reset --hard "$commit_hash"
 
-# # Function to revert a directory to a specific commit
-# revert_directory_to_commit() {
-#     local dir=$1
-#     local commit_hash=$2
-    
-#     # Check if the directory exists
-#     if [ -d "$dir" ]; then
-#         # Change to the directory
-#         cd "$dir" || return 1
-        
-#         # Perform the git reset to the specified commit
-#         git reset --hard "$commit_hash" || return 1
-#     fi
-# }
+echo "Reverted to commit before $target_date"
 
-# # Define the date before which to revert (March 12, 2024)
-# revert_date="2024-03-12"
+    #rm -rf "$path"
+            num_slashes=$(tr -cd '/' <<< "$dir" | wc -c)
+        # Return to the previous directory accordingly
+        for (( i=0; i<num_slashes; i++ )); do
+            cd ..
+        done
+done
 
-# # Get the commit hash before the revert date
-# for dir in "${directories[@]}"; do
-#     commit_hash=$(find_commit_before_date "$dir" "$revert_date")
-
-#     # Check if a valid commit hash was found
-#     if [ -n "$commit_hash" ]; then
-#         echo "Reverting $dir to state before $revert_date..."
-#         revert_directory_to_commit "$dir" "$commit_hash"
-#         echo "Revert completed."
-#     else
-#         echo "Error: No commits found before $revert_date in $dir."
-#     fi
-# done
 
