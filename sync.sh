@@ -36,7 +36,6 @@ repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
 
 # # Start reverting repositories within frameworks/base
 # revert_repo_to_before_march_12 "frameworks/base"
-
 #!/bin/bash
 
 # Function to find the latest commit before March 12, 2024, and revert the repository to that commit
@@ -65,15 +64,30 @@ revert_repo_to_before_march_12() {
 # Export the function to use it recursively
 export -f revert_repo_to_before_march_12
 
-# Function to find all git repositories and revert them
+# Function to find all git repositories and list them
+list_all_repos() {
+  local base_dir=$1
+  cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
+
+  # Find all .git directories and list them
+  find . -type d -name ".git" | while read git_dir; do
+    local repo_path=$(dirname "$git_dir")
+    echo "Found repository at $repo_path"
+  done
+
+  # Go back to the previous directory
+  cd - > /dev/null || { echo "Error: Failed to change directory back to previous directory"; return 1; }
+}
+
+# Function to revert all git repositories
 revert_all_repos() {
   local base_dir=$1
   cd "$base_dir" || { echo "Error: Could not change directory to $base_dir"; return 1; }
 
-  # Find all .git directories
+  # Find all .git directories and revert them
   find . -type d -name ".git" | while read git_dir; do
     local repo_path=$(dirname "$git_dir")
-    echo "Processing repository at $repo_path"
+    echo "Reverting repository at $repo_path"
     revert_repo_to_before_march_12 "$repo_path"
   done
 
@@ -81,9 +95,12 @@ revert_all_repos() {
   cd - > /dev/null || { echo "Error: Failed to change directory back to previous directory"; return 1; }
 }
 
-# Start reverting all repositories from the current directory
-revert_all_repos "$(pwd)"
+# List all repositories with .git directories
+echo "Listing all repositories with .git directories:"
+list_all_repos "$(pwd)"
 
+# Revert all repositories
+revert_all_repos "$(pwd)"
 
 
 
