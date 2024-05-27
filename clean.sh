@@ -9,6 +9,14 @@ get_paths() {
 
 get_paths
 
+directories=($(get_paths))
+echo "Contents of directories array:"
+for dir in "${directories[@]}"; do
+    echo "$dir"
+done
+
+
+
 
 # # Format the paths and assign to the directories array
 # directories=($(get_paths))
