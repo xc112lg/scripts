@@ -53,4 +53,7 @@ scan_directories() {
 project_paths=$(extract_paths "$MANIFEST_DIR")
 
 # Convert the space-separated paths string to an array
-IFS=$'\n' read -r -d '' -a paths_array <<< "
+IFS=$'\n' read -r -d '' -a paths_array <<< "$project_paths"
+
+# Scan directories based on extracted paths
+scan_directories "$MANIFEST_DIR" "${paths_array[@]}"
