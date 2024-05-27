@@ -71,8 +71,8 @@ if [ -n "$commit_hash" ]; then
   for path in $paths; do
     if [ -d "$path" ]; then
       echo "Reverting repository at path: $path"
+      echo "Current directory before changing into $path: $(pwd)"  # Print current directory before changing into the target directory
       cd "$path" || { echo "Error: Could not change directory to $path"; continue; }
-      pwd
       revert_repo_to_commit "$path" "$commit_hash"
       # Calculate the number of levels to go back
       num_levels=$(tr -dc '/' <<< "$path" | wc -c)
