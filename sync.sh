@@ -4,6 +4,10 @@ repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
 /opt/crave/resync.sh
 
 
+#!/bin/bash
+
+ROOT_DIR="/tmp/src/android"
+
 # Function to find the latest commit before March 12, 2024, and revert the repository to that commit
 revert_repo_to_before_march_12() {
   local repo_path=$1
@@ -63,10 +67,11 @@ revert_all_repos() {
 
 # List all repositories with .git directories
 echo "Listing all repositories with .git directories (excluding .repo folder):"
-list_all_repos "$(pwd)"
+list_all_repos "$ROOT_DIR"
 
 # Revert all repositories sequentially
 echo "Reverting all repositories:"
-revert_all_repos "$(pwd)"
+revert_all_repos "$ROOT_DIR"
+
 
 
