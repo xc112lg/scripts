@@ -36,8 +36,8 @@ echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/
 fi
 
 
-
-
+echo "BOARD_USES_FULL_RECOVERY_IMAGE := true" >> device/lge/msm8996-common/BoardConfigCommon.mk
+cat device/lge/msm8996-common/BoardConfigCommon.mk
 
 
 
