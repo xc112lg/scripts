@@ -1,5 +1,5 @@
 #!/bin/bash
-mkdir -p vendor/lineage-priv
+rm -rf vendor/lineage-priv
 
 if [ -d "vendor/lineage-priv/keys" ]; then
   echo "Directory vendor/extra/keys already exists, skipping."
