@@ -102,7 +102,7 @@ elif [ "$DEVICE" == "h872" ]; then
 export BUILD_DEVICE="h872"
 	echo "${MAKEFILE}_h872${RELEASETYPE1}-userdebug"
 
-    lunch ${MAKEFILE}_h872${RELEASETYPE1}-eng
+    lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
 # Check if command is "clean"
 if [ "$COMMAND" == "clean" ]; then
     echo "Cleaning..."
