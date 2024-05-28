@@ -1,7 +1,7 @@
 #!/bin/bash
-mkdir -p vendor/extra
+mkdir -p vendor/lineage-priv
 
-if [ -d "vendor/extra/keys" ]; then
+if [ -d "vendor/lineage-priv/keys" ]; then
   echo "Directory vendor/extra/keys already exists, skipping."
 else
     subject='/C=PH/ST=Philippines/L=Manila/O=Rex H/OU=Rex H/CN=Rex H/emailAddress=dtiven13@gmail.com'
