@@ -40,8 +40,7 @@ fi
 echo "-include vendor/lineage-priv/keys/keys.mk" >> device/lge/msm8996-common/msm8996.mk
 
 
-ls android-certs
-cat vendor/lineage-priv/keys/BUILD.bazel
+
 
 
 
