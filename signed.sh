@@ -1,8 +1,14 @@
 #!/bin/bash
 
 
+#!/bin/bash
 
-
+# Check if the directory exists
+if [ -d "vendor/extra/keys" ]; then
+  # Check if the directory is empty
+  if [ "$(ls -A vendor/extra/keys)" ]; then
+    echo "not empty skipping key creation"
+  else
     subject='/C=PH/ST=Philippines/L=Manila/O=Rex H/OU=Rex H/CN=Rex H/emailAddress=dtiven13@gmail.com'
 mkdir ./android-certs
 
@@ -14,7 +20,7 @@ done
 mkdir vendor/extra
 mkdir vendor/lineage-priv
 
-mv ~/.android-certs vendor/extra/keys
+cp -r ./android-certs vendor/extra/keys
 #For Lineage 21 and newer use the command below if not then use above 
 #cp ~/.android-certs vendor/lineage-priv/keys
 echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/extra/product.mk
@@ -31,4 +37,24 @@ echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/
 #     visibility = ["//visibility:public"],
 # )
 # EOF
+  fi
+else
+  echo "Directory vendor/extra/keys does not exist."
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
