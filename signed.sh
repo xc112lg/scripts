@@ -1,5 +1,5 @@
 #!/bin/bash
-rm -rf vendor/lineage-priv android-certs
+#rm -rf vendor/lineage-priv android-certs
 mkdir -p vendor/lineage-priv
 if [ -d "vendor/lineage-priv/keys" ]; then
   echo "Directory vendor/extra/keys already exists, skipping."
@@ -22,7 +22,7 @@ mv ./android-certs vendor/lineage-priv/keys
 #For Lineage 21 and newer use the command below if not then use above
 echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/lineage-priv/keys/releasekey" > vendor/lineage-priv/keys/keys.mk
 
-cat << 'EOF' > vendor/extra/keys/BUILD.bazel
+cat << 'EOF' > vendor/lineage-priv/keys/BUILD.bazel
 filegroup(
     name = "android_certificate_directory",
     srcs = glob([
