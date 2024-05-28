@@ -41,7 +41,7 @@ echo "-include vendor/lineage-priv/keys/keys.mk" >> device/lge/msm8996-common/ms
 
 
 
-cat vendor/extra/keys/BUILD.bazel
+cat vendor/lineage-priv/keys/BUILD.bazel
 
 
 
