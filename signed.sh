@@ -1,10 +1,4 @@
 #!/bin/bash
-cd external/chromium-webview/prebuilt/arm64
-git lfs install
-git rev-parse --git-dir
-git config --global --add safe.directory external/chromium-webview/prebuilt/arm64/
-git lfs pull
-cd ../../../..
 
 
 
