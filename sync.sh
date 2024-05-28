@@ -65,7 +65,6 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 source scripts/clean.sh
 
-#!/bin/bash
 
 main() {
     # Run repo sync command and capture the output
