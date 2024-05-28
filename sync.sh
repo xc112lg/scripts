@@ -11,12 +11,7 @@ COM1="${7}"
 COM2="${8}"
 CORE="${9:-"$(nproc --all)"}"
 
-cd external/chromium-webview/prebuilt/arm64
-git lfs install
-git rev-parse --git-dir
-git config --global --add safe.directory external/chromium-webview/prebuilt/arm64/
-git lfs pull
-cd ../../../..
+
 
 ## Remove existing build artifactsa
 if [ "$DELZIP" == "delzip" ]; then
@@ -30,10 +25,9 @@ rm -rf .repo/local_manifests
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
-rm -rf external/chromium-webview
 source scripts/clean.sh
 source scripts/extras.sh
-#!/bin/bash
+
 
 main() {
     # Run repo sync command and capture the output
