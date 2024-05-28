@@ -109,7 +109,9 @@ if [ "$COMMAND" == "clean" ]; then
     m clean
 fi
     m installclean
-    ${COM1} -j$(nproc --all) ${COM2}
+    mka target-files-package otatools
+
+    
 else
     echo "Building for the specified device: $DEVICE..."
     # Build for the specified device
