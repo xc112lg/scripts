@@ -1,20 +1,39 @@
 #!/bin/bash
 
-# S_asb_2023-03
-# repopick -t S_asb_2023-03
+# Scan all folders under external/chromium-webview/prebuilt/*
+echo "Scanning folders in external/chromium-webview/prebuilt/*"
+folders=$(find external/chromium-webview/prebuilt/* -type d)
 
-# Charging animation
-cd frameworks/base/
-git cherry-pick 10a30bf4bbee8e98a742338ef89f0a414ff638b9
-cd ../../
+# Install Git LFS
+echo "Installing Git LFS"
+git lfs install
 
-# PixelProps
-cd frameworks/base/
-git cherry-pick 9c542fb2323aae953d9957d320ba8ae1603aaafe
-cd ../../
-
-# Updater
-cd vendor/lineage
-git fetch https://github.com/LG-G6/android_vendor_lineage.git lineage-19.1
-git cherry-pick 8246f8702827e7ca209e607dcc17cf4f1dba998f
-cd ../../
+# Loop through each folder
+for folder in $folders; do
+  echo "Processing folder: $folder"
+  
+  # Check if the folder is a Git repository
+  if [ -d "$folder/.git" ]; then
+    echo "$folder is a Git repository"
+    
+    # Navigate to the Git repository
+    cd "$folder"
+    
+    # Get the Git directory
+    GIT_DIR=$(git rev-parse --git-dir)
+    echo "Git directory is: $GIT_DIR"
+    
+    # Add the folder to the list of safe directories
+    echo "Adding $folder to the list of safe directories"
+    git config --global --add safe.directory "$folder"
+    
+    # Pull Git LFS objects
+    echo "Pulling Git LFS objects"
+    git lfs pull
+    
+    # Navigate back to the initial directory
+    cd - > /dev/null
+  else
+    echo "$folder is not a Git repository"
+  fi
+done
