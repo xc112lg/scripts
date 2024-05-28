@@ -108,7 +108,7 @@ else
 fi
 
 source scripts/signed.sh
-source scripts/extras.sh
+#source scripts/extras.sh
 # source scripts/fixes.sh
 export USE_CCACHE=1
 source build/envsetup.sh
