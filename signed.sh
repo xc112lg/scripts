@@ -41,3 +41,11 @@ cat device/lge/msm8996-common/BoardConfigCommon.mk
 
 
 
+
+
+
+
+
+
+    
+
