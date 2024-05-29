@@ -46,8 +46,8 @@ main $*
 
 
 
-source scripts/clean.sh
-source scripts/extras.sh
+# source scripts/clean.sh
+# source scripts/extras.sh
 
 source build/envsetup.sh
 chmod +x scripts/generate_certs.sh
