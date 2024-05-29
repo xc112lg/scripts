@@ -6,7 +6,7 @@ path="frameworks/base"
 
 # Navigate to the frameworks/base directory
 cd "$path" || { echo "Directory $path not found"; exit 1; }
-
+git log -n 1
 # Find the latest commit hash
 latest_commit_hash=$(git rev-parse HEAD)
 
