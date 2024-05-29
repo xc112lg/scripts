@@ -13,6 +13,12 @@ source scripts/clean.sh
 source scripts/extras.sh
 
 source build/envsetup.sh
+chmod +x scripts/generate_certs.sh
+chmod +x scripts/build_and_sign.sh
+
+
+
+source scripts/generate_certs.sh
 source scripts/build_and_sign.sh
     # lunch lineage_h872-userdebug
     # m installclean
