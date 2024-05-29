@@ -3,8 +3,17 @@
 # Define the cut-off date
 CUTOFF_DATE="2024-03-12"
 
+# Define the branch name
+BRANCH_NAME="lineage-21.0"
+
 # Navigate to the desired directory within the repository
 cd frameworks/base || { echo "Directory frameworks/base does not exist."; exit 1; }
+
+# Check if the branch exists
+if ! git rev-parse --verify "$BRANCH_NAME" >/dev/null 2>&1; then
+  echo "Branch $BRANCH_NAME does not exist."
+  exit 1
+fi
 
 # Get the date of the latest commit
 LATEST_COMMIT_DATE=$(git log -1 --format=%ci | cut -d' ' -f1)
@@ -15,8 +24,8 @@ CUTOFF_DATE_SECONDS=$(date -d "$CUTOFF_DATE" +%s)
 
 # Function to revert to the commit before the cut-off date
 revert_to_commit_before_cutoff() {
-  # Find the commit before the cut-off date
-  COMMIT_BEFORE_CUTOFF=$(git rev-list -n 1 --before="$CUTOFF_DATE" master)
+  # Find the commit before the cut-off date in the specified branch
+  COMMIT_BEFORE_CUTOFF=$(git rev-list -n 1 --before="$CUTOFF_DATE" "$BRANCH_NAME")
 
   if [ -z "$COMMIT_BEFORE_CUTOFF" ]; then
     echo "No commit found before $CUTOFF_DATE."
