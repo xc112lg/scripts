@@ -109,7 +109,7 @@ if [ "$COMMAND" == "clean" ]; then
     m clean
 fi
     m installclean
-    m bacon
+    make bacon
     mka target-files-package otatools
     
 
