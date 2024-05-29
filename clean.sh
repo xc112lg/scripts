@@ -1,46 +1,24 @@
 #!/bin/bash
 
-# Define the cut-off date
-CUTOFF_DATE="2024-03-12"
+# Define the path to the target directory
+TARGET_DIR="frameworks/base"
 
-# Navigate to the desired directory within the repository
-if ! cd frameworks/base; then
-  echo "Directory frameworks/base does not exist."
-  exit 1
-fi
+# Define the cutoff date
+CUTOFF_DATE="2024-03-12T00:00:00Z"
 
-# Get the latest commit date across all branches
-LATEST_COMMIT_DATE=$(git for-each-ref --sort=-committerdate --format='%(committerdate:iso8601)' refs/heads/ | head -n 1 | cut -d' ' -f1)
-LATEST_COMMIT_HASH=$(git for-each-ref --sort=-committerdate --format='%(objectname)' refs/heads/ | head -n 1)
+# Navigate to the target directory
+cd "$TARGET_DIR" || { echo "Directory $TARGET_DIR not found."; exit 1; }
 
-# Convert dates to seconds since epoch for comparison
-LATEST_COMMIT_DATE_SECONDS=$(date -d "$LATEST_COMMIT_DATE" +%s)
-CUTOFF_DATE_SECONDS=$(date -d "$CUTOFF_DATE" +%s)
+# Find the latest commit before the cutoff date
+PRE_MARCH12_COMMIT=$(git rev-list -n 1 --before="$CUTOFF_DATE" HEAD)
 
-# Function to find the commit before the cut-off date across all branches
-find_commit_before_cutoff() {
-  # Find the commit before the cut-off date across all branches
-  COMMIT_BEFORE_CUTOFF=$(git rev-list -n 1 --before="$CUTOFF_DATE" --all)
-
-  if [ -z "$COMMIT_BEFORE_CUTOFF" ]; then
-    echo "No commit found before $CUTOFF_DATE."
-    exit 1
-  fi
-
-  echo "$COMMIT_BEFORE_CUTOFF"
-}
-
-# Compare the latest commit date with the cut-off date
-if [ "$LATEST_COMMIT_DATE_SECONDS" -gt "$CUTOFF_DATE_SECONDS" ]; then
-  echo "Latest commit date $LATEST_COMMIT_DATE is after the cut-off date $CUTOFF_DATE."
-  COMMIT_BEFORE_CUTOFF=$(find_commit_before_cutoff)
-  if [ -z "$COMMIT_BEFORE_CUTOFF" ]; then
-    echo "No commit found before $CUTOFF_DATE. Exiting without reverting."
-    exit 1
-  fi
-  # Revert to the commit before the cut-off date
-  git reset --hard "$COMMIT_BEFORE_CUTOFF"
-  echo "Reverted to commit $COMMIT_BEFORE_CUTOFF dated $(git log -1 --format=%ci "$COMMIT_BEFORE_CUTOFF")."
+if [ -z "$PRE_MARCH12_COMMIT" ]; then
+  echo "No commits found before March 12, 2024. No action taken."
 else
-  echo "No commit is after the cut-off date $CUTOFF_DATE. No action needed."
+  # Revert the repository to the state of the commit before March 12, 2024
+  git reset --hard "$PRE_MARCH12_COMMIT"
+  echo "Repository reverted to commit before March 12, 2024: $PRE_MARCH12_COMMIT"
 fi
+
+# Navigate back to the original directory
+cd - > /dev/null
