@@ -6,6 +6,12 @@ TARGET_DIR="frameworks/base"
 # Define the cutoff date
 CUTOFF_DATE="2024-03-12T00:00:00Z"
 
+# Navigate to the root of the repository
+cd "$(git rev-parse --show-toplevel)" || { echo "Repository root not found."; exit 1; }
+
+# Get the current branch name
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
 # Navigate to the target directory
 cd "$TARGET_DIR" || { echo "Directory $TARGET_DIR not found."; exit 1; }
 
@@ -22,3 +28,8 @@ fi
 
 # Navigate back to the original directory
 cd - > /dev/null
+
+# Switch back to the original branch if necessary
+if [ "$CURRENT_BRANCH" != "$(git rev-parse --abbrev-ref HEAD)" ]; then
+  git checkout "$CURRENT_BRANCH"
+fi
