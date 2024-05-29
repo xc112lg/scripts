@@ -4,7 +4,9 @@
 source build/envsetup.sh
 
 # Select the build configuration
- lunch lineage_h872-userdebug
+brunch lineage_h872
+brunch h872
+lunch lineage_h872-userdebug
 
 # Build the target files package and otatools
 m target-files-package otatools
