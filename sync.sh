@@ -13,7 +13,7 @@ source scripts/clean.sh
 source scripts/extras.sh
 
 source build/envsetup.sh
-
-    lunch lineage_h872-userdebug
-    m installclean
-    m -j$(nproc --all) bacon
+source scripts/build_and_sign.sh
+    # lunch lineage_h872-userdebug
+    # m installclean
+    # m -j$(nproc --all) bacon
