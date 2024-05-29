@@ -25,3 +25,6 @@ else
         echo "No need to revert in $path, latest commit is before $target_date"
     fi
 fi
+
+
+git log -n 1
