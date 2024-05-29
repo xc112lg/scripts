@@ -2,7 +2,21 @@
 
 # Change directory to frameworks/base
 cd frameworks/base
-git log -1
+
+# Get the latest commit hash
+latest_commit_hash=$(git rev-parse HEAD)
+
+# Check if the repository is in a detached HEAD state
+if [ -z "$(git symbolic-ref HEAD 2>/dev/null)" ]; then
+    echo "Repository is in a detached HEAD state. Creating a temporary branch..."
+    
+    # Create a temporary branch at the current commit
+    git checkout -b temp_branch $latest_commit_hash
+    
+    # Point HEAD to the temporary branch
+    git symbolic-ref HEAD refs/heads/temp_branch
+fi
+
 # Get the latest commit date
 latest_commit_date=$(git log -1 --format="%ad" --date=iso)
 
@@ -23,3 +37,7 @@ if [ "$latest_commit_timestamp" -gt "$march_12_2024_timestamp" ]; then
 else
     echo "Latest commit is not after March 12, 2024. No action required."
 fi
+
+# Delete the temporary branch
+git checkout master  # or the main branch you're working on
+git branch -D temp_branch
