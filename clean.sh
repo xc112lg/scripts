@@ -1,3 +1,5 @@
+#!/bin/bash
+
 xml_dir=".repo/manifests"
 paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | sed 's/$/\//')
 
@@ -6,16 +8,18 @@ target_date="2024-03-12"
 
 # Iterate through each path
 for path in $paths; do
-    cd "$path" || exit
+    echo "Processing path: $path"
+    cd "$path" || { echo "Failed to change directory to $path"; exit 1; }
 
     # Count the number of slashes in the path
     num_slashes=$(tr -dc '/' <<< "$path" | awk '{ print length; }')
 
     # Get the date of the latest commit
     latest_commit_date=$(git log -1 --format=%ci | cut -d' ' -f1)
+    echo "Latest commit date in $path: $latest_commit_date"
 
     # Compare the latest commit date with the target date
-    if [[ "$latest_commit_date" <= "$target_date" ]]; then
+    if [[ "$latest_commit_date" < "$target_date" ]] || [[ "$latest_commit_date" == "$target_date" ]]; then
         echo "Latest commit in $path is on or before $target_date. Skipping reset."
     else
         # Find the commit hash or tag before the target date
@@ -35,5 +39,4 @@ for path in $paths; do
     for ((i=0; i<num_slashes; i++)); do
         cd ..
     done
-
 done
