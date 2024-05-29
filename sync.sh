@@ -71,7 +71,7 @@ fi
 
 
 source scripts/extras.sh
-source scripts/fixes.sh
+#source scripts/fixes.sh
 #source scripts/signed.sh
 export USE_CCACHE=1
 source build/envsetup.sh
@@ -110,7 +110,7 @@ if [ "$COMMAND" == "clean" ]; then
 fi
     m installclean
     make bacon
-    mka target-files-package otatools
+  #  mka target-files-package otatools
     
 
     
