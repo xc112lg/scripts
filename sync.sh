@@ -126,5 +126,7 @@ source scripts/signed.sh
   lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
   make bacon
 
+  mka target-files-package otatools
+
 
 
