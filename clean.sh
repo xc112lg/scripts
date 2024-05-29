@@ -4,6 +4,8 @@ paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml)
 # Define the target date
 target_date="2024-03-12"
 
+reverted_directories=()
+
 for path in $paths; do
     # Append a slash to the end of the path
     path="${path}/"
@@ -25,6 +27,7 @@ for path in $paths; do
             # Reset the branch to the commit before the target date
             git reset --hard "$commit_hash"
             echo "Reverted to commit $commit_hash before $target_date in $path"
+            reverted_directories+=("$path")
         else
             echo "No need to revert in $path, latest commit is before $target_date"
         fi
@@ -33,3 +36,13 @@ for path in $paths; do
     # Move back to the original directory
     cd -
 done
+
+# List reverted directories
+if [ ${#reverted_directories[@]} -eq 0 ]; then
+    echo "No directories were reverted."
+else
+    echo "Reverted directories:"
+    for dir in "${reverted_directories[@]}"; do
+        echo "- $dir"
+    done
+fi
