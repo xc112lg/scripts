@@ -3,7 +3,7 @@ rm -rf .repo/local_manifests
 #rm -rf device/lge/
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
-cp scripts/roomservice.xml .repo/local_manifests
+# cp scripts/roomservice.xml .repo/local_manifests
 
 
 #repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
