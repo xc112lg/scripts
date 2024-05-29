@@ -1,8 +1,22 @@
+xml_dir=".repo/manifests"
+paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | sed 's/$/\//')
+
+
+
+# Remove each file
+for path in $paths; do
+    cd "$path"
+    # Count the number of slashes in the path
+    num_slashes=$(tr -dc '/' <<< "$path" | awk '{ print length; }')
+
+
+
+
+
 # Define the target date
 target_date="2024-03-12"
 
-# Set the path to frameworks/base
-path="frameworks/base"
+
 
 # Navigate to the frameworks/base directory
 cd "$path" || { echo "Directory $path not found"; exit 1; }
@@ -25,3 +39,14 @@ else
         echo "No need to revert in $path, latest commit is before $target_date"
     fi
 fi
+
+
+
+  # Move back to the original directory
+    for ((i=0; i<num_slashes; i++)); do
+        cd ..
+    done
+
+done
+
+
