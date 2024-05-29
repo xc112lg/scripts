@@ -15,7 +15,13 @@ cd ../..
 
 
 
-#source scripts/clean.sh
+source scripts/clean.sh
+
+
+cd frameworks/base
+git log -n 1
+git status
+cd ../..
 # source scripts/extras.sh
 
 #source build/envsetup.sh
