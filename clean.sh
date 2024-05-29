@@ -4,7 +4,10 @@
 CUTOFF_DATE="2024-03-12"
 
 # Navigate to the desired directory within the repository
-cd frameworks/base || { echo "Directory frameworks/base does not exist."; exit 1; }
+if ! cd frameworks/base; then
+  echo "Directory frameworks/base does not exist."
+  exit 1
+fi
 
 # Get the latest commit date across all branches
 LATEST_COMMIT_DATE=$(git for-each-ref --sort=-committerdate --format='%(committerdate:iso8601)' refs/heads/ | head -n 1 | cut -d' ' -f1)
@@ -31,6 +34,10 @@ find_commit_before_cutoff() {
 if [ "$LATEST_COMMIT_DATE_SECONDS" -gt "$CUTOFF_DATE_SECONDS" ]; then
   echo "Latest commit date $LATEST_COMMIT_DATE is after the cut-off date $CUTOFF_DATE."
   COMMIT_BEFORE_CUTOFF=$(find_commit_before_cutoff)
+  if [ -z "$COMMIT_BEFORE_CUTOFF" ]; then
+    echo "No commit found before $CUTOFF_DATE. Exiting without reverting."
+    exit 1
+  fi
   # Revert to the commit before the cut-off date
   git reset --hard "$COMMIT_BEFORE_CUTOFF"
   echo "Reverted to commit $COMMIT_BEFORE_CUTOFF dated $(git log -1 --format=%ci "$COMMIT_BEFORE_CUTOFF")."
