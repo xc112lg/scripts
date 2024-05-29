@@ -11,7 +11,7 @@ COM1="${7}"
 COM2="${8}"
 CORE="${9:-"$(nproc --all)"}"
 
-
+git lfs install
 
 ## Remove existing build artifactsa
 if [ "$DELZIP" == "delzip" ]; then
@@ -72,7 +72,7 @@ fi
 
 source scripts/extras.sh
 source scripts/fixes.sh
-source scripts/signed.sh
+#source scripts/signed.sh
 export USE_CCACHE=1
 source build/envsetup.sh
 
