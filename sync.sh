@@ -4,9 +4,9 @@ rm -rf .repo/local_manifests
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
-# cd frameworks/base
-# git log 1 
-# cd ../..
+cd frameworks/base
+git log 1
+cd ../..
 
 #repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 #repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
@@ -14,7 +14,7 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 
 
-source scripts/clean.sh
+#source scripts/clean.sh
 # source scripts/extras.sh
 
 #source build/envsetup.sh
