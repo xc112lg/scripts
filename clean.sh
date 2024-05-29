@@ -30,8 +30,11 @@ march_12_2024_timestamp=$(date -d "March 12, 2024" +%s)
 if [ "$latest_commit_timestamp" -gt "$march_12_2024_timestamp" ]; then
     echo "Latest commit is after March 12, 2024. Reverting..."
     
+    # Get the commit hash before March 12, 2024
+    target_commit_hash=$(git rev-list -1 --before="$march_12_2024_timestamp" HEAD)
+    
     # Revert to the commit before March 12, 2024
-    git checkout $(git rev-list -1 --before="$march_12_2024_timestamp" HEAD)
+    git checkout $target_commit_hash
 
     echo "Reverted successfully."
 else
