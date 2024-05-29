@@ -11,7 +11,7 @@ COM1="${7}"
 COM2="${8}"
 CORE="${9:-"$(nproc --all)"}"
 
-git lfs install
+rm -rf external/chromium-webview/prebuilt/*
 
 ## Remove existing build artifactsa
 if [ "$DELZIP" == "delzip" ]; then
