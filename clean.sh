@@ -11,7 +11,7 @@ if [ -z "$(git symbolic-ref HEAD 2>/dev/null)" ]; then
     echo "Repository is in a detached HEAD state. Creating a temporary branch..."
     
     # Create a temporary branch at the current commit
-    git checkout -b temp_branch $latest_commit_hash
+    git checkout -b temp_branch "$latest_commit_hash"
     
     # Point HEAD to the temporary branch
     git symbolic-ref HEAD refs/heads/temp_branch
