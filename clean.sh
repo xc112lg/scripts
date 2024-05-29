@@ -34,7 +34,7 @@ if [ "$latest_commit_timestamp" -gt "$march_12_2024_timestamp" ]; then
     target_commit_hash=$(git rev-list -1 --before="$march_12_2024_timestamp" HEAD)
     
     # Revert to the commit before March 12, 2024
-    git checkout "$target_commit_hash"
+    git checkout "$target_commit_hash" .
 
     echo "Reverted successfully."
 else
@@ -42,7 +42,7 @@ else
 fi
 
 # Switch back to the main branch (replace 'main' with your main branch name)
-git checkout main  # or the main branch you're working on
+git checkout master  # or the main branch you're working on
 
 # Delete the temporary branch
 git branch -D temp_branch
