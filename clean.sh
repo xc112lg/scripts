@@ -19,9 +19,7 @@ for path in $paths; do
     echo "Latest commit date in $path: $latest_commit_date"
 
     # Compare the latest commit date with the target date
-    if [[ "$latest_commit_date" < "$target_date" ]] || [[ "$latest_commit_date" == "$target_date" ]]; then
-        echo "Latest commit in $path is on or before $target_date. Skipping reset."
-    else
+    if [[ "$latest_commit_date" > "$target_date" ]]; then
         # Find the commit hash or tag before the target date
         commit_hash=$(git rev-list -1 --before="$target_date" HEAD)
 
@@ -33,6 +31,8 @@ for path in $paths; do
         # Reset the branch to the commit
         git reset --hard "$commit_hash"
         echo "Reverted to commit before $target_date in $path."
+    else
+        echo "Latest commit in $path is on or before $target_date. Skipping reset."
     fi
 
     # Move back to the original directory
