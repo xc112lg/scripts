@@ -1,48 +1,37 @@
 #!/bin/bash
 
-# Change directory to frameworks/base
-cd frameworks/base || exit
+# Define the cut-off date
+CUTOFF_DATE="2024-03-12"
 
-# Get the latest commit hash
-latest_commit_hash=$(git rev-parse HEAD)
+# Navigate to the desired directory within the repository
+cd frameworks/base || { echo "Directory frameworks/base does not exist."; exit 1; }
 
-# Check if the repository is in a detached HEAD state
-if [ -z "$(git symbolic-ref HEAD 2>/dev/null)" ]; then
-    echo "Repository is in a detached HEAD state. Creating a temporary branch..."
-    
-    # Create a temporary branch at the current commit
-    git checkout -b temp_branch "$latest_commit_hash"
-    
-    # Point HEAD to the temporary branch
-    git symbolic-ref HEAD refs/heads/temp_branch
-fi
+# Get the date of the latest commit
+LATEST_COMMIT_DATE=$(git log -1 --format=%ci | cut -d' ' -f1)
 
-# Get the latest commit date
-latest_commit_date=$(git log -1 --format="%ad" --date=iso)
+# Convert dates to seconds since epoch for comparison
+LATEST_COMMIT_DATE_SECONDS=$(date -d "$LATEST_COMMIT_DATE" +%s)
+CUTOFF_DATE_SECONDS=$(date -d "$CUTOFF_DATE" +%s)
 
-# Convert commit date to timestamp
-latest_commit_timestamp=$(date -d "$latest_commit_date" +%s)
+# Function to revert to the commit before the cut-off date
+revert_to_commit_before_cutoff() {
+  # Find the commit before the cut-off date
+  COMMIT_BEFORE_CUTOFF=$(git rev-list -n 1 --before="$CUTOFF_DATE" master)
 
-# Timestamp for March 12, 2024
-march_12_2024_timestamp=$(date -d "March 12, 2024" +%s)
+  if [ -z "$COMMIT_BEFORE_CUTOFF" ]; then
+    echo "No commit found before $CUTOFF_DATE."
+    exit 1
+  fi
 
-# Check if the latest commit is after March 12, 2024
-if [ "$latest_commit_timestamp" -gt "$march_12_2024_timestamp" ]; then
-    echo "Latest commit is after March 12, 2024. Reverting..."
-    
-    # Get the commit hash before March 12, 2024
-    target_commit_hash=$(git rev-list -1 --before="$march_12_2024_timestamp" HEAD)
-    
-    # Revert to the commit before March 12, 2024
-    git checkout "$target_commit_hash" .
+  # Revert to that commit
+  git reset --hard "$COMMIT_BEFORE_CUTOFF"
+  echo "Reverted to commit $COMMIT_BEFORE_CUTOFF dated $(git log -1 --format=%ci "$COMMIT_BEFORE_CUTOFF")."
+}
 
-    echo "Reverted successfully."
+# Compare the latest commit date with the cut-off date
+if [ "$LATEST_COMMIT_DATE_SECONDS" -gt "$CUTOFF_DATE_SECONDS" ]; then
+  echo "Latest commit date $LATEST_COMMIT_DATE is after the cut-off date $CUTOFF_DATE."
+  revert_to_commit_before_cutoff
 else
-    echo "Latest commit is not after March 12, 2024. No action required."
+  echo "No commit is after the cut-off date $CUTOFF_DATE. No action needed."
 fi
-
-# Switch back to the main branch (replace 'main' with your main branch name)
-git checkout master  # or the main branch you're working on
-
-# Delete the temporary branch
-git branch -D temp_branch
