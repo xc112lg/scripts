@@ -2,7 +2,7 @@
 <manifest>
 
  <remote name="github1"
-        fetch="https://.com" />
+        fetch="https://github.com" />
 
   
   <project name="LineageOS/android_device_lge_h870" path="device/lge/h870" remote="github1" revision="lineage-21" />
