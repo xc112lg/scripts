@@ -20,8 +20,11 @@ for path in $paths; do
 
     # Compare the latest commit date with the target date
     if [[ "$latest_commit_date" > "$target_date" ]]; then
+        echo "Latest commit in $path is after $target_date. Proceeding to revert."
+
         # Find the commit hash or tag before the target date
         commit_hash=$(git rev-list -1 --before="$target_date" HEAD)
+        echo "Commit hash before $target_date: $commit_hash"
 
         if [ -z "$commit_hash" ]; then
             echo "No commits found before $target_date in $path."
