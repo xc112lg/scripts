@@ -7,6 +7,7 @@ source build/envsetup.sh
 breakfast lineage_h872
 breakfast h872
 lunch lineage_h872-userdebug
+lunch
 
 # Build the target files package and otatools
 m target-files-package otatools
