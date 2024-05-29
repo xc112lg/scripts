@@ -5,7 +5,7 @@ rm -rf .repo/local_manifests
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 cd frameworks/base
-git log -1
+git log 
 
 #repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 #repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
