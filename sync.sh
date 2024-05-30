@@ -40,7 +40,7 @@ repo forall -c "git lfs install && git lfs pull && git lfs checkout"
 source build/envsetup.sh
 
 
-echo "2nd run"
+
 
 #/opt/crave/resync.sh
 source scripts/clean.sh
