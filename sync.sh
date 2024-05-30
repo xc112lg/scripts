@@ -1,5 +1,5 @@
 #!/bin/bash
-repo init -u https://github.com/LineageOS/android.git -b lineage-20.0 --git-lfs
+repo init -u https://github.com/LineageOS/android.git -b lineage-20.0
 #git clean -fdX
 #rm -rf frameworks/base/
 rm -rf .repo/local_manifests device/lge/msm8996-common
