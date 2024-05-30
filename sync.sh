@@ -1,6 +1,6 @@
 #!/bin/bash
 repo init -u https://github.com/LineageOS/android.git -b lineage-20.0 --git-lfs
-git lfs uninstall
+
 #git clean -fdX
 #rm -rf frameworks/base/
 rm -rf .repo/local_manifests device/lge/msm8996-common
@@ -10,6 +10,7 @@ mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
 
+repo init --git-lfs
 rm -rf external/chromium-webview/prebuilt/*
 rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
 rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
