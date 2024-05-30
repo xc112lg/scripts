@@ -8,6 +8,15 @@ rm -rf .repo/local_manifests device/lge/msm8996-common
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
+rm -rf external/chromium-webview/prebuilt/*
+rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
+rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
+
+
+
+
+
+
 
 main() {
     # Run repo sync command and capture the output
