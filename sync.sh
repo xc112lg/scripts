@@ -1,5 +1,6 @@
 #!/bin/bash
 repo init -u https://github.com/LineageOS/android.git -b lineage-20.0 --git-lfs
+git lfs install
 
 #git clean -fdX
 #rm -rf frameworks/base/
