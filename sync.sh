@@ -7,6 +7,7 @@ rm -rf .repo/local_manifests device/lge/msm8996-common
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
+git lfs uninstall
 
 # rm -rf external/chromium-webview/prebuilt/*
 # rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
