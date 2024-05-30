@@ -36,7 +36,7 @@ main() {
 }
 main $*
 
-#repo forall -c "git lfs install && git lfs pull && git lfs checkout"
+repo forall -c "git lfs install && git lfs pull && git lfs checkout"
 source build/envsetup.sh
 
 
