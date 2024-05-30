@@ -146,6 +146,7 @@ if [ "$COMMAND" == "clean" ]; then
     echo "Cleaning..."
     m clean
 fi
+lunch lineage_h872-ap1a-userdebug
     m installclean
    m target-files-package otatools
 else
