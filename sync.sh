@@ -25,8 +25,7 @@ rm -rf .repo/local_manifests
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
-source scripts/clean.sh
-source scripts/extras.sh
+
 
 
 main() {
@@ -70,7 +69,7 @@ else
 fi
 
 
-source scripts/extras.sh
+
 #source scripts/fixes.sh
 #source scripts/signed.sh
 export USE_CCACHE=1
@@ -111,6 +110,13 @@ fi
     m installclean
     make bacon
   #  mka target-files-package otatools
+echo "2nd run"
+
+
+source scripts/clean.sh
+source scripts/extras.sh
+m installclean
+m bacon
     
 
     
@@ -122,11 +128,7 @@ else
 fi
 
 
-source scripts/signed.sh
-  lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
-  make bacon
 
-  mka target-files-package otatools
 
 
 
