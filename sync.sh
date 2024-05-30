@@ -10,13 +10,13 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 
 /opt/crave/resync.sh
-
+repo forall -c "git lfs install && git lfs pull && git lfs checkout"
 source build/envsetup.sh
 
 
 echo "2nd run"
-repo forall -c "git lfs install && git lfs pull && git lfs checkout"
-/opt/crave/resync.sh
+
+#/opt/crave/resync.sh
 source scripts/clean.sh
 source scripts/extras.sh
 
