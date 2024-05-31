@@ -4,27 +4,24 @@ rm -rf .repo/local_manifests
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
-cd frameworks/base
-git log -n 1
-git status
-cd ../..
+
 
 #repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
-#repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
-#/opt/crave/resync.sh
+repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
+/opt/crave/resync.sh
 
 
 
 source scripts/clean.sh
 
 
-cd frameworks/base
-git log -n 1
-git status
-cd ../..
+
 # source scripts/extras.sh
 
-#source build/envsetup.sh
+source build/envsetup.sh
+lunch lineage_h872-userdebug
+m installclean
+m -j$(nproc --all) bacon
 # chmod +x scripts/generate_certs.sh
 # chmod +x scripts/build_and_sign.sh
 
