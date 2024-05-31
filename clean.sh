@@ -6,7 +6,7 @@ target_date="2024-03-12"
 
 for path in $paths; do
     # Append a slash to the end of the path
-    path="${path}/"
+    path="${path}"
 
     # Navigate to the directory
     cd "$path" || { echo "Directory $path not found"; continue; }
