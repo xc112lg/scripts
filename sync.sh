@@ -109,7 +109,7 @@ fi
 
 rm -rf hardware/lge
 git clone https://github.com/xc112lg/android_hardware_lge hardware/lge
-
+ls hardware/lge
 #source scripts/signed.sh
 #source scripts/extras.sh
 #source scripts/fixes.sh
