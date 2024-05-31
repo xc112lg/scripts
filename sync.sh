@@ -142,15 +142,12 @@ elif [ "$DEVICE" == "h872" ]; then
 export BUILD_DEVICE="h872"
 	echo "${MAKEFILE}_h872${RELEASETYPE1}-userdebug"
 
-    lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
-# Check if command is "clean"
-if [ "$COMMAND" == "clean" ]; then
-    echo "Cleaning..."
-    m clean
-fi
-lunch lineage_h872-ap1a-userdebug
-    m installclean
-   m target-files-package otatools
+lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
+
+
+
+m installclean
+m target-files-package otatools
 else
     echo "Building for the specified device: $DEVICE..."
     # Build for the specified device
