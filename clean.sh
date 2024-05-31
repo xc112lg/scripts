@@ -1,6 +1,6 @@
 xml_dir=".repo/manifests"
 paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | sed 's/$/\//')
-echo "paths"
+echo "$paths"
 # Define the target date
 target_date="2024-03-12"
 
