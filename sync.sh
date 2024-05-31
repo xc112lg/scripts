@@ -98,6 +98,7 @@ source build/envsetup.sh
 cd device/lge/msm8996-common
 repopick -f 389322
 repopick -f 393050
+sed -i 's/android.hardware.radio@1.4-service.legacy/android.hardware.radio@1.4-service.lge/g' msm8996.mk
 cd ../../../
 
 lunch lineage_h872-ap1a-userdebug
