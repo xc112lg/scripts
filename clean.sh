@@ -1,26 +1,27 @@
 xml_dir=".repo/manifests"
 paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | sed 's/$/\//')
-echo "$paths"
+
+
+
+# Remove each file
+for path in $paths; do
+    cd "$path"
+    # Count the number of slashes in the path
+    num_slashes=$(tr -dc '/' <<< "$path" | awk '{ print length; }')
 # Define the target date
 target_date="2024-03-12"
 
-for path in $paths; do
-    # Append a slash to the end of the path
-    path="${path}"
 
-    # Navigate to the directory
-    cd "$path" || { echo "Directory $path not found"; continue; }
+  # Get the list of commits with their dates
+  commits=$(git log --pretty=format:"%H %cd" --date=iso 2>>"$LOG_FILE")
+  # if [ $? -ne 0 ]; then
+  #   echo "Failed to retrieve git log." | tee -a "$LOG_FILE"
+  #   exit 1
+  # fi
 
-# Get the list of commits with their dates
-commits=$(git log --pretty=format:"%H %cd" --date=iso 2>>"$LOG_FILE")
-# if [ $? -ne 0 ]; then
-#   echo "Failed to retrieve git log." | tee -a "$LOG_FILE"
-#   exit 1
-# fi
-
-# Iterate over the commits
-echo "Processing commits..." | tee -a "$LOG_FILE"
-echo "$commits" | while IFS= read -r line; do
+  # Iterate over the commits
+  echo "Processing commits..." | tee -a "$LOG_FILE"
+  echo "$commits" | while IFS= read -r line; do
   commit_hash=$(echo "$line" | awk '{print $1}')
   commit_date=$(echo "$line" | cut -d' ' -f2-)
   echo "Checking commit: $commit_hash, date: $commit_date" | tee -a "$LOG_FILE"
@@ -72,18 +73,15 @@ echo "$commits" | while IFS= read -r line; do
     echo "Commit $commit_hash is before $TARGET_DATE, skipping." | tee -a "$LOG_FILE"
   fi
 
-done
+  done
 
 
 
 
 
 
+    for ((i=0; i<num_slashes; i++)); do
+        cd ..
+    done
 
-
-
-
-
-    # Move back to the original directory
-    cd -
 done
