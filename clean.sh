@@ -8,6 +8,11 @@ for path in $paths; do
     cd "$path"
     # Count the number of slashes in the path
     num_slashes=$(tr -dc '/' <<< "$path" | awk '{ print length; }')
+
+
+
+
+
 # Define the target date
 target_date="2024-03-12"
 
@@ -80,6 +85,8 @@ target_date="2024-03-12"
 
 
 
+
+  # Move back to the original directory
     for ((i=0; i<num_slashes; i++)); do
         cd ..
     done
