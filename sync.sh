@@ -112,7 +112,7 @@ git clone https://github.com/xc112lg/android_hardware_lge hardware/lge
 
 #source scripts/signed.sh
 #source scripts/extras.sh
-source scripts/fixes.sh
+#source scripts/fixes.sh
 chmod +x scripts/generate_certs.sh
 #source scripts/generate_certs.sh
 export USE_CCACHE=1
