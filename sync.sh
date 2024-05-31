@@ -95,11 +95,9 @@ chmod +x scripts/generate_certs.sh
 #source scripts/generate_certs.sh
 export USE_CCACHE=1
 source build/envsetup.sh
-cd device/lge/msm8996-common
 repopick -f 389322
 repopick -f 393050
-sed -i 's/android.hardware.radio@1.4-service.legacy/android.hardware.radio@1.4-service.lge/g' msm8996.mk
-cd ../../../
+repopick -f 392575
 
 lunch lineage_h872-ap1a-userdebug
     m installclean
