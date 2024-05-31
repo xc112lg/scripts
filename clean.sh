@@ -1,22 +1,89 @@
-#!/bin/bash
+#xml_dir=".repo/manifests"
+paths=android_hardware_lge/
 
-# Define the path to the target directory
-TARGET_DIR="frameworks/base"
+# Define the target date
+target_date="2024-03-12"
 
-# Define the cutoff date
-CUTOFF_DATE="2024-03-12T00:00:00Z"
+for path in $paths; do
+    # Append a slash to the end of the path
+    path="${path}/"
 
-# Navigate to the target directory
-cd "$(git rev-parse --show-toplevel)" || { echo "Repository root not found."; exit 1; }
-cd "$TARGET_DIR" || { echo "Directory $TARGET_DIR not found."; exit 1; }
+    # Navigate to the directory
+    cd "$path" || { echo "Directory $path not found"; continue; }
 
-# Find the latest commit before the cutoff date
-PRE_MARCH12_COMMIT=$(git rev-list -n 1 --before="$CUTOFF_DATE" HEAD)
-
-if [ -z "$PRE_MARCH12_COMMIT" ]; then
-  echo "No commits found before March 12, 2024. No action taken."
-else
-  # Revert the repository to the state of the commit before March 12, 2024
-  git reset --hard "$PRE_MARCH12_COMMIT"
-  echo "Repository reverted to commit before March 12, 2024: $PRE_MARCH12_COMMIT"
+# Get the list of commits with their dates
+commits=$(git log --pretty=format:"%H %cd" --date=iso 2>>"$LOG_FILE")
+if [ $? -ne 0 ]; then
+  echo "Failed to retrieve git log." | tee -a "$LOG_FILE"
+  exit 1
 fi
+
+# Iterate over the commits
+echo "Processing commits..." | tee -a "$LOG_FILE"
+echo "$commits" | while IFS= read -r line; do
+  commit_hash=$(echo "$line" | awk '{print $1}')
+  commit_date=$(echo "$line" | cut -d' ' -f2-)
+  echo "Checking commit: $commit_hash, date: $commit_date" | tee -a "$LOG_FILE"
+
+  # Convert commit date to epoch time
+  commit_epoch=$(date_to_epoch "$commit_date")
+
+  if [ $commit_epoch -gt $target_epoch ]; then
+    echo "Found commit after $TARGET_DATE: $commit_hash" | tee -a "$LOG_FILE"
+
+    # Find the latest commit before the target date
+    previous_commit=$(git log --before="$TARGET_DATE" --pretty=format:"%H" -n 1 2>>"$LOG_FILE")
+    if [ $? -ne 0 ]; then
+      echo "Failed to retrieve previous commit." | tee -a "$LOG_FILE"
+      exit 1
+    fi
+
+    if [ -n "$previous_commit" ]; then
+      echo "Reverting commit before $TARGET_DATE: $previous_commit" | tee -a "$LOG_FILE"
+      git revert --no-commit "$previous_commit" 2>>"$LOG_FILE"
+      if [ $? -ne 0 ]; then
+        echo "Failed to revert commit: $previous_commit" | tee -a "$LOG_FILE"
+        exit 1
+      fi
+
+      # Remove files added by the reverted commit
+      git diff --name-only "$previous_commit" | xargs rm -rf
+
+      git commit -am "Revert commit $previous_commit" 2>>"$LOG_FILE"
+      if [ $? -ne 0 ]; then
+        echo "Failed to commit revert" | tee -a "$LOG_FILE"
+        exit 1
+      fi
+
+      # Check if the commit has been reverted
+      revert_check=$(git log --grep="Revert" --grep="$previous_commit" 2>>"$LOG_FILE")
+      if [ -n "$revert_check" ]; then
+        echo "Commit $previous_commit has been successfully reverted." | tee -a "$LOG_FILE"
+      else
+        echo "Revert of commit $previous_commit failed." | tee -a "$LOG_FILE"
+      fi
+    else
+      echo "No commit found before $TARGET_DATE" | tee -a "$LOG_FILE"
+    fi
+
+    # Break after processing the first commit after target date
+    break
+  else
+    echo "Commit $commit_hash is before $TARGET_DATE, skipping." | tee -a "$LOG_FILE"
+  fi
+
+done
+
+
+
+
+
+
+
+
+
+
+
+    # Move back to the original directory
+    cd -
+done
