@@ -13,10 +13,10 @@ for path in $paths; do
 
 # Get the list of commits with their dates
 commits=$(git log --pretty=format:"%H %cd" --date=iso 2>>"$LOG_FILE")
-if [ $? -ne 0 ]; then
-  echo "Failed to retrieve git log." | tee -a "$LOG_FILE"
-  exit 1
-fi
+# if [ $? -ne 0 ]; then
+#   echo "Failed to retrieve git log." | tee -a "$LOG_FILE"
+#   exit 1
+# fi
 
 # Iterate over the commits
 echo "Processing commits..." | tee -a "$LOG_FILE"
