@@ -1,5 +1,5 @@
-#xml_dir=".repo/manifests"
-paths=android_hardware_lge/
+xml_dir=".repo/manifests"
+paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | sed 's/$/\//')
 
 # Define the target date
 target_date="2024-03-12"
