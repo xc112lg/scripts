@@ -1,11 +1,11 @@
 xml_dir=".repo/manifests"
-paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | sed 's/$/\//')
+paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml)
 
 
 
 # Remove each file
 for path in $paths; do
-    cd "$path"
+    cd "$path/"
     # Count the number of slashes in the path
     num_slashes=$(tr -dc '/' <<< "$path" | awk '{ print length; }')
 # Define the target date
