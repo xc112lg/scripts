@@ -46,7 +46,7 @@
 
 #git clean -fdX
 #rm -rf frameworks/base/
-rm -rf .repo/local_manifests
+rm -rf .repo/local_manifests device/lge/msm8996-common
 #rm -rf device/lge/
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
@@ -86,10 +86,10 @@ main() {
 
 main $*
 
-
-
-
-
+cd device/lge/msm8996-common
+repopick -f 389322
+repopick -f 393050
+cd ../../../
 
 #source scripts/signed.sh
 #source scripts/extras.sh
