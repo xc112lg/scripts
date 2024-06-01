@@ -134,6 +134,7 @@ EOF
 
 lunch lineage_h872-ap1a-userdebug
     m installclean
+    m bacon
 
 
 
