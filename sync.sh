@@ -128,7 +128,7 @@ filegroup(
 )
 EOF
 
-
+sed -i '/-include device\/lge\/msm8996-common\/BoardConfigCommon.mk/a\-include vendor/lineage-priv/keys/keys.mk' device/lge/g6-common/BoardConfigCommon.mk
 
 
 
