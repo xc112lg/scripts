@@ -46,7 +46,7 @@
 
 #git clean -fdX
 #rm -rf frameworks/base/
-rm -rf .repo/local_manifests device/lge/msm8996-common
+rm -rf .repo/local_manifests device/lge
 #rm -rf device/lge/
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
