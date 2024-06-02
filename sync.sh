@@ -131,10 +131,9 @@ EOF
 sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/lineage-priv/keys/keys.mk' device/lge/msm8996-common/msm8996.mk
 
 
-
 lunch lineage_h872-ap1a-userdebug
-    m installclean
-    m bacon
+m installclean
+m bacon
 
 
 
