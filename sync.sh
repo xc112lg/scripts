@@ -114,9 +114,9 @@ done
 mkdir vendor/extra
 mkdir vendor/lineage-priv
 cp -r ~/.android-certs vendor/extra/keys
-echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/lineage-priv/keys/releasekey" > vendor/lineage-priv/keys/keys.mk
-cp -r ~/.android-certs vendor/lineage-priv/keys
 
+cp -r ~/.android-certs vendor/lineage-priv/keys
+echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/lineage-priv/keys/releasekey" > vendor/lineage-priv/keys/keys.mk
 cat << 'EOF' >  vendor/lineage-priv/keys/BUILD.bazel
 filegroup(
     name = "android_certificate_directory",
