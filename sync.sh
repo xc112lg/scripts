@@ -39,7 +39,7 @@
 
 
 
-
+repo init -u https://github.com/crdroidandroid/android.git -b 14.0 --git-lfs
 
 
 
@@ -60,7 +60,7 @@ rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuil
 
 main() {
     # Run repo sync command and capture the output
-    repo sync -c -j32 --force-sync --no-clone-bundle --no-tags 2>&1 | tee /tmp/output.txt
+    repo sync -c -j64 --force-sync --no-clone-bundle --no-tags 2>&1 | tee /tmp/output.txt
 
     # Check if there are any failing repositories
     if grep -q "Failing repos:" /tmp/output.txt ; then
@@ -81,7 +81,7 @@ main() {
 
         # Re-sync all repositories after deletion
         echo "Re-syncing all repositories..."
-        repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
+        repo sync -c -j64 --force-sync --no-clone-bundle --no-tags
     else
         echo "All repositories synchronized successfully."
     fi
