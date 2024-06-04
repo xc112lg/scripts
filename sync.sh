@@ -1,7 +1,7 @@
 #!/bin/bash
-git lfs install
+
 repo init -u https://github.com/crdroidandroid/android.git -b 13.0 --git-lfs
-git lfs install
+
 
 
 rm -rf .repo/local_manifests device/lge build/tools 
@@ -10,7 +10,7 @@ mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
 
-repo init --git-lfs
+
 rm -rf external/chromium-webview/prebuilt/*
 rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
 rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
