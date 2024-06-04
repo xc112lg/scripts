@@ -95,7 +95,7 @@ main $*
 #source scripts/extras.sh
 #source scripts/fixes.sh
 chmod +x scripts/generate_certs.sh
-source scripts/generate_certs.sh
+# source scripts/generate_certs.sh
 export USE_CCACHE=1
 source build/envsetup.sh
 repopick -f 389322
