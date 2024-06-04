@@ -101,8 +101,13 @@ source build/envsetup.sh
 repopick -f 389322
 repopick -f 393050
 repopick -f 392575
-repopick -f 391357
+#repopick -f 391357
 
+
+cd device/lineage/sepolicy
+git fetch https://github.com/xc112lg/android_device_lineage_sepolicy.git patch-1
+git cherry-pick 936989aab95e9f7ae6bb3a1d95f18c4de98eb194
+cd ../../../
 
 subject='/C=DE/ST=Germany/L=Berlin/O=Max Mustermann/OU=Max Mustermann/CN=Max Mustermann/emailAddress=max@mustermann.de'
 mkdir ~/.android-certs
