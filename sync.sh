@@ -1,7 +1,7 @@
 #!/bin/bash
 
 repo init -u https://github.com/crdroidandroid/android.git -b 13.0 --git-lfs
-
+rm -rf ~/.android-certs
 
 
 rm -rf .repo/local_manifests device/lge build/tools 
@@ -25,7 +25,7 @@ git fetch https://github.com/xc112lg/android_build.git patch-1
 git cherry-pick b7b12b875a97eee6e512c74c53a82066e237a31a
 cd ../../
 
-subject='/C=DE/ST=Germany/L=Berlin/O=Max Mustermann/OU=Max Mustermann/CN=Max Mustermann/emailAddress=max@mustermann.de'
+subject='/C=PH/ST=Philippines/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
 mkdir ~/.android-certs
 
 for x in releasekey platform shared media networkstack testkey cyngn-priv-app bluetooth sdk_sandbox verifiedboot; do \
