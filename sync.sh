@@ -108,8 +108,8 @@ source build/envsetup.sh
 # git fetch https://github.com/xc112lg/android_device_lineage_sepolicy.git patch-1
 # git cherry-pick 936989aab95e9f7ae6bb3a1d95f18c4de98eb194
 # cd ../../../
-
-subject='/C=DE/ST=Germany/L=Berlin/O=Max Mustermann/OU=Max Mustermann/CN=Max Mustermann/emailAddress=max@mustermann.de'
+rm -rf ~/.android-certs
+subject='/C=PH/ST=Philippines/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
 mkdir ~/.android-certs
 
 for x in releasekey platform shared media networkstack testkey cyngn-priv-app bluetooth sdk_sandbox verifiedboot; do \
