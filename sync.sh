@@ -1,6 +1,6 @@
 #!/bin/bash
 
-repo init -u https://github.com/crdroidandroid/android.git -b 13.0 --git-lfs
+#repo init -u https://github.com/crdroidandroid/android.git -b 13.0 --git-lfs
 rm -rf ~/.android-certs
 
 
