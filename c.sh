@@ -57,6 +57,9 @@ bash generate.sh everest
 cd ../../../ 
 echo "LOG: done generating."
 
+echo "1st sync"
+curl -sf https://raw.githubusercontent.com/sounddrill31/docker-images/patch-19/aosp/common/resync.sh | bash;
+echo "2nd sync"
 # /opt/crave/resync.sh
 curl -sf https://raw.githubusercontent.com/xc112lg/scripts/cd10/b.sh | bash;
 
