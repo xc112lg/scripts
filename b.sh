@@ -1,5 +1,5 @@
 #!/bin/bash
-repo init -u https://github.com/Evolution-X/manifest -b u
+#repo init -u https://github.com/Evolution-X/manifest -b u
 
 
 main() {
