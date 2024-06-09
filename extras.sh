@@ -17,6 +17,7 @@ cd ../../
 # PixelProps
 cd frameworks/base/
 git cherry-pick 9c542fb2323aae953d9957d320ba8ae1603aaafe
+mkdir core/java/com/android/internal/util/custom
 cd core/java/com/android/internal/util/custom/
 rm PixelPropsUtils.java
 wget https://raw.githubusercontent.com/crdroidandroid/android_frameworks_base/14.0/core/java/com/android/internal/util/crdroid/PixelPropsUtils.java
