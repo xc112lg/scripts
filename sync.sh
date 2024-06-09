@@ -57,25 +57,25 @@ source scripts/fixes.sh
 source scripts/extras.sh
 
 
-sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/extra/product.mk' device/lge/msm8996-common/msm8996.mk
-cd build/tools
-git fetch https://github.com/xc112lg/android_build.git patch-1
-git cherry-pick b7b12b875a97eee6e512c74c53a82066e237a31a
-cd ../../
+# sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/extra/product.mk' device/lge/msm8996-common/msm8996.mk
+# cd build/tools
+# git fetch https://github.com/xc112lg/android_build.git patch-1
+# git cherry-pick b7b12b875a97eee6e512c74c53a82066e237a31a
+# cd ../../
 
-subject='/C=PH/ST=Philippines/L=Manila/O=xc112lg/OU=xc112lg/CN=xc112lg/emailAddress=dtiven13@gmail.com'
-mkdir ~/.android-certs
+# subject='/C=PH/ST=Philippines/L=Manila/O=xc112lg/OU=xc112lg/CN=xc112lg/emailAddress=dtiven13@gmail.com'
+# mkdir ~/.android-certs
 
-for x in releasekey platform shared media networkstack testkey cyngn-priv-app bluetooth sdk_sandbox verifiedboot; do \
- yes "" |   ./development/tools/make_key ~/.android-certs/$x "$subject"; \
-done
+# for x in releasekey platform shared media networkstack testkey cyngn-priv-app bluetooth sdk_sandbox verifiedboot; do \
+#  yes "" |   ./development/tools/make_key ~/.android-certs/$x "$subject"; \
+# done
 
-mkdir vendor/extra
-mkdir vendor/lineage-priv
-cp -r ~/.android-certs vendor/extra/keys
+# mkdir vendor/extra
+# mkdir vendor/lineage-priv
+# cp -r ~/.android-certs vendor/extra/keys
 
-cp -r ~/.android-certs vendor/lineage-priv/keys
-echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/extra/product.mk
+# cp -r ~/.android-certs vendor/lineage-priv/keys
+# echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/extra/product.mk
 
 
 
