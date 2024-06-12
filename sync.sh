@@ -13,9 +13,9 @@ CORE="${9:-"$(nproc --all)"}"
 mkdir -p cc
 mkdir -p c
 # Set default values for device and commandd
-wget https://github.com/ccache/ccache/releases/download/v4.9.1/ccache-4.9.1-linux-x86_64.tar.xz
-tar -xf ccache-4.9.1-linux-x86_64.tar.xz
-cd ccache-4.9.1-linux-x86_64
+wget https://github.com/ccache/ccache/releases/download/v4.10/ccache-4.10-linux-x86_64.tar.xz
+tar -xf ccache-4.10-linux-x86_64.tar.xz
+cd ccache-4.10-linux-x86_64
 #sudo make install
 #ccache --version
 sudo cp ccache /usr/bin/
