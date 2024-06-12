@@ -84,10 +84,10 @@ rm -rf ~/.android-certs
 # #lunch lineage_us997-userdebug
 # lunch lineage_h872-userdebug
 # m installclean
-# m bacon
+# m bacon  build/tools 
 
 
-rm -rf .repo/local_manifests device/lge build/tools vendor/lineage-priv
+rm -rf .repo/local_manifests device/lge vendor/lineage-priv frameworks/base
 
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
@@ -103,10 +103,10 @@ rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuil
 
 source build/envsetup.sh
 sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/extra/product.mk' device/lge/msm8996-common/msm8996.mk
-cd build/tools
-git fetch https://github.com/xc112lg/android_build.git patch-1
-git cherry-pick b7b12b875a97eee6e512c74c53a82066e237a31a
-cd ../../
+# cd build/tools
+# git fetch https://github.com/xc112lg/android_build.git patch-1
+# git cherry-pick b7b12b875a97eee6e512c74c53a82066e237a31a
+# cd ../../
 
 cd frameworks/base
 git fetch https://github.com/xc112lg/android_frameworks_base-1.git patch-19
