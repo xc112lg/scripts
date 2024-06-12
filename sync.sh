@@ -96,14 +96,14 @@ main $*
 #source scripts/fixes.sh
 chmod +x scripts/generate_certs.sh
 # source scripts/generate_certs.sh
-export USE_CCACHE=1
+# export USE_CCACHE=1
 source build/envsetup.sh
-repopick -f 390841
-repopick -f 390845
-repopick -f 390846
-repopick -f 390847
-repopick -f 390848
-repopick -f 393931
+# repopick -f 390841
+# repopick -f 390845
+# repopick -f 390846
+# repopick -f 390847
+# repopick -f 390848
+# repopick -f 393931
 # cd device/lineage/sepolicy
 # git fetch https://github.com/xc112lg/android_device_lineage_sepolicy.git patch-1
 # git cherry-pick 936989aab95e9f7ae6bb3a1d95f18c4de98eb194
