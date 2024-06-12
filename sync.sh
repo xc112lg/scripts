@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#repo init -u https://github.com/crdroidandroid/android.git -b 13.0 --git-lfs
+repo init -u https://github.com/crdroidandroid/android.git -b 13.0 --git-lfs
 rm -rf ~/.android-certs
 
 
@@ -80,6 +80,12 @@ cd build/tools
 git fetch https://github.com/xc112lg/android_build.git patch-1
 git cherry-pick b7b12b875a97eee6e512c74c53a82066e237a31a
 cd ../../
+
+cd frameworks/base
+git fetch https://github.com/xc112lg/android_frameworks_base-1.git patch-19
+git cherry-pick 34bfc667283e91110ca1672b413480391b762cf9
+cd ../../
+
 
 subject='/C=PH/ST=Philippines/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
 mkdir ~/.android-certs
