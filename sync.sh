@@ -84,10 +84,10 @@ rm -rf ~/.android-certs
 # #lunch lineage_us997-userdebug
 # lunch lineage_h872-userdebug
 # m installclean
-# m bacon  build/tools 
+# m bacon 
 
 
-rm -rf .repo/local_manifests device/lge vendor/lineage-priv frameworks/base
+rm -rf .repo/local_manifests device/lge vendor/lineage-priv frameworks/base  build/tools 
 
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
