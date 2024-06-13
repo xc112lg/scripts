@@ -148,7 +148,7 @@ echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/
     # lunch lineage_h870-userdebug
     # m installclean
     # m -j$(nproc --all) bacon
-    lunch lineage_h872-userdebug
+    lunch lineage_h872-user
     m installclean
     m -j$(nproc --all) bacon
 
