@@ -30,7 +30,7 @@ ccache -s
 repo init -u https://github.com/crdroidandroid/android.git -b 13.0 --git-lfs
 rm -rf ~/.android-certs
 
-
+git clone https://gitlab.com/MindTheGapps/vendor_gapps -b tau vendor/gapps
 # rm -rf .repo/local_manifests device/lge build/tools 
 
 # mkdir -p .repo/local_manifests
@@ -103,6 +103,7 @@ rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuil
 
 source build/envsetup.sh
 sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/extra/product.mk' device/lge/msm8996-common/msm8996.mk
+sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a include vendor/gapps/arm64/arm64-vendor.mk' device/lge/msm8996-common/msm8996.mk
 cd build/tools
 git fetch https://github.com/xc112lg/android_build.git patch-1
 git cherry-pick b7b12b875a97eee6e512c74c53a82066e237a31a
@@ -148,7 +149,7 @@ echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/
     # lunch lineage_h870-userdebug
     # m installclean
     # m -j$(nproc --all) bacon
-    lunch lineage_h872-user
+    lunch lineage_h872-userdebug
     m installclean
     m -j$(nproc --all) bacon
 
