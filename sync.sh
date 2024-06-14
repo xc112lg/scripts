@@ -137,6 +137,7 @@ sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/lineage-priv/ke
 
 
 lunch lineage_h872-ap1a-eng
+m clean
 m installclean
 m bacon
 
