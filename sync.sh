@@ -59,7 +59,9 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 source scripts/clean.sh
 
-#!/bin/bash
+rm -rf external/chromium-webview/prebuilt/*
+rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
+rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
 
 main() {
     # Run repo sync command and capture the output
@@ -91,6 +93,23 @@ main() {
 }
 
 main $*
+
+
+
+sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/extra/product.mk' device/lge/msm8996-common/msm8996.mk
+subject='/C=PH/ST=Philippines/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
+mkdir ~/.android-certs
+
+for x in releasekey platform shared media networkstack testkey cyngn-priv-app bluetooth sdk_sandbox verifiedboot; do \
+ yes "" |   ./development/tools/make_key ~/.android-certs/$x "$subject"; \
+done
+
+mkdir vendor/extra
+mkdir vendor/lineage-priv
+cp -r ~/.android-certs vendor/extra/keys
+
+cp -r ~/.android-certs vendor/lineage-priv/keys
+echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/extra/product.mk
 
 
 
@@ -143,50 +162,50 @@ fi
 
 
 
-# source scripts/fixes.sh
-# export USE_CCACHE=1
-# source build/envsetup.sh
+source scripts/fixes.sh
+export USE_CCACHE=1
+source build/envsetup.sh
 
 
-# # Check if command is "clean"
-# if [ "$COMMAND" == "clean" ]; then
-#     echo "Cleaning..."
-#     m clean
-# fi
+# Check if command is "clean"
+if [ "$COMMAND" == "clean" ]; then
+    echo "Cleaning..."
+    m clean
+fi
 
-# # Check if device is set to "all"
-# if [ "$DEVICE" == "all" ]; then
-#     echo "Building for all devices..."
+# Check if device is set to "all"
+if [ "$DEVICE" == "all" ]; then
+    echo "Building for all devices..."
 
-#     lunch ${MAKEFILE}_us997${RELEASETYPE1}-userdebug
-#     m installclean
-#     ${COM1} -j$(nproc --all) ${COM2}
-#     lunch ${MAKEFILE}_h870${RELEASETYPE1}-userdebug
-#     m installclean
-#     ${COM1} -j$(nproc --all) ${COM2}
-#     lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
-#     m installclean
-#     ${COM1} -j$(nproc --all) ${COM2}
+    lunch ${MAKEFILE}_us997${RELEASETYPE1}-userdebug
+    m installclean
+    ${COM1} -j$(nproc --all) ${COM2}
+    lunch ${MAKEFILE}_h870${RELEASETYPE1}-userdebug
+    m installclean
+    ${COM1} -j$(nproc --all) ${COM2}
+    lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
+    m installclean
+    ${COM1} -j$(nproc --all) ${COM2}
  
-# elif [ "$DEVICE" == "h872" ]; then
-#     echo "Building for h872..."
-# export BUILD_DEVICE="h872"
-# 	echo "${MAKEFILE}_h872${RELEASETYPE1}-userdebug"
+elif [ "$DEVICE" == "h872" ]; then
+    echo "Building for h872..."
+export BUILD_DEVICE="h872"
+	echo "${MAKEFILE}_h872${RELEASETYPE1}-userdebug"
 
-#     lunch ${MAKEFILE}_h872${RELEASETYPE1}-eng
-# # Check if command is "clean"
-# if [ "$COMMAND" == "clean" ]; then
-#     echo "Cleaning..."
-#     m clean
-# fi
-#     m installclean
-#     ${COM1} -j$(nproc --all) ${COM2}
-# else
-#     echo "Building for the specified device: $DEVICE..."
-#     # Build for the specified device
-#     lunch "$DEVICE"
-#     ${COM1} -j16 ${COM2}
-# fi
+    lunch ${MAKEFILE}_h872${RELEASETYPE1}-eng
+# Check if command is "clean"
+if [ "$COMMAND" == "clean" ]; then
+    echo "Cleaning..."
+    m clean
+fi
+    m installclean
+    ${COM1} -j$(nproc --all) ${COM2}
+else
+    echo "Building for the specified device: $DEVICE..."
+    # Build for the specified device
+    lunch "$DEVICE"
+    ${COM1} -j16 ${COM2}
+fi
 
 
 
