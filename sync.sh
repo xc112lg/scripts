@@ -51,12 +51,12 @@ fi
 
 #git clean -fdX
 #rm -rf frameworks/base/
-rm -rf .repo/local_manifests
+rm -rf .repo/local_manifests 
 #rm -rf device/lge/
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
-
+sed -i 's|hardware/qcom-caf/msm8996-R|hardware/qcom-caf/msm8996|g' .repo/manifests/arrow.xml
 source scripts/clean.sh
 
 # rm -rf external/chromium-webview/prebuilt/*
