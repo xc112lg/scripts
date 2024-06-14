@@ -56,7 +56,7 @@ rm -rf .repo/local_manifests
 #rm -rf kernel/lge/msm8996
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
-sed -i 's|hardware/qcom-caf/msm8996-R|hardware/qcom-caf/msm8996|g' .repo/manifests/arrow.xml
+#sed -i 's|hardware/qcom-caf/msm8996-R|hardware/qcom-caf/msm8996|g' .repo/manifests/arrow.xml
 source scripts/clean.sh
 
 # rm -rf external/chromium-webview/prebuilt/*
