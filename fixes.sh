@@ -1,8 +1,8 @@
 ## Cam fix for LG G6 and delete some line cause im stupid.
-cd frameworks/base/
-git fetch https://github.com/xc112lg/frameworks_base.git AOSP
-git cherry-pick e52c414a96d35fb32e585310edb557abac18beb5
-cd ../../
+# cd frameworks/base/
+# git fetch https://github.com/xc112lg/frameworks_base.git AOSP
+# git cherry-pick e52c414a96d35fb32e585310edb557abac18beb5
+# cd ../../
 
 # Mixer: adjust input volume levels
 cd device/lge/g6-common
@@ -23,15 +23,5 @@ cd ../../../
 #cd ../../../
 
 
-cd device/lge/msm8996-common
-sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-1
-sleep 1 &&git cherry-pick 7ef8ee92f398052a9d6351e4d7157e8474401f5b
 
-cd ../../../
 
-cd vendor/lge/msm8996-common/
-
-sleep 1 && git fetch https://github.com/xc112lg/proprietary_vendor_lge_msm8996-common.git patch-2
-sleep 1 && git cherry-pick b7ae264df1d799c5d635bada6afbc3714df75cdb 
-sleep 1 && git cherry-pick 1efc7fd60e02b78c0ce03b184b1c0f485100cd18
-cd ../../../
