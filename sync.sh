@@ -59,9 +59,9 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 source scripts/clean.sh
 
-rm -rf external/chromium-webview/prebuilt/*
-rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
-rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
+# rm -rf external/chromium-webview/prebuilt/*
+# rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
+# rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
 rm -rf hardware/lge
 main() {
     # Run repo sync command and capture the output
