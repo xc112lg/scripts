@@ -31,9 +31,9 @@
   <project name="TheMuppets/proprietary_vendor_lge_g6-common" path="vendor/lge/g6-common" remote="github1" revision="lineage-20" />
   <project name="LineageOS/android_hardware_sony_timekeep" path="hardware/sony/timekeep" remote="github1" revision="lineage-20" />
 
-  <remove-project name="android_vendor_qcom_opensource_vibrator" />
+  <!--<remove-project name="android_vendor_qcom_opensource_vibrator" />
 
    <project path="vendor/qcom/opensource/vibrator" name="android_vendor_qcom_opensource_vibrator" groups="qcom,waipio-vendor" remote="lineage" />
-
+-->
   
 </manifest>
