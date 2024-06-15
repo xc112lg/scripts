@@ -4,6 +4,12 @@
  <remote  name="github1"
            fetch="https://github.com"
 />
+
+  <remote  name="lineage"
+           fetch="https://github.com/LineageOS"
+           review="https://review.lineageos.org/"
+           revision="refs/heads/lineage-20.0" />
+ 
   <project name="LineageOS/android_device_lge_h830" path="device/lge/h830" remote="github1" revision="lineage-20" />
   <project name="LineageOS/android_device_lge_h850" path="device/lge/h850" remote="github1" revision="lineage-20" />
   <project name="LineageOS/android_device_lge_rs988" path="device/lge/rs988" remote="github1" revision="lineage-20" />
@@ -25,7 +31,9 @@
   <project name="TheMuppets/proprietary_vendor_lge_g6-common" path="vendor/lge/g6-common" remote="github1" revision="lineage-20" />
   <project name="LineageOS/android_hardware_sony_timekeep" path="hardware/sony/timekeep" remote="github1" revision="lineage-20" />
 
+  <remove-project name="android_vendor_qcom_opensource_vibrator" />
 
+   <project path="vendor/qcom/opensource/vibrator" name="android_vendor_qcom_opensource_vibrator" groups="qcom,waipio-vendor" remote="lineage" />
 
   
 </manifest>
