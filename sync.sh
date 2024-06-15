@@ -177,12 +177,12 @@ fi
 if [ "$DEVICE" == "all" ]; then
     echo "Building for all devices..."
 
-    lunch ${MAKEFILE}_us997${RELEASETYPE1}-userdebug
-    m installclean
-    ${COM1} -j$(nproc --all) ${COM2}
-    lunch ${MAKEFILE}_h870${RELEASETYPE1}-userdebug
-    m installclean
-    ${COM1} -j$(nproc --all) ${COM2}
+#    lunch ${MAKEFILE}_us997${RELEASETYPE1}-userdebug
+#    m installclean
+ #   ${COM1} -j$(nproc --all) ${COM2}
+ #   lunch ${MAKEFILE}_h870${RELEASETYPE1}-userdebug
+#    m installclean
+#    ${COM1} -j$(nproc --all) ${COM2}
     lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
     m installclean
     ${COM1} -j$(nproc --all) ${COM2}
