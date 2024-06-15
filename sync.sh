@@ -93,9 +93,9 @@ main() {
 }
 
 main $*
+vendor/qcom/opensource/vibrator/aidl/Vibrator.cpp
 
-
-
+sed -i "/#include <log\/log.h>/a #include <fcntl.h>" vendor/qcom/opensource/vibrator/aidl/Vibrator.cpp
 sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/extra/product.mk' device/lge/msm8996-common/msm8996.mk
 subject='/C=PH/ST=Philippines/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
 mkdir ~/.android-certs
