@@ -48,7 +48,7 @@ COMMONFULLPHONE="${10}"
 if [ "$DELZIP" == "delzip" ]; then
     rm -rf out/target/product/*/*.zip
 fi
-
+export ARROW_GAPPS=true
 #git clean -fdX
 rm -rf vendor/qcom/
 rm -rf .repo/local_manifests 
@@ -58,7 +58,7 @@ mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 #sed -i 's|hardware/qcom-caf/msm8996-R|hardware/qcom-caf/msm8996|g' .repo/manifests/arrow.xml
 source scripts/clean.sh
-git clone https://gitlab.com/MindTheGapps/vendor_gapps -b tau vendor/gapps
+#git clone https://gitlab.com/MindTheGapps/vendor_gapps -b tau vendor/gapps
 # rm -rf external/chromium-webview/prebuilt/*
 # rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
 # rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
@@ -97,7 +97,7 @@ main $*
 
 #sed -i "/#include <log\/log.h>/a #include <fcntl.h>" vendor/qcom/opensource/vibrator/aidl/Vibrator.cpp
 sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/extra/product.mk' device/lge/msm8996-common/msm8996.mk
-sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a include vendor/gapps/arm64/arm64-vendor.mk' device/lge/msm8996-common/msm8996.mk
+#sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a include vendor/gapps/arm64/arm64-vendor.mk' device/lge/msm8996-common/msm8996.mk
 subject='/C=PH/ST=Philippines/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
 mkdir ~/.android-certs
 
