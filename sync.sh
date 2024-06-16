@@ -95,10 +95,11 @@ main() {
 main $*
 #vendor/qcom/opensource/vibrator/aidl/Vibrator.cpp
 
-#sed -i "/#include <log\/log.h>/a #include <fcntl.h>" vendor/qcom/opensource/vibrator/aidl/Vibrator.cpp
-sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/extra/product.mk' device/lge/msm8996-common/msm8996.mk
-#sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a include vendor/gapps/arm64/arm64-vendor.mk' device/lge/msm8996-common/msm8996.mk
-subject='/C=PH/ST=Philippines/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
+
+if [ -f vendor/extra/product.mk ]; then
+    echo "File exists, Skipping key generation"
+else
+    subject='/C=PH/ST=Philippines/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
 mkdir ~/.android-certs
 
 for x in releasekey platform shared media networkstack testkey cyngn-priv-app bluetooth sdk_sandbox verifiedboot; do \
@@ -111,6 +112,17 @@ cp -r ~/.android-certs vendor/extra/keys
 
 cp -r ~/.android-certs vendor/lineage-priv/keys
 echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/extra/product.mk
+fi
+
+
+
+
+
+
+#sed -i "/#include <log\/log.h>/a #include <fcntl.h>" vendor/qcom/opensource/vibrator/aidl/Vibrator.cpp
+sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/extra/product.mk' device/lge/msm8996-common/msm8996.mk
+#sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a include vendor/gapps/arm64/arm64-vendor.mk' device/lge/msm8996-common/msm8996.mk
+
 
 
 
