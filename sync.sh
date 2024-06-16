@@ -187,6 +187,17 @@ if [ "$DEVICE" == "all" ]; then
     lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
     m installclean
     ${COM1} -j$(nproc --all) ${COM2}
+
+sed -i "/#include <log\/log.h>/a #include <fcntl.h>" vendor/qcom/opensource/vibrator/aidl/Vibrator.cpp
+       lunch ${MAKEFILE}_us997${RELEASETYPE1}-userdebug
+   m installclean
+   ${COM1} -j$(nproc --all) ${COM2}
+   lunch ${MAKEFILE}_h870${RELEASETYPE1}-userdebug
+   m installclean
+   ${COM1} -j$(nproc --all) ${COM2}
+    lunch ${MAKEFILE}_h872${RELEASETYPE1}-userdebug
+    m installclean
+    ${COM1} -j$(nproc --all) ${COM2}
  
 elif [ "$DEVICE" == "h872" ]; then
     echo "Building for h872..."
