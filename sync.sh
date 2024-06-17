@@ -92,7 +92,7 @@ git cherry-pick 34bfc667283e91110ca1672b413480391b762cf9
 cd ../../
 
 
-subject='/C=PH/ST=Philippines/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
+subject='/C=PH/ST=Metro Manila/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
 mkdir ~/.android-certs
 
 for x in releasekey platform shared media networkstack testkey bluetooth sdk_sandbox verifiedboot; do \
