@@ -79,7 +79,7 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 
 source build/envsetup.sh
-sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/extra/product.mk' device/lge/msm8996-common/msm8996.mk
+sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/lineage-priv/keys/keys.mk' device/lge/msm8996-common/msm8996.mk
 sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a include vendor/gapps/arm64/arm64-vendor.mk' device/lge/msm8996-common/msm8996.mk
 cd build/tools
 git fetch https://github.com/xc112lg/android_build.git patch-1
