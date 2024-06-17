@@ -91,29 +91,9 @@ git fetch https://github.com/xc112lg/android_frameworks_base-1.git patch-19
 git cherry-pick 34bfc667283e91110ca1672b413480391b762cf9
 cd ../../
 
-
-subject='/C=PH/ST=Metro Manila/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
-mkdir ~/.android-certs
-
-for x in releasekey platform shared media networkstack testkey bluetooth sdk_sandbox verifiedboot; do \
- yes "" |   ./development/tools/make_key ~/.android-certs/$x "$subject"; \
-done
-
-
-mkdir vendor/lineage-priv
-mv ~/.android-certs vendor/lineage-priv/keys
-echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/lineage-priv/keys/releasekey" > vendor/lineage-priv/keys/keys.mk
-
-cat <<EOF > vendor/lineage-priv/keys/BUILD.bazel
-filegroup(
-    name = "android_certificate_directory",
-    srcs = glob([
-        "*.pk8",
-        "*.pem",
-    ]),
-    visibility = ["//visibility:public"],
-)
-EOF
+export GH_TOKEN=$(cat gh_token.txt)
+git clone https://$GH_TOKEN@github.com/xc112lg/keys -n main vendor/lineage-priv/keys
+ls vendor/lineage-priv/keys
 
 
 
