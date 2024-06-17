@@ -90,6 +90,10 @@ cd frameworks/base
 git fetch https://github.com/xc112lg/android_frameworks_base-1.git patch-19
 git cherry-pick 34bfc667283e91110ca1672b413480391b762cf9
 cd ../../
+cd device/lge/h872
+git fetch https://github.com/xc112lg/android_device_lge_h87.git patch-1
+git cherry-pick 03d20825e951352d519461ec60d98e05fc930c20
+cd ../../../
 
 export GH_TOKEN=$(cat gh_token.txt)
 git clone https://$GH_TOKEN@github.com/xc112lg/keys -b main vendor/lineage-priv/keys
