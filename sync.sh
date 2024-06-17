@@ -3,30 +3,6 @@
 
 
 
-mkdir -p cc
-mkdir -p c
-# Set default values for device and commandd
-wget https://github.com/ccache/ccache/releases/download/v4.10/ccache-4.10-linux-x86_64.tar.xz
-tar -xf ccache-4.10-linux-x86_64.tar.xz
-cd ccache-4.10-linux-x86_64
-#sudo make install
-#ccache --version
-sudo cp ccache /usr/bin/
-sudo ln -sf ccache /usr/bin/gcc
-sudo ln -sf ccache /usr/bin/g++
-cd ..
-ccache --version
-
-export USE_CCACHE=1
-sleep 1
-export CCACHE_DIR=$PWD/cc
-sleep 1 
-ccache -s
-ccache -F 0
-ccache -M 0
-echo $CCACHE_DIR
-ccache -s
-
 rm -rf external/chromium-webview/prebuilt/*
 rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
 rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
