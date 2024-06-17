@@ -96,22 +96,26 @@ main $*
 #vendor/qcom/opensource/vibrator/aidl/Vibrator.cpp
 
 
-if [ -f vendor/extra/product.mk ]; then
+if [ -f vendor/lineage-priv/keys/keys.mk ]; then
     echo "File exists, Skipping key generation"
 else
-    subject='/C=PH/ST=Philippines/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
-mkdir ~/.android-certs
-
-for x in releasekey platform shared media networkstack nfc testkey cyngn-priv-app bluetooth sdk_sandbox verifiedboot; do \
- yes "" |   ./development/tools/make_key ~/.android-certs/$x "$subject"; \
-done
-
-mkdir vendor/extra
+   chmod +x scripts/generate_certs.sh
+source scripts/generate_certs.sh
+sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/lineage-priv/keys/keys.mk' device/lge/msm8996-common/msm8996.mk
+#sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a include vendor/gapps/arm64/arm64-vendor.mk' device/lge/msm8996-common/msm8996.mk
 mkdir vendor/lineage-priv
-cp -r ~/.android-certs vendor/extra/keys
-
 cp -r ~/.android-certs vendor/lineage-priv/keys
-echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/extra/product.mk
+echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/lineage-priv/keys/releasekey" > vendor/lineage-priv/keys/keys.mk
+cat << 'EOF' >  vendor/lineage-priv/keys/BUILD.bazel
+filegroup(
+    name = "android_certificate_directory",
+    srcs = glob([
+        "*.pk8",
+        "*.pem",
+    ]),
+    visibility = ["//visibility:public"],
+)
+EOF
 fi
 
 
