@@ -27,6 +27,10 @@ ccache -M 0
 echo $CCACHE_DIR
 ccache -s
 
+rm -rf external/chromium-webview/prebuilt/*
+rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
+rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
+
 repo init -u https://github.com/crdroidandroid/android.git -b 13.0 --git-lfs
 rm -rf ~/.android-certs
 
@@ -93,10 +97,7 @@ mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
 
-repo init --git-lfs
-rm -rf external/chromium-webview/prebuilt/*
-rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
-rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
+
 
 /opt/crave/resync.sh
 
@@ -118,27 +119,25 @@ cd ../../
 subject='/C=PH/ST=Philippines/L=Manila/O=RexC/OU=RexC/CN=Rexc/emailAddress=dtiven13@gmail.com'
 mkdir ~/.android-certs
 
-for x in releasekey platform shared media networkstack testkey cyngn-priv-app bluetooth sdk_sandbox verifiedboot; do \
+for x in releasekey platform shared media networkstack testkey bluetooth sdk_sandbox verifiedboot; do \
  yes "" |   ./development/tools/make_key ~/.android-certs/$x "$subject"; \
 done
 
-mkdir vendor/extra
+
 mkdir vendor/lineage-priv
-cp -r ~/.android-certs vendor/extra/keys
+mv ~/.android-certs vendor/lineage-priv/keys
+echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/lineage-priv/keys/releasekey" > vendor/lineage-priv/keys/keys.mk
 
-cp -r ~/.android-certs vendor/lineage-priv/keys
-echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/extra/product.mk
-
-# cat << 'EOF' >  vendor/lineage-priv/keys/BUILD.bazel
-# filegroup(
-#     name = "android_certificate_directory",
-#     srcs = glob([
-#         "*.pk8",
-#         "*.pem",
-#     ]),
-#     visibility = ["//visibility:public"],
-# )
-# EOF
+cat <<EOF > vendor/lineage-priv/keys/BUILD.bazel
+filegroup(
+    name = "android_certificate_directory",
+    srcs = glob([
+        "*.pk8",
+        "*.pem",
+    ]),
+    visibility = ["//visibility:public"],
+)
+EOF
 
 
 
