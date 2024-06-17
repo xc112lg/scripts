@@ -92,7 +92,7 @@ git cherry-pick 34bfc667283e91110ca1672b413480391b762cf9
 cd ../../
 
 export GH_TOKEN=$(cat gh_token.txt)
-git clone https://$GH_TOKEN@github.com/xc112lg/keys -n main vendor/lineage-priv/keys
+git clone https://$GH_TOKEN@github.com/xc112lg/keys -b main vendor/lineage-priv/keys
 ls vendor/lineage-priv/keys
 
 
