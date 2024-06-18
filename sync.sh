@@ -10,7 +10,7 @@ rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuil
 repo init -u https://github.com/crdroidandroid/android.git -b 13.0 --git-lfs
 rm -rf ~/.android-certs
 
-git clone https://gitlab.com/MindTheGapps/vendor_gapps -b tau vendor/gapps
+#git clone https://gitlab.com/MindTheGapps/vendor_gapps -b tau vendor/gapps
 
 
 
@@ -41,8 +41,8 @@ git fetch https://github.com/xc112lg/android_frameworks_base-1.git patch-21
 git cherry-pick a41aa682ee7edd2b2d44ce70a4f535436fc89345
 cd ../../
 cd device/lge/h872
-git fetch https://github.com/xc112lg/android_device_lge_h872.git patch-1
-git cherry-pick 03d20825e951352d519461ec60d98e05fc930c20
+git fetch https://github.com/xc112lg/android_device_lge_h872.git patch-2
+git cherry-pick c84299a2ef90af96b739541664239a6378e96d46
 cd ../../../
 
 export GH_TOKEN=$(cat gh_token.txt)
