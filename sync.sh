@@ -36,6 +36,9 @@ cd ../../
 cd frameworks/base
 git fetch https://github.com/xc112lg/android_frameworks_base-1.git patch-19
 git cherry-pick 34bfc667283e91110ca1672b413480391b762cf9
+
+git fetch https://github.com/xc112lg/android_frameworks_base-1.git patch-21
+git cherry-pick a41aa682ee7edd2b2d44ce70a4f535436fc89345
 cd ../../
 cd device/lge/h872
 git fetch https://github.com/xc112lg/android_device_lge_h872.git patch-1
