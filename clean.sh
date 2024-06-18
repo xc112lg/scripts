@@ -1,7 +1,11 @@
+# xml_dir=".repo/manifests"
+# paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml)
+
 xml_dir=".repo/manifests"
-paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml)
 
 
+# Use xmlstarlet to extract paths, enclose each in double quotes, and join them with spaces
+paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml | awk '{printf "\"%s\" ", $0}')
 
 # Remove each file
 for path in $paths; do
