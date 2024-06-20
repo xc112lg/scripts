@@ -13,7 +13,7 @@ repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
 
 
 
-source scripts/clean.sh
+#source scripts/clean.sh
 
 
 
