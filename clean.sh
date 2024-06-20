@@ -31,9 +31,15 @@ for path in $paths; do
     # Change to the directory
     cd "$path" || { echo "Failed to cd into $path"; exit 1; }
     
-    # List the contents
-    echo "Listing contents of $path:" | tee -a "$LOG_FILE"
-    ls | tee -a "$LOG_FILE"
+
+
+    # Check if there are any commits after the target date
+    latest_commit_after_target=$(git rev-list --all --after="$TARGET_DATE" --max-count=1)
+    if [ -z "$latest_commit_after_target" ]; then
+      echo "No commits found after $TARGET_DATE in $path" | tee -a "$LOG_FILE"
+      cd "$original_dir" || exit 1
+      continue
+    fi
     
     # Get the list of commits around the target date
     commits=$(git rev-list --all --before="$TARGET_DATE" --max-count=10)
@@ -72,15 +78,6 @@ for path in $paths; do
         continue
       fi
 
-      # Remove files added by the reverted commit
-      git diff --name-only "$last_commit_before_target" | xargs rm -rf
-
-      git commit -am "Revert commit $last_commit_before_target" 2>>"$LOG_FILE"
-      if [ $? -ne 0 ]; then
-        echo "Failed to commit revert" | tee -a "$LOG_FILE"
-        cd "$original_dir" || exit 1
-        continue
-      fi
 
       # Check if the commit has been reverted
       revert_check=$(git log --grep="Revert" --grep="$last_commit_before_target" 2>>"$LOG_FILE")
@@ -112,10 +109,6 @@ done
 if [ -z "${reverted_commits[*]}" ]; then
   echo "No commit found before $TARGET_DATE" | tee -a "$LOG_FILE"
 fi
-
-
-
-
 
 
 
