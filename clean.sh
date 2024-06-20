@@ -32,14 +32,16 @@ for path in $paths; do
     cd "$path" || { echo "Failed to cd into $path"; exit 1; }
     
     # List the contents
-    echo "Listing contents of $path:"
-    ls
+    echo "Listing contents of $path:" | tee -a "$LOG_FILE"
+    ls | tee -a "$LOG_FILE"
     
-    # Get the list of commits with their dates
-    commits=$(git log --pretty=format:"%H %cd" --date=iso 2>>"$LOG_FILE")
-    if [ $? -ne 0 ]; then
-      echo "Failed to retrieve git log." | tee -a "$LOG_FILE"
-      exit 1
+    # Get the list of commits around the target date
+    commits=$(git rev-list --all --before="$TARGET_DATE" --max-count=100)
+
+    if [ -z "$commits" ]; then
+      echo "No commits found before $TARGET_DATE in $path" | tee -a "$LOG_FILE"
+      cd "$original_dir" || exit 1
+      continue
     fi
 
     last_commit_before_target=""
@@ -47,18 +49,13 @@ for path in $paths; do
 
     # Iterate over the commits
     echo "Processing commits..." | tee -a "$LOG_FILE"
-    echo "$commits" | while IFS= read -r line; do
-      commit_hash=$(echo "$line" | awk '{print $1}')
-      commit_date=$(echo "$line" | cut -d' ' -f2-)
-      
-      # Convert commit date to epoch time
+    for commit in $commits; do
+      commit_date=$(git show -s --format=%ci "$commit")
       commit_epoch=$(date_to_epoch "$commit_date")
 
       if [ $commit_epoch -le $target_epoch ]; then
-        last_commit_before_target=$commit_hash
+        last_commit_before_target=$commit
         last_commit_date_before_target=$commit_date
-      else
-        # Once we find a commit after the target date, we can stop
         break
       fi
     done
@@ -71,7 +68,8 @@ for path in $paths; do
       git revert --no-commit "$last_commit_before_target" 2>>"$LOG_FILE"
       if [ $? -ne 0 ]; then
         echo "Failed to revert commit: $last_commit_before_target" | tee -a "$LOG_FILE"
-        exit 1
+        cd "$original_dir" || exit 1
+        continue
       fi
 
       # Remove files added by the reverted commit
@@ -80,7 +78,8 @@ for path in $paths; do
       git commit -am "Revert commit $last_commit_before_target" 2>>"$LOG_FILE"
       if [ $? -ne 0 ]; then
         echo "Failed to commit revert" | tee -a "$LOG_FILE"
-        exit 1
+        cd "$original_dir" || exit 1
+        continue
       fi
 
       # Check if the commit has been reverted
@@ -99,7 +98,7 @@ for path in $paths; do
     # Change back to the original directory
     cd "$original_dir" || { echo "Failed to cd back to $original_dir"; exit 1; }
   else
-    echo "$path is not a directory or does not exist."
+    echo "$path is not a directory or does not exist." | tee -a "$LOG_FILE"
   fi
 done
 
@@ -109,10 +108,10 @@ for commit in "${reverted_commits[@]}"; do
   echo "$commit" | tee -a "$LOG_FILE"
 done
 
-
-
-
-
+# Echo if no commit was found
+if [ -z "${reverted_commits[*]}" ]; then
+  echo "No commit found before $TARGET_DATE" | tee -a "$LOG_FILE"
+fi
 
 
 
