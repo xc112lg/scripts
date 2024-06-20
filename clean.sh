@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Directory containing XML files
-xml_dir=".repo/manifests"
+xml_dirs=(".repo/manifests" ".repo/manifests/snippets")
 
 # Get the list of paths from the XML files
 paths=$(xmlstarlet sel -t -v "//project/@path" "$xml_dir"/*.xml)
