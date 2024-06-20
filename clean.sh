@@ -36,7 +36,7 @@ for path in $paths; do
     ls | tee -a "$LOG_FILE"
     
     # Get the list of commits around the target date
-    commits=$(git rev-list --all --before="$TARGET_DATE" --max-count=100)
+    commits=$(git rev-list --all --before="$TARGET_DATE" --max-count=10)
 
     if [ -z "$commits" ]; then
       echo "No commits found before $TARGET_DATE in $path" | tee -a "$LOG_FILE"
