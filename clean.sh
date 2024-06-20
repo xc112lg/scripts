@@ -21,6 +21,9 @@ target_epoch=$(date_to_epoch "$TARGET_DATE")
 # Log file
 LOG_FILE="script.log"
 
+# Initialize a list to store reverted commits
+reverted_commits=()
+
 # Iterate over each path
 for path in $paths; do
   # Check if the path is a directory
@@ -39,68 +42,78 @@ for path in $paths; do
       exit 1
     fi
 
+    last_commit_before_target=""
+    last_commit_date_before_target=""
+
     # Iterate over the commits
     echo "Processing commits..." | tee -a "$LOG_FILE"
     echo "$commits" | while IFS= read -r line; do
       commit_hash=$(echo "$line" | awk '{print $1}')
       commit_date=$(echo "$line" | cut -d' ' -f2-)
-      echo "Checking commit: $commit_hash, date: $commit_date" | tee -a "$LOG_FILE"
-
+      
       # Convert commit date to epoch time
       commit_epoch=$(date_to_epoch "$commit_date")
 
-      if [ $commit_epoch -gt $target_epoch ]; then
-        echo "Found commit after $TARGET_DATE: $commit_hash" | tee -a "$LOG_FILE"
-
-        # Find the latest commit before the target date
-        previous_commit=$(git log --before="$TARGET_DATE" --pretty=format:"%H" -n 1 2>>"$LOG_FILE")
-        if [ $? -ne 0 ]; then
-          echo "Failed to retrieve previous commit." | tee -a "$LOG_FILE"
-          exit 1
-        fi
-
-        if [ -n "$previous_commit" ]; then
-          echo "Reverting commit before $TARGET_DATE: $previous_commit" | tee -a "$LOG_FILE"
-          git revert --no-commit "$previous_commit" 2>>"$LOG_FILE"
-          if [ $? -ne 0 ]; then
-            echo "Failed to revert commit: $previous_commit" | tee -a "$LOG_FILE"
-            exit 1
-          fi
-
-          # Remove files added by the reverted commit
-          git diff --name-only "$previous_commit" | xargs rm -rf
-
-          git commit -am "Revert commit $previous_commit" 2>>"$LOG_FILE"
-          if [ $? -ne 0 ]; then
-            echo "Failed to commit revert" | tee -a "$LOG_FILE"
-            exit 1
-          fi
-
-          # Check if the commit has been reverted
-          revert_check=$(git log --grep="Revert" --grep="$previous_commit" 2>>"$LOG_FILE")
-          if [ -n "$revert_check" ]; then
-            echo "Commit $previous_commit has been successfully reverted." | tee -a "$LOG_FILE"
-          else
-            echo "Revert of commit $previous_commit failed." | tee -a "$LOG_FILE"
-          fi
-        else
-          echo "No commit found before $TARGET_DATE" | tee -a "$LOG_FILE"
-        fi
-
-        # Break after processing the first commit after target date
-        break
+      if [ $commit_epoch -le $target_epoch ]; then
+        last_commit_before_target=$commit_hash
+        last_commit_date_before_target=$commit_date
       else
-        echo "Commit $commit_hash is before $TARGET_DATE, skipping." | tee -a "$LOG_FILE"
+        # Once we find a commit after the target date, we can stop
+        break
+      fi
+    done
+
+    if [ -n "$last_commit_before_target" ]; then
+      echo "Last commit before $TARGET_DATE: $last_commit_before_target, date: $last_commit_date_before_target" | tee -a "$LOG_FILE"
+      
+      # Revert the last commit before the target date
+      echo "Reverting commit before $TARGET_DATE: $last_commit_before_target" | tee -a "$LOG_FILE"
+      git revert --no-commit "$last_commit_before_target" 2>>"$LOG_FILE"
+      if [ $? -ne 0 ]; then
+        echo "Failed to revert commit: $last_commit_before_target" | tee -a "$LOG_FILE"
+        exit 1
       fi
 
-    done
-    
+      # Remove files added by the reverted commit
+      git diff --name-only "$last_commit_before_target" | xargs rm -rf
+
+      git commit -am "Revert commit $last_commit_before_target" 2>>"$LOG_FILE"
+      if [ $? -ne 0 ]; then
+        echo "Failed to commit revert" | tee -a "$LOG_FILE"
+        exit 1
+      fi
+
+      # Check if the commit has been reverted
+      revert_check=$(git log --grep="Revert" --grep="$last_commit_before_target" 2>>"$LOG_FILE")
+      if [ -n "$revert_check" ]; then
+        echo "Commit $last_commit_before_target has been successfully reverted." | tee -a "$LOG_FILE"
+        # Add to the list of reverted commits
+        reverted_commits+=("$last_commit_before_target")
+      else
+        echo "Revert of commit $last_commit_before_target failed." | tee -a "$LOG_FILE"
+      fi
+    else
+      echo "No commit found before $TARGET_DATE" | tee -a "$LOG_FILE"
+    fi
+
     # Change back to the original directory
     cd "$original_dir" || { echo "Failed to cd back to $original_dir"; exit 1; }
   else
     echo "$path is not a directory or does not exist."
   fi
 done
+
+# Echo all reverted commits
+echo "All reverted commits:" | tee -a "$LOG_FILE"
+for commit in "${reverted_commits[@]}"; do
+  echo "$commit" | tee -a "$LOG_FILE"
+done
+
+
+
+
+
+
 
 
 
