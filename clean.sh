@@ -18,6 +18,7 @@ for path in $paths; do
     
     # List the contents
     echo "Listing contents of $path:"
+    ls
 target_date="2024-03-12"
 
 
