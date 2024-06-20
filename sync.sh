@@ -16,7 +16,6 @@ source scripts/clean.sh
 
 
 
-source scripts/extras.sh
 
 source build/envsetup.sh
 lunch lineage_h872-userdebug
