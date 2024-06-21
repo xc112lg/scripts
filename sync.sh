@@ -18,9 +18,9 @@ source scripts/clean.sh
 
 
 
-# source build/envsetup.sh
-# lunch lineage_h872-userdebug
-# m installclean
+source build/envsetup.sh
+lunch lineage_h872-userdebug
+m installclean
 # m -j$(nproc --all) bacon
 # chmod +x scripts/generate_certs.sh
 # chmod +x scripts/build_and_sign.sh
