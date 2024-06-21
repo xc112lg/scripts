@@ -4,8 +4,8 @@
 #rm -rf kernel/lge/msm8996
 #mkdir -p .repo/local_manifests
 #cp scripts/roomservice.xml .repo/local_manifests
-mkdir -p cc
-ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
+# mkdir -p cc
+# ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
 # mkdir -p c
 # cd c
 cd cc
