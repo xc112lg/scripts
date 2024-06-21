@@ -6,15 +6,15 @@
 #cp scripts/roomservice.xml .repo/local_manifests
 # mkdir -p cc
 # ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
-# mkdir -p c
-cd cc
+mkdir -p c
+cd c
 
 repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
 /opt/crave/resync.sh
 
 
 
-source scripts/clean.sh
+#source scripts/clean.sh
 
 
 
