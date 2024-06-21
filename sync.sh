@@ -8,10 +8,10 @@
 # ls -1 c | xargs -I {} -P 10 -n 1 rsync -au c/{} cc/
 # mkdir -p c
 # cd c
-cd cc
+#cd cc
 repo init -u https://github.com/xc112lg/android.git -b 14.0 --git-lfs
 /opt/crave/resync.sh
-crave ssh -- git clone https://github.com/xc112lg/scripts.git -b test
+#crave ssh -- git clone https://github.com/xc112lg/scripts.git -b test
 
 source scripts/clean.sh
 
@@ -19,8 +19,9 @@ source scripts/clean.sh
 
 
 source build/envsetup.sh
-lunch lineage_h872-userdebug
-m installclean
+mka
+# lunch lineage_h872-userdebug
+# m installclean
 # m -j$(nproc --all) bacon
 # chmod +x scripts/generate_certs.sh
 # chmod +x scripts/build_and_sign.sh
