@@ -28,10 +28,10 @@ cp scripts/roomservice.xml .repo/local_manifests
 source build/envsetup.sh
 sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a -include vendor/lineage-priv/keys/keys.mk' device/lge/msm8996-common/msm8996.mk
 sed -i '/include $(LOCAL_PATH)\/vendor_prop.mk/a include vendor/gapps/arm64/arm64-vendor.mk' device/lge/msm8996-common/msm8996.mk
-cd build/tools
-git fetch https://github.com/xc112lg/android_build.git patch-1
-git cherry-pick b7b12b875a97eee6e512c74c53a82066e237a31a
-cd ../../
+# cd build/tools
+# git fetch https://github.com/xc112lg/android_build.git patch-1
+# git cherry-pick b7b12b875a97eee6e512c74c53a82066e237a31a
+# cd ../../
 
 cd frameworks/base
 git fetch https://github.com/xc112lg/android_frameworks_base-1.git patch-19
@@ -40,10 +40,10 @@ git cherry-pick 34bfc667283e91110ca1672b413480391b762cf9
 git fetch https://github.com/xc112lg/android_frameworks_base-1.git patch-21
 git cherry-pick a41aa682ee7edd2b2d44ce70a4f535436fc89345
 cd ../../
-cd device/lge/h872
-git fetch https://github.com/xc112lg/android_device_lge_h872.git patch-3
-git cherry-pick 2bba913c985d61b4388fed12c0f22706d39fe328
-cd ../../../
+# cd device/lge/h872
+# git fetch https://github.com/xc112lg/android_device_lge_h872.git patch-3
+# git cherry-pick 2bba913c985d61b4388fed12c0f22706d39fe328
+# cd ../../../
 
 cd kernel/lge/msm8996
 git fetch https://github.com/xc112lg/android_kernel_lge_msm8996.git patch-1
