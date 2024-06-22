@@ -1,4 +1,4 @@
-#!/bin/bash
+e#!/bin/bash
 
 
 
@@ -7,7 +7,7 @@ rm -rf external/chromium-webview/prebuilt/*
 rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
 rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
 
-repo init -u https://github.com/crdroidandroid/android.git -b 13.0 --git-lfs
+#repo init -u https://github.com/crdroidandroid/android.git -b 13.0 --git-lfs
 rm -rf ~/.android-certs
 
 #git clone https://gitlab.com/MindTheGapps/vendor_gapps -b tau vendor/gapps
@@ -56,9 +56,9 @@ git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch
 git cherry-pick 9daaaf54dcb05966235c7a63f776f5c4eb2fc25f
 cd ../../../
 
-export GH_TOKEN=$(cat gh_token.txt)
-git clone https://$GH_TOKEN@github.com/xc112lg/keys -b main vendor/lineage-priv/keys
-ls vendor/lineage-priv/keys
+# export GH_TOKEN=$(cat gh_token.txt)
+# git clone https://$GH_TOKEN@github.com/xc112lg/keys -b main vendor/lineage-priv/keys
+# ls vendor/lineage-priv/keys
 
 
 
