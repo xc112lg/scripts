@@ -1,4 +1,4 @@
-e#!/bin/bash
+#!/bin/bash
 
 
 
