@@ -56,9 +56,9 @@ git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch
 git cherry-pick 9daaaf54dcb05966235c7a63f776f5c4eb2fc25f
 cd ../../../
 
-# export GH_TOKEN=$(cat gh_token.txt)
-# git clone https://$GH_TOKEN@github.com/xc112lg/keys -b main vendor/lineage-priv/keys
-# ls vendor/lineage-priv/keys
+export GH_TOKEN=$(cat gh_token.txt)
+git clone https://$GH_TOKEN@github.com/xc112lg/keys -b main vendor/lineage-priv/keys
+ls vendor/lineage-priv/keys
 
 
 
