@@ -10,7 +10,7 @@ rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuil
 #repo init -u https://github.com/crdroidandroid/android.git -b 13.0 --git-lfs
 rm -rf ~/.android-certs
 
-#git clone https://gitlab.com/MindTheGapps/vendor_gapps -b tau vendor/gapps
+git clone https://gitlab.com/MindTheGapps/vendor_gapps -b tau vendor/gapps
 
 
 
