@@ -20,7 +20,7 @@ mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
 
-
+rm -rf out/target/product/*/*.zip
 
 /opt/crave/resync.sh
 
