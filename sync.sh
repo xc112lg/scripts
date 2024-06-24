@@ -50,6 +50,10 @@ git clone https://github.com/xc112lg/android_device_lge_msm8996-common -b patch-
 
 source build/envsetup.sh
 
-lunch lineage_h872-ap2a-eng
-m installclean
-m bacon
+# lunch lineage_h872-ap2a-eng
+# m installclean
+# m bacon
+
+
+breakfast h872
+brunch h872 eng
