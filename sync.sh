@@ -44,9 +44,8 @@ main() {
 main $*
 
 cd device/lge/msm8996-common
-sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-12
-sleep 1 &&git cherry-pick 4fa74117cd16f6c81709c5ee6022c52ccbe486a6 
-sleep 1 &&git cherry-pick 02e827da0d5dc692668016bfb2a9c282ea2de57c
+sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-13
+sleep 1 &&git cherry-pick 56682ec4057ebe313ef9e537f89dd641fff8c6fe 
 cd ../../../
 
 source build/envsetup.sh
