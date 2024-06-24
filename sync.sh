@@ -1,36 +1,20 @@
 #!/bin/bash
 
-
-DEVICE="${1:-all}"  
-COMMAND="${2:-build}" 
-DELZIP="${3}"
-MAKEFILE="${4}" 
-RELEASETYPE="${5}" 
-VENDOR="${6}" 
-COM1="${7}"
-COM2="${8}"
-CORE="${9:-"$(nproc --all)"}"
-
-## Remove existing build artifactsa
-if [ "$DELZIP" == "delzip" ]; then
-    rm -rf out/target/product/*/*.zip
-fi
-
-#git clean -fdX
-#rm -rf frameworks/base/
-rm -rf .repo/local_manifests
-#rm -rf device/lge/
-#rm -rf kernel/lge/msm8996
+rm -rf .repo/local_manifests device/lge/msm8996-common
+rm -rf  ~/.android-certs/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
+#rm -rf ~/.android-certs
 
-#source scripts/clean.sh
-
-#!/bin/bash
+repo init --git-lfs
+rm -rf external/chromium-webview/prebuilt/*
+rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
+rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
+repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 
 main() {
     # Run repo sync command and capture the output
-    repo sync -c -j${CORE} --force-sync --no-clone-bundle --no-tags 2>&1 | tee /tmp/output.txt
+    repo sync -c -j20 --force-sync --no-clone-bundle --no-tags 2>&1 | tee /tmp/output.txt
 
     # Check if there are any failing repositories
     if grep -q "Failing repos:" /tmp/output.txt ; then
@@ -51,7 +35,7 @@ main() {
 
         # Re-sync all repositories after deletion
         echo "Re-syncing all repositories..."
-        repo sync -c -j${CORE} --force-sync --no-clone-bundle --no-tags
+        repo sync -c -j20 --force-sync --no-clone-bundle --no-tags
     else
         echo "All repositories synchronized successfully."
     fi
@@ -59,21 +43,13 @@ main() {
 
 main $*
 
+cd device/lge/msm8996-common
+sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-11
+sleep 1 &&git cherry-pick 31b89a6e4baa916155f94ff3e027cc9a4a2b2e95 
+cd ../../../
 
-
-
-if [ "$RELEASETYPE" == "none" ]; then
-    RELEASETYPE1=""
-else 
-    RELEASETYPE1="$RELEASETYPE"
-fi
-
-
-
-
-export USE_CCACHE=1
 source build/envsetup.sh
-source scripts/fixes.sh
 
-
-
+lunch lineage_h872-ap2a-eng
+m installclean
+m bacon
