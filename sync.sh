@@ -44,8 +44,8 @@ main() {
 main $*
 
 
-rm -rf device/lge/msm8996-common
-git clone https://github.com/xc112lg/android_device_lge_msm8996-common -b patch-13 device/lge/msm8996-common
+rm -rf kernel/lge/msm8996
+git clone https://github.com/xc112lg/android_kernel_lge_msm8996.git --depth 1 -b test2 kernel/lge/msm8996
 
 
 source build/envsetup.sh
