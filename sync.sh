@@ -1,5 +1,5 @@
 #!/bin/bash
-
+rm -rf kernel/lge/msm8996
 rm -rf .repo/local_manifests device/lge/msm8996-common
 rm -rf  ~/.android-certs/
 mkdir -p .repo/local_manifests
