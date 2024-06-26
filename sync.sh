@@ -47,7 +47,7 @@ main $*
 # rm -rf kernel/lge/msm8996
 # git clone https://github.com/xc112lg/android_kernel_lge_msm8996.git --depth 1 -b test2 kernel/lge/msm8996
 
-
+repopick -p 396073
 source build/envsetup.sh
 
 lunch lineage_h872-ap2a-eng
