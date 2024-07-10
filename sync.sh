@@ -1,5 +1,27 @@
 #!/bin/bash
-echo $(nproc --all)
+
+repo --version
+
+
+
+# Download the latest version of repo
+curl -o repo https://storage.googleapis.com/git-repo-downloads/repo
+
+# Make the repo script executable
+chmod a+x repo
+
+# Move the repo script to the appropriate location
+sudo mv repo /usr/local/bin/repo
+
+# Verify the update
+repo --version
+
+
+
+
+
+
+
 rm -rf .repo/local_manifests device/lge/msm8996-common
 rm -rf  ~/.android-certs/
 mkdir -p .repo/local_manifests
