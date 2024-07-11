@@ -4,17 +4,17 @@ repo --version
 
 
 
-# Download the latest version of repo
-curl -o repo https://storage.googleapis.com/git-repo-downloads/repo
+# # Download the latest version of repo
+# curl -o repo https://storage.googleapis.com/git-repo-downloads/repo
 
-# Make the repo script executable
-chmod a+x repo
+# # Make the repo script executable
+# chmod a+x repo
 
-# Move the repo script to the appropriate location
-sudo mv repo /usr/local/bin/repo
+# # Move the repo script to the appropriate location
+# sudo mv repo /usr/local/bin/repo
 
-# Verify the update
-repo --version
+# # Verify the update
+# repo --version
 
 
 
