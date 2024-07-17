@@ -65,10 +65,8 @@ repo init --depth=1 --no-repo-verify -u https://github.com/TheParasiteProject/ma
 # }
 
 # main $*
+sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
 
-
-rm -rf device/lge/msm8996-common
-git clone https://github.com/xc112lg/android_device_lge_msm8996-common.git --depth 1 -b patch-2 device/lge/msm8996-common
 
 
 source build/envsetup.sh
