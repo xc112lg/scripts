@@ -15,12 +15,12 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 /opt/crave/resync.sh
 
-cd build/make
-ls
-git reset --hard
-cd -
-ls
-cat build/envsetup.sh
+# cd build/make
+# ls
+# git reset --hard
+# cd -
+# ls
+# cat build/envsetup.sh
 
 
 sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
@@ -42,5 +42,5 @@ source build/envsetup.sh
 # m bacon
 
 
-breakfast h872
-brunch h872 eng
+# breakfast h872
+# brunch h872 eng
