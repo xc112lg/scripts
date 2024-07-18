@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+
+MANIFEST="${1}"  
+BRANCH="${2}" 
+DEVICE="${3}"
+
+ECHO "$MANIFEST"
+ECHO "$BRANCH"
+ECHO "$DEVICE"
