@@ -32,7 +32,7 @@ git reset --hard
 
 cd -
 
-sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/make/envsetup.sh
+#sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/make/envsetup.sh
 
 
 #cat build/envsetup.sh
