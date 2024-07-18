@@ -20,11 +20,18 @@ ls
 git reset --hard
 cd -
 ls
-
+cat build/envsetup.sh
 
 
 sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
 
+cd build/make
+ls
+git reset --hard
+cd -
+ls
+
+cat build/envsetup.sh
 
 
 
