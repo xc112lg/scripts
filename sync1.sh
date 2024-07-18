@@ -29,7 +29,7 @@ cp scripts/roomservice.xml .repo/local_manifests
 #rm -rf ~/.android-certs
 
 
-/opt/crave/resync.sh
+#/opt/crave/resync.sh
 # main() {
 #     # Run repo sync command and capture the output
 #     repo sync -c -j20 --force-sync --no-clone-bundle --no-tags 2>&1 | tee /tmp/output.txt
@@ -61,10 +61,10 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 # main $*
 ls
-cd build
-git reset --hard
-cd ..
-sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
+# cd build
+# git reset --hard
+# cd ..
+# sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
 
 
 
