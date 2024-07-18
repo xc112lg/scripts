@@ -72,11 +72,11 @@ sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\
 
 
 
-source build/envsetup.sh
-#repopick -p 396073
-lunch lineage_h872-ap2a-eng
-m installclean
-m bacon
+# source build/envsetup.sh
+# #repopick -p 396073
+# lunch lineage_h872-ap2a-eng
+# m installclean
+# m bacon
 
 
 # # breakfast h872
