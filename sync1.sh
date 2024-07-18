@@ -7,7 +7,7 @@
 
 
 
-rm -rf .repo/local_manifests build
+rm -rf .repo/local_manifests 
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
