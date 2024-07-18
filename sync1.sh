@@ -1,6 +1,6 @@
 #!/bin/bash
 
-repo --version
+
 
 
 
@@ -23,7 +23,6 @@ repo --version
 
 
 rm -rf .repo/local_manifests device/lge/msm8996-common
-rm -rf  ~/.android-certs/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 #rm -rf ~/.android-certs
