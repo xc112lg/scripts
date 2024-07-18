@@ -27,8 +27,8 @@ sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\
 
 cd build/make
 ls
-        git reset --hard
-	git clean -fdx
+git reset --hard
+
 
 cd -
 ls
