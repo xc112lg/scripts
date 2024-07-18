@@ -65,6 +65,9 @@ repo init --depth=1 --no-repo-verify -u https://github.com/TheParasiteProject/ma
 # }
 
 # main $*
+cd build
+git reset --hard
+cd ..
 sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
 
 
