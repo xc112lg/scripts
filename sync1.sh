@@ -31,11 +31,11 @@ git reset --hard
 cd -
 ls
 
-cat build/envsetup.sh
+#cat build/envsetup.sh
 
 
 
-source build/envsetup.sh
+#source build/envsetup.sh
 
 # lunch lineage_h872-ap2a-eng
 # m installclean
