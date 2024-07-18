@@ -59,11 +59,12 @@ cp scripts/roomservice.xml .repo/local_manifests
 # }
 
 # main $*
-ls
+
 cd build
 ls
 git reset --hard
-cd ..
+cd -
+ls
 # sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
 
 
