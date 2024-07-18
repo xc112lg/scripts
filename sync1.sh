@@ -39,12 +39,12 @@ sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\
 
 
 
-#source build/envsetup.sh
+source build/envsetup.sh
 
 # lunch lineage_h872-ap2a-eng
 # m installclean
 # m bacon
 
 
-# breakfast h872
-# brunch h872 eng
+breakfast h872
+brunch h872 eng
