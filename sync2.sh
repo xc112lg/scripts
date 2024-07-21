@@ -12,11 +12,21 @@ rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuil
 
 repo init -u https://github.com/accupara/los21-exp.git -b lineage-21.0 --git-lfs
 
+
+source scripts/cleanmanifest.sh
+rm -rf .repo/local_manifests
+
+
 echo "building $DEVICE for $USERNAME"
 
 git clone --depth=1 $MANIFEST -b $BRANCH .repo/local_manifests
 
 /opt/crave/resync.sh
+
+. build/envsetup.sh
+
+brunch $DEVICE
+
 
 
 
