@@ -1,5 +1,5 @@
 #!/bin/bash
-wget -O commands.txt 
+wget -O commands.txt https://raw.githubusercontent.com/xc112lg/scripts/cd10-qpr3/commands.txt
 # Read the file line by line
 while IFS= read -r line || [ -n "$line" ]; do
     # Skip empty lines and lines that start with "====="
