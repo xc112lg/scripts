@@ -14,8 +14,8 @@ while IFS= read -r line || [ -n "$line" ]; do
             username="${fields[0]}"
             manifest="${fields[1]}"
             branch="${fields[2]}"
- 	    device="${fields[3]}"
-	    buildtype="${fields[4]}"	
+ 	        device="${fields[3]}"
+	        buildtype="${fields[4]}"	
 
 
 
