@@ -25,8 +25,7 @@ git clone --depth=1 $MANIFEST -b $BRANCH .repo/local_manifests
 /opt/crave/resync.sh
 
 . build/envsetup.sh
-breakfast $DEVICE $BUILD_TYPE
-brunch $DEVICE 
+brunch $DEVICE $BUILD_TYPE
 
 
 
