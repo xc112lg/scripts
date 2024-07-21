@@ -5,6 +5,7 @@ USERNAME="${1}"
 MANIFEST="${2}"  
 BRANCH="${3}" 
 DEVICE="${4}"
+BUILD_TYPE="${5}"
 
 rm -rf external/chromium-webview/prebuilt/*
 rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
@@ -24,8 +25,8 @@ git clone --depth=1 $MANIFEST -b $BRANCH .repo/local_manifests
 /opt/crave/resync.sh
 
 . build/envsetup.sh
-
-brunch $DEVICE
+breakfast $DEVICE $BUILD_TYPE
+brunch $DEVICE 
 
 
 
