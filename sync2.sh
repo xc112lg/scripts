@@ -1,5 +1,5 @@
 #!/bin/bash
-
+rm -rf hardware vendor  kernel/xiaomi/fog 
 
 USERNAME="${1}"
 MANIFEST="${2}"  
