@@ -14,7 +14,7 @@ rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuil
 repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 
 
-#source scripts/cleanmanifest.sh
+source scripts/cleanmanifest.sh
 rm -rf .repo/local_manifests
 
 
