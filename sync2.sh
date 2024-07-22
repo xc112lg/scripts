@@ -1,5 +1,5 @@
 #!/bin/bash
-rm -rf hardware vendor  kernel/xiaomi/fog 
+
 
 USERNAME="${1}"
 MANIFEST="${2}"  
@@ -22,6 +22,11 @@ rm -rf .repo/local_manifests
 echo "building $DEVICE for $USERNAME"
 
 git clone --depth=1 $MANIFEST -b $BRANCH .repo/local_manifests
+
+cd build
+git reset --hard
+cd ..
+sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
 
 /opt/crave/resync.sh
 
