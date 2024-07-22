@@ -26,9 +26,11 @@ git clone --depth=1 $MANIFEST -b $BRANCH .repo/local_manifests
 cd build
 git reset --hard
 cd ..
-sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
+
 
 /opt/crave/resync.sh
+
+sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
 
 . build/envsetup.sh
 brunch $DEVICE $BUILD_TYPE
