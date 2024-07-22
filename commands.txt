@@ -1,2 +1,2 @@
-Ardiakun,https://github.com/ardia-kun/local_manifest,CR,fog,userdebug
+cristop23,https://github.com/christop23/local_manifests.git,main,miatoll,userdebug
 Shravan,https://github.com/shravansayz/local_manifests,los21,RMX1901,userdebug
