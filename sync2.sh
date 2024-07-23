@@ -11,8 +11,8 @@ rm -rf external/chromium-webview/prebuilt/*
 rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
 rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
 
-repo init -u https://github.com/accupara/los21-exp.git -b lineage-21.0 --git-lfs
-#repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+#repo init -u https://github.com/accupara/los21-exp.git -b lineage-21.0 --git-lfs
+repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 
 
 source scripts/cleanmanifest.sh
