@@ -6,7 +6,7 @@ MANIFEST="${2}"
 BRANCH="${3}" 
 DEVICE="${4}"
 BUILD_TYPE="${5}"
-rm -rf hardware vendor  kernel
+#rm -rf hardware vendor  kernel
 rm -rf external/chromium-webview/prebuilt/*
 rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
 rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
