@@ -23,14 +23,17 @@ echo "building $DEVICE for $USERNAME"
 
 git clone --depth=1 $MANIFEST -b $BRANCH .repo/local_manifests
 
-cd build
+cd build/make
+ls
 git reset --hard
-cd ..
+
+
+cd -
 
 
 /opt/crave/resync.sh
 
-sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
+sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/make/envsetup.sh
 
 . build/envsetup.sh
 brunch $DEVICE $BUILD_TYPE
