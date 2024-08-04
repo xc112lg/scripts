@@ -36,7 +36,7 @@ cd -
 #sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/make/envsetup.sh
 
 . build/envsetup.sh
-brunch $DEVICE $BUILD_TYPE
+breakfast $DEVICE $BUILD_TYPE
 
 
 
