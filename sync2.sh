@@ -37,6 +37,7 @@ cd -
 
 . build/envsetup.sh
 breakfast $DEVICE $BUILD_TYPE
+m bacon
 
 
 
