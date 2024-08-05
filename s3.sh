@@ -49,7 +49,41 @@ monitor_pid=$!
 
 # Run main command in the background
 echo "Running main command..."
-rm -rf sync && git clone https://gitlab.com/muhammadrafiasyddiq/sync && chmod +x sync/sync.sh && ./sync/sync.sh &
+repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs
+
+
+
+
+#git clean -fdX
+#rm -rf frameworks/base/
+rm -rf .repo/local_manifests  mkdir vendor/lineage-priv
+rm -rf device/infinix/X6833B
+rm -rf vendor/infinix/X6833B
+#rm -rf device/lge/
+#rm -rf kernel/lge/msm8996
+mkdir -p .repo/local_manifests
+cp scripts/roomservice.xml .repo/local_manifests
+git clone https://github.com/muhammadrafiasyddiq/android_kernel_infinix_X6833B kernel/infinix/X6833B
+
+wget https://pixeldrain.com/u/e2wpLqPZ && mkdir device/infinix/ && mkdir device/infinix/X6833B && unzip e2wpLqPZ -d device/infinix/X6833B/
+
+git clone  https://gitlab.com/muhammadrafiasyddiq/vendor vendor/infinix/X6833B/
+
+rm -rf hardware/mediatek
+
+git clone https://gitlab.com/muhammadrafiasyddiq/mediatek hardware/mediatek
+
+git clone https://github.com/LineageOS/android_device_mediatek_sepolicy_vndr device/mediatek/sepolicy_vndr
+
+git clone https://gitlab.com/muhammadrafiasyddiq/hardware hardware/device/infinix/X6833B/power/
+
+
+
+/opt/crave/resync.sh
+source build/envsetup.sh
+riseup X6833B userdebug
+gk -s
+rise b
 
 main_command_pid=$!
 
