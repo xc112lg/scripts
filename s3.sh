@@ -146,9 +146,6 @@ main $*
 
 
 source build/envsetup.sh
-
-
-
 riseup X6833B userdebug
 gk -s
 rise b
