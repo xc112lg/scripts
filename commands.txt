@@ -1,5 +1,5 @@
 Shravan,https://github.com/shravansayz/local_manifests,crdroid,RMX1901,userdebug
-Saroj,https://github.com/shravansayz/local_manifests,lineage-21-rosy,rosy,userdebug
+Saroj,https://github.com/saroj-nokia/local_manifests,lineage-21-rosy,rosy,userdebug
 sounddrill31,https://github.com/sounddrill31/local_manifests_oxygen,lineage-21-qpr3,oxygen,userdebug
 hellomotosung,https://github.com/hellomotosung/local_manifests,lineage-21,kane,userdebug
 ogpoopy,https://github.com/aosp-realm/android_build_manifest.git,apollo-evo14,apollo,userdebug
