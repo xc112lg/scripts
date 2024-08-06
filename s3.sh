@@ -18,7 +18,7 @@ check_cpu_usage() {
   echo $usage
 }
 
-# Variable to track if CPU usage stays below 60%
+# Variable to track if CPU usage stays below 10%
 cpu_below_threshold=true
 
 # Start a background process to monitor CPU usage for the last 10 minutes of the 1-hour period
@@ -32,16 +32,16 @@ cpu_below_threshold=true
     cpu_usage=$(check_cpu_usage)
     echo "Last 10 minutes - minute $i: CPU usage is $cpu_usage%"
 
-    if (( $(echo "$cpu_usage > 60" | bc -l) )); then
-      echo "CPU usage exceeded 60%: $cpu_usage%"
+    if (( $(echo "$cpu_usage > 10" | bc -l) )); then
+      echo "CPU usage exceeded 10%: $cpu_usage%"
       cpu_below_threshold=false
       break
     fi
   done
 
   if $cpu_below_threshold; then
-    echo "CPU usage stayed below 60% for the last 10 minutes. Exiting."
-    kill $$  # Exit the entire script if the CPU usage stayed below 60%
+    echo "CPU usage stayed below 10% for the last 10 minutes. Exiting."
+    kill $$  # Exit the entire script if the CPU usage stayed below 10%
   fi
 ) &
 
