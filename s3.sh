@@ -18,8 +18,8 @@ check_cpu_usage() {
   echo $usage
 }
 
-# Variable to track if CPU usage stays below 10%
-cpu_below_threshold=true
+# Variable to track CPU usage values
+cpu_usages=()
 
 # Start a background process to monitor CPU usage for the last 10 minutes of the 1-hour period
 (
@@ -31,17 +31,20 @@ cpu_below_threshold=true
     sleep 60
     cpu_usage=$(check_cpu_usage)
     echo "Last 10 minutes - minute $i: CPU usage is $cpu_usage%"
-
-    if (( $(echo "$cpu_usage > 10" | bc -l) )); then
-      echo "CPU usage exceeded 10%: $cpu_usage%"
-      cpu_below_threshold=false
-      break
-    fi
+    cpu_usages+=($cpu_usage)
   done
 
-  if $cpu_below_threshold; then
-    echo "CPU usage stayed below 10% for the last 10 minutes. Exiting."
-    kill $$  # Exit the entire script if the CPU usage stayed below 10%
+  # Calculate the average CPU usage
+  total_usage=0
+  for usage in "${cpu_usages[@]}"; do
+    total_usage=$(echo "$total_usage + $usage" | bc)
+  done
+  average_usage=$(echo "$total_usage / 10" | bc -l)
+  echo "Average CPU usage over the last 10 minutes: $average_usage%"
+
+  if (( $(echo "$average_usage <= 5" | bc -l) )); then
+    echo "Average CPU usage stayed below 5%. Exiting."
+    kill $$  # Exit the entire script if the average CPU usage stayed below 5%
   fi
 ) &
 
@@ -50,9 +53,6 @@ monitor_pid=$!
 # Run main command in the background
 echo "Running main command..."
 repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs
-
-
-
 
 #git clean -fdX
 #rm -rf frameworks/base/
@@ -77,15 +77,11 @@ git clone https://github.com/LineageOS/android_device_mediatek_sepolicy_vndr dev
 
 git clone https://gitlab.com/muhammadrafiasyddiq/hardware hardware/device/infinix/X6833B/power/
 
-
-
 /opt/crave/resync.sh
 source build/envsetup.sh
 riseup X6833B userdebug
 gk -s
 rise b
-
-
 
 main_command_pid=$!
 
