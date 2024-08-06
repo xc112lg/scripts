@@ -65,19 +65,21 @@ rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuil
 # }
 
 # main $*
-cd build
-git reset --hard
-cd ..
-sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
+# cd build
+# git reset --hard
+# cd ..
+# sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
 
+sed -i 's/lineageos_h872_defconfig/vendor\/lge\/h872.config/g' device/lge/h872/BoardConfig.mk
+cat device/lge/h872/BoardConfig.mk
 
-
-# source build/envsetup.sh
+source build/envsetup.sh
 # #repopick -p 396073
 # lunch lineage_h872-ap2a-eng
 # m installclean
 # m bacon
 
 
-# # breakfast h872
+breakfast h872
+m bacon
 # # brunch h872 eng
