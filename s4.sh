@@ -84,7 +84,7 @@ repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 
 cd kernel/lge/msm8996
 # Fix LTO
-sleep 1 && git fetch https://github.com/xc112lg/msm8996_lge_kernel.git patch-2
+sleep 1 && git fetch https://github.com/xc112lg/android_kernel_lge_msm8996.git patch-2
 sleep 1 && git cherry-pick f06b7401fe3b2162387a72c78bde0bbe7f2828dd
 cd -
 
