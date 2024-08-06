@@ -71,7 +71,9 @@ rm -rf external/chromium-webview/prebuilt/*
 rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
 rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
 repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
-
+cd kernel/lge/msm8996
+git reset --hard
+cd -
 /opt/crave/resync.sh
 
 # cd build
