@@ -49,41 +49,33 @@ monitor_pid=$!
 
 # Run main command in the background
 echo "Running main command..."
-repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs
+repo init -u https://github.com/accupara/los21-exp.git -b lineage-21.0 --git-lfs
+#repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 
 
+source scripts/cleanmanifest.sh
+rm -rf .repo/local_manifests
 
 
-#git clean -fdX
-#rm -rf frameworks/base/
-rm -rf .repo/local_manifests  mkdir vendor/lineage-priv
-rm -rf device/infinix/X6833B
-rm -rf vendor/infinix/X6833B
-#rm -rf device/lge/
-#rm -rf kernel/lge/msm8996
-mkdir -p .repo/local_manifests
-cp scripts/roomservice.xml .repo/local_manifests
-git clone https://github.com/muhammadrafiasyddiq/android_kernel_infinix_X6833B kernel/infinix/X6833B
+echo "building $DEVICE for $USERNAME"
 
-wget https://pixeldrain.com/u/e2wpLqPZ && mkdir device/infinix/ && mkdir device/infinix/X6833B && unzip e2wpLqPZ -d device/infinix/X6833B/
+git clone --depth=1 $MANIFEST -b $BRANCH .repo/local_manifests
 
-git clone  https://gitlab.com/muhammadrafiasyddiq/vendor vendor/infinix/X6833B/
+cd build/make
+ls
+git reset --hard
 
-rm -rf hardware/mediatek
 
-git clone https://gitlab.com/muhammadrafiasyddiq/mediatek hardware/mediatek
-
-git clone https://github.com/LineageOS/android_device_mediatek_sepolicy_vndr device/mediatek/sepolicy_vndr
-
-git clone https://gitlab.com/muhammadrafiasyddiq/hardware hardware/device/infinix/X6833B/power/
-
+cd -
 
 
 /opt/crave/resync.sh
-source build/envsetup.sh
-riseup X6833B userdebug
-gk -s
-rise b
+
+#sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/make/envsetup.sh
+
+. build/envsetup.sh
+breakfast $DEVICE $BUILD_TYPE
+m bacon
 
 main_command_pid=$!
 
