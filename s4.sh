@@ -60,7 +60,7 @@ echo "Running main command..."
 
 
 
-rm -rf .repo/local_manifests device/lge/h872
+rm -rf .repo/local_manifests device prebuilts
 rm -rf  ~/.android-certs/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
