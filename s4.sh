@@ -60,7 +60,7 @@ echo "Running main command..."
 
 
 
-rm -rf .repo/local_manifests prebuilts
+rm -rf .repo/local_manifests prebuilts/clang/host/linux-x86
 rm -rf  ~/.android-certs/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
