@@ -34,6 +34,9 @@ cd kernel/lge/msm8996
 # Fix LTO
 sleep 1 && git fetch https://github.com/xc112lg/android_kernel_lge_msm8996.git patch-2
 sleep 1 && git cherry-pick f06b7401fe3b2162387a72c78bde0bbe7f2828dd
+
+
+sleep 1 && git cherry-pick bc797ee9fba35da3fe56a3ffe185a9404ce04840
 cd -
 
 
