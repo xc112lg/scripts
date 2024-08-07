@@ -6,16 +6,13 @@
 
 
 
-rm -rf .repo/local_manifests  
+rm -rf .repo/local_manifests prebuilts
 rm -rf  ~/.android-certs/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 #rm -rf ~/.android-certs
 
-repo init --git-lfs
-rm -rf external/chromium-webview/prebuilt/*
-rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
-rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
+
 repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 cd kernel/lge/msm8996
 git reset --hard
