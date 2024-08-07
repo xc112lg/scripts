@@ -12,8 +12,9 @@ mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 #rm -rf ~/.android-certs
 
+git lfs uninstall
 
-repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+repo init -u https://github.com/LineageOS/android.git -b lineage-21.0
 cd kernel/lge/msm8996
 git reset --hard
 cd -
