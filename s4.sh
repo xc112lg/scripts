@@ -41,11 +41,11 @@ cd -
 source build/envsetup.sh
 # #repopick -p 396073
 # lunch lineage_h872-ap2a-eng
-m installclean
+
 # m bacon
 
 
-breakfast h872
+breakfast h872 userdebug 
 m installclean
 m bacon
 
