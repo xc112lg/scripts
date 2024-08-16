@@ -33,7 +33,7 @@ cd -
 
 
 sed -i '/select SND_SOC_MSM_HDMI_CODEC_RX if ARCH_MSM8996/d' kernel/lge/msm8996/sound/soc/msm/Kconfig
-
+cat  kernel/lge/msm8996/sound/soc/msm/Kconfig
 source build/envsetup.sh
 # #repopick -p 396073
 # lunch lineage_h872-ap2a-eng
