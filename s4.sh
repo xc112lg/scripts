@@ -1,18 +1,12 @@
 #!/bin/bash
 
-
-
-
-
-
-
-rm -rf .repo/local_manifests kernel/lge/msm8996 
+rm -rf .repo/local_manifests 
 rm -rf  ~/.android-certs/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 #rm -rf ~/.android-certs
 
-git lfs uninstall
+#git lfs uninstall
 
 repo init -u https://github.com/LineageOS/android.git -b lineage-21.0
 cd kernel/lge/msm8996
@@ -37,6 +31,8 @@ cd -
 # sleep 1 && git cherry-pick bc797ee9fba35da3fe56a3ffe185a9404ce04840
 # cd -
 
+
+sed -i '/select SND_SOC_MSM_HDMI_CODEC_RX if ARCH_MSM8996/d' kernel/lge/msm8996/sound/soc/msm/Kconfig
 
 source build/envsetup.sh
 # #repopick -p 396073
