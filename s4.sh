@@ -6,7 +6,7 @@
 
 
 
-rm -rf .repo/local_manifests prebuilts
+rm -rf .repo/local_manifests kernel/lge/msm8996 
 rm -rf  ~/.android-certs/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
