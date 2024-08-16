@@ -1,10 +1,6 @@
 #!/bin/bash
 
-USERNAME="${1}"
-MANIFEST="${2}"  
-BRANCH="${3}" 
-DEVICE="${4}"
-BUILD_TYPE="${5}"
+
 
 # Ensure mpstat is installed
 if ! command -v mpstat &> /dev/null; then
@@ -54,34 +50,9 @@ monitor_pid=$!
 echo "Running main command..."
 repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs
 
-#git clean -fdX
-#rm -rf frameworks/base/
-rm -rf .repo/local_manifests  mkdir vendor/lineage-priv
-rm -rf device/infinix/X6833B
-rm -rf vendor/infinix/X6833B
-#rm -rf device/lge/
-#rm -rf kernel/lge/msm8996
-mkdir -p .repo/local_manifests
-cp scripts/roomservice.xml .repo/local_manifests
-git clone https://github.com/muhammadrafiasyddiq/android_kernel_infinix_X6833B kernel/infinix/X6833B
+#MAIN COMMAND HERE
 
-wget https://pixeldrain.com/u/e2wpLqPZ && mkdir device/infinix/ && mkdir device/infinix/X6833B && unzip e2wpLqPZ -d device/infinix/X6833B/
 
-git clone  https://gitlab.com/muhammadrafiasyddiq/vendor vendor/infinix/X6833B/
-
-rm -rf hardware/mediatek
-
-git clone https://gitlab.com/muhammadrafiasyddiq/mediatek hardware/mediatek
-
-git clone https://github.com/LineageOS/android_device_mediatek_sepolicy_vndr device/mediatek/sepolicy_vndr
-
-git clone https://gitlab.com/muhammadrafiasyddiq/hardware hardware/device/infinix/X6833B/power/
-
-/opt/crave/resync.sh
-source build/envsetup.sh
-riseup X6833B userdebug
-gk -s
-rise b
 
 main_command_pid=$!
 
