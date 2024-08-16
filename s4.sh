@@ -12,7 +12,7 @@ repo init -u https://github.com/LineageOS/android.git -b lineage-21.0
 cd kernel/lge/msm8996
 git reset --hard
 cd -
-# /opt/crave/resync.sh
+/opt/crave/resync.sh
 
 # cd build
 # git reset --hard
