@@ -44,7 +44,7 @@ source build/envsetup.sh
 # m bacon
 
 
-breakfast h872 userdebug 
+breakfast h872 eng 
 m installclean
 m bacon
 
