@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf .repo/local_manifests kernel/lge/msm8996
+rm -rf .repo/local_manifests device/lge/msm8996-common
 rm -rf  ~/.android-certs/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
@@ -32,6 +32,7 @@ repo init -u https://github.com/LineageOS/android.git -b lineage-21.0
 # sleep 1 && git cherry-pick bc797ee9fba35da3fe56a3ffe185a9404ce04840
 # cd -
 
+sed -i '/^TARGET_KERNEL_CONFIG := vendor\/lge\/lge_msm8996_defconfig$/d' device/lge/msm8996-common/BoardConfigCommon.mk
 
 #sed -i '/select SND_SOC_MSM_HDMI_CODEC_RX if ARCH_MSM8996/d' kernel/lge/msm8996/sound/soc/msm/Kconfig
 #cat  kernel/lge/msm8996/sound/soc/msm/Kconfig
