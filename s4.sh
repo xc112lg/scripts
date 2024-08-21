@@ -37,7 +37,15 @@ repo init -u https://github.com/LineageOS/android.git -b lineage-21.0
 #sed -i '/select SND_SOC_MSM_HDMI_CODEC_RX if ARCH_MSM8996/d' kernel/lge/msm8996/sound/soc/msm/Kconfig
 #cat  kernel/lge/msm8996/sound/soc/msm/Kconfig
 source build/envsetup.sh
-# #repopick -p 396073
+
+
+
+repopick -p 399942
+repopick -p 399943
+repopick -p 399944
+repopick -p 399959
+repopick -p 399960
+repopick -p 399961
 # lunch lineage_h872-ap2a-eng
 
 # m bacon
