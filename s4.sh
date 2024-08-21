@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf .repo/local_manifests 
+rm -rf .repo/local_manifests kernel/lge/msm8996
 rm -rf  ~/.android-certs/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
@@ -12,9 +12,7 @@ rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
 rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
 
 repo init -u https://github.com/LineageOS/android.git -b lineage-21.0
-cd kernel/lge/msm8996
-git reset --hard
-cd -
+
 /opt/crave/resync.sh
 
 # cd build
@@ -35,7 +33,7 @@ cd -
 # cd -
 
 
-sed -i '/select SND_SOC_MSM_HDMI_CODEC_RX if ARCH_MSM8996/d' kernel/lge/msm8996/sound/soc/msm/Kconfig
+#sed -i '/select SND_SOC_MSM_HDMI_CODEC_RX if ARCH_MSM8996/d' kernel/lge/msm8996/sound/soc/msm/Kconfig
 #cat  kernel/lge/msm8996/sound/soc/msm/Kconfig
 source build/envsetup.sh
 # #repopick -p 396073
