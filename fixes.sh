@@ -18,7 +18,7 @@ sleep 1 && git cherry-pick a9b2d47299267762cf2f64cc0e79606fc3b52301
 cd -
 
 #some fixes will be push to source fter testingg
-cd device/lge/msm8996-common
+cd hardware/lge
 sleep 1 &&git fetch https://github.com/xc112lg/android_hardware_lge.git aosp14
 sleep 1 &&git cherry-pick 72583c8caff8932487b7be015ff8f4eb73a3f5a0 
 cd -
