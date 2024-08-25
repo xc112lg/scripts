@@ -5,6 +5,7 @@ rm -rf .repo/local_manifests
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
+rm -rf device/phh/treble
 
 
 rm -rf external/chromium-webview/prebuilt/*
