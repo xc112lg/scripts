@@ -17,15 +17,18 @@ rm -rf .repo/projects/vendor/gms.git
 rm -rf .repo/project-objects/*/android_vendor_gms.git
 
 repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs
+source scripts/clean.sh
 
 
 /opt/crave/resync.sh
 
 
 
+source scripts/clean.sh
+
 
 source build/envsetup.sh
-
+source scripts/fixes.sh
 
 
 riseup  h872 eng
