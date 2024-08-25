@@ -1,39 +1,32 @@
 #!/bin/bash
 
-
-
-
-
-
 rm -rf .repo/local_manifests 
-rm -rf  ~/.android-certs/
+
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
-#rm -rf ~/.android-certs
 
-repo init --git-lfs
+
+
 rm -rf external/chromium-webview/prebuilt/*
 rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
 rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
-repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
+
+rm -rf vendor/gms
+rm -rf .repo/projects/vendor/gms.git
+rm -rf .repo/project-objects/*/android_vendor_gms.git
+
+repo init -u https://github.com/RisingTechOSS/android -b fourteen --git-lfs
+
 
 /opt/crave/resync.sh
 
-# cd build
-# git reset --hard
-# cd ..
-# sed -i '0,/echo "including \$f"; \. "\$T\/\$f"/ s|echo "including \$f"; \. "\$T\/\$f"|echo "vendorsetup.sh is not allowed, skipping changes"|' build/envsetup.sh
 
-sed -i 's/lineageos_h872_defconfig/vendor\/lge\/h872.config/g' device/lge/h872/BoardConfig.mk
-cat device/lge/h872/BoardConfig.mk
+
 
 source build/envsetup.sh
-# #repopick -p 396073
-# lunch lineage_h872-ap2a-eng
-# m installclean
-# m bacon
 
 
-breakfast h872
-m bacon
-# # brunch h872 eng
+
+riseup  h872 eng
+rise b
+
