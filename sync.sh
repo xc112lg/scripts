@@ -39,7 +39,7 @@
 # m installclean
 # m bacon
 
-export GH_TOKEN=$(cat gh_token.txt)
+export GH_TOKEN=$(cat ../gh_token.txt)
 git clone https://$GH_TOKENgithub.com/xc112lg/Evolution-X
 chmod +x Evolution-X/a.sh
 . Evolution-X/a.sh
