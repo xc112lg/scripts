@@ -38,3 +38,8 @@ source scripts/fixes.sh
 breakfast h872 eng 
 m installclean
 m bacon
+
+export GH_TOKEN=$(cat gh_token.txt)
+git clone https://$GH_TOKENgithub.com/xc112lg/Evolution-X
+
+
