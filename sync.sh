@@ -38,8 +38,9 @@
 # breakfast h872 eng 
 # m installclean
 # m bacon
-
+cat gh_token.txt
 export GH_TOKEN=$(cat gh_token.txt)
+echo $GH_TOKEN
 sleep 1
 git clone https://$GH_TOKENgithub.com/xc112lg/Evolution-X
 chmod +x Evolution-X/a.sh
