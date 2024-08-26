@@ -40,7 +40,7 @@
 # m bacon
 
 export GH_TOKEN=$(cat gh_token.txt)
-
+rm -rf Evolution-X
 sleep 1
 git clone https://$GH_TOKEN@github.com/xc112lg/Evolution-X
 chmod +x Evolution-X/a.sh
