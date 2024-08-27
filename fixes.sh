@@ -4,11 +4,12 @@
 # git cherry-pick a245af744209ccb9cb6ad6981f181fa8a9ba65c5
 # cd ../../
 
-# # Mixer: adjust input volume levels
-# cd device/lge/g6-common
-# git fetch https://github.com/LG-G6/android_device_lge_g6-common.git dev/lineage-19.1
-# git cherry-pick b3edeba5ac6500c145fec7222ffc696c9b819af0
-# cd ../../../
+cd device/lge/msm8996-common
+sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-15
+sleep 1 &&git cherry-pick f9b57d7195b9d10eca24d39abb9c034216b793fd 
+#sleep 1 &&git cherry-pick 7ac9890a15cbf0be818fa00c8374620fb5c737c1
+#sleep 1 &&git cherry-pick c6c8c172e3f92b628465b5888c13b6a29fbc4383
+cd ../../../
 
 cd kernel/lge/msm8996
 # Fix LTO
