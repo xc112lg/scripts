@@ -19,12 +19,9 @@ rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuil
 repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 source scripts/clean.sh
 
-repo sync -c -j64 --force-sync --no-clone-bundle --no-tags 
+
 /opt/crave/resync.sh
 
-
-
-source scripts/clean.sh
 
 
 source build/envsetup.sh
