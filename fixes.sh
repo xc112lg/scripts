@@ -5,9 +5,9 @@
 # cd ../../
 
 cd device/lge/msm8996-common
-sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-4
-sleep 1 &&git cherry-pick 9ba41a03f9a4795658ed3a8358788d5ed685cf74 
-#sleep 1 &&git cherry-pick 7ac9890a15cbf0be818fa00c8374620fb5c737c1
+sleep 1 &&git fetch https://github.com/xc112lg/android_device_lge_msm8996-common.git patch-15
+sleep 1 &&git cherry-pick f9b57d7195b9d10eca24d39abb9c034216b793fd 
+sleep 1 &&git cherry-pick 612dad688902fbdcba65a2edfc838c448aa4d6af
 #sleep 1 &&git cherry-pick c6c8c172e3f92b628465b5888c13b6a29fbc4383
 cd ../../../
 
