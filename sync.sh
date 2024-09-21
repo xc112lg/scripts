@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -rf .repo/local_manifests 
+rm -rf .repo/local_manifests prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9
 
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
