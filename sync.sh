@@ -15,7 +15,7 @@ rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuil
 # rm -rf vendor/gms
 # rm -rf .repo/projects/vendor/gms.git
 # rm -rf .repo/project-objects/*/android_vendor_gms.git
-repo init -u https://github.com/crdroidandroid/android.git -b 14.0 --git-lfs
+repo init -u https://github.com/yaap/manifest.git -b fifteen --git-lfs
 #repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs
 source scripts/clean.sh
 
@@ -34,7 +34,7 @@ source scripts/fixes.sh
 
 breakfast h872 eng 
 m installclean
-m bacon
+m yaap
 
 
 #export GH_TOKEN=$(cat gh_token.txt)
