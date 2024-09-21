@@ -84,7 +84,7 @@ source scripts/fixes.sh
 # # # rise b
 
 
-breakfast h872 eng 
+lunch lineage_h872-eng
 m installclean
 m yaap
 
