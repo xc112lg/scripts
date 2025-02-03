@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
+
+  <remote name="gitlab1" fetch="https://gitlab.com" />
   <project name="crdroidandroid/android_device_xiaomi_vayu" path="device/xiaomi/vayu" remote="github" revision="15.0" />
   <project name="crdroidandroid/android_device_xiaomi_sm8150-common" path="device/xiaomi/sm8150-common" remote="github" revision="15.0" />
-  <project name="crdroidandroid/proprietary_vendor_xiaomi_vayu" path="vendor/xiaomi/vayu" remote="gitlab" revision="15.0" />
+  <project name="crdroidandroid/proprietary_vendor_xiaomi_vayu" path="vendor/xiaomi/vayu" remote="gitlab1" revision="15.0" />
   <project name="crdroidandroid/android_hardware_xiaomi" path="hardware/xiaomi" remote="github" revision="15.0" />
   <project name="crdroidandroid/android_kernel_xiaomi_sm8150" path="kernel/xiaomi/sm8150" remote="github" revision="15.0" />
-  <project name="crdroidandroid/proprietary_vendor_xiaomi_sm8150-common" path="device/xiaomi/vayu" remote="gitlab" revision="15.0" />
-  <project name="crdroidandroid/proprietary_vendor_xiaomi_miuicamera" path="device/xiaomi/vayu" remote="gitlab" revision="15.0" />
+  <project name="crdroidandroid/proprietary_vendor_xiaomi_sm8150-common" path="device/xiaomi/vayu" remote="gitlab1" revision="15.0" />
+  <project name="crdroidandroid/proprietary_vendor_xiaomi_miuicamera" path="device/xiaomi/vayu" remote="gitlab1" revision="15.0" />
 </manifest>
