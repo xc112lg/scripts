@@ -7,6 +7,6 @@
   <project name="crdroidandroid/proprietary_vendor_xiaomi_vayu" path="vendor/xiaomi/vayu" remote="gitlab1" revision="15.0" />
   <project name="crdroidandroid/android_hardware_xiaomi" path="hardware/xiaomi" remote="github" revision="15.0" />
   <project name="crdroidandroid/android_kernel_xiaomi_sm8150" path="kernel/xiaomi/sm8150" remote="github" revision="15.0" />
-  <project name="crdroidandroid/proprietary_vendor_xiaomi_sm8150-common" path="device/xiaomi/vayu" remote="gitlab1" revision="15.0" />
-  <project name="crdroidandroid/proprietary_vendor_xiaomi_miuicamera" path="device/xiaomi/vayu" remote="gitlab1" revision="15.0" />
+  <project name="crdroidandroid/proprietary_vendor_xiaomi_sm8150-common" path="vendor/xiaomi/sm8150-common" remote="gitlab1" revision="15.0" />
+  <project name="crdroidandroid/proprietary_vendor_xiaomi_miuicamera" path="vendor/xiaomi/miuicamera" remote="gitlab1" revision="15.0" />
 </manifest>
