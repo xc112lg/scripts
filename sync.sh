@@ -41,7 +41,7 @@ main() {
 
 main $*
 
-
+/opt/crave/resync.sh
 
 
 
