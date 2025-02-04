@@ -44,7 +44,7 @@ main $*
 
 
 
-source scripts/changes.sh
+#source scripts/changes.sh
 source scripts/signed.sh
 
 source build/envsetup.sh
