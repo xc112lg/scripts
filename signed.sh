@@ -1,24 +1,11 @@
 #!/bin/bash
 
-if [ -d ~/.android-certs/ ]; then
-echo "key already exist"
-
+if [ -f gh_token.txt ]; then
+    export GH_TOKEN=$(cat gh_token.txt)
+    git clone https://$GH_TOKEN@github.com/xc112lg/key vendor/lineage-priv/keys
 else
-    subject='/C=PH/ST=Philippines/L=Manila/O=Rex H/OU=Rex H/CN=Rex H/emailAddress=dtiven13@gmail.com'
-mkdir ~/.android-certs
-
-for x in releasekey platform shared media networkstack testkey cyngn-priv-app bluetooth sdk_sandbox verifiedboot; do 
-    yes "" | ./development/tools/make_key ~/.android-certs/$x "$subject"
-done
-
-mkdir vendor/extra
-mkdir vendor/lineage-priv/keys
-
-mv ~/.android-certs vendor/extra/keys
-#For Lineage 21 and newer use the command below if not then use above 
-#mv ~/.android-certs vendor/lineage-priv/keys
-echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/extra/product.mk
-#For Lineage 21 and newer use the command below if not then use above
-#echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/lineage-priv/keys/releasekey" > vendor/lineage-priv/keys/keys.mk
-
+    echo "gh_token.txt not found. Skipping repository clone."
 fi
+
+
+
