@@ -3,7 +3,7 @@
 
 
 rm -rf .repo/local_manifests
-
+rm -rf frameworks/base/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
@@ -47,8 +47,8 @@ main $*
 source scripts/changes.sh
 source scripts/signed.sh
 
-source build/envsetup.sh
-breakfast vayu
-brunch vayu
+#source build/envsetup.sh
+#breakfast vayu
+#brunch vayu
 
 
