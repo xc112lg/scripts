@@ -4,7 +4,7 @@ if [ -d ~/.android-certs/ ]; then
 echo "key already exist"
 
 else
-    subject='/C=PH/ST=Philippines/L=Manila/O=Rex H/OU=Rex H/CN=Rex H/emailAddress=dtiven13@gmail.com'
+    subject='/C=PH/ST=Philippines/L=Manila/O=Rex H/OU=Rex H/CN=Rex H/emailAddress=rexc1835@gmail.com'
 mkdir ~/.android-certs
 
 for x in releasekey platform shared media networkstack testkey cyngn-priv-app bluetooth sdk_sandbox verifiedboot; do 
@@ -22,3 +22,6 @@ echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/extra/keys/releasekey" > vendor/
 #echo "PRODUCT_DEFAULT_DEV_CERTIFICATE := vendor/lineage-priv/keys/releasekey" > vendor/lineage-priv/keys/keys.mk
 
 fi
+
+printf 'filegroup(\n    name = "android_certificate_directory",\n    srcs = glob([\n        "*.pk8",\n        "*.pem",\n    ]),\n    visibility = ["//visibility:public"],\n)\n' > BUILD.bazel
+
