@@ -49,6 +49,6 @@ source scripts/signed.sh
 
 source build/envsetup.sh
 breakfast vayu
-brunch vayu
+#brunch vayu
 
 
