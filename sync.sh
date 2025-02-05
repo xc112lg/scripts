@@ -10,8 +10,6 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 repo init -u https://github.com/crdroidandroid/android.git -b 15.0 --git-lfs
 
-#!/bin/bash
-# Copyright (c) 2016-2025 Crave.io Inc. All rights reserved
 
 repo --version
 cd .repo/repo
@@ -74,8 +72,7 @@ main() {
 }
 
 main $*
-
-
+export TEMPORARY_DISABLE_PATH_RESTRICTIONS=true 
 
 #source scripts/changes.sh
 source scripts/signed.sh
