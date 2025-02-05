@@ -8,7 +8,8 @@ rm -rf .repo/local_manifests
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
-repo init -u https://github.com/crdroidandroid/android.git -b 14.0 --git-lfs
+
+repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs --depth=1
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
 
 /opt/crave/resync.sh
