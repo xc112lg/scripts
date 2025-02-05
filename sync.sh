@@ -1,5 +1,5 @@
 #!/bin/bash
-
+rm -rf kernel/lge/msm8996 frameworks/base
 
 DEVICE="${1:-all}"  
 COMMAND="${2:-build}" 
