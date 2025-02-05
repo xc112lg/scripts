@@ -38,8 +38,8 @@ fi
 
 
 
-source scripts/fixes.sh
-source scripts/signed.sh
+# source scripts/fixes.sh
+# source scripts/signed.sh
 export USE_CCACHE=1
 source build/envsetup.sh
 
