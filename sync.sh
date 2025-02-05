@@ -72,7 +72,7 @@ main() {
 }
 
 main $*
-export TEMPORARY_DISABLE_PATH_RESTRICTIONS=true 
+#export TEMPORARY_DISABLE_PATH_RESTRICTIONS=true 
 
 #source scripts/changes.sh
 source scripts/signed.sh
