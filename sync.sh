@@ -1,15 +1,8 @@
 #!/bin/bash
-rm -rf kernel/lge/msm8996 frameworks/base
+which repo
 
-DEVICE="${1:-all}"  
-COMMAND="${2:-build}" 
-DELZIP="${3}"
-MAKEFILE="${4}" 
-RELEASETYPE="${5}" 
-VENDOR="${6}" 
-COM1="${7}"
-COM2="${8}"
-CORE="${9:-"$(nproc --all)"}"
+sudo curl -o /usr/bin/repo https://storage.googleapis.com/git-repo-downloads/repo
+sudo chmod +x /usr/bin/repo
 
 
 ## Remove existing build artifactsa
