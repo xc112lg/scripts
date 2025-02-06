@@ -9,8 +9,8 @@ sudo chmod +x /usr/bin/repo
 
 
 rm -rf .repo/local_manifests/ 
-repo init -u https://github.com/crdroidandroid/android.git -b 14.0 --git-lfs 
-git clone https://github.com/iamrh1819/local_manifests --depth 1 -b A14-NF .repo/local_manifests && # Sync the repositories if [ -f /usr/bin
+repo init -u https://github.com/LineageOS/android.git -b lineage-21.0 --git-lfs --depth=1
+git clone https://github.com/iamrh1819/local_manifests --depth 1 -b A14-NF .repo/local_manifests  # Sync the repositories if [ -f /usr/bin
 /opt/crave/resync.sh 
 source build/envsetup.sh 
 brunch a30s user
