@@ -2,6 +2,12 @@
 sudo apt-get update
 sudo apt-get install -y ccache
 export USE_CCACHE=1
+which repo
+
+sudo curl -o /usr/bin/repo https://storage.googleapis.com/git-repo-downloads/repo
+sudo chmod +x /usr/bin/repo
+
+
 rm -rf .repo/local_manifests/ 
 repo init -u https://github.com/crdroidandroid/android.git -b 14.0 --git-lfs 
 git clone https://github.com/iamrh1819/local_manifests --depth 1 -b A14-NF .repo/local_manifests && # Sync the repositories if [ -f /usr/bin
