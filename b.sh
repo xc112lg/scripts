@@ -2,11 +2,12 @@
 sudo apt-get update
 sudo apt-get install -y ccache
 export USE_CCACHE=1
-rm -rf .repo/local_manifests 
-repo init --depth=1 --no-repo-verify -u https://github.com/crdroidandroid/android.git -b 14.0 -g default,-mips,-darwin,-notdefault
-git clone https://github.com/aosp-realm/android_build_manifest.git -b apollo-cr14 .repo/local_manifests
-/opt/crave/resync.sh
-source build/envsetup.sh
+rm -rf .repo/local_manifests/ 
+repo init -u https://github.com/crdroidandroid/android.git -b 14.0 --git-lfs 
+git clone https://github.com/iamrh1819/local_manifests --depth 1 -b A14-NF .repo/local_manifests && # Sync the repositories if [ -f /usr/bin
+/opt/crave/resync.sh 
+source build/envsetup.sh 
+brunch a30s user
 #brunch apollo
 
 rm -rf scripts
