@@ -7,7 +7,7 @@ rm -rf frameworks/base/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
-repo init -u https://github.com/crdroidandroid/android.git -b 15.0 --git-lfs
+repo init -u https://github.com/crdroidandroid/android.git -b 15.0 --git-lfs --depth 1
 
 main() {
     # Run repo sync command and capture the output
