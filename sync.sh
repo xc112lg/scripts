@@ -15,7 +15,7 @@ git clone https://github.com/xc112lg/rbe --depth 1
 
 export USE_RBE=1                                      
 export RBE_DIR="rbe"                      # Path to the extracted reclient directory (relative or absolute)
-export NINJA_REMOTE_NUM_JOBS=300                        # Number of parallel remote jobs (adjust based on your RAM, buildbuddy has 80 CPU cores in the free tier)
+export NINJA_REMOTE_NUM_JOBS=500                       # Number of parallel remote jobs (adjust based on your RAM, buildbuddy has 80 CPU cores in the free tier)
 
 # --- BuildBuddy Connection Settings ---
 export RBE_service="remote.buildbuddy.io:443"        # BuildBuddy instance address (without grpcs://, add the port 443)
