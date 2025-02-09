@@ -7,21 +7,9 @@ rm -rf frameworks/base/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
-mkdir -p rbe  # Ensure the target directory exists
 
-ZIP_URL=$(wget -qO- "https://chrome-infra-packages.appspot.com/p/infra/rbe/client/linux-amd64/+/latest" | grep -Eo 'https://[^"]+\.zip' | head -n 1)
 
-# Check if a URL was found
-if [[ -n "$ZIP_URL" ]]; then
-    echo "Downloading from: $ZIP_URL"
-    wget -O rbe_client.zip "$ZIP_URL"
-    echo "Download completed: rbe_client.zip"
-else
-    echo "Error: Could not find the download link."
-    exit 1
-fi
-
-unzip -o rbe_client.zip -d rbe  # Extract and overwrite if needed
+git clone https://github.com/xc112lg/rbe --depth 1
 
 
 
