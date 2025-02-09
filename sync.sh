@@ -16,6 +16,8 @@ source scripts/changes.sh
 source scripts/signed.sh
 
 source build/envsetup.sh
+make installclean
+
 breakfast vayu
 brunch vayu
 
