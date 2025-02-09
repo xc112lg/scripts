@@ -9,14 +9,19 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 mkdir -p rbe  # Ensure the target directory exists
 
-if [ ! -f "client-linux-amd64.zip" ]; then
-    echo "File not found. Downloading..."
-    wget -O client-linux-amd64.zip "https://storage.googleapis.com/chrome-infra-packages/store/SHA256/9fdc44153a24ecda030d63313fa9ebc56fc456445c7b9324d279cf0377e5d9d6?Expires=1738973851&GoogleAccessId=chrome-infra-packages%40appspot.gserviceaccount.com&Signature=OvyDTYzrRY6Fy%2BhKHjXSkR2FTT93Shx8Em5gpIbd2VboI7ER7miWRKGaQfwpFmNIPT6mSLlSJEWyEkFoKt5mVn%2BEIERn63%2FXMOGVIWMKFoQalCVpLJ5%2BW3cZReqBxMfhIpLjIlQIW3qMsDwTyGg%2BWntDNNz%2Bhe%2F%2Fi8C7BRabcQ49mpAZIhs5hh43geDQmSUwHyilMbFAbzJF6Hnmc%2BUkQ2sz0fMqe69CduNbViKO89ZezFuxi1ExnPiNNWrbtANMhi1PW9m4gjSZCl%2FSvb9hmHgp9%2FIv8XgqvDWywhyveu5rGzrSt9P39dmFsprlxa6KDbUi104WAP0OqhOSgUSwbA%3D%3D&response-content-disposition=attachment%3B+filename%3D%22client-linux-amd64.zip%22"
+ZIP_URL=$(wget -qO- "https://chrome-infra-packages.appspot.com/p/infra/rbe/client/linux-amd64/+/latest" | grep -Eo 'https://[^"]+\.zip' | head -n 1)
+
+# Check if a URL was found
+if [[ -n "$ZIP_URL" ]]; then
+    echo "Downloading from: $ZIP_URL"
+    wget -O rbe_client.zip "$ZIP_URL"
+    echo "Download completed: rbe_client.zip"
 else
-    echo "File already exists. Skipping download."
+    echo "Error: Could not find the download link."
+    exit 1
 fi
 
-unzip -o client-linux-amd64.zip -d rbe  # Extract and overwrite if needed
+unzip -o rbe_client.zip -d rbe  # Extract and overwrite if needed
 
 
 
