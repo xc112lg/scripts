@@ -9,7 +9,7 @@ cp scripts/roomservice.xml .repo/local_manifests
 
 
 
-git clone https://github.com/xc112lg/rbe --depth 1
+#git clone https://github.com/xc112lg/rbe --depth 1
 
 
 
