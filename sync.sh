@@ -75,8 +75,10 @@ source scripts/signed.sh
 
 source build/envsetup.sh
 make installclean
+brunch vayu
 
-breakfast vayu
+export SOONG_CONFIG_LTO_disable=true
+make installclean
 brunch vayu
 
 
