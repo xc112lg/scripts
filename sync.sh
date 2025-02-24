@@ -5,6 +5,7 @@ rm -rf frameworks/base/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 git clone https://github.com/xc112lg/rbe --depth 1
+export TARGET_IS_LEGACY=true
 export LLVM_PREBUILT=$(pwd)/prebuilts/clang/host/linux-x86/clang-r547379
 export CLANG_VERSION=clang-r547379
 export USE_RBE=1                                      
