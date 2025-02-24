@@ -62,8 +62,10 @@ git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
 cd -
 source scripts/signed.sh
 source build/envsetup.sh
+lunch lineage_vayu-ap4a-userdebug
 m installclean
-brunch vayu
+m evolution
+#brunch vayu
 
 
 
