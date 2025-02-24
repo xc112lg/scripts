@@ -8,6 +8,6 @@ cd ../../
 
 cd system/core/
 
-git fetch https://github.com/xc112lg/android_system_core.git patch-2
-git cherry-pick 0af0d0611b2a58ba0e8950d396f7ef222377f29d
+git fetch https://github.com/xc112lg/android_system_core.git patch-3
+git cherry-pick b6641906a17cfc887686b2f191b1d66c08db7a2f
 cd -
