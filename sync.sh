@@ -61,7 +61,7 @@ git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
 cd -
 source scripts/signed.sh
 source build/envsetup.sh
-make installclean
+m installclean
 brunch vayu
 
 
