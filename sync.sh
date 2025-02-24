@@ -3,7 +3,7 @@
 
 
 rm -rf .repo/local_manifests
-# rm -rf frameworks/base/
+rm -rf frameworks/base/
 # rm -rf system/core/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
@@ -70,10 +70,15 @@ export RBE_LINT_POOL=default
 
 
 
-repo init -u https://github.com/crdroidandroid/android.git -b 15.0 --git-lfs --depth 1
+repo init -u https://github.com/Evolution-X/manifest -b vic --git-lfs --depth 1
 /opt/crave/resync.sh 
 
 #source scripts/changes.sh
+cd frameworks/base/
+git fetch https://github.com/xc112lg/android_frameworks_base.git patch-2
+git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
+cd -
+
 source scripts/signed.sh
 
 source build/envsetup.sh
