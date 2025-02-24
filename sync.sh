@@ -62,7 +62,10 @@ git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
 cd -
 source scripts/signed.sh
 source build/envsetup.sh
-export SOURCE_DATE_EPOCH=1583020800  # Example epoch time
+EPOCH_TIME=$(date +%s)
+
+# Export the variable
+export SOURCE_DATE_EPOCH=$EPOCH_TIME 
 
 lunch lineage_vayu-ap4a-userdebug
 m installclean
