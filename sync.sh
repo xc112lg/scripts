@@ -3,8 +3,8 @@
 
 
 rm -rf .repo/local_manifests
-rm -rf frameworks/base/
-rm -rf system/core/
+# rm -rf frameworks/base/
+# rm -rf system/core/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 
