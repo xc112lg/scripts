@@ -10,4 +10,5 @@
   <project name="crdroidandroid/proprietary_vendor_xiaomi_sm8150-common" path="vendor/xiaomi/sm8150-common" remote="gitlab1" revision="15.0" />
   <project name="crdroidandroid/proprietary_vendor_xiaomi_miuicamera" path="vendor/xiaomi/miuicamera" remote="gitlab1" revision="15.0" />
   <project name="crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379" path="prebuilts/clang/host/linux-x86/clang-r547379" remote="gitlab1" revision="15.0" />
+  <remove project path="prebuilts/clang/host/linux-x86/clang-latest" name="crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r536225" clone-depth="1" remote="crdroid-gitlab" />
 </manifest>
