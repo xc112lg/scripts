@@ -73,7 +73,7 @@ export RBE_LINT_POOL=default
 repo init -u https://github.com/crdroidandroid/android.git -b 15.0 --git-lfs --depth 1
 /opt/crave/resync.sh 
 
-source scripts/changes.sh
+#source scripts/changes.sh
 source scripts/signed.sh
 
 source build/envsetup.sh
