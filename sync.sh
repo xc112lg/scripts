@@ -6,14 +6,13 @@ mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 git clone https://github.com/xc112lg/rbe --depth 1
 
-export LLVM_PREBUILT=$(pwd)/prebuilts/clang/host/linux-x86/clang-r547379
-export CLANG_VERSION=clang-r547379
+
 export USE_RBE=1                                      
 export RBE_DIR="rbe"                      # Path to the extracted reclient directory (relative or absolute)
 export NINJA_REMOTE_NUM_JOBS=500                       # Number of parallel remote jobs (adjust based on your RAM, buildbuddy has 80 CPU cores in the free tier)
 # --- BuildBuddy Connection Settings ---
 export RBE_service="remote.buildbuddy.io:443"        # BuildBuddy instance address (without grpcs://, add the port 443)
-export RBE_remote_headers="x-buildbuddy-api-key=NF5nEUUyU7LIy2QkkIIe"    # Your BuildBuddy API key
+export RBE_remote_headers="x-buildbuddy-api-key=agvbfhIb0K9IxDbawp09"    # Your BuildBuddy API key
 export RBE_use_rpc_credentials=false                   
 export RBE_service_no_auth=true                       
 # --- Unified Downloads/Uploads (Recommended) ---
