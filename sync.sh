@@ -53,6 +53,7 @@ export RBE_JAVA_POOL=default
 export RBE_METALAVA_POOL=default
 export RBE_LINT_POOL=default
 repo init -u https://github.com/Evolution-X/manifest -b vic --git-lfs --depth 1
+repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
 /opt/crave/resync.sh 
 #source scripts/changes.sh
 cd frameworks/base/
