@@ -63,7 +63,7 @@ export RBE_LINT_POOL=default
 # git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
 # cd -
 # source scripts/signed.sh
-# source build/envsetup.sh
+source build/envsetup.sh
 # EPOCH_TIME=$(date +%s)
 
 # # Export the variable
