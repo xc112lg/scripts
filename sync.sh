@@ -84,6 +84,15 @@ unset TARGET_IS_LEGACY
 echo $TARGET_IS_LEGACY
 export TARGET_IS_LEGACY=false
 m evolution
+m evolution
+
+rm -rf device/xiaomi/sm8150-common
+/opt/crave/resync.sh 
+source scripts/signed.sh
+source build/envsetup.sh
+lunch lineage_vayu-ap4a-userdebug
+m evolution
+
 #brunch vayu
 
 
