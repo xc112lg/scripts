@@ -1,5 +1,6 @@
 #!/bin/bash
 rm -rf .repo/local_manifests
+rm -rf device/xiaomi/sm8150-common
 #rm -rf frameworks/base/
 # rm -rf system/core/
 mkdir -p .repo/local_manifests
@@ -64,7 +65,11 @@ git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x
 # cd -
 source scripts/signed.sh
 source build/envsetup.sh
+git fetch https://github.com/xc112lg/android_device_xiaomi_sm8150-common.git patch-1
+git cherry-pick c08e3f943ea6dc232d5de69e51fca923329ad262
+cd device/xiaomi/sm8150-common
 
+cd -
 
 # EPOCH_TIME=$(date +%s)
 
