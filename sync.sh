@@ -71,6 +71,11 @@ export SOURCE_DATE_EPOCH=$EPOCH_TIME
 
 lunch lineage_vayu-ap4a-userdebug
 m installclean
+echo legacy 
+echo $TARGET_IS_LEGACY
+unset TARGET_IS_LEGACY
+echo $TARGET_IS_LEGACY
+export TARGET_IS_LEGACY=false
 m evolution
 #brunch vayu
 
