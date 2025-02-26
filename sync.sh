@@ -6,8 +6,6 @@ rm -rf device/xiaomi/sm8150-common
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
 git clone https://github.com/xc112lg/rbe --depth 1
-
-
 export USE_RBE=1                                      
 export RBE_DIR="rbe"                      # Path to the extracted reclient directory (relative or absolute)
 export NINJA_REMOTE_NUM_JOBS=500                       # Number of parallel remote jobs (adjust based on your RAM, buildbuddy has 80 CPU cores in the free tier)
@@ -57,25 +55,23 @@ repo init -u https://github.com/Evolution-X/manifest -b vic --git-lfs --depth 1
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
 /opt/crave/resync.sh 
 #source scripts/changes.sh
-
 git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379 prebuilts/clang/host/linux-x86/clang-r547379 --depth 1
 # cd frameworks/base/
 # git fetch https://github.com/xc112lg/android_frameworks_base.git patch-2
 # git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
 # cd -
 source scripts/signed.sh
-source build/envsetup.sh
 
 cd device/xiaomi/sm8150-common
-git fetch https://github.com/xc112lg/android_device_xiaomi_sm8150-common.git patch-1
-git cherry-pick c08e3f943ea6dc232d5de69e51fca923329ad262
+git fetch https://github.com/xc112lg/android_device_xiaomi_sm8150-common.git patch-2
+git cherry-pick 369071093635c1534384617ceea209b676c38469
 cd -
 
 # EPOCH_TIME=$(date +%s)
 
 # # Export the variable
 # export SOURCE_DATE_EPOCH=$EPOCH_TIME 
-
+source build/envsetup.sh
 lunch lineage_vayu-ap4a-userdebug
 m installclean
 echo legacy 
@@ -83,14 +79,6 @@ echo $TARGET_IS_LEGACY
 unset TARGET_IS_LEGACY
 echo $TARGET_IS_LEGACY
 export TARGET_IS_LEGACY=false
-m evolution
-m evolution
-
-rm -rf device/xiaomi/sm8150-common
-/opt/crave/resync.sh 
-source scripts/signed.sh
-source build/envsetup.sh
-lunch lineage_vayu-ap4a-userdebug
 m evolution
 
 #brunch vayu
