@@ -56,6 +56,8 @@ repo init -u https://github.com/Evolution-X/manifest -b vic --git-lfs --depth 1
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
 /opt/crave/resync.sh 
 #source scripts/changes.sh
+
+git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379 prebuilts/clang/host/linux-x86/clang-r547379
 cd frameworks/base/
 git fetch https://github.com/xc112lg/android_frameworks_base.git patch-2
 git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
