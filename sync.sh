@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -rf .repo/local_manifests
-rm -rf frameworks/base/
+#rm -rf frameworks/base/
 # rm -rf system/core/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
@@ -58,10 +58,10 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
 #source scripts/changes.sh
 
 git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379 prebuilts/clang/host/linux-x86/clang-r547379 --depth 1
-cd frameworks/base/
-git fetch https://github.com/xc112lg/android_frameworks_base.git patch-2
-git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
-cd -
+# cd frameworks/base/
+# git fetch https://github.com/xc112lg/android_frameworks_base.git patch-2
+# git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
+# cd -
 source scripts/signed.sh
 source build/envsetup.sh
 
