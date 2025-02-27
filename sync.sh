@@ -62,8 +62,8 @@ git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x
 # cd -
 source scripts/signed.sh
 cd device/xiaomi/sm8150-common
-git fetch https://github.com/xc112lg/android_device_xiaomi_sm8150-common.git patch-2
-git cherry-pick 369071093635c1534384617ceea209b676c38469
+git fetch https://github.com/xc112lg/android_device_xiaomi_sm8150-common.git patch-3
+git cherry-pick 55aa1ec33116e405511449ab21de1924075e5dd8
 cd -
 source build/envsetup.sh
 lunch lineage_vayu-ap4a-userdebug
