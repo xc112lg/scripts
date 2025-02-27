@@ -61,9 +61,9 @@ git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x
 # git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
 # cd -
 source scripts/signed.sh
-cd build/make
-git fetch https://github.com/xc112lg/build.git patch-1
-git cherry-pick 82a0aef7923992b13bdb3e32e6c0ce5411219dc7
+cd build/soong
+git fetch https://github.com/xc112lg/build_soong.git patch-1
+git cherry-pick e2cb1a7381847f0f77f7ebbf7d5e6f6bcc34bc5a
 cd -
 source build/envsetup.sh
 lunch lineage_vayu-ap4a-userdebug
