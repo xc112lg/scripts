@@ -73,7 +73,7 @@ echo "PLATFORM_SECURITY_PATCH_TIMESTAMP: $PLATFORM_SECURITY_PATCH_TIMESTAMP"
 
 
 
-m clean
+m installclean
 # echo legacy
 # echo $TARGET_IS_LEGACY
 m evolution
