@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -rf .repo/local_manifests
-rm -rf device/xiaomi/sm8150-common
+rm -rf build/make
 #rm -rf frameworks/base/
 # rm -rf system/core/
 mkdir -p .repo/local_manifests
@@ -61,30 +61,23 @@ git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x
 # git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
 # cd -
 source scripts/signed.sh
-cd device/xiaomi/sm8150-common
-git fetch https://github.com/xc112lg/android_device_xiaomi_sm8150-common.git patch-4
-git cherry-pick 180a4af20ef4b7405517a98bcc8a55acad32b1ae
+cd build/make
+git fetch https://github.com/xc112lg/build.git patch-1
+git cherry-pick 82a0aef7923992b13bdb3e32e6c0ce5411219dc7
 cd -
 source build/envsetup.sh
 lunch lineage_vayu-ap4a-userdebug
+echo "PLATFORM_SECURITY_PATCH: $PLATFORM_SECURITY_PATCH"
+echo "RELEASE_PLATFORM_SECURITY_PATCH: $RELEASE_PLATFORM_SECURITY_PATCH"
+echo "PLATFORM_SECURITY_PATCH_TIMESTAMP: $PLATFORM_SECURITY_PATCH_TIMESTAMP"
+
+
+
 m installclean
-echo legacy
-echo $TARGET_IS_LEGACY
+# echo legacy
+# echo $TARGET_IS_LEGACY
 m evolution
-sleep 10
-# source scripts/signed.sh
-rm -rf device/xiaomi/sm8150-common
-/opt/crave/resync.sh
-cd device/xiaomi/sm8150-common
-git fetch https://github.com/xc112lg/android_device_xiaomi_sm8150-common.git patch-2
-git cherry-pick 369071093635c1534384617ceea209b676c38469
-cd -
-source build/envsetup.sh
-lunch lineage_vayu-ap4a-userdebug
-m installclean
-echo legacy
-echo $TARGET_IS_LEGACY
-m evolution
+
 
 
 
