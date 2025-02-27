@@ -71,17 +71,20 @@ m installclean
 echo legacy
 echo $TARGET_IS_LEGACY
 m evolution
+sleep 10
 # source scripts/signed.sh
-# cd device/xiaomi/sm8150-common
-# git fetch https://github.com/xc112lg/android_device_xiaomi_sm8150-common.git patch-2
-# git cherry-pick 369071093635c1534384617ceea209b676c38469
-# cd -
-# source build/envsetup.sh
-# lunch lineage_vayu-ap4a-userdebug
-# m installclean
-# echo legacy
-# echo $TARGET_IS_LEGACY
-# m evolution
+rm -rf device/xiaomi/sm8150-common
+/opt/crave/resync.sh
+cd device/xiaomi/sm8150-common
+git fetch https://github.com/xc112lg/android_device_xiaomi_sm8150-common.git patch-2
+git cherry-pick 369071093635c1534384617ceea209b676c38469
+cd -
+source build/envsetup.sh
+lunch lineage_vayu-ap4a-userdebug
+m installclean
+echo legacy
+echo $TARGET_IS_LEGACY
+m evolution
 
 
 
