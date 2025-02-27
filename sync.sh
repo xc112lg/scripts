@@ -53,7 +53,7 @@ export RBE_METALAVA_POOL=default
 export RBE_LINT_POOL=default
 repo init -u https://github.com/Evolution-X/manifest -b vic --git-lfs --depth 1
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
-/opt/crave/resync.sh 
+/opt/crave/resync.sh
 #source scripts/changes.sh
 git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379 prebuilts/clang/host/linux-x86/clang-r547379 --depth 1
 # cd frameworks/base/
@@ -61,42 +61,16 @@ git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x
 # git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
 # cd -
 source scripts/signed.sh
-
-# cd device/xiaomi/sm8150-common
-# git fetch https://github.com/xc112lg/android_device_xiaomi_sm8150-common.git patch-2
-# git cherry-pick 369071093635c1534384617ceea209b676c38469
-# cd -
-
-# EPOCH_TIME=$(date +%s)
-
-# # Export the variable
-# export SOURCE_DATE_EPOCH=$EPOCH_TIME 
-source build/envsetup.sh
-lunch lineage_vayu-ap4a-userdebug
-m installclean
-echo legacy 
-echo $TARGET_IS_LEGACY
-m evolution
-
-
-
 cd device/xiaomi/sm8150-common
 git fetch https://github.com/xc112lg/android_device_xiaomi_sm8150-common.git patch-2
 git cherry-pick 369071093635c1534384617ceea209b676c38469
 cd -
-
-# EPOCH_TIME=$(date +%s)
-
-# # Export the variable
-# export SOURCE_DATE_EPOCH=$EPOCH_TIME 
 source build/envsetup.sh
 lunch lineage_vayu-ap4a-userdebug
 m installclean
-echo legacy 
+echo legacy
 echo $TARGET_IS_LEGACY
 m evolution
-
-#brunch vayu
 
 
 
