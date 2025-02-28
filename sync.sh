@@ -52,7 +52,7 @@ export RBE_JAVA_POOL=default
 export RBE_METALAVA_POOL=default
 export RBE_LINT_POOL=default
 repo init -u https://github.com/Evolution-X/manifest -b vic --git-lfs --depth 1
-repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
+#repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
 /opt/crave/resync.sh
 #source scripts/changes.sh
 git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379 prebuilts/clang/host/linux-x86/clang-r547379 --depth 1
