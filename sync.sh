@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -rf .repo/local_manifests
-rm -rf build/soong
+rm -rf device/xiaomi/sm8150-common
 #rm -rf frameworks/base/
 # rm -rf system/core/
 mkdir -p .repo/local_manifests
