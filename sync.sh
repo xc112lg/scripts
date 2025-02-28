@@ -1,6 +1,6 @@
 #!/bin/bash
 rm -rf .repo/local_manifests
-rm -rf build/make
+rm -rf build/soong
 #rm -rf frameworks/base/
 # rm -rf system/core/
 mkdir -p .repo/local_manifests
@@ -61,10 +61,10 @@ git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x
 # git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
 # cd -
 source scripts/signed.sh
-cd build/soong
-git fetch https://github.com/xc112lg/build_soong.git patch-1
-git cherry-pick e2cb1a7381847f0f77f7ebbf7d5e6f6bcc34bc5a
-cd -
+# cd build/soong
+# git fetch https://github.com/xc112lg/build_soong.git patch-1
+# git cherry-pick e2cb1a7381847f0f77f7ebbf7d5e6f6bcc34bc5a
+# cd -
 source build/envsetup.sh
 lunch lineage_vayu-ap4a-userdebug
 echo "PLATFORM_SECURITY_PATCH: $PLATFORM_SECURITY_PATCH"
