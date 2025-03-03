@@ -56,23 +56,16 @@ repo init -u https://github.com/Evolution-X/manifest -b vic --git-lfs --depth 1
 /opt/crave/resync.sh
 #source scripts/changes.sh
 git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379 prebuilts/clang/host/linux-x86/clang-r547379 --depth 1
-# cd frameworks/base/
-# git fetch https://github.com/xc112lg/android_frameworks_base.git patch-2
-# git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
-# cd -
+cd frameworks/base/
+git fetch https://github.com/xc112lg/frameworks_base-1.git patch-1
+git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
+cd -
 source scripts/signed.sh
-# cd build/soong
-# git fetch https://github.com/xc112lg/build_soong.git patch-1
-# git cherry-pick e2cb1a7381847f0f77f7ebbf7d5e6f6bcc34bc5a
-# cd -
+cd kernel/xiaomi/sm8150
+curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -
+cd -
 source build/envsetup.sh
 lunch lineage_vayu-ap4a-userdebug
-echo "PLATFORM_SECURITY_PATCH: $PLATFORM_SECURITY_PATCH"
-echo "RELEASE_PLATFORM_SECURITY_PATCH: $RELEASE_PLATFORM_SECURITY_PATCH"
-echo "PLATFORM_SECURITY_PATCH_TIMESTAMP: $PLATFORM_SECURITY_PATCH_TIMESTAMP"
-
-
-
 m installclean
 # echo legacy
 # echo $TARGET_IS_LEGACY
