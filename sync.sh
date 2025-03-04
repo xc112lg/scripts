@@ -1,7 +1,7 @@
 #!/bin/bash
 rm -rf .repo/local_manifests
 rm -rf device/xiaomi/sm8150-common
-#rm -rf frameworks/base/
+rm -rf frameworks/base/
 # rm -rf system/core/
 mkdir -p .repo/local_manifests
 cp scripts/roomservice.xml .repo/local_manifests
@@ -56,10 +56,11 @@ repo init -u https://github.com/Evolution-X/manifest -b vic --git-lfs --depth 1
 /opt/crave/resync.sh
 #source scripts/changes.sh
 git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379 prebuilts/clang/host/linux-x86/clang-r547379 --depth 1
-cd frameworks/base/
-git fetch https://github.com/xc112lg/frameworks_base-1.git patch-1
-git cherry-pick 3a3b3718ffcfe53127cbfa228577f02d825e1960
-cd -
+
+grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
+sed -i '/"com.netease.cloudmusic",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
+
+
 source scripts/signed.sh
 cd kernel/xiaomi/sm8150
 curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -
