@@ -66,7 +66,7 @@ cd kernel/xiaomi/sm8150
 curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -
 cd -
 source build/envsetup.sh
-lunch lineage_vayu-ap4a-userdebug
+lunch lineage_vayu-bp1a-userdebug
 m installclean
 # echo legacy
 # echo $TARGET_IS_LEGACY
