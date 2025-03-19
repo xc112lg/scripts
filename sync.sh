@@ -5,7 +5,7 @@ rm -rf frameworks/base
 rm -rf kernel/xiaomi/sm8150
 # rm -rf system/core/
 mkdir -p .repo/local_manifests
-#cp scripts/roomservice.xml .repo/local_manifests
+cp scripts/roomservice.xml .repo/local_manifests
 git clone https://github.com/xc112lg/rbe --depth 1
 export USE_RBE=1                                      
 export RBE_DIR="rbe"                      # Path to the extracted reclient directory (relative or absolute)
@@ -53,7 +53,7 @@ export RBE_JAVA_POOL=default
 export RBE_METALAVA_POOL=default
 export RBE_LINT_POOL=default
 repo init -u https://github.com/Evolution-X/manifest -b vic-qpr1 --git-lfs
-git clone https://github.com/vayu-development-sources/local_manifests.git -b evo15-dolby .repo/local_manifests
+#git clone https://github.com/vayu-development-sources/local_manifests.git -b evo15-dolby .repo/local_manifests
 #repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
 /opt/crave/resync.sh
 #source scripts/changes.sh
@@ -64,9 +64,9 @@ sed -i '/"in.startv.hotstar",/a\        "com.lazada.android",\n        "com.shop
 
 
 source scripts/signed.sh
-cd kernel/xiaomi/sm8150
-curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -
-cd -
+# cd kernel/xiaomi/sm8150
+# curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -
+# cd -
 source build/envsetup.sh
 lunch lineage_vayu-ap4a-userdebug
 m installclean
