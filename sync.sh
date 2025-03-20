@@ -1,78 +1,86 @@
 #!/bin/bash
-rm -rf .repo/local_manifests
-rm -rf device/xiaomi/sm8150-common
-rm -rf frameworks/base
-rm -rf kernel/xiaomi/sm8150
-# rm -rf system/core/
-mkdir -p .repo/local_manifests
-#cp scripts/roomservice.xml .repo/local_manifests
-git clone https://github.com/xc112lg/rbe --depth 1
-export USE_RBE=1                                      
-export RBE_DIR="rbe"                      # Path to the extracted reclient directory (relative or absolute)
-export NINJA_REMOTE_NUM_JOBS=500                       # Number of parallel remote jobs (adjust based on your RAM, buildbuddy has 80 CPU cores in the free tier)
-# --- BuildBuddy Connection Settings ---
-export RBE_service="remote.buildbuddy.io:443"        # BuildBuddy instance address (without grpcs://, add the port 443)
-export RBE_remote_headers="x-buildbuddy-api-key=agvbfhIb0K9IxDbawp09"    # Your BuildBuddy API key
-export RBE_use_rpc_credentials=false                   
-export RBE_service_no_auth=true                       
-# --- Unified Downloads/Uploads (Recommended) ---
-export RBE_use_unified_downloads=true
-export RBE_use_unified_uploads=true
-# --- Execution Strategies (remote_local_fallback is generally best) ---
-export RBE_R8_EXEC_STRATEGY=remote_local_fallback
-export RBE_D8_EXEC_STRATEGY=remote_local_fallback
-export RBE_JAVAC_EXEC_STRATEGY=remote_local_fallback
-export RBE_JAR_EXEC_STRATEGY=remote_local_fallback
-export RBE_ZIP_EXEC_STRATEGY=remote_local_fallback
-export RBE_TURBINE_EXEC_STRATEGY=remote_local_fallback
-export RBE_SIGNAPK_EXEC_STRATEGY=remote_local_fallback
-export RBE_CXX_EXEC_STRATEGY=remote_local_fallback    # Important see below.
-export RBE_CXX_LINKS_EXEC_STRATEGY=remote_local_fallback
-export RBE_ABI_LINKER_EXEC_STRATEGY=remote_local_fallback
-export RBE_ABI_DUMPER_EXEC_STRATEGY=    # Will make build slower, by a lot. Keeping this for documentation
-export RBE_CLANG_TIDY_EXEC_STRATEGY=remote_local_fallback
-export RBE_METALAVA_EXEC_STRATEGY=remote_local_fallback
-export RBE_LINT_EXEC_STRATEGY=remote_local_fallback
-# --- Enable RBE for Specific Tools ---
-export RBE_R8=1
-export RBE_D8=1
-export RBE_JAVAC=1
-export RBE_JAR=1
-export RBE_ZIP=1
-export RBE_TURBINE=1
-export RBE_SIGNAPK=1
-export RBE_CXX_LINKS=1
-export RBE_CXX=1
-export RBE_ABI_LINKER=1
-export RBE_ABI_DUMPER=    # Will make build slower, by a lot. Keeping this for documentation
-export RBE_CLANG_TIDY=1
-export RBE_METALAVA=1
-export RBE_LINT=1
-# --- Resource Pools ---
-export RBE_JAVA_POOL=default
-export RBE_METALAVA_POOL=default
-export RBE_LINT_POOL=default
-repo init -u https://github.com/Evolution-X/manifest -b vic-qpr1 --git-lfs
-git clone https://github.com/vayu-development-sources/local_manifests.git -b evo15-dolby .repo/local_manifests
-#repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
-/opt/crave/resync.sh
-#source scripts/changes.sh
-git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379 prebuilts/clang/host/linux-x86/clang-r547379 --depth 1
+# rm -rf .repo/local_manifests
+# rm -rf device/xiaomi/sm8150-common
+# rm -rf frameworks/base
+# rm -rf kernel/xiaomi/sm8150
+# # rm -rf system/core/
+# mkdir -p .repo/local_manifests
+# #cp scripts/roomservice.xml .repo/local_manifests
+# git clone https://github.com/xc112lg/rbe --depth 1
+# export USE_RBE=1                                      
+# export RBE_DIR="rbe"                      # Path to the extracted reclient directory (relative or absolute)
+# export NINJA_REMOTE_NUM_JOBS=500                       # Number of parallel remote jobs (adjust based on your RAM, buildbuddy has 80 CPU cores in the free tier)
+# # --- BuildBuddy Connection Settings ---
+# export RBE_service="remote.buildbuddy.io:443"        # BuildBuddy instance address (without grpcs://, add the port 443)
+# export RBE_remote_headers="x-buildbuddy-api-key=agvbfhIb0K9IxDbawp09"    # Your BuildBuddy API key
+# export RBE_use_rpc_credentials=false                   
+# export RBE_service_no_auth=true                       
+# # --- Unified Downloads/Uploads (Recommended) ---
+# export RBE_use_unified_downloads=true
+# export RBE_use_unified_uploads=true
+# # --- Execution Strategies (remote_local_fallback is generally best) ---
+# export RBE_R8_EXEC_STRATEGY=remote_local_fallback
+# export RBE_D8_EXEC_STRATEGY=remote_local_fallback
+# export RBE_JAVAC_EXEC_STRATEGY=remote_local_fallback
+# export RBE_JAR_EXEC_STRATEGY=remote_local_fallback
+# export RBE_ZIP_EXEC_STRATEGY=remote_local_fallback
+# export RBE_TURBINE_EXEC_STRATEGY=remote_local_fallback
+# export RBE_SIGNAPK_EXEC_STRATEGY=remote_local_fallback
+# export RBE_CXX_EXEC_STRATEGY=remote_local_fallback    # Important see below.
+# export RBE_CXX_LINKS_EXEC_STRATEGY=remote_local_fallback
+# export RBE_ABI_LINKER_EXEC_STRATEGY=remote_local_fallback
+# export RBE_ABI_DUMPER_EXEC_STRATEGY=    # Will make build slower, by a lot. Keeping this for documentation
+# export RBE_CLANG_TIDY_EXEC_STRATEGY=remote_local_fallback
+# export RBE_METALAVA_EXEC_STRATEGY=remote_local_fallback
+# export RBE_LINT_EXEC_STRATEGY=remote_local_fallback
+# # --- Enable RBE for Specific Tools ---
+# export RBE_R8=1
+# export RBE_D8=1
+# export RBE_JAVAC=1
+# export RBE_JAR=1
+# export RBE_ZIP=1
+# export RBE_TURBINE=1
+# export RBE_SIGNAPK=1
+# export RBE_CXX_LINKS=1
+# export RBE_CXX=1
+# export RBE_ABI_LINKER=1
+# export RBE_ABI_DUMPER=    # Will make build slower, by a lot. Keeping this for documentation
+# export RBE_CLANG_TIDY=1
+# export RBE_METALAVA=1
+# export RBE_LINT=1
+# # --- Resource Pools ---
+# export RBE_JAVA_POOL=default
+# export RBE_METALAVA_POOL=default
+# export RBE_LINT_POOL=default
+# repo init -u https://github.com/Evolution-X/manifest -b vic-qpr1 --git-lfs
+# git clone https://github.com/vayu-development-sources/local_manifests.git -b evo15-dolby .repo/local_manifests
+# #repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
+# /opt/crave/resync.sh
+# #source scripts/changes.sh
+# git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379 prebuilts/clang/host/linux-x86/clang-r547379 --depth 1
 
-grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
-sed -i '/"in.startv.hotstar",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
+# grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
+# sed -i '/"in.startv.hotstar",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 
 
-source scripts/signed.sh
-cd kernel/xiaomi/sm8150
-curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -
-cd -
-source build/envsetup.sh
-lunch lineage_vayu-ap4a-userdebug
-m installclean
-# echo legacy
-# echo $TARGET_IS_LEGACY
-m evolution
+# source scripts/signed.sh
+# cd kernel/xiaomi/sm8150
+# curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -
+# cd -
+# source build/envsetup.sh
+# lunch lineage_vayu-ap4a-userdebug
+# m installclean
+# # echo legacy
+# # echo $TARGET_IS_LEGACY
+# m evolution
+mkdir -p vayu
+rm -rf vayu/*
+cp -r out/target/product/*/*.zip vayu
+cp -r out/target/product/*/recovery.img vayu
+
+for file in vayu/*; do
+  curl -T "$file" -u :$GH_TOKEN https://pixeldrain.com/api/file/ || echo "Failed to upload $file"
+done
 
 
 
