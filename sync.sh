@@ -64,9 +64,9 @@ sed -i '/"in.startv.hotstar",/a\        "com.lazada.android",\n        "com.shop
 
 
 source scripts/signed.sh
-cd kernel/xiaomi/sm8150
-curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -
-cd -
+# cd kernel/xiaomi/sm8150
+# curl -LSs "https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" | bash -
+# cd -
 source build/envsetup.sh
 lunch lineage_vayu-ap4a-userdebug
 m installclean
