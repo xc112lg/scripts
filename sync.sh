@@ -79,7 +79,7 @@ cp -r out/target/product/*/*.zip vayu
 cp -r out/target/product/*/recovery.img vayu
 
 for file in vayu/*; do
-  curl -T "$file" -u :$GH_TOKEN https://pixeldrain.com/api/file/ || echo "Failed to upload $file"
+  curl -T "$file" -u :$pixeldrain https://pixeldrain.com/api/file/ || echo "Failed to upload $file"
 done
 
 
