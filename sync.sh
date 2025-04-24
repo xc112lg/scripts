@@ -57,11 +57,11 @@ git clone https://github.com/vayu-development-sources/local_manifests.git -b evo
 #repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
 /opt/crave/resync.sh
 #source scripts/changes.sh
-git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379 prebuilts/clang/host/linux-x86/clang-r547379 --depth 1
+#git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379 prebuilts/clang/host/linux-x86/clang-r547379 --depth 1
 
 grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
-sed -i '/"in.startv.hotstar",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
-
+sed -i '/"com.google.android.gms",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
+cat frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 
 source scripts/signed.sh
 # cd kernel/xiaomi/sm8150
