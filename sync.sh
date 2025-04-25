@@ -54,7 +54,7 @@ export RBE_METALAVA_POOL=default
 export RBE_LINT_POOL=default
 repo init -u https://github.com/Evolution-X/manifest -b vic-qpr1 --git-lfs
 git clone https://github.com/vayu-development-sources/local_manifests.git -b evo15-dolby .repo/local_manifests
-#repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
+repo sync -c -j64 --force-sync --no-clone-bundle --no-tags --prune
 /opt/crave/resync.sh
 #source scripts/changes.sh
 #git clone https://gitlab.com/crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r547379 prebuilts/clang/host/linux-x86/clang-r547379 --depth 1
