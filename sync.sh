@@ -2,7 +2,7 @@
 rm -rf .repo/local_manifests
 rm -rf device/xiaomi/sm8150-common
 rm -rf frameworks/base
-rm -rf kernel/xiaomi/sm8150
+rm -rf rbe
 # rm -rf system/core/
 mkdir -p .repo/local_manifests
 #cp scripts/roomservice.xml .repo/local_manifests
@@ -12,7 +12,8 @@ export RBE_DIR="rbe"                      # Path to the extracted reclient direc
 export NINJA_REMOTE_NUM_JOBS=500                       # Number of parallel remote jobs (adjust based on your RAM, buildbuddy has 80 CPU cores in the free tier)
 # --- BuildBuddy Connection Settings ---
 export RBE_service="remote.buildbuddy.io:443"        # BuildBuddy instance address (without grpcs://, add the port 443)
-export RBE_remote_headers="x-buildbuddy-api-key=NF5nEUUyU7LIy2QkkIIe"    # Your BuildBuddy API key
+#export RBE_remote_headers="x-buildbuddy-api-key=NF5nEUUyU7LIy2QkkIIe"    # Your BuildBuddy API key
+export RBE_password="NF5nEUUyU7LIy2QkkIIe"
 export RBE_use_rpc_credentials=true                   
 export RBE_service_no_auth=false                       
 # --- Unified Downloads/Uploads (Recommended) ---
@@ -52,6 +53,12 @@ export RBE_LINT=1
 export RBE_JAVA_POOL=default
 export RBE_METALAVA_POOL=default
 export RBE_LINT_POOL=default
+
+
+# {"success":false,"value":"authentication_required","message":"This request requires API authentication. Please provide an API key in the password field of HTTP Basic Access Authentication"}
+# {"success":false,"value":"authentication_required","message":"This request requires API authentication. Please provide an API key in the password field of HTTP Basic Access Authentication"}
+
+
 repo init -u https://github.com/Evolution-X/manifest -b vic-qpr1 --git-lfs
 git clone https://github.com/vayu-development-sources/local_manifests.git -b evo15-dolby .repo/local_manifests
 repo sync -c -j64 --force-sync --no-clone-bundle --no-tags --prune
