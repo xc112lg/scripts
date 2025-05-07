@@ -59,7 +59,7 @@ export RBE_LINT_POOL=default
 # {"success":false,"value":"authentication_required","message":"This request requires API authentication. Please provide an API key in the password field of HTTP Basic Access Authentication"}
 
 
-repo init -u https://github.com/Evolution-X/manifest -b vic-qpr1 --git-lfs
+repo init -u https://github.com/Evolution-X/manifest -b vic --git-lfs
 git clone https://github.com/vayu-development-sources/local_manifests.git -b evo15-dolby .repo/local_manifests
 repo sync -c -j64 --force-sync --no-clone-bundle --no-tags --prune
 /opt/crave/resync.sh
