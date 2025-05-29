@@ -61,7 +61,7 @@ export RBE_LINT_POOL=default
 
 repo init -u https://github.com/Evolution-X/manifest -b vic --git-lfs
 git clone https://github.com/vayu-development-sources/local_manifests.git -b evo15-dolby .repo/local_manifests
-repo sync -c -j64 --force-sync --no-clone-bundle --no-tags --prune
+repo sync -c -j32 --force-sync --no-clone-bundle --no-tags --prune
 /opt/crave/resync.sh
 
 git clone https://gitlab.com/ArmSM/vendor_xiaomi_miuicamera.git vendor/xiaomi/miuicamera
