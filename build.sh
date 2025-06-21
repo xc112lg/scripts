@@ -46,4 +46,4 @@ lunch lineage_vayu-bp1a-userdebug
 make installclean
 
 # Run
-mka derp
+m evolution
