@@ -23,6 +23,9 @@ if [ ! 0 == 0 ]
 
 # repo sync
 /opt/crave/resync.sh
+grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
+sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
+cat frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 
 # # Set up build environment
 # cd frameworks/base && curl https://gist.githubusercontent.com/bagaskara815/b2abdff48cae8370ca2a0b867d7769e4/raw/fw.patch >> fw.patch && git am fw.patch && rm fw.patch && cd ../../
