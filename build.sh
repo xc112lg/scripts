@@ -10,8 +10,8 @@ rm -rf out/target/product/*/system/etc/Changelog.txt \
        out/target/product/*/gen/ETC/Changelog.txt_intermediates
 
 # Clone DerpFest
-repo init -u https://github.com/DerpFest-LOS/android_manifest.git -b 15.2 --depth=1 --git-lfs
 
+repo init -u https://github.com/Evolution-X/manifest -b vic --depth=1 --git-lfs
 #Temp Fix Repo tool
 #cd .repo/repo;git pull -r;cd ../..;
 
@@ -40,7 +40,7 @@ cd vendor/google/gms && curl https://gist.githubusercontent.com/bagaskara815/eff
 source build/envsetup.sh
 
 # brunch configuration
-lunch lineage_vayu-bp1a-user
+lunch lineage_vayu-bp1a-userdebug
 
 # Clean
 make installclean
