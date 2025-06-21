@@ -3,7 +3,7 @@ rm -rf device/xiaomi
 rm -rf kernel/xiaomi
 rm -rf vendor/xiaomi
 rm -rf hardware/xiaomi
-
+rm -rf build/soong
 # Cleanup previous changelog to make it always fresh
 rm -rf out/target/product/*/system/etc/Changelog.txt \
        out/target/product/*/obj/ETC/Changelog.txt_intermediates \
