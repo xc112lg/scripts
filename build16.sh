@@ -20,7 +20,7 @@ git clone https://github.com/bagaskara815/local_manifests --depth 1 -b 15.2-old 
 if [ ! 0 == 0 ]
  then   curl -o .repo/local_manifests https://github.com/bagaskara815/local_manifests.git
  fi
-
+repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # repo sync
 /opt/crave/resync.sh
 grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
