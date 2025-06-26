@@ -1,3 +1,4 @@
+repo init -u https://github.com/Evolution-X/manifest -b bka --depth=1 --git-lfs
 rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf kernel/xiaomi
