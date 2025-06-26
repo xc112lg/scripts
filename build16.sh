@@ -14,10 +14,10 @@ rm -rf out/target/product/*/system/etc/Changelog.txt \
 repo init -u https://github.com/Evolution-X/manifest -b bka --depth=1 --git-lfs
 #Temp Fix Repo tool
 #cd .repo/repo;git pull -r;cd ../..;
-mkdir -p .repo/local_manifests
-cp scripts/roomservice.xml .repo/local_manifests
+
+
 # Clone local_manifests repository
-# git clone https://github.com/xc112lg/local_manifests --depth 1 -b 15.2-old .repo/local_manifests
+git clone https://github.com/xc112lg/local_manifests --depth 1 -b cr .repo/local_manifests
 # if [ ! 0 == 0 ]
 #  then   curl -o .repo/local_manifests https://github.com/bagaskara815/local_manifests.git
 #  fi
