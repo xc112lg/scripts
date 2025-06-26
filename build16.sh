@@ -10,7 +10,6 @@ rm -rf out/target/product/*/system/etc/Changelog.txt \
        out/target/product/*/gen/ETC/Changelog.txt_intermediates
 
 # Clone DerpFest
-
 repo init -u https://github.com/Evolution-X/manifest -b bka --depth=1 --git-lfs
 #Temp Fix Repo tool
 #cd .repo/repo;git pull -r;cd ../..;
