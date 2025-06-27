@@ -27,7 +27,10 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
 sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 #cat frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
-
+cd hardware/xiaomi
+git fetch https://github.com/xc112lg/android_hardware_xiaomi.git patch-2
+git cherry-pick d894f0a080f0b462c9f6bbccfc6f85c538183c62
+cd -
 # # Set up build environment
 # cd frameworks/base && curl https://gist.githubusercontent.com/bagaskara815/b2abdff48cae8370ca2a0b867d7769e4/raw/fw.patch >> fw.patch && git am fw.patch && rm fw.patch && cd ../../
 # wget https://github.com/bagaskara815/local_manifests/raw/keys/keys.zip && unzip -o keys.zip -d vendor/lineage/signing/ && rm keys.zip
