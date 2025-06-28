@@ -1,4 +1,4 @@
-repo init -u https://github.com/Evolution-X/manifest -b bka --depth=1 --git-lfs
+
 rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf kernel/xiaomi
@@ -23,7 +23,7 @@ git clone https://github.com/xc112lg/local_manifests --depth 1 -b cr .repo/local
 #  fi
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # repo sync
-/opt/crave/resync.sh
+#/opt/crave/resync.sh
 grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
 sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 #cat frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
