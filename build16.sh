@@ -29,6 +29,10 @@ sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.sho
 #cat frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 sed -i '/name: "libwfdservice"/,/system_ext_specific: true/ s/system_ext_specific: true/system_ext_specific: true,\n    allow_undefined_symbols: true/' vendor/xiaomi/sm8150-common/Android.bp
 
+grep -q '^PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS *:=' device/xiaomi/vayu/lineage_vayu.mk || echo 'PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false' >> device/xiaomi/vayu/lineage_vayu.mk
+cat device/xiaomi/vayu/lineage_vayu.mk
+
+
 cat vendor/xiaomi/sm8150-common/Android.bp
 cd hardware/xiaomi
 git fetch https://github.com/xc112lg/android_hardware_xiaomi.git patch-2
