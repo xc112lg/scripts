@@ -34,7 +34,7 @@ grep -q 'allow_undefined_symbols: true,' vendor/xiaomi/sm8150-common/Android.bp 
 }
 }' vendor/xiaomi/sm8150-common/Android.bp
 
-
+cat vendor/xiaomi/sm8150-common/Android.bp
 cd hardware/xiaomi
 git fetch https://github.com/xc112lg/android_hardware_xiaomi.git patch-2
 git cherry-pick d894f0a080f0b462c9f6bbccfc6f85c538183c62
