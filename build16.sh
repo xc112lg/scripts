@@ -17,8 +17,8 @@ repo init -u https://github.com/Evolution-X/manifest -b bka --depth=1 --git-lfs
 
 
 # Clone local_manifests repository
-#git clone https://github.com/xc112lg/local_manifests --depth 1 -b cr .repo/local_manifests
-git clone https://github.com/bagaskara815/local_manifests --depth 1 -b 15.2-old .repo/local_manifests
+git clone https://github.com/xc112lg/local_manifests --depth 1 -b cr .repo/local_manifests
+#git clone https://github.com/bagaskara815/local_manifests --depth 1 -b 15.2-old .repo/local_manifests
 # if [ ! 0 == 0 ]
 #  then   curl -o .repo/local_manifests https://github.com/bagaskara815/local_manifests.git
 #  fi
