@@ -4,7 +4,7 @@ rm -rf device/xiaomi
 rm -rf kernel/xiaomi
 rm -rf vendor/xiaomi
 rm -rf hardware/xiaomi
-rm -rf build/soong
+#rm -rf build/soong
 # Cleanup previous changelog to make it always fresh
 rm -rf out/target/product/*/system/etc/Changelog.txt \
        out/target/product/*/obj/ETC/Changelog.txt_intermediates \
@@ -86,7 +86,7 @@ sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.sho
 #cat frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 sed -i '/name: "libwfdservice"/,/system_ext_specific: true/ s/system_ext_specific: true/system_ext_specific: true,\n    allow_undefined_symbols: true/' vendor/xiaomi/sm8150-common/Android.bp
 
-#grep -q '^PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS *:=' device/xiaomi/vayu/lineage_vayu.mk || echo 'PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false' >> device/xiaomi/vayu/lineage_vayu.mk
+grep -q '^PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS *:=' device/xiaomi/vayu/lineage_vayu.mk || echo 'PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false' >> device/xiaomi/vayu/lineage_vayu.mk
 
 
 
