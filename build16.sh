@@ -28,13 +28,13 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
 sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 #cat frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
-sed -i '/name: "libwfdservice"/,/system_ext_specific: true/ s/system_ext_specific: true/system_ext_specific: true,\n    allow_undefined_symbols: true/' vendor/xiaomi/sm8150-common/Android.bp
+#sed -i '/name: "libwfdservice"/,/system_ext_specific: true/ s/system_ext_specific: true/system_ext_specific: true,\n    allow_undefined_symbols: true/' vendor/xiaomi/sm8150-common/Android.bp
 
-grep -q '^PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS *:=' device/xiaomi/vayu/lineage_vayu.mk || echo 'PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false' >> device/xiaomi/vayu/lineage_vayu.mk
-cat device/xiaomi/vayu/lineage_vayu.mk
+#grep -q '^PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS *:=' device/xiaomi/vayu/lineage_vayu.mk || echo 'PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false' >> device/xiaomi/vayu/lineage_vayu.mk
 
 
-cat vendor/xiaomi/sm8150-common/Android.bp
+
+
 cd hardware/xiaomi
 git fetch https://github.com/xc112lg/android_hardware_xiaomi.git patch-2
 git cherry-pick d894f0a080f0b462c9f6bbccfc6f85c538183c62
