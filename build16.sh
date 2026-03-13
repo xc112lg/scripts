@@ -111,7 +111,7 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 source build/envsetup.sh
 
 # brunch configuration
-lunch lineage_vayu-bp2a-userdebug
+lunch lineage_vayu-bp4a-userdebug
 
 # Clean
 make installclean
