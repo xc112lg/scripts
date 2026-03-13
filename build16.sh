@@ -80,13 +80,13 @@ git clone https://github.com/xc112lg/local_manifests --depth 1 -b cr .repo/local
 #  fi
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # repo sync
-#/opt/crave/resync.sh
-grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
-sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
-#cat frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
-sed -i '/name: "libwfdservice"/,/system_ext_specific: true/ s/system_ext_specific: true/system_ext_specific: true,\n    allow_undefined_symbols: true/' vendor/xiaomi/sm8150-common/Android.bp
+/opt/crave/resync.sh
+# grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
+# sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
+# #cat frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
+# sed -i '/name: "libwfdservice"/,/system_ext_specific: true/ s/system_ext_specific: true/system_ext_specific: true,\n    allow_undefined_symbols: true/' vendor/xiaomi/sm8150-common/Android.bp
 
-grep -q '^PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS *:=' device/xiaomi/vayu/lineage_vayu.mk || echo 'PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false' >> device/xiaomi/vayu/lineage_vayu.mk
+# grep -q '^PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS *:=' device/xiaomi/vayu/lineage_vayu.mk || echo 'PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false' >> device/xiaomi/vayu/lineage_vayu.mk
 
 
 
