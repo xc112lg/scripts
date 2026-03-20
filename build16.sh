@@ -67,7 +67,7 @@ export RBE_METALAVA_POOL=default
 export RBE_LINT_POOL=default
 
 # Clone DerpFest
-repo init -u https://github.com/Evolution-X/manifest -b bka --depth=1 --git-lfs
+repo init -u https://github.com/Evolution-X/manifest -b bq2 --depth=1 --git-lfs
 #Temp Fix Repo tool
 #cd .repo/repo;git pull -r;cd ../..;
 
