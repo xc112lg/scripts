@@ -87,9 +87,8 @@ grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/ut
 sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 #cat frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 # sed -i '/$(call inherit-product, vendor/xiaomi/blossom/blossom-vendor.mk)\n    $(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk/' device/xiaomi/blossom/device.mk
-sed -i 's|$(call inherit-product, vendor/xiaomi/blossom/blossom-vendor.mk|$(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk|' device/xiaomi/blossom/device.mk
+sed -i 's|$(call inherit-product, vendor/xiaomi/miuicamera/MiuiCamera.mk)|$(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk|' device/xiaomi/blossom/device.mk
 # grep -q '^PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS *:=' device/xiaomi/vayu/lineage_vayu.mk || echo 'PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false' >> device/xiaomi/vayu/lineage_vayu.mk
-
 
 
 # cd hardware/xiaomi
