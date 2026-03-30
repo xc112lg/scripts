@@ -3,6 +3,7 @@ rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf device/xiaomi/blossom-kernel
 rm -rf vendor/xiaomi
+rm -rf vendor/xiaomi/miuicamera
 rm -rf hardware/mediatek
 rm -rf device/mediatek/sepolicy_vndr
 #rm -rf build/soong
