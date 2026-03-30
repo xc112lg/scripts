@@ -116,13 +116,13 @@ fi
 # # GMS temp fix
 # cd vendor/google/gms && curl https://gist.githubusercontent.com/bagaskara815/eff6e36fb96db28298d35281eb2b85c4/raw/gms-temp-fix.patch >> gms-temp-fix.patch && git am gms-temp-fix.patch && rm gms-temp-fix.patch && cd ../../../
 
-source build/envsetup.sh
+# source build/envsetup.sh
 
-# brunch configuration
-lunch lineage_blossom-bp4a-userdebug
+# # brunch configuration
+# lunch lineage_blossom-bp4a-userdebug
 
-# Clean
-make installclean
+# # Clean
+# make installclean
 
-# Run
-m evolution
+# # Run
+# m evolution
