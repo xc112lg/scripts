@@ -90,8 +90,13 @@ sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.sho
 
 # grep -q '^PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS *:=' device/xiaomi/vayu/lineage_vayu.mk || echo 'PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false' >> device/xiaomi/vayu/lineage_vayu.mk
 
-if grep -q '$(call inherit-product, vendor/xiaomi/miuicamera/MiuiCamera.mk)' device/xiaomi/blossom/device.mk; then
-    sed -i 's|$(call inherit-product, vendor/xiaomi/miuicamera/MiuiCamera.mk)|$(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk)|g' device/xiaomi/blossom/device.mk
+FILE="device/xiaomi/blossom/device.mk"
+
+if grep -q 'inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk' "$FILE"; then
+    echo "Already correct, no changes made."
+else
+    echo "Fixing line..."
+    sed -i 's|$(call inherit-product, vendor/xiaomi/miuicamera/MiuiCamera.mk|$(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk|g' "$FILE"
 fi
 
 # cd hardware/xiaomi
