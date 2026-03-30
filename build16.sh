@@ -86,8 +86,8 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
 sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 #cat frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
-# sed -i '/name: "libwfdservice"/,/system_ext_specific: true/ s/system_ext_specific: true/system_ext_specific: true,\n    allow_undefined_symbols: true/' vendor/xiaomi/sm8150-common/Android.bp
-
+# sed -i '/$(call inherit-product, vendor/xiaomi/blossom/blossom-vendor.mk)\n    $(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk/' device/xiaomi/blossom/device.mk
+sed -i 's|$(call inherit-product, vendor/xiaomi/blossom/blossom-vendor.mk|$(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk|' device/xiaomi/blossom/device.mk
 # grep -q '^PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS *:=' device/xiaomi/vayu/lineage_vayu.mk || echo 'PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false' >> device/xiaomi/vayu/lineage_vayu.mk
 
 FILE="device/xiaomi/blossom/device.mk"
@@ -96,7 +96,7 @@ if grep -q 'inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk' "
     echo "Already correct, no changes made."
 else
     echo "Fixing line..."
-    sed -i 's|$(call inherit-product, vendor/xiaomi/miuicamera/MiuiCamera.mk|$(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk|g' "$FILE"
+    sed -i 's|$(call inherit-product, vendor/xiaomi/blossom/blossom-vendor.mk)|$(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk|g' "$FILE"
 fi
 
 # cd hardware/xiaomi
