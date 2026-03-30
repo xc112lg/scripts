@@ -6,7 +6,7 @@ rm -rf vendor/xiaomi
 rm -rf vendor/xiaomi/miuicamera
 rm -rf hardware/mediatek
 rm -rf device/mediatek/sepolicy_vndr
-rm -rf packages/apps/DolbyAtmos
+rm -rf hardware/dolby
 #rm -rf build/soong
 # Cleanup previous changelog to make it always fresh
 rm -rf out/target/product/*/system/etc/Changelog.txt \
