@@ -91,8 +91,8 @@ sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.sho
 sed -i 's|$(call inherit-product, vendor/xiaomi/miuicamera/MiuiCamera.mk)|$(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk)|' device/xiaomi/blossom/device.mk
 sed -i 's|$(call inherit-product, hardware/dolby/dolby.mk)|$(call inherit-product-if-exists, hardware/dolby/dolby.mk)|' device/xiaomi/blossom/device.mk
 
-sed -i 's|v30|v33|' device/xiaomi/blossom/vndk/Android.mk
-sed -i 's|v32|v33|' device/xiaomi/blossom/vndk/Android.mk
+sed -i 's|v30|v32|' device/xiaomi/blossom/vndk/Android.mk
+#sed -i 's|v32|v33|' device/xiaomi/blossom/vndk/Android.mk
 source build/envsetup.sh
 
 # brunch configuration
