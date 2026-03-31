@@ -90,26 +90,9 @@ sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.sho
 # sed -i '/$(call inherit-product, vendor/xiaomi/blossom/blossom-vendor.mk)\n    $(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk/' device/xiaomi/blossom/device.mk
 sed -i 's|$(call inherit-product, vendor/xiaomi/miuicamera/MiuiCamera.mk)|$(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk)|' device/xiaomi/blossom/device.mk
 sed -i 's|$(call inherit-product, hardware/dolby/dolby.mk)|$(call inherit-product-if-exists, hardware/dolby/dolby.mk)|' device/xiaomi/blossom/device.mk
-# grep -q '^PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS *:=' device/xiaomi/vayu/lineage_vayu.mk || echo 'PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false' >> device/xiaomi/vayu/lineage_vayu.mk
 
-
-# cd hardware/xiaomi
-# git fetch https://github.com/xc112lg/android_hardware_xiaomi.git patch-2
-# git cherry-pick d894f0a080f0b462c9f6bbccfc6f85c538183c62
-# cd -
-# # Set up build environment
-# cd frameworks/base && curl https://gist.githubusercontent.com/bagaskara815/b2abdff48cae8370ca2a0b867d7769e4/raw/fw.patch >> fw.patch && git am fw.patch && rm fw.patch && cd ../../
-# wget https://github.com/bagaskara815/local_manifests/raw/keys/keys.zip && unzip -o keys.zip -d vendor/lineage/signing/ && rm keys.zip
-
-# # disable fsgen
-# cd build/soong && curl https://gist.githubusercontent.com/bagaskara815/2f26516ef378fe8eae9803749e331a09/raw/fsgen.patch >> fsgen.patch && git am fsgen.patch && rm fsgen.patch && cd ../../
-
-# # Nfc Fix
-# cd packages/apps/Nfc && curl https://gist.githubusercontent.com/bagaskara815/e9ad53683e62a66ff0a4ba5d714bed80/raw/nfcfix.patch >> nfcfix.patch && git am nfcfix.patch && rm nfcfix.patch && cd ../../../
-
-# # GMS temp fix
-# cd vendor/google/gms && curl https://gist.githubusercontent.com/bagaskara815/eff6e36fb96db28298d35281eb2b85c4/raw/gms-temp-fix.patch >> gms-temp-fix.patch && git am gms-temp-fix.patch && rm gms-temp-fix.patch && cd ../../../
-
+sed -i 's|v30|v33|' device/xiaomi/blossom/vndk/Android.mk
+sed -i 's|v32|v33|' device/xiaomi/blossom/vndk/Android.mk
 source build/envsetup.sh
 
 # brunch configuration
