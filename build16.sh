@@ -91,21 +91,12 @@ sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.sho
 sed -i 's|$(call inherit-product, vendor/xiaomi/miuicamera/MiuiCamera.mk)|$(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk)|' device/xiaomi/blossom/device.mk
 sed -i 's|$(call inherit-product, hardware/dolby/dolby.mk)|$(call inherit-product-if-exists, hardware/dolby/dolby.mk)|' device/xiaomi/blossom/device.mk
 
-sed -i 's|v30|v32|' device/xiaomi/blossom/vndk/Android.mk
-#sed -i 's|v32|v33|' device/xiaomi/blossom/vndk/Android.mk
-source build/envsetup.sh
 
-# brunch configuration
-lunch lineage_blossom-bp4a-userdebug
+cd device/xiaomi/blossom
+git fetch https://github.com/xc112lg/android_device_xiaomi_blossom.git patch-2
+git cherry-pick 18f395f1c3de530500be1e6a62cdf96ade9bde6f
+cd - 
 
-# Clean
-make installclean
-
-# Run
-m evolution
-
-sed -i 's|v30|v34|' device/xiaomi/blossom/vndk/Android.mk
-sed -i 's|v32|v34|' device/xiaomi/blossom/vndk/Android.mk
 source build/envsetup.sh
 
 # brunch configuration
