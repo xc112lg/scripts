@@ -103,3 +103,16 @@ make installclean
 
 # Run
 m evolution
+
+sed -i 's|v30|v34|' device/xiaomi/blossom/vndk/Android.mk
+sed -i 's|v32|v34|' device/xiaomi/blossom/vndk/Android.mk
+source build/envsetup.sh
+
+# brunch configuration
+lunch lineage_blossom-bp4a-userdebug
+
+# Clean
+make installclean
+
+# Run
+m evolution
