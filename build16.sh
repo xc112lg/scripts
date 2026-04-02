@@ -97,9 +97,9 @@ cd -
 sed -i 's|$(call inherit-product, vendor/xiaomi/miuicamera/MiuiCamera.mk)|$(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk)|' device/xiaomi/blossom/device.mk
 sed -i 's|$(call inherit-product, hardware/dolby/dolby.mk)|$(call inherit-product-if-exists, hardware/dolby/dolby.mk)|' device/xiaomi/blossom/device.mk
 
-sed -i '/proc \/tp_gesture/d' device/xiaomi/blossom/sepolicy/**/*
-sed -i '/cpufreq/d' device/xiaomi/blossom/sepolicy/**/*
-sed -i '/gpu_(min|max)_clock/d' device/xiaomi/blossom/sepolicy/**/*
+# sed -i '/proc \/tp_gesture/d' device/xiaomi/blossom/sepolicy/**/*
+# sed -i '/cpufreq/d' device/xiaomi/blossom/sepolicy/**/*
+# sed -i '/gpu_(min|max)_clock/d' device/xiaomi/blossom/sepolicy/**/*
 
 
 source build/envsetup.sh
