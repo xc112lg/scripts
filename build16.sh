@@ -93,7 +93,7 @@ cd device/xiaomi/blossom
 git fetch https://github.com/xc112lg/android_device_xiaomi_blossom.git patch-3
 sleep 5
 git cherry-pick 523fb262dd41a83f05b4303e53976b9ba1ce6a6d
-
+cd -
 sed -i 's|$(call inherit-product, vendor/xiaomi/miuicamera/MiuiCamera.mk)|$(call inherit-product-if-exists, vendor/xiaomi/miuicamera/MiuiCamera.mk)|' device/xiaomi/blossom/device.mk
 sed -i 's|$(call inherit-product, hardware/dolby/dolby.mk)|$(call inherit-product-if-exists, hardware/dolby/dolby.mk)|' device/xiaomi/blossom/device.mk
 
