@@ -94,6 +94,7 @@ sed -i 's|$(call inherit-product, hardware/dolby/dolby.mk)|$(call inherit-produc
 
 cd device/xiaomi/blossom
 git fetch https://github.com/xc112lg/android_device_xiaomi_blossom.git patch-2
+sleep 5
 git cherry-pick 18f395f1c3de530500be1e6a62cdf96ade9bde6f e139eba1535a4465ea57f98d0b8b3f5528f558bb
 cd - 
 
