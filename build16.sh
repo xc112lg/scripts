@@ -101,7 +101,31 @@ sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.sho
 # sed -i '/cpufreq/d' device/xiaomi/blossom/sepolicy/**/*
 # sed -i '/gpu_(min|max)_clock/d' device/xiaomi/blossom/sepolicy/**/*
 
+# Path to the Android.mk file
+ANDROID_MK="hardware/mediatek/sensors/Android.mk"
 
+# Check if file exists
+if [ ! -f "$ANDROID_MK" ]; then
+    echo "Error: $ANDROID_MK not found!"
+    exit 1
+fi
+
+# Create backup
+cp "$ANDROID_MK" "${ANDROID_MK}.backup.$(date +%Y%m%d_%H%M%S)"
+echo "Backup created"
+
+# Use sed to comment out the module block
+# This looks for the pattern and adds # to each line until BUILD_SHARED_LIBRARY
+sed -i '/^include $(CLEAR_VARS)/,/^include $(BUILD_SHARED_LIBRARY)/{
+    /LOCAL_MODULE := android.hardware.sensors@2.0-subhal-impl-1.0/,/^include $(BUILD_SHARED_LIBRARY)/{
+        s/^/# /
+    }
+}' "$ANDROID_MK"
+
+# Alternative more precise sed command if the above doesn't work
+# sed -i '/LOCAL_MODULE := android.hardware.sensors@2.0-subhal-impl-1.0/,/^include $(BUILD_SHARED_LIBRARY)/s/^/# /' "$ANDROID_MK"
+
+echo "Module commented out in $ANDROID_MK"
 source build/envsetup.sh
 
 # brunch configuration
