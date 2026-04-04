@@ -104,7 +104,11 @@ sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.sho
 
 # Path to the Android.mk file
 # Quick one-liner fix
-echo -e "\n# Disable duplicate sensor module\nPRODUCT_PACKAGES += -android.hardware.sensors@2.0-subhal-impl-1.0" >> device/xiaomi/blossom/device.mk
+cd device/xiaomi/blossom && \
+echo -e "\n# Fix sensor HAL conflict\nPRODUCT_PACKAGES += android.hardware.sensors@2.0-subhal-impl-mediatek\nPRODUCT_PACKAGES -= android.hardware.sensors@2.0-subhal-impl-1.0" >> device.mk && \
+echo -e "\n# Sensor HAL config\nTARGET_NO_LINEAGE_SENSORS_HAL := true" >> BoardConfig.mk && \
+echo "✅ Fixed"
+cd -
 source build/envsetup.sh
 
 # brunch configuration
