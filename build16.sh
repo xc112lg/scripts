@@ -37,7 +37,8 @@ sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.sho
 
 source build/envsetup.sh
 lunch lineage_blossom-bp4a-userdebug
-make installclean
+make clean
+
 m evolution 2>&1 | tee build.log
 curl -F "file=@build.log" https://temp.sh/upload
 
