@@ -109,7 +109,7 @@ sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.sho
 
 
 
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/lineagesensor.sh | bash
+#curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/lineagesensor.sh | bash
 source build/envsetup.sh
 lunch lineage_blossom-bp4a-userdebug
 make installclean
