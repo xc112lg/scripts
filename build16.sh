@@ -1,3 +1,5 @@
+sudo apt update
+sudo apt install patchelf -y
 
 rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
