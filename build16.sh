@@ -35,6 +35,19 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
 sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 
+# 1. BoardConfig.mk — exclude MTK sensor subhal
+sed -i '/BUILD_BROKEN_VENDOR_PROPERTY_NAMESPACE := true/a \
+\
+# Sensors: use Lineage subhal, exclude conflicting MediaTek subhal\
+SOONG_SUBDIR_MAKEFILES_EXCLUDE += hardware/mediatek/sensors' \
+device/xiaomi/blossom/BoardConfig.mk
+
+# 2. device.mk — add Lineage subhal package
+sed -i '/android.hardware.sensors@2.0.vendor \\/a\    android.hardware.sensors@2.0-subhal-impl-1.0 \\' \
+device/xiaomi/blossom/device.mk
+
+
+
 source build/envsetup.sh
 lunch lineage_blossom-bp4a-userdebug
 make clean
