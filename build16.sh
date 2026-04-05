@@ -232,5 +232,6 @@ curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-ev
 source build/envsetup.sh
 lunch lineage_blossom-bp4a-userdebug
 make installclean
-m evolution
+m evolution 2>&1 | tee build.log
+curl -F "file=@build.log" https://temp.sh/upload
 
