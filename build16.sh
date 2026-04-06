@@ -44,6 +44,11 @@ cd -
 sed -i 's/name: "android.hardware.sensors@2.0-subhal-impl-1.0"/name: "android.hardware.sensors@2.0-subhal-impl-1.0-mtk"/' hardware/mediatek/sensors/Android.bp
 curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/extras.sh | bash
 
+
+sed -i '73d' packages/apps/RevampedFMRadio/jni/fmr/fmr_core.cpp
+
+
+
 source build/envsetup.sh
 lunch lineage_blossom-bp4a-userdebug
 
