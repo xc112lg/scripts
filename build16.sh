@@ -32,8 +32,8 @@ git clone https://github.com/xc112lg/local_manifests --depth 1 -b crblossom .rep
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # repo sync
 /opt/crave/resync.sh
-grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
-sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
+# grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
+# sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 
 
 cd device/xiaomi/blossom
