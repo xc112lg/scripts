@@ -10,6 +10,8 @@ rm -rf hardware/mediatek
 rm -rf device/mediatek/sepolicy_vndr
 rm -rf hardware/dolby
 rm -rf hardware/
+rm -rf packages/apps/RevampedFMRadio
+
 #rm -rf build/soong
 # Cleanup previous changelog to make it always fresh
 rm -rf out/target/product/*/system/etc/Changelog.txt \
@@ -51,7 +53,7 @@ mv /tmp/fixed.xml packages/apps/Settings/Evolver/res/xml/evolution_settings_misc
 echo "Line 39 should now look normal:"
 sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
-sed -i '73d' packages/apps/RevampedFMRadio/jni/fmr/fmr_core.cpp
+#sed -i '73d' packages/apps/RevampedFMRadio/jni/fmr/fmr_core.cpp
 
 
 
