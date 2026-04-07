@@ -1,78 +1,48 @@
-#!/bin/sh
-# absolute mish mash of stuff
+#!/bin/bash
 
-# git rebase --abort
-# git am --abort
-# git am --skip
+set -e
 
-rm -rf .repo/local_manifests
-rm -rf treblestuff/
-rm -rf device/phh/treble/
-rm -rf .git/rebase-apply/
-rm -rf vendor/hardware_overlay/
+FILE="packages/apps/RevampedFMRadio/jni/fmr/fmr_core.cpp"
 
-repo init -u https://github.com/ProjectEverest/manifest -b qpr2 --git-lfs
+echo "🔧 Fixing FMR_init safely (structure-aware)..."
 
-git clone https://github.com/kaii-lb/treble_manifest.git .repo/local_manifests
-git clone https://github.com/TrebleDroid/vendor_hardware_overlay.git vendor/hardware_overlay/
-git clone https://github.com/kaii-lb/treble_everest.git treblestuff/
-
-ls treblestuff/ 1>/dev/null
-if [ $? != 0 ]; then
-  echo "ERROR: syncing treble_everest failed."
-  exit 1
+# 1. Ensure file exists
+if [ ! -f "$FILE" ]; then
+    echo "❌ File not found: $FILE"
+    exit 1
 fi
 
-# treblestuff/patches/apply.sh . trebledroid
-# if [ $? != 0 ]; then
-#   echo "ERROR: failed applying trebledroid patches."
-#   git rebase --abort
-# fi
-treblestuff/patches/apply.sh . debug
-if [ $? != 0 ]; then
-  echo "ERROR: failed applying debug patches."
-  git am --show-current-patch=diff
-  git rebase --abort
-fi
-treblestuff/patches/apply.sh . pre
-if [ $? != 0 ]; then
-  echo "ERROR: failed applying debug patches."
-  git am --show-current-patch=diff
-  git rebase --abort
+# 2. Restore file first (prevents broken sed damage)
+echo "♻️ Restoring clean file..."
+git checkout -- "$FILE" 2>/dev/null || true
+
+# 3. Apply safe patch (NO line deletion)
+echo "✏️ Applying safe ret fix..."
+sed -i 's/int ret = 0;/int ret;/g' "$FILE"
+
+# 4. Verify structure (basic sanity checks)
+echo "🔍 Verifying structure..."
+
+if ! grep -q "for (idx=0; idx<FMR_MAX_IDX; idx++)" "$FILE"; then
+    echo "❌ Missing for-loop (file likely corrupted)"
+    exit 1
 fi
 
-git clone https://github.com/TrebleDroid/device_phh_treble.git device/phh/treble/
-
-ls device/phh/treble 1>/dev/null
-if [ $? != 0 ]; then
-  echo "ERROR: syncing device_phh_treble failed."
-  exit 1
+if ! grep -q "break;" "$FILE"; then
+    echo "❌ Missing break statement"
+    exit 1
 fi
 
-cp treblestuff/everest.mk device/phh/treble/everest.mk
+if ! grep -q "fail:" "$FILE"; then
+    echo "❌ Missing fail label"
+    exit 1
+fi
 
-cd device/phh/treble
-git clean -fdx
-bash generate.sh everest
-cd ../../../ 
-echo "LOG: done generating."
+echo "✅ Structure looks good"
 
+# 5. Clean only this module (fast)
+echo "🧹 Cleaning FM intermediates..."
+rm -rf out/target/product/*/obj/SHARED_LIBRARIES/libmtkfmjni_intermediates 2>/dev/null || true
 
-echo "2nd sync"
-# /opt/crave/resync.sh
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/cd10/b.sh | bash;
-
-echo "LOG: resync done."
-
-export EVEREST_MAINTAINER="kaii"
-export TARGET_SUPPORTS_BLUR=true
-export TARGET_HAS_UDFPS=true
-export EXTRA_UDFPS_ANIMATIONS=true
-export TARGET_INCLUDE_PIXEL_LAUNCHER=false
-export TARGET_RELEASE=ap1a
-
-source build/envsetup.sh
-
-# screw this command sideways
-lunch treble_arm64_bgN-ap1a-user
-make systemimage -j $(nproc --all)
+echo "🚀 Done! You can now rebuild:"
+echo "   mka bacon -j\$(nproc)"
