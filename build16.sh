@@ -56,21 +56,23 @@ sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellan
 
 
 
-FMR_FILE="packages/apps/RevampedFMRadio/jni/fmr/fmr_core.cpp"
+# Create a patch file (save as fix-fmr-core.patch)
+cat > fix-fmr-core.patch << 'EOF'
+--- a/packages/apps/RevampedFMRadio/jni/fmr/fmr_core.cpp
++++ b/packages/apps/RevampedFMRadio/jni/fmr/fmr_core.cpp
+@@ -70,8 +70,6 @@ int FMR_get_cfgs(int idx)
+ 
+ int FMR_chk_cfg_data(int idx __unused)
+ {
+-    int ret = 0;
+-
+     //TODO Need check? how to check?
+     return 0;
+ }
+EOF
 
-if [ -f "$FMR_FILE" ]; then
-    # Find and fix the unused ret variable in fmr_set_freq function
-    awk '
-    /^static int fmr_set_freq/ { in_function = 1 }
-    in_function && /int ret = 0;/ {
-        print "    // " $0 "  // Commented out - unused variable"
-        next
-    }
-    { print }
-    ' "$FMR_FILE" > "$FMR_FILE.tmp" && mv "$FMR_FILE.tmp" "$FMR_FILE"
-    
-    echo "Fixed unused variable in $FMR_FILE"
-fi
+# Apply it in your build script before compiling
+patch -p1 < fix-fmr-core.patch
 
 
 
