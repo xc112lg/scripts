@@ -59,6 +59,6 @@ source build/envsetup.sh
 lunch lineage_blossom-bp4a-userdebug
 
 
-make libmtkfmjni -j8 2>&1 | tee build.log
+make libmtkfmjni -j4 2>&1 | tee build.log
 curl -F "file=@build.log" https://temp.sh/upload
 
