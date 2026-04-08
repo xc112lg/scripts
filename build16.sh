@@ -55,6 +55,31 @@ sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellan
 
 
 
+
+FMR_FILE="packages/apps/RevampedFMRadio/jni/fmr/fmr_core.cpp"
+
+if [ -f "$FMR_FILE" ]; then
+    # Find and fix the unused ret variable in fmr_set_freq function
+    awk '
+    /^static int fmr_set_freq/ { in_function = 1 }
+    in_function && /int ret = 0;/ {
+        print "    // " $0 "  // Commented out - unused variable"
+        next
+    }
+    { print }
+    ' "$FMR_FILE" > "$FMR_FILE.tmp" && mv "$FMR_FILE.tmp" "$FMR_FILE"
+    
+    echo "Fixed unused variable in $FMR_FILE"
+fi
+
+
+
+
+
+
+
+
+
 source build/envsetup.sh
 lunch lineage_blossom-bp4a-userdebug
 
