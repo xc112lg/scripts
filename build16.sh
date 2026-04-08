@@ -53,9 +53,6 @@ mv /tmp/fixed.xml packages/apps/Settings/Evolver/res/xml/evolution_settings_misc
 echo "Line 39 should now look normal:"
 sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/c.sh | bash
-#sed -i '73d' packages/apps/RevampedFMRadio/jni/fmr/fmr_core.cpp
-
 
 
 source build/envsetup.sh
