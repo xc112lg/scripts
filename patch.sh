@@ -1,88 +1,63 @@
 #!/usr/bin/env bash
 set -e
 
-echo "🔧 Fixing SELinux neverallow violations..."
+echo "🔧 Fixing ALL sepolicy neverallow violations..."
 
 # ==============================
-# 1. Remove sys_module from system_server
+# MEDIATEK FIX (sys_module)
 # ==============================
-SYS_SERVER_FILE="device/mediatek/sepolicy_vndr/basic/non_plat/system_server.te"
+MTK_SYS="device/mediatek/sepolicy_vndr/basic/non_plat/system_server.te"
 
-if [ -f "$SYS_SERVER_FILE" ]; then
-    echo "➡️ Patching system_server.te (removing sys_module)..."
-    sed -i '/sys_module/d' "$SYS_SERVER_FILE"
+if [ -f "$MTK_SYS" ]; then
+    echo "➡️ Removing forbidden sys_module from system_server..."
+    sed -i '/sys_module/d' "$MTK_SYS"
 fi
 
 # ==============================
-# 2. Remove default_prop usage from vendor_init
+# XIAOMI FIX (vendor_init)
 # ==============================
-VENDOR_INIT_FILE="device/xiaomi/blossom/sepolicy/vendor/vendor_init.te"
+BASE="device/xiaomi/blossom/sepolicy/vendor"
+VENDOR_INIT="$BASE/vendor_init.te"
+PROP_TE="$BASE/property.te"
+PROP_CTX="$BASE/property_contexts"
 
-if [ -f "$VENDOR_INIT_FILE" ]; then
-    echo "➡️ Patching vendor_init.te (removing default_prop)..."
-    sed -i '/default_prop/d' "$VENDOR_INIT_FILE"
+if [ -f "$VENDOR_INIT" ]; then
+    echo "➡️ Cleaning vendor_init illegal rules..."
+
+    sed -i '/default_prop:property_service set/d' "$VENDOR_INIT"
+    sed -i '/system_prop:property_service set/d' "$VENDOR_INIT"
+
+    if ! grep -q "vendor_prop:property_service set" "$VENDOR_INIT"; then
+        echo "➡️ Adding safe vendor_prop rule..."
+        echo "allow vendor_init vendor_prop:property_service set;" >> "$VENDOR_INIT"
+    fi
 fi
 
 # ==============================
-# 3. Ensure vendor property type exists
+# Ensure vendor_prop exists
 # ==============================
-PROP_TE="device/xiaomi/blossom/sepolicy/vendor/property.te"
-
-mkdir -p "$(dirname "$PROP_TE")"
+mkdir -p "$BASE"
 
 if [ ! -f "$PROP_TE" ]; then
     echo "➡️ Creating property.te..."
-    cat <<EOF > "$PROP_TE"
-type vendor_prop, property_type;
-EOF
+    echo "type vendor_prop, property_type;" > "$PROP_TE"
 else
     if ! grep -q "vendor_prop" "$PROP_TE"; then
-        echo "➡️ Adding vendor_prop type..."
         echo "type vendor_prop, property_type;" >> "$PROP_TE"
     fi
 fi
 
 # ==============================
-# 4. Ensure property_contexts exists
+# Ensure property_contexts
 # ==============================
-PROP_CTX="device/xiaomi/blossom/sepolicy/vendor/property_contexts"
-
-mkdir -p "$(dirname "$PROP_CTX")"
-
 if [ ! -f "$PROP_CTX" ]; then
-    echo "➡️ Creating property_contexts..."
-    cat <<EOF > "$PROP_CTX"
-vendor.fix.prop   u:object_r:vendor_prop:s0
-EOF
+    echo "vendor.blossom.fix   u:object_r:vendor_prop:s0" > "$PROP_CTX"
 else
-    if ! grep -q "vendor.fix.prop" "$PROP_CTX"; then
-        echo "➡️ Adding vendor property context..."
-        echo "vendor.fix.prop   u:object_r:vendor_prop:s0" >> "$PROP_CTX"
+    if ! grep -q "vendor_prop" "$PROP_CTX"; then
+        echo "vendor.blossom.fix   u:object_r:vendor_prop:s0" >> "$PROP_CTX"
     fi
 fi
 
-# ==============================
-# 5. Allow vendor_init to set vendor_prop
-# ==============================
-if [ -f "$VENDOR_INIT_FILE" ]; then
-    if ! grep -q "vendor_prop" "$VENDOR_INIT_FILE"; then
-        echo "➡️ Adding safe vendor_prop rule..."
-        echo "allow vendor_init vendor_prop:property_service set;" >> "$VENDOR_INIT_FILE"
-    fi
-fi
-
-# ==============================
-# 6. Optional: disable neverallow (debug only)
-# ==============================
-BOARD_CONFIG="device/xiaomi/blossom/BoardConfig.mk"
-
-if [ -f "$BOARD_CONFIG" ]; then
-    if ! grep -q "SELINUX_IGNORE_NEVERALLOWS" "$BOARD_CONFIG"; then
-        echo "➡️ Adding debug bypass (optional)..."
-        echo "SELINUX_IGNORE_NEVERALLOWS := true" >> "$BOARD_CONFIG"
-    fi
-fi
-
-echo "✅ SELinux fixes applied!"
-echo "👉 Now run:"
+echo "✅ ALL sepolicy issues fixed!"
+echo "👉 Now rebuild:"
 echo "   m clean && make -j\$(nproc)"
