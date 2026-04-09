@@ -1,6 +1,4 @@
-echo "🔧 Applying FMR core fix..."
-
-patch -p1 << 'EOF'
+patch -p1 --forward --batch --silent << 'EOF'
 --- a/packages/apps/RevampedFMRadio/jni/fmr/fmr_core.cpp
 +++ b/packages/apps/RevampedFMRadio/jni/fmr/fmr_core.cpp
 @@ -70,8 +70,6 @@ int FMR_get_cfgs(int idx)
@@ -15,4 +13,4 @@ patch -p1 << 'EOF'
 EOF
 
 # Apply it in your build script before compiling
-patch -p1 < fix-fmr-core.patch
+#patch -p1 < fix-fmr-core.patch
