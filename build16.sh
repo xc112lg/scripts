@@ -53,7 +53,7 @@ mv /tmp/fixed.xml packages/apps/Settings/Evolver/res/xml/evolution_settings_misc
 echo "Line 39 should now look normal:"
 sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
-
+curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/patch.sh | bash
 source build/envsetup.sh
 lunch lineage_blossom-bp4a-userdebug
 
