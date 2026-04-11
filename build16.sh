@@ -38,22 +38,22 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 
 
-cd device/xiaomi/blossom
-git fetch https://github.com/xc112lg/device_xiaomi_blossom.git patch-3
-sleep 5
-git cherry-pick 27f6bcc191aaaeb66a424b591218418250cec4c6
-cd -
-sed -i 's/name: "android.hardware.sensors@2.0-subhal-impl-1.0"/name: "android.hardware.sensors@2.0-subhal-impl-1.0-mtk"/' hardware/mediatek/sensors/Android.bp
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/extras.sh | bash
+# cd device/xiaomi/blossom
+# git fetch https://github.com/xc112lg/device_xiaomi_blossom.git patch-3
+# sleep 5
+# git cherry-pick 27f6bcc191aaaeb66a424b591218418250cec4c6
+# cd -
+# sed -i 's/name: "android.hardware.sensors@2.0-subhal-impl-1.0"/name: "android.hardware.sensors@2.0-subhal-impl-1.0-mtk"/' hardware/mediatek/sensors/Android.bp
+# curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/extras.sh | bash
 
-tr -d '\000' < packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml > /tmp/fixed.xml
-mv /tmp/fixed.xml packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
+# tr -d '\000' < packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml > /tmp/fixed.xml
+# mv /tmp/fixed.xml packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
-# Verify the fix
-echo "Line 39 should now look normal:"
-sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
+# # Verify the fix
+# echo "Line 39 should now look normal:"
+# sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fix_sepolicy.sh | bash
+# curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fix_sepolicy.sh | bash
 source build/envsetup.sh
 lunch lineage_blossom-bp4a-userdebug
 
