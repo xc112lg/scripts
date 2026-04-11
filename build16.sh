@@ -39,9 +39,9 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 
 
 cd device/xiaomi/blossom
-git fetch https://github.com/xc112lg/device_xiaomi_blossom.git A16
+git fetch https://github.com/xc112lg/device_xiaomi_blossom.git patch-3
 sleep 5
-git cherry-pick 8e6695e2302618cd3f1acb9d1f3505b354c13f13
+git cherry-pick 27f6bcc191aaaeb66a424b591218418250cec4c6
 cd -
 sed -i 's/name: "android.hardware.sensors@2.0-subhal-impl-1.0"/name: "android.hardware.sensors@2.0-subhal-impl-1.0-mtk"/' hardware/mediatek/sensors/Android.bp
 curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/extras.sh | bash
