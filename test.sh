@@ -17,9 +17,9 @@ for p in "${PATHS[@]}"; do
     fi
 done
 
-echo "🔎 Checking for duplicate module definitions..."
+# echo "🔎 Checking for duplicate module definitions..."
 
-grep -r "vendor.mediatek.hardware.bluetooth.audio@2.1" . 2>/dev/null | grep -v vendor
+# grep -r "vendor.mediatek.hardware.bluetooth.audio@2.1" . 2>/dev/null | grep -v vendor
 
 echo "🧼 Cleaning build cache..."
 rm -rf out/soong
