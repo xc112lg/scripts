@@ -56,6 +56,14 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fix_sepolicy.sh | bash
 curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/test.sh  | bash
 rm -rf hardware/mediatek/interfaces/hardware/bluetooth
+
+sudo fallocate -l 20G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+export SOONG_UI_THREADS=2
+mka -j2 bacon
 source build/envsetup.sh
 lunch lineage_blossom-bp4a-userdebug
 
