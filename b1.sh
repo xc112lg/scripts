@@ -59,8 +59,8 @@ rm -rf hardware/mediatek/interfaces/hardware/bluetooth
 
 
 
-export SOONG_UI_THREADS=2
-mka -j2 bacon
+export SOONG_UI_THREADS=1
+mka -j1 bacon
 source build/envsetup.sh
 lunch lineage_blossom-bp4a-userdebug
 make clean
