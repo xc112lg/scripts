@@ -2,91 +2,70 @@
 
 set -e
 
-MARKER="# AUTO-GAPPS-GMS-FIX"
-DEVICE_MK="device/xiaomi/blossom/device.mk"
-
+MARKER="# AUTO-GMS-DISABLED"
 GAPPS_DIR="vendor/gapps"
 GMS_DIR="vendor/gms"
 
-TMP_GAPPS="/tmp/gapps_modules.txt"
-TMP_GMS="/tmp/gms_modules.txt"
-TMP_DUP="/tmp/duplicate_modules.txt"
-
 echo "========================================"
-echo " GApps vs GMS Auto Conflict Resolver"
+echo " Proper GMS Duplicate Module Fixer"
 echo "========================================"
 
-# ✅ Check device.mk exists
-if [ ! -f "$DEVICE_MK" ]; then
-    echo "❌ device.mk not found at $DEVICE_MK"
-    exit 1
-fi
-
-echo "📍 Using device mk: $DEVICE_MK"
-
-# ✅ Check if already applied
-if grep -q "$MARKER" "$DEVICE_MK"; then
-    echo "✅ Fix already applied. Skipping."
+# Skip if already done
+if grep -r "$MARKER" $GMS_DIR >/dev/null 2>&1; then
+    echo "✅ GMS modules already patched. Skipping."
     exit 0
 fi
 
-# ✅ Check directories exist
-if [ ! -d "$GAPPS_DIR" ] || [ ! -d "$GMS_DIR" ]; then
-    echo "❌ Missing vendor/gapps or vendor/gms directory"
-    exit 1
-fi
+TMP_GAPPS="/tmp/gapps.txt"
+TMP_GMS="/tmp/gms.txt"
+TMP_DUP="/tmp/dup.txt"
 
-echo "🔍 Scanning modules..."
-
-# Extract modules (Android.mk + Android.bp)
+# Extract modules
 grep -rhoP 'LOCAL_MODULE\s*:=\s*\K.*' $GAPPS_DIR 2>/dev/null > $TMP_GAPPS || true
 grep -rhoP 'name\s*:\s*"\K.*(?=")' $GAPPS_DIR 2>/dev/null >> $TMP_GAPPS || true
 
 grep -rhoP 'LOCAL_MODULE\s*:=\s*\K.*' $GMS_DIR 2>/dev/null > $TMP_GMS || true
 grep -rhoP 'name\s*:\s*"\K.*(?=")' $GMS_DIR 2>/dev/null >> $TMP_GMS || true
 
-# Clean lists
 sort -u $TMP_GAPPS -o $TMP_GAPPS
 sort -u $TMP_GMS -o $TMP_GMS
 
-# Find duplicates
 comm -12 $TMP_GAPPS $TMP_GMS > $TMP_DUP
 
 if [ ! -s "$TMP_DUP" ]; then
-    echo "✅ No duplicate modules found. Nothing to fix."
+    echo "✅ No duplicates found."
     exit 0
 fi
 
-echo "⚠️ Found duplicate modules:"
+echo "⚠️ Found duplicates:"
 cat $TMP_DUP
 
-echo "🛠 Applying fix (ONE-TIME)..."
-
-# Write to device.mk
-{
-echo ""
-echo "$MARKER"
-echo "# Auto-disable GMS duplicates (prefer GApps)"
-echo "PRODUCT_PACKAGES_REMOVE += \\"
+echo "🔧 Disabling duplicates inside vendor/gms..."
 
 while read mod; do
-    echo "    $mod \\"
+    echo "➡️ Processing $mod"
+
+    FILES=$(grep -rl "$mod" $GMS_DIR 2>/dev/null)
+
+    for f in $FILES; do
+        echo "   📄 $f"
+
+        # Backup
+        cp "$f" "$f.bak"
+
+        # Disable LOCAL_MODULE
+        sed -i "s/^\(\s*LOCAL_MODULE\s*:=\s*$mod\)/$MARKER \1/" "$f"
+
+        # Disable Soong module
+        sed -i "s/name:\s*\"$mod\"/$MARKER name: \"$mod\"/" "$f"
+    done
+
 done < $TMP_DUP
 
-echo ""
-} >> "$DEVICE_MK"
-
-echo "🧼 Cleaning Soong cache..."
+echo "🧼 Cleaning Soong..."
 rm -rf out/soong
 
 echo "========================================"
-echo "✅ Fix applied successfully!"
-echo "👉 GApps will now take priority over GMS"
-echo "👉 This will NOT run again automatically"
+echo "✅ GMS duplicates disabled successfully!"
+echo "👉 GApps will now be used"
 echo "========================================"
-
-echo ""
-echo "Next step:"
-echo "source build/envsetup.sh"
-echo "lunch lineage_blossom-userdebug"
-echo "mka bacon"
