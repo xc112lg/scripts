@@ -1,71 +1,102 @@
 #!/bin/bash
-
 set -e
 
-MARKER="# AUTO-GMS-DISABLED"
+MARKER="# AUTO-GAPPS-GMS-FIX"
+DEVICE_MK="device/xiaomi/blossom/device.mk"
 GAPPS_DIR="vendor/gapps"
 GMS_DIR="vendor/gms"
+TMP_GAPPS="/tmp/gapps_modules.txt"
+TMP_GMS="/tmp/gms_modules.txt"
+TMP_DUP="/tmp/duplicate_modules.txt"
 
 echo "========================================"
-echo " Proper GMS Duplicate Module Fixer"
+echo " GApps vs GMS Auto Conflict Resolver"
 echo "========================================"
 
-# Skip if already done
-if grep -r "$MARKER" $GMS_DIR >/dev/null 2>&1; then
-    echo "✅ GMS modules already patched. Skipping."
+# Check device.mk exists
+if [ ! -f "$DEVICE_MK" ]; then
+    echo "❌ device.mk not found at $DEVICE_MK"
+    exit 1
+fi
+echo "📍 Using device mk: $DEVICE_MK"
+
+# Check if already applied
+if grep -q "$MARKER" "$DEVICE_MK"; then
+    echo "✅ Fix already applied. Skipping."
     exit 0
 fi
 
-TMP_GAPPS="/tmp/gapps.txt"
-TMP_GMS="/tmp/gms.txt"
-TMP_DUP="/tmp/dup.txt"
+# Check directories exist
+if [ ! -d "$GAPPS_DIR" ] || [ ! -d "$GMS_DIR" ]; then
+    echo "❌ Missing vendor/gapps or vendor/gms directory"
+    exit 1
+fi
 
-# Extract modules
-grep -rhoP 'LOCAL_MODULE\s*:=\s*\K.*' $GAPPS_DIR 2>/dev/null > $TMP_GAPPS || true
-grep -rhoP 'name\s*:\s*"\K.*(?=")' $GAPPS_DIR 2>/dev/null >> $TMP_GAPPS || true
+echo "🔍 Scanning modules..."
 
-grep -rhoP 'LOCAL_MODULE\s*:=\s*\K.*' $GMS_DIR 2>/dev/null > $TMP_GMS || true
-grep -rhoP 'name\s*:\s*"\K.*(?=")' $GMS_DIR 2>/dev/null >> $TMP_GMS || true
+# Extract LOCAL_MODULE from .mk files only (avoids bp false positives)
+grep -rhoP 'LOCAL_MODULE\s*:=\s*\K\S+' "$GAPPS_DIR" --include="*.mk" 2>/dev/null \
+    | sort -u > "$TMP_GAPPS" || true
 
-sort -u $TMP_GAPPS -o $TMP_GAPPS
-sort -u $TMP_GMS -o $TMP_GMS
+grep -rhoP 'LOCAL_MODULE\s*:=\s*\K\S+' "$GMS_DIR" --include="*.mk" 2>/dev/null \
+    | sort -u > "$TMP_GMS" || true
 
-comm -12 $TMP_GAPPS $TMP_GMS > $TMP_DUP
+# Extract module names from .bp files (top-level name fields only)
+grep -rhoP '^\s*name:\s*"\K[^"]+' "$GAPPS_DIR" --include="*.bp" 2>/dev/null \
+    | sort -u >> "$TMP_GAPPS" || true
+
+grep -rhoP '^\s*name:\s*"\K[^"]+' "$GMS_DIR" --include="*.bp" 2>/dev/null \
+    | sort -u >> "$TMP_GMS" || true
+
+# Re-sort after appending bp results
+sort -u "$TMP_GAPPS" -o "$TMP_GAPPS"
+sort -u "$TMP_GMS" -o "$TMP_GMS"
+
+# Find duplicates
+comm -12 "$TMP_GAPPS" "$TMP_GMS" > "$TMP_DUP"
 
 if [ ! -s "$TMP_DUP" ]; then
-    echo "✅ No duplicates found."
+    echo "✅ No duplicate modules found. Nothing to fix."
     exit 0
 fi
 
-echo "⚠️ Found duplicates:"
-cat $TMP_DUP
+COUNT=$(wc -l < "$TMP_DUP")
+echo "⚠️  Found $COUNT duplicate module(s):"
+cat "$TMP_DUP"
+echo ""
 
-echo "🔧 Disabling duplicates inside vendor/gms..."
+echo "🛠️  Applying fix to $DEVICE_MK..."
 
-while read mod; do
-    echo "➡️ Processing $mod"
+# Build the blocklist block with correct trailing backslash handling
+{
+    echo ""
+    echo "$MARKER"
+    echo "# Auto-generated: disable GMS duplicates and prefer GApps versions"
+    echo "PRODUCT_PACKAGES_BLOCKLIST += \\"
 
-    FILES=$(grep -rl "$mod" $GMS_DIR 2>/dev/null)
-
-    for f in $FILES; do
-        echo "   📄 $f"
-
-        # Backup
-        cp "$f" "$f.bak"
-
-        # Disable LOCAL_MODULE
-        sed -i "s/^\(\s*LOCAL_MODULE\s*:=\s*$mod\)/$MARKER \1/" "$f"
-
-        # Disable Soong module
-        sed -i "s/name:\s*\"$mod\"/$MARKER name: \"$mod\"/" "$f"
+    # Print all but last line with trailing backslash
+    head -n -1 "$TMP_DUP" | while read -r mod; do
+        echo "    $mod \\"
     done
 
-done < $TMP_DUP
+    # Last line without trailing backslash
+    tail -n 1 "$TMP_DUP" | while read -r mod; do
+        echo "    $mod"
+    done
 
-echo "🧼 Cleaning Soong..."
+    echo ""
+} >> "$DEVICE_MK"
+
+echo "🧼 Cleaning Soong cache..."
 rm -rf out/soong
 
 echo "========================================"
-echo "✅ GMS duplicates disabled successfully!"
-echo "👉 GApps will now be used"
+echo "✅ Fix applied successfully!"
+echo "👉 GApps will now take priority over GMS"
+echo "👉 This will NOT run again (marker set)"
 echo "========================================"
+echo ""
+echo "Next steps:"
+echo "  source build/envsetup.sh"
+echo "  lunch lineage_blossom-userdebug"
+echo "  mka bacon"
