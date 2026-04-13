@@ -60,8 +60,11 @@ rm -rf hardware/mediatek/interfaces/hardware/bluetooth
 curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/disablegms.sh  | bash
 source build/envsetup.sh
 lunch lineage_blossom-bp4a-userdebug
-export SOONG_UI_THREADS=1
-export JACK_SERVER_VM_ARGUMENTS="-Xmx2g"
+export SOONG_JOBS=1
+export NINJA_JOBS=1
+export _JAVA_OPTIONS="-Xmx2g"
+export WITH_DEXPREOPT=false
+source build/envsetup.sh
 
 m -j1 evolution 2>&1 | tee build.log
 curl -F "file=@build.log" https://temp.sh/upload
