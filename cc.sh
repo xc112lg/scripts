@@ -11,7 +11,7 @@ rm -rf device/mediatek/sepolicy_vndr
 rm -rf hardware/dolby
 rm -rf hardware/
 rm -rf packages/apps/RevampedFMRadio
-rm -rf vendor/
+rm -rf vendor/gms
 
 #rm -rf build/soong
 # Cleanup previous changelog to make it always fresh
