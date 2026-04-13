@@ -23,6 +23,11 @@ echo "📍 Using device mk: $DEVICE_MK"
 # Check if already applied
 if grep -q "$MARKER" "$DEVICE_MK"; then
     echo "✅ Fix already applied. Skipping."
+    echo ""
+    echo "📋 Current blocklist in $DEVICE_MK:"
+    echo "----------------------------------------"
+    sed -n "/$MARKER/,/^$/p" "$DEVICE_MK"
+    echo "----------------------------------------"
     exit 0
 fi
 
@@ -34,14 +39,14 @@ fi
 
 echo "🔍 Scanning modules..."
 
-# Extract LOCAL_MODULE from .mk files only (avoids bp false positives)
+# Extract LOCAL_MODULE from .mk files only
 grep -rhoP 'LOCAL_MODULE\s*:=\s*\K\S+' "$GAPPS_DIR" --include="*.mk" 2>/dev/null \
     | sort -u > "$TMP_GAPPS" || true
 
 grep -rhoP 'LOCAL_MODULE\s*:=\s*\K\S+' "$GMS_DIR" --include="*.mk" 2>/dev/null \
     | sort -u > "$TMP_GMS" || true
 
-# Extract module names from .bp files (top-level name fields only)
+# Extract top-level name fields from .bp files
 grep -rhoP '^\s*name:\s*"\K[^"]+' "$GAPPS_DIR" --include="*.bp" 2>/dev/null \
     | sort -u >> "$TMP_GAPPS" || true
 
@@ -67,19 +72,17 @@ echo ""
 
 echo "🛠️  Applying fix to $DEVICE_MK..."
 
-# Build the blocklist block with correct trailing backslash handling
+# Build the blocklist block
 {
     echo ""
     echo "$MARKER"
     echo "# Auto-generated: disable GMS duplicates and prefer GApps versions"
     echo "PRODUCT_PACKAGES_BLOCKLIST += \\"
 
-    # Print all but last line with trailing backslash
     head -n -1 "$TMP_DUP" | while read -r mod; do
         echo "    $mod \\"
     done
 
-    # Last line without trailing backslash
     tail -n 1 "$TMP_DUP" | while read -r mod; do
         echo "    $mod"
     done
@@ -95,6 +98,13 @@ echo "✅ Fix applied successfully!"
 echo "👉 GApps will now take priority over GMS"
 echo "👉 This will NOT run again (marker set)"
 echo "========================================"
+
+echo ""
+echo "📋 Written to $DEVICE_MK:"
+echo "----------------------------------------"
+sed -n "/$MARKER/,/^$/p" "$DEVICE_MK"
+echo "----------------------------------------"
+
 echo ""
 echo "Next steps:"
 echo "  source build/envsetup.sh"
