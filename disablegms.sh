@@ -91,7 +91,7 @@ echo "🛠️  Applying fix to $DEVICE_MK..."
 } >> "$DEVICE_MK"
 
 echo "🧼 Cleaning Soong cache..."
-rm -rf out/soong
+#rm -rf out/soong
 
 echo "========================================"
 echo "✅ Fix applied successfully!"
