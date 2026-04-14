@@ -77,6 +77,7 @@ export _JAVA_OPTIONS="-Xmx2g"
 export WITHOUT_CHECK_API=true
 export SOONG_ALLOW_MISSING_DEPENDENCIES=true
 export SOONG_UI_JAVA_OPTS="-Xmx2g"
+export BUILD_FROM_SOURCE_STUB=true
 m evolution -j1 2>&1 | tee build.log
 curl -F "file=@build.log" https://temp.sh/upload
 
