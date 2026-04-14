@@ -1,17 +1,18 @@
 sudo apt update
 sudo apt install patchelf -y
+sudo apt install zram-tools -y
 
 rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf device/xiaomi/blossom-kernel
 rm -rf vendor/xiaomi
+rm -rf vendor/gms
 rm -rf vendor/xiaomi/miuicamera
 rm -rf hardware/mediatek
 rm -rf device/mediatek/sepolicy_vndr
 rm -rf hardware/dolby
 rm -rf hardware/
 rm -rf packages/apps/RevampedFMRadio
-rm -rf vendor/gms
 
 #rm -rf build/soong
 # Cleanup previous changelog to make it always fresh
@@ -54,18 +55,28 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # echo "Line 39 should now look normal:"
 # sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
-# curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fix_sepolicy.sh | bash
+curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fix_sepolicy.sh | bash
+curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fixvolte.sh | bash
+
+
 curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/test.sh  | bash
 rm -rf hardware/mediatek/interfaces/hardware/bluetooth
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/disablegms1.sh  | bash
-source build/envsetup.sh
-lunch lineage_blossom-bp4a-userdebug
-export SOONG_JOBS=1
-export NINJA_JOBS=1
-export _JAVA_OPTIONS="-Xmx2g"
-export WITH_DEXPREOPT=false
+#curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/disablegms1.sh  | bash
 source build/envsetup.sh
 
-m -j1 evolution 2>&1 | tee build.log
+export TARGET_USES_PICO_GAPPS=true
+rm -rf hardware/interfaces/biometrics/fingerprint/2.1/default
+sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
+lunch lineage_blossom-bp4a-userdebug
+
+
+export NINJA_ARGS="-j1 -l1"
+export JACK_SERVER_VM_ARGUMENTS="-Xmx4g -Dfile.encoding=UTF-8"
+export NINJA_STATUS=""
+export _JAVA_OPTIONS="-Xmx2g"
+export WITHOUT_CHECK_API=true
+export SOONG_ALLOW_MISSING_DEPENDENCIES=true
+export SOONG_UI_JAVA_OPTS="-Xmx2g"
+m evolution 2>&1 | tee build.log
 curl -F "file=@build.log" https://temp.sh/upload
 
