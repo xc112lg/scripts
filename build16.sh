@@ -65,8 +65,34 @@ source build/envsetup.sh
 
 export TARGET_USES_PICO_GAPPS=true
 rm -rf hardware/interfaces/biometrics/fingerprint/2.1/default
+# Fix ThemeUtils.getInstance() syntax errors
+echo "Fixing ThemeUtils.getInstance() syntax errors..."
+
+FILES=(
+    "packages/apps/Settings/Evolver/src/org/evolution/settings/fragments/themes/IconShapes.java"
+    "packages/apps/Settings/Evolver/src/org/evolution/settings/fragments/themes/NavigationBarIcons.java"
+    "packages/apps/Settings/Evolver/src/org/evolution/settings/fragments/themes/Themes.java"
+)
+
+for file in "${FILES[@]}"; do
+    if [ -f "$file" ]; then
+        echo "Processing: $file"
+        sed -i 's/new ThemeUtils\.getInstance(/ThemeUtils.getInstance(/g' "$file"
+    else
+        echo "Warning: $file not found"
+    fi
+done
+
+echo "Done! Re-run your build."
+
+
 sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
 lunch lineage_blossom-bp4a-userdebug
+
+
+
+
+
 
 
 m evolution 2>&1 | tee build.log
