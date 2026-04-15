@@ -59,7 +59,7 @@ curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-ev
 curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fixvolte.sh | bash
 
 
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/test.sh  | bash
+#curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/test.sh  | bash
 rm -rf hardware/mediatek/interfaces/hardware/bluetooth
 #curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/disablegms1.sh  | bash
 source build/envsetup.sh
