@@ -86,6 +86,12 @@ rm -rf hardware/interfaces/biometrics/fingerprint/2.1/default
 
 # echo "Done! Re-run your build."
 
+git clone https://github.com/Evolution-X/vendor_evolution-priv_keys-template vendor/evolution-priv/keys
+cd vendor/evolution-priv/keys
+./keys.sh
+cd -
+
+
 
 sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
 sed -i '/# FM Radio/,+2d' device/xiaomi/blossom/device.mk
