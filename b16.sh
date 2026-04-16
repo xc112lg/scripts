@@ -86,10 +86,10 @@ rm -rf hardware/interfaces/biometrics/fingerprint/2.1/default
 
 # echo "Done! Re-run your build."
 
-git clone https://github.com/Evolution-X/vendor_evolution-priv_keys-template vendor/evolution-priv/keys
-cd vendor/evolution-priv/keys
-./keys.sh
-cd -
+# git clone https://github.com/Evolution-X/vendor_evolution-priv_keys-template vendor/evolution-priv/keys
+# cd vendor/evolution-priv/keys
+# ./keys.sh
+# cd -
 
 
 
