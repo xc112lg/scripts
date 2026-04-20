@@ -56,7 +56,7 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
 #curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fix_sepolicy.sh | bash
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fixvolte.sh | bash
+#curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fixvolte.sh | bash
 
 
 #curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/test.sh  | bash
@@ -86,16 +86,16 @@ rm -rf hardware/interfaces/biometrics/fingerprint/2.1/default
 
 # echo "Done! Re-run your build."
 
-git clone https://github.com/Evolution-X/vendor_evolution-priv_keys-template vendor/evolution-priv/keys
-cd vendor/evolution-priv/keys
-./keys.sh
-cd -
+# git clone https://github.com/Evolution-X/vendor_evolution-priv_keys-template vendor/evolution-priv/keys
+# cd vendor/evolution-priv/keys
+# ./keys.sh
+# cd -
 
 
 
-sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
+#sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
 sed -i '/# FM Radio/,+2d' device/xiaomi/blossom/device.mk
-sed -i '/<<<<<<< HEAD/d;/=======/d;/>>>>>>>/d' device/xiaomi/blossom/rootdir/etc/fstab.mt6765
+#sed -i '/<<<<<<< HEAD/d;/=======/d;/>>>>>>>/d' device/xiaomi/blossom/rootdir/etc/fstab.mt6765
 lunch lineage_blossom-bp4a-eng
 
 
