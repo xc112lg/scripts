@@ -54,6 +54,10 @@ else
     patchelf --add-needed "$SHIM_NAME" "$CAMERA_HAL"
     echo "Patched successfully."
 fi
+
+
+
+
 # grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
 # sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 
@@ -73,10 +77,46 @@ fi
 # echo "Line 39 should now look normal:"
 # sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/clean_genfscon4.sh | bash
 #curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fixvolte.sh | bash
 
+#############################################
 
+VENDOR_CIL="out/soong/.intermediates/system/sepolicy/vendor_sepolicy.cil/android_common/blossom/vendor_sepolicy.cil"
+PLAT_CIL="out/soong/.intermediates/system/sepolicy/plat_sepolicy.cil/android_common/plat_sepolicy.cil"
+
+VENDOR_RULE=$(sed -n '31p' "$VENDOR_CIL")
+PLAT_RULE=$(sed -n '141p' "$PLAT_CIL")
+
+echo "[INFO] Platform rule: $PLAT_RULE"
+echo "[INFO] Vendor rule:   $VENDOR_RULE"
+
+CONFLICT_FS=$(echo "$VENDOR_RULE" | grep -oP '(?<=genfscon )\S+')
+CONFLICT_PATH=$(echo "$VENDOR_RULE" | grep -oP '(?<=genfscon \S{1,64} )\S+')
+
+echo "[INFO] Conflicting: fs=$CONFLICT_FS path=$CONFLICT_PATH"
+
+FILES=$(grep -rln "genfscon.*$CONFLICT_PATH" \
+  device/ vendor/ \
+  --include="*.te" \
+  --include="genfs_contexts" \
+  --include="*.cil" 2>/dev/null || true)
+
+if [ -z "$FILES" ]; then
+  echo "[WARN] No source files found. Check device/vendor dirs manually."
+  exit 1
+fi
+
+for f in $FILES; do
+  echo "[FIX] Processing: $f"
+  cp "$f" "${f}.bak"
+  grep -v "genfscon.*${CONFLICT_PATH}" "$f" > "${f}.tmp" && mv "${f}.tmp" "$f"
+  echo "      Backup saved: ${f}.bak"
+done
+
+echo ""
+echo "[DONE] Re-run your build to verify the fix."
+echo "       To restore: for f in \$(find . -name '*.bak'); do mv \$f \${f%.bak}; done"
+##########################################33
 #curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/test.sh  | bash
 rm -rf hardware/mediatek/interfaces/hardware/bluetooth
 #curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/disablegms1.sh  | bash
