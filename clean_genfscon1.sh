@@ -2,9 +2,6 @@
 
 echo "[*] Cleaning vendor genfscon (MTK-safe mode)..."
 
-# Backup first (important)
-echo "[*] Creating backup..."
-cp -r vendor vendor_backup_genfscon
 
 # Process all files containing genfscon
 FILES=$(grep -rl "genfscon" vendor/ 2>/dev/null)
