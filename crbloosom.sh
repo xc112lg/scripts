@@ -5,14 +5,20 @@ rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf device/xiaomi/blossom-kernel
 rm -rf vendor/xiaomi
+rm -rf vendor/gms
 rm -rf vendor/xiaomi/miuicamera
 rm -rf hardware/mediatek
 rm -rf device/mediatek/sepolicy_vndr
+rm -rf hardware/dolby
+rm -rf hardware/
 rm -rf packages/apps/RevampedFMRadio
 rm -rf packages/apps/Settings/
 
 #rm -rf build/soong
 # Cleanup previous changelog to make it always fresh
+rm -rf out/target/product/*/system/etc/Changelog.txt \
+       out/target/product/*/obj/ETC/Changelog.txt_intermediates \
+       out/target/product/*/gen/ETC/Changelog.txt_intermediates
 
 
 repo init -u https://github.com/Evolution-X/manifest -b bq2 --depth=1 --git-lfs
@@ -49,8 +55,8 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # echo "Line 39 should now look normal:"
 # sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fix_sepolicy.sh | bash
-# curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fixvolte.sh | bash
+#curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fix_sepolicy.sh | bash
+curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fixvolte.sh | bash
 
 
 #curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/test.sh  | bash
@@ -80,16 +86,16 @@ rm -rf hardware/interfaces/biometrics/fingerprint/2.1/default
 
 # echo "Done! Re-run your build."
 
-# git clone https://github.com/Evolution-X/vendor_evolution-priv_keys-template vendor/evolution-priv/keys
-# cd vendor/evolution-priv/keys
-# ./keys.sh
-# cd -
+git clone https://github.com/Evolution-X/vendor_evolution-priv_keys-template vendor/evolution-priv/keys
+cd vendor/evolution-priv/keys
+./keys.sh
+cd -
 
 
 
-#sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
+sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
 sed -i '/# FM Radio/,+2d' device/xiaomi/blossom/device.mk
-#sed -i '/<<<<<<< HEAD/d;/=======/d;/>>>>>>>/d' device/xiaomi/blossom/rootdir/etc/fstab.mt6765
+sed -i '/<<<<<<< HEAD/d;/=======/d;/>>>>>>>/d' device/xiaomi/blossom/rootdir/etc/fstab.mt6765
 lunch lineage_blossom-bp4a-eng
 
 
@@ -100,4 +106,3 @@ lunch lineage_blossom-bp4a-eng
 
 m evolution 2>&1 | tee build.log
 curl -F "file=@build.log" https://temp.sh/upload
-
