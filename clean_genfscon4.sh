@@ -1,15 +1,15 @@
 #!/bin/bash
 
 echo "[*] Cleaning vendor genfscon (MTK-safe mode)..."
-# remove ALL debugfs
-sed -i '/genfscon debugfs/d' vendor -R
+# remove debugfs
+find vendor -type f -exec sed -i '/genfscon debugfs/d' {} +
 
 # remove ALL /proc/sys (CRITICAL)
-sed -i '/genfscon proc "\/sys/d' vendor -R
+find vendor -type f -exec sed -i '/genfscon proc "\/sys/d' {} +
 
-# remove kernel tunables
-sed -i '/genfscon proc "\/kernel/d' vendor -R
-sed -i '/genfscon proc "\/vm/d' vendor -R
+# remove kernel/vm tunables
+find vendor -type f -exec sed -i '/genfscon proc "\/kernel/d' {} +
+find vendor -type f -exec sed -i '/genfscon proc "\/vm/d' {} +
 
 # Process all files containing genfscon
 FILES=$(grep -rl "genfscon" vendor/ 2>/dev/null)
