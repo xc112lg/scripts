@@ -41,6 +41,10 @@ for f in $FILES; do
     }
     ' "$f"
 done
+sed -i '/genfscon debugfs/d' vendor -R
+sed -i '/genfscon proc "\/sys/d' vendor -R
+sed -i '/genfscon proc "\/kernel/d' vendor -R
+sed -i '/genfscon proc "\/vm/d' vendor -R
 
 echo "[✓] Done cleaning genfscon"
 echo "[!] Backup saved at: vendor_backup_genfscon"
