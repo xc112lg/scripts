@@ -73,7 +73,7 @@ fi
 # echo "Line 39 should now look normal:"
 # sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/clean_genfscon2.sh | bash
+curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/clean_genfscon3.sh | bash
 #curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fixvolte.sh | bash
 
 
