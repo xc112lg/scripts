@@ -23,7 +23,27 @@ repo init -u https://github.com/Evolution-X/manifest -b bq2 --depth=1 --git-lfs
 #Temp Fix Repo tool
 #cd .repo/repo;git pull -r;cd ../..;
 
+CAMERA_HAL="vendor/xiaomi/blossom/proprietary/vendor/bin/hw/camerahalserver"
 
+SHIM_NAME="libshim_utils.so"
+
+if [ ! -f "$CAMERA_HAL" ]; then
+    echo "Error: $CAMERA_HAL not found!"
+    exit 1
+fi
+
+if ! command -v patchelf &> /dev/null; then
+    echo "Error: patchelf is not installed!"
+    exit 1
+fi
+
+if patchelf --print-needed "$CAMERA_HAL" | grep -q "$SHIM_NAME"; then
+    echo "Shim already added to camerahalserver."
+else
+    echo "Patching camerahalserver to add $SHIM_NAME..."
+    patchelf --add-needed "$SHIM_NAME" "$CAMERA_HAL"
+    echo "Patched successfully."
+fi
 # Clone local_manifests repository
 #git clone https://github.com/0kaarun/Blossom_local_mainfest --depth 1 -b A16 .repo/local_manifests
 
@@ -53,8 +73,8 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # echo "Line 39 should now look normal:"
 # sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
-#curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fix_sepolicy.sh | bash
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fixvolte.sh | bash
+curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fix_sepolicy.sh | bash
+#curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fixvolte.sh | bash
 
 
 #curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/test.sh  | bash
