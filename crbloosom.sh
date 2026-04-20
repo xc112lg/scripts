@@ -23,6 +23,18 @@ repo init -u https://github.com/Evolution-X/manifest -b bq2 --depth=1 --git-lfs
 #Temp Fix Repo tool
 #cd .repo/repo;git pull -r;cd ../..;
 
+
+# Clone local_manifests repository
+#git clone https://github.com/0kaarun/Blossom_local_mainfest --depth 1 -b A16 .repo/local_manifests
+
+git clone https://github.com/xc112lg/local_manifests --depth 1 -b crb .repo/local_manifests
+# if [ ! 0 == 0 ]
+#  then   curl -o .repo/local_manifests https://github.com/bagaskara815/local_manifests.git
+#  fi
+repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
+# repo sync
+/opt/crave/resync.sh
+
 CAMERA_HAL="vendor/xiaomi/blossom/proprietary/vendor/bin/hw/camerahalserver"
 
 SHIM_NAME="libshim_utils.so"
@@ -44,16 +56,6 @@ else
     patchelf --add-needed "$SHIM_NAME" "$CAMERA_HAL"
     echo "Patched successfully."
 fi
-# Clone local_manifests repository
-#git clone https://github.com/0kaarun/Blossom_local_mainfest --depth 1 -b A16 .repo/local_manifests
-
-git clone https://github.com/xc112lg/local_manifests --depth 1 -b crb .repo/local_manifests
-# if [ ! 0 == 0 ]
-#  then   curl -o .repo/local_manifests https://github.com/bagaskara815/local_manifests.git
-#  fi
-repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
-# repo sync
-/opt/crave/resync.sh
 # grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
 # sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
 
