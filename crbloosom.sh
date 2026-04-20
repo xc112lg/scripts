@@ -8,9 +8,6 @@ rm -rf vendor/xiaomi
 rm -rf vendor/xiaomi/miuicamera
 rm -rf hardware/mediatek
 rm -rf device/mediatek/sepolicy_vndr
-rm -rf hardware/dolby
-rm -rf packages/apps/RevampedFMRadio
-rm -rf packages/apps/Settings/
 
 #rm -rf build/soong
 # Cleanup previous changelog to make it always fresh
@@ -75,7 +72,7 @@ fi
 # echo "Line 39 should now look normal:"
 # sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fix_sepolicy.sh | bash
+curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/clean_genfscon.sh | bash
 #curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fixvolte.sh | bash
 
 
