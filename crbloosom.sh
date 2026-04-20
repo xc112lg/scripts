@@ -112,7 +112,7 @@ rm -rf hardware/interfaces/biometrics/fingerprint/2.1/default
 # cd -
 
 
-
+git clone https://github.com/xc112lg/v30 prebuilts/vndk/v30
 sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
 sed -i '/# FM Radio/,+2d' device/xiaomi/blossom/device.mk
 sed -i '/<<<<<<< HEAD/d;/=======/d;/>>>>>>>/d' device/xiaomi/blossom/rootdir/etc/fstab.mt6765
