@@ -68,7 +68,7 @@ fi
 # git cherry-pick 27f6bcc191aaaeb66a424b591218418250cec4c6
 # cd -
 # sed -i 's/name: "android.hardware.sensors@2.0-subhal-impl-1.0"/name: "android.hardware.sensors@2.0-subhal-impl-1.0-mtk"/' hardware/mediatek/sensors/Android.bp
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/clean_genfscon6.sh | bash
+#curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/clean_genfscon6.sh | bash
 
 sed -i '/\/fpsgo/d' $(grep -rl fpsgo device/ vendor/)
 sed -i '/\/mtkfb/d' $(grep -rl mtkfb device/ vendor/)
