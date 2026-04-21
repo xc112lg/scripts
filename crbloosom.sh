@@ -75,6 +75,7 @@ sed -i '/\/mtkfb/d' $(grep -rl mtkfb device/ vendor/)
 sed -i '/\/ion\//d' $(grep -rl 'genfscon debugfs "/ion' device/ vendor/)
 sed -i '/dynamic_debug/d' $(grep -rl dynamic_debug device/ vendor/)
 sed -i '/kmemleak/d' $(grep -rl kmemleak device/ vendor/)
+sed -i '/dirty_writeback_centisecs/d' device/mediatek/sepolicy_vndr/basic/non_plat/genfs_contexts
 rm -rf out/soong/.intermediates/system/sepolicy
 # tr -d '\000' < packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml > /tmp/fixed.xml
 # mv /tmp/fixed.xml packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
