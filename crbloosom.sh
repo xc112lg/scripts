@@ -128,7 +128,7 @@ echo "  Android SELinux Auto Cleaner (A16)"
 echo "======================================"
 
 # Paths
-SEARCH_DIRS="device vendor"
+SEARCH_DIRS="device/xiaomi/blossom vendor/xiaomi"
 
 echo "[*] Removing forbidden capabilities..."
 
