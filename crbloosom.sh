@@ -70,6 +70,12 @@ fi
 # sed -i 's/name: "android.hardware.sensors@2.0-subhal-impl-1.0"/name: "android.hardware.sensors@2.0-subhal-impl-1.0-mtk"/' hardware/mediatek/sensors/Android.bp
 curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/clean_genfscon6.sh | bash
 
+sed -i '/\/fpsgo/d' $(grep -rl fpsgo device/ vendor/)
+sed -i '/\/mtkfb/d' $(grep -rl mtkfb device/ vendor/)
+sed -i '/\/ion\//d' $(grep -rl 'genfscon debugfs "/ion' device/ vendor/)
+sed -i '/dynamic_debug/d' $(grep -rl dynamic_debug device/ vendor/)
+sed -i '/kmemleak/d' $(grep -rl kmemleak device/ vendor/)
+rm -rf out/soong/.intermediates/system/sepolicy
 # tr -d '\000' < packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml > /tmp/fixed.xml
 # mv /tmp/fixed.xml packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
 
@@ -122,7 +128,12 @@ sed -i '/# FM Radio/,+2d' device/xiaomi/blossom/device.mk
 sed -i '/<<<<<<< HEAD/d;/=======/d;/>>>>>>>/d' device/xiaomi/blossom/rootdir/etc/fstab.mt6765
 lunch lineage_blossom-bp4a-eng
 
-
+sed -i '/\/fpsgo/d' $(grep -rl fpsgo device/ vendor/)
+sed -i '/\/mtkfb/d' $(grep -rl mtkfb device/ vendor/)
+sed -i '/\/ion\//d' $(grep -rl 'genfscon debugfs "/ion' device/ vendor/)
+sed -i '/dynamic_debug/d' $(grep -rl dynamic_debug device/ vendor/)
+sed -i '/kmemleak/d' $(grep -rl kmemleak device/ vendor/)
+rm -rf out/soong/.intermediates/system/sepolicy
 
 
 
