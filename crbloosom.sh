@@ -137,6 +137,7 @@ sed -i '/\/mtkfb/d' $(grep -rl mtkfb device/ vendor/)
 sed -i '/\/ion\//d' $(grep -rl 'genfscon debugfs "/ion' device/ vendor/)
 sed -i '/dynamic_debug/d' $(grep -rl dynamic_debug device/ vendor/)
 sed -i '/kmemleak/d' $(grep -rl kmemleak device/ vendor/)
+sed -i '/persist.vendor.audio\./d' device/xiaomi/blossom/sepolicy/vendor/property_contexts
 find system -name "*property_contexts*" -exec sed -i '/persist.vendor.audio\./d' {} +
 rm -rf out/soong/.intermediates/system/sepolicy
 
