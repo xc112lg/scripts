@@ -123,6 +123,70 @@ rm -rf hardware/interfaces/biometrics/fingerprint/2.1/default
 # cd -
 
 
+echo "======================================"
+echo "  Android SELinux Auto Cleaner (A16)"
+echo "======================================"
+
+# Paths
+SEARCH_DIRS="device vendor"
+
+echo "[*] Removing forbidden capabilities..."
+
+# 1. sys_module (STRICT NEVERALLOW)
+grep -rl "sys_module" $SEARCH_DIRS | while read -r file; do
+    echo "  -> Cleaning sys_module in $file"
+    sed -i '/sys_module/d' "$file"
+done
+
+# 2. mounton on exec_type (VERY COMMON MTK ISSUE)
+grep -rl "mounton" $SEARCH_DIRS | while read -r file; do
+    echo "  -> Cleaning mounton in $file"
+    sed -i '/mounton/d' "$file"
+done
+
+# 3. ptrace (sometimes forbidden depending on domain)
+grep -rl "ptrace" $SEARCH_DIRS | while read -r file; do
+    echo "  -> Cleaning ptrace in $file"
+    sed -i '/ptrace/d' "$file"
+done
+
+# 4. sys_rawio (dangerous capability)
+grep -rl "sys_rawio" $SEARCH_DIRS | while read -r file; do
+    echo "  -> Cleaning sys_rawio in $file"
+    sed -i '/sys_rawio/d' "$file"
+done
+
+# 5. vendor trying to touch system_file (common violation)
+grep -rl "system_file" $SEARCH_DIRS | while read -r file; do
+    echo "  -> Checking system_file rules in $file"
+    sed -i '/system_file.*write/d' "$file"
+    sed -i '/system_file.*append/d' "$file"
+done
+
+# 6. debugfs access (often blocked)
+grep -rl "debugfs" $SEARCH_DIRS | while read -r file; do
+    echo "  -> Cleaning debugfs in $file"
+    sed -i '/debugfs/d' "$file"
+done
+
+# 7. proc/kmsg access (restricted)
+grep -rl "kmsg" $SEARCH_DIRS | while read -r file; do
+    echo "  -> Cleaning kmsg in $file"
+    sed -i '/kmsg/d' "$file"
+done
+
+# 8. Remove permissive domains (not allowed in user builds)
+grep -rl "permissive" $SEARCH_DIRS | while read -r file; do
+    echo "  -> Removing permissive domain in $file"
+    sed -i '/permissive/d' "$file"
+done
+
+echo "[*] Cleaning intermediate sepolicy cache..."
+rm -rf out/soong/.intermediates/system/sepolicy
+
+echo "[✓] Done. Now rebuild."
+
+
 git clone https://github.com/xc112lg/v30 prebuilts/vndk/v30
 sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
 sed -i '/# FM Radio/,+2d' device/xiaomi/blossom/device.mk
