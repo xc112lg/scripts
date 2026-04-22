@@ -1,32 +1,30 @@
 #!/bin/bash
 
-echo "[*] Scanning for duplicate property prefixes..."
+echo "[*] Using ripgrep to find duplicates..."
 
-TMP_FILE=$(mktemp)
+TMP=$(mktemp)
 
-# Collect all property_contexts entries
-grep -R "ro.vendor." device/ vendor/ 2>/dev/null | grep property_contexts > "$TMP_FILE"
+rg "ro\.vendor\." device vendor -n 2>/dev/null \
+| grep property_contexts > "$TMP"
 
-# Extract only property keys
-cut -d':' -f2- "$TMP_FILE" | awk '{print $1}' | sort | uniq -d > duplicates.txt
+# Extract property keys
+cut -d':' -f3 "$TMP" | awk '{print $1}' | sort | uniq -d > duplicates.txt
 
 if [ ! -s duplicates.txt ]; then
-    echo "[✓] No duplicate prefixes found"
+    echo "[✓] No duplicates found"
     exit 0
 fi
 
-echo "[!] Duplicates found:"
+echo "[!] Duplicates:"
 cat duplicates.txt
 echo
 
-# Process each duplicate
 while read prop; do
     echo "[*] Fixing $prop"
 
-    # Find all occurrences
-    matches=$(grep -R "$prop" device/ vendor/ 2>/dev/null | grep property_contexts)
+    matches=$(rg "$prop" device vendor -n 2>/dev/null | grep property_contexts)
 
-    # Prefer MTK version
+    # Prefer MTK
     keep=$(echo "$matches" | grep -i "mediatek" | head -n1)
 
     if [ -z "$keep" ]; then
@@ -35,7 +33,6 @@ while read prop; do
 
     echo "    -> Keeping: $keep"
 
-    # Remove others
     echo "$matches" | while read line; do
         if [[ "$line" != "$keep" ]]; then
             file=$(echo "$line" | cut -d':' -f1)
@@ -47,12 +44,4 @@ while read prop; do
 
 done < duplicates.txt
 
-echo
-echo "[✓] Cleanup done"
-
-# Optional: clean build intermediates
-echo "[*] Cleaning sepolicy intermediates..."
-rm -rf out/soong/.intermediates/system/sepolicy
-rm -rf out/target/product/*/obj/ETC/*property_contexts*
-
-echo "[✓] Done. Rebuild now."
+echo "[✓] Done"
