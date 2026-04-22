@@ -141,7 +141,7 @@ sed -i '/persist.vendor.audio\./d' device/xiaomi/blossom/sepolicy/vendor/propert
 find system -name "*property_contexts*" -exec sed -i '/persist.vendor.audio\./d' {} +
 rm -rf out/soong/.intermediates/system/sepolicy
 
-
+curl -sf https://raw.githubusercontent.com/xc112lg/scripts/e26bfcc302c6f3e2314f07d1cb8634e53c7f3471/aa.sh | bash
 
 
 
