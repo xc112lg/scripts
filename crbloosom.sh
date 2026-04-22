@@ -130,6 +130,7 @@ git clone https://github.com/xc112lg/v30 prebuilts/vndk/v30
 sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
 sed -i '/# FM Radio/,+2d' device/xiaomi/blossom/device.mk
 sed -i '/<<<<<<< HEAD/d;/=======/d;/>>>>>>>/d' device/xiaomi/blossom/rootdir/etc/fstab.mt6765
+rg -l -0 '<<<<<<<|=======|>>>>>>>' hardware/mediatek | xargs -0 sed -i '/^<<<<<<< /d;/^=======/d;/^>>>>>>> /d'
 lunch lineage_blossom-bp4a-eng
 
 sed -i '/\/fpsgo/d' $(grep -rl fpsgo device/ vendor/)
