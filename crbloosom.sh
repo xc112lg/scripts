@@ -2,149 +2,85 @@ sudo apt update
 sudo apt install patchelf -y
 
 rm -rf .repo/local_manifests/
+rm -rf .repo/manifests/
 rm -rf device/xiaomi
 rm -rf device/xiaomi/blossom-kernel
 rm -rf vendor/xiaomi
 rm -rf vendor/xiaomi/miuicamera
 rm -rf hardware/mediatek
 rm -rf device/mediatek/sepolicy_vndr
-rm -rf vendor
+rm -rf hardware/dolby
+# rm -rf bootable
+# rm -rf build/make
+# rm -rf frameworks/av
+# rm -rf frameworks/base
+# rm -rf hardware/google/pixel
+# rm -rf hawrdware/interfaces
+# rm -rf packages/modules/Bluetooth
+#rm -rf vendor
+#rm -rf TMP_PATCHES
 
-#rm -rf build/soong
-# Cleanup previous changelog to make it always fresh
-rm -rf out/target/product/*/system/etc/Changelog.txt \
-       out/target/product/*/obj/ETC/Changelog.txt_intermediates \
-       out/target/product/*/gen/ETC/Changelog.txt_intermediates
 
 
 repo init -u https://github.com/Evolution-X/manifest -b bq2 --depth=1 --git-lfs
-#Temp Fix Repo tool
-#cd .repo/repo;git pull -r;cd ../..;
-
-
-# Clone local_manifests repository
-#git clone https://github.com/0kaarun/Blossom_local_mainfest --depth 1 -b A16 .repo/local_manifests
-
-git clone https://github.com/xc112lg/local_manifests --depth 1 -b crb .repo/local_manifests
-# if [ ! 0 == 0 ]
-#  then   curl -o .repo/local_manifests https://github.com/bagaskara815/local_manifests.git
-#  fi
+git clone https://github.com/jayz1212/local --depth 1 -b cda13 .repo/local_manifests
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
-# repo sync
+
+
 /opt/crave/resync.sh
 
-CAMERA_HAL="vendor/xiaomi/blossom/proprietary/vendor/bin/hw/camerahalserver"
-
-SHIM_NAME="libshim_utils.so"
-
-if [ ! -f "$CAMERA_HAL" ]; then
-    echo "Error: $CAMERA_HAL not found!"
-    exit 1
-fi
-
-if ! command -v patchelf &> /dev/null; then
-    echo "Error: patchelf is not installed!"
-    exit 1
-fi
-
-if patchelf --print-needed "$CAMERA_HAL" | grep -q "$SHIM_NAME"; then
-    echo "Shim already added to camerahalserver."
-else
-    echo "Patching camerahalserver to add $SHIM_NAME..."
-    patchelf --add-needed "$SHIM_NAME" "$CAMERA_HAL"
-    echo "Patched successfully."
-fi
 
 
+# DEVICE_DIR="device/xiaomi/blossom/sepolicy/vendor"
+# FILE="$DEVICE_DIR/init.te"
 
+# echo "[*] Fixing sepolicy neverallow (mounton)..."
 
-# grep -q '"com.lazada.android"' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java || \
-# sed -i '/"com.android.chrome",/a\        "com.lazada.android",\n        "com.shopee.ph",' frameworks/base/core/java/com/android/internal/util/evolution/PixelPropsUtils.java
+# if [ ! -f "$FILE" ]; then
+#     echo "[!] File not found: $FILE"
+#     exit 1
+# fi
 
+# # Backup
+# cp "$FILE" "$FILE.bak"
 
-# cd device/xiaomi/blossom
-# git fetch https://github.com/xc112lg/device_xiaomi_blossom.git patch-3
-# sleep 5
-# git cherry-pick 27f6bcc191aaaeb66a424b591218418250cec4c6
-# cd -
-# sed -i 's/name: "android.hardware.sensors@2.0-subhal-impl-1.0"/name: "android.hardware.sensors@2.0-subhal-impl-1.0-mtk"/' hardware/mediatek/sensors/Android.bp
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/clean_genfscon6.sh | bash
+# # 1. Remove illegal mounton rules
+# sed -i '/volte_.*_exec.*mounton/d' "$FILE"
 
-sed -i '/\/fpsgo/d' $(grep -rl fpsgo device/ vendor/)
-sed -i '/\/mtkfb/d' $(grep -rl mtkfb device/ vendor/)
-sed -i '/\/ion\//d' $(grep -rl 'genfscon debugfs "/ion' device/ vendor/)
-sed -i '/dynamic_debug/d' $(grep -rl dynamic_debug device/ vendor/)
-sed -i '/kmemleak/d' $(grep -rl kmemleak device/ vendor/)
-sed -i '/dirty_writeback_centisecs/d' device/mediatek/sepolicy_vndr/basic/non_plat/genfs_contexts
-sed -i '/mounton/d' device/xiaomi/blossom/sepolicy/vendor/init.te
-rm -rf out/soong/.intermediates/system/sepolicy
-# tr -d '\000' < packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml > /tmp/fixed.xml
-# mv /tmp/fixed.xml packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
+# # 2. Add safe rules if not already present
+# grep -q "volte_imcb_exec:file" "$FILE" || cat >> "$FILE" <<EOF
 
-# # Verify the fix
-# echo "Line 39 should now look normal:"
-# sed -n '39p' packages/apps/Settings/Evolver/res/xml/evolution_settings_miscellaneous.xml
+# # Auto-added safe VoLTE rules
+# allow init volte_imcb_exec:file { read open execute getattr };
+# allow init volte_stack_exec:file { read open execute getattr };
+# allow init volte_ua_exec:file { read open execute getattr };
+# EOF
 
-#curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/fixvolte.sh | bash
-
-#############################################
-
-
-##########################################33
-#curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/test.sh  | bash
-rm -rf hardware/mediatek/interfaces/hardware/bluetooth
-#curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom-evo/disablegms1.sh  | bash
+# echo "[✓] mounton rules removed and safe rules added"
+#rm -rf hardware/mediatek/interfaces/hardware/bluetooth
+rg -l -0 '<<<<<<<|=======|>>>>>>>' hardware/mediatek | xargs -0 sed -i '/^<<<<<<< /d;/^=======/d;/^>>>>>>> /d'
+#./device/xiaomi/blossom/applyPatches.sh device/xiaomi/blossom/patches
 source build/envsetup.sh
 
 export TARGET_USES_PICO_GAPPS=true
+export TARGET_ENABLE_BLUR=false
+export WITH_GMS=false
 rm -rf hardware/interfaces/biometrics/fingerprint/2.1/default
-# Fix ThemeUtils.getInstance() syntax errors
-# echo "Fixing ThemeUtils.getInstance() syntax errors..."
 
-# FILES=(
-#     "packages/apps/Settings/Evolver/src/org/evolution/settings/fragments/themes/IconShapes.java"
-#     "packages/apps/Settings/Evolver/src/org/evolution/settings/fragments/themes/NavigationBarIcons.java"
-#     "packages/apps/Settings/Evolver/src/org/evolution/settings/fragments/themes/Themes.java"
-# )
-
-# for file in "${FILES[@]}"; do
-#     if [ -f "$file" ]; then
-#         echo "Processing: $file"
-#         sed -i 's/new ThemeUtils\.getInstance(/ThemeUtils.getInstance(/g' "$file"
-#     else
-#         echo "Warning: $file not found"
-#     fi
-# done
-
-# echo "Done! Re-run your build."
-
-# git clone https://github.com/Evolution-X/vendor_evolution-priv_keys-template vendor/evolution-priv/keys
-# cd vendor/evolution-priv/keys
-# ./keys.sh
-# cd -
-
-
-
-
-git clone https://github.com/xc112lg/v30 prebuilts/vndk/v30
 sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
 sed -i '/# FM Radio/,+2d' device/xiaomi/blossom/device.mk
-sed -i '/<<<<<<< HEAD/d;/=======/d;/>>>>>>>/d' device/xiaomi/blossom/rootdir/etc/fstab.mt6765
-rg -l -0 '<<<<<<<|=======|>>>>>>>' hardware/mediatek | xargs -0 sed -i '/^<<<<<<< /d;/^=======/d;/^>>>>>>> /d'
+
+export NINJA_ARGS="-j1 -l1"
+export SOONG_UI_JOBS=1
+export GOMAXPROCS=1
+export _JAVA_OPTIONS="-Xmx1200m"
+export LLVM_THREADS=1
+export SOONG_USE_PARTIAL_COMPILE=true
+
+
+
+
+
 lunch lineage_blossom-bp4a-eng
-
-sed -i '/\/fpsgo/d' $(grep -rl fpsgo device/ vendor/)
-sed -i '/\/mtkfb/d' $(grep -rl mtkfb device/ vendor/)
-sed -i '/\/ion\//d' $(grep -rl 'genfscon debugfs "/ion' device/ vendor/)
-sed -i '/dynamic_debug/d' $(grep -rl dynamic_debug device/ vendor/)
-sed -i '/kmemleak/d' $(grep -rl kmemleak device/ vendor/)
-sed -i '/persist.vendor.audio\./d' device/xiaomi/blossom/sepolicy/vendor/property_contexts
-find system -name "*property_contexts*" -exec sed -i '/persist.vendor.audio\./d' {} +
-rm -rf out/soong/.intermediates/system/sepolicy
-
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/e26bfcc302c6f3e2314f07d1cb8634e53c7f3471/aa.sh | bash
-
-
-
-m evolution 2>&1 | tee build.log
-curl -F "file=@build.log" https://temp.sh/upload
+#make clean
+m evolution -j1 2>&1 | tee build1.log && curl -F "file=@build1.log" https://temp.sh/upload
