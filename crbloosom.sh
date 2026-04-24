@@ -59,7 +59,7 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # echo "[✓] mounton rules removed and safe rules added"
 #rm -rf hardware/mediatek/interfaces/hardware/bluetooth
 rg -l -0 '<<<<<<<|=======|>>>>>>>' hardware/mediatek | xargs -0 sed -i '/^<<<<<<< /d;/^=======/d;/^>>>>>>> /d'
-
+git clone https://github.com/xc112lg/v30 --depth 1 -b main prebuilts/vndk/v30/
 
 #./device/xiaomi/blossom/applyPatches.sh device/xiaomi/blossom/patches
 source build/envsetup.sh
