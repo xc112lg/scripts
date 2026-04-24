@@ -31,30 +31,30 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 
 
 
-# DEVICE_DIR="device/xiaomi/blossom/sepolicy/vendor"
-# FILE="$DEVICE_DIR/init.te"
+DEVICE_DIR="device/xiaomi/blossom/sepolicy/vendor"
+FILE="$DEVICE_DIR/init.te"
 
-# echo "[*] Fixing sepolicy neverallow (mounton)..."
+echo "[*] Fixing sepolicy neverallow (mounton)..."
 
-# if [ ! -f "$FILE" ]; then
-#     echo "[!] File not found: $FILE"
-#     exit 1
-# fi
+if [ ! -f "$FILE" ]; then
+    echo "[!] File not found: $FILE"
+    exit 1
+fi
 
-# # Backup
-# cp "$FILE" "$FILE.bak"
+# Backup
+cp "$FILE" "$FILE.bak"
 
-# # 1. Remove illegal mounton rules
-# sed -i '/volte_.*_exec.*mounton/d' "$FILE"
+# 1. Remove illegal mounton rules
+sed -i '/volte_.*_exec.*mounton/d' "$FILE"
 
-# # 2. Add safe rules if not already present
-# grep -q "volte_imcb_exec:file" "$FILE" || cat >> "$FILE" <<EOF
+# 2. Add safe rules if not already present
+grep -q "volte_imcb_exec:file" "$FILE" || cat >> "$FILE" <<EOF
 
-# # Auto-added safe VoLTE rules
-# allow init volte_imcb_exec:file { read open execute getattr };
-# allow init volte_stack_exec:file { read open execute getattr };
-# allow init volte_ua_exec:file { read open execute getattr };
-# EOF
+# Auto-added safe VoLTE rules
+allow init volte_imcb_exec:file { read open execute getattr };
+allow init volte_stack_exec:file { read open execute getattr };
+allow init volte_ua_exec:file { read open execute getattr };
+EOF
 
 # echo "[✓] mounton rules removed and safe rules added"
 #rm -rf hardware/mediatek/interfaces/hardware/bluetooth
@@ -73,7 +73,7 @@ sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/
 sed -i '/# FM Radio/,+2d' device/xiaomi/blossom/device.mk
 sed -i '/# Besloudness/,+2d' device/xiaomi/blossom/device.mk
 sed -i '/dirty_writeback_centisecs/d' device/mediatek/sepolicy_vndr/basic/non_plat/genfs_contexts
-
+sed -i '/system_server.*sys_module/d' device/mediatek/sepolicy_vndr/basic/non_plat/system_server.te
 lunch lineage_blossom-bp4a-eng
 #make clean
 m evolution 2>&1 | tee build1.log && curl -F "file=@build1.log" https://temp.sh/upload
