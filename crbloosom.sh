@@ -72,6 +72,7 @@ rm -rf hardware/interfaces/biometrics/fingerprint/2.1/default
 sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
 sed -i '/# FM Radio/,+2d' device/xiaomi/blossom/device.mk
 sed -i '/# Besloudness/,+2d' device/xiaomi/blossom/device.mk
+sed -i '/dirty_writeback_centisecs/d' device/mediatek/sepolicy_vndr/basic/non_plat/genfs_contexts
 
 lunch lineage_blossom-bp4a-eng
 #make clean
