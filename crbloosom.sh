@@ -59,6 +59,8 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # echo "[✓] mounton rules removed and safe rules added"
 #rm -rf hardware/mediatek/interfaces/hardware/bluetooth
 rg -l -0 '<<<<<<<|=======|>>>>>>>' hardware/mediatek | xargs -0 sed -i '/^<<<<<<< /d;/^=======/d;/^>>>>>>> /d'
+sed -i '/PRODUCT_PACKAGES/ s/\<BesLoudness\>//g' device/xiaomi/blossom/device.mk
+
 #./device/xiaomi/blossom/applyPatches.sh device/xiaomi/blossom/patches
 source build/envsetup.sh
 
