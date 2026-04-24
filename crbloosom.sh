@@ -59,7 +59,7 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # echo "[✓] mounton rules removed and safe rules added"
 #rm -rf hardware/mediatek/interfaces/hardware/bluetooth
 rg -l -0 '<<<<<<<|=======|>>>>>>>' hardware/mediatek | xargs -0 sed -i '/^<<<<<<< /d;/^=======/d;/^>>>>>>> /d'
-sed -i '/PRODUCT_PACKAGES/ s/\<BesLoudness\>//g' device/xiaomi/blossom/device.mk
+
 
 #./device/xiaomi/blossom/applyPatches.sh device/xiaomi/blossom/patches
 source build/envsetup.sh
@@ -71,18 +71,8 @@ rm -rf hardware/interfaces/biometrics/fingerprint/2.1/default
 
 sed -i '\|$(call inherit-product, vendor/gapps/arm64/arm64-vendor.mk)|d' device/xiaomi/blossom/lineage_blossom.mk
 sed -i '/# FM Radio/,+2d' device/xiaomi/blossom/device.mk
-
-export NINJA_ARGS="-j1 -l1"
-export SOONG_UI_JOBS=1
-export GOMAXPROCS=1
-export _JAVA_OPTIONS="-Xmx1200m"
-export LLVM_THREADS=1
-export SOONG_USE_PARTIAL_COMPILE=true
-
-
-
-
+sed -i '/# Besloudness/,+2d' device/xiaomi/blossom/device.mk
 
 lunch lineage_blossom-bp4a-eng
 #make clean
-m evolution -j1 2>&1 | tee build1.log && curl -F "file=@build1.log" https://temp.sh/upload
+m evolution 2>&1 | tee build1.log && curl -F "file=@build1.log" https://temp.sh/upload
