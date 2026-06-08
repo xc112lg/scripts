@@ -3,6 +3,7 @@ sed -i '/alias patch='\''patch --force'\''/d;/alias repo-init='\''repo init --de
 sed -i "1ialias patch='patch --force'\nalias repo-init='repo init --depth=1'" ~/.bashrc
 
 source ~/.bashrc 
+head -10 ~/.bashrc
 echo test1
 type patch
 
