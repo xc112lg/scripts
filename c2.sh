@@ -1,9 +1,18 @@
 sed -i '/alias patch='\''patch --force'\''/d;/alias repo-init='\''repo init --depth=1'\''/d' ~/.bashrc
  
-sed -i '/^case $- in/i alias patch="patch --force"\nalias repo-init="repo init --depth=1"' ~/.bashrc
-source ~/.bashrc
+# Define aliases directly in current shell
+alias patch='patch --force'
+alias repo-init='repo init --depth=1'
  
-# Test if alias works
+# Also add to bashrc for future sessions
+cat >> ~/.bashrc << 'EOF'
+ 
+# Custom aliases
+alias patch='patch --force'
+alias repo-init='repo init --depth=1'
+EOF
+ 
+# Test if aliases work
 echo "Testing aliases:"
 type patch
 type repo-init
