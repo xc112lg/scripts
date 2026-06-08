@@ -1,11 +1,12 @@
 sed -i '/alias patch='\''patch --force'\''/d;/alias repo-init='\''repo init --depth=1'\''/d' ~/.bashrc
  
-sed -i '/^esac$/a alias patch="patch --force"\nalias repo-init="repo init --depth=1"' ~/.bashrc
+sed -i '/^case $- in/i alias patch="patch --force"\nalias repo-init="repo init --depth=1"' ~/.bashrc
 source ~/.bashrc
-alias patch
+ 
+# Test if alias works
+echo "Testing aliases:"
 type patch
-
-cat  ~/.bashrc
+type repo-init
 # rm -rf .repo/local_manifests/  && # Clone local_manifests repository
 
 #  git clone https://github.com/ardiandideyashidiq/local_manifest-P13001L --depth 1 -b lineage-23.2 .repo/local_manifests && 
