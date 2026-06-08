@@ -1,3 +1,4 @@
+type patch
 rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf TMP_PATCHES
