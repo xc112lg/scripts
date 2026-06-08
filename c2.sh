@@ -2,7 +2,8 @@ sed -i '/alias patch='\''patch --force'\''/d;/alias repo-init='\''repo init --de
 
 sed -i "1ialias patch='patch --force'\nalias repo-init='repo init --depth=1'" ~/.bashrc
 echo here
-source ~/.bashrc; alias patch
+source ~/.bashrc
+alias patch
 # rm -rf .repo/local_manifests/  && # Clone local_manifests repository
 
 #  git clone https://github.com/ardiandideyashidiq/local_manifest-P13001L --depth 1 -b lineage-23.2 .repo/local_manifests && 
