@@ -1,7 +1,7 @@
 echo test1
 type patch
-echo "alias patch='patch --force'" >> /home/admin/.bashrc
-source /home/admin/.bashrc
+echo "alias patch='patch --force'" >> ~/.bashrc
+source ~/.bashrc
 echo test2
 type patch
 
