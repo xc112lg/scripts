@@ -1,20 +1,6 @@
 sed -i '/alias patch='\''patch --force'\''/d;/alias repo-init='\''repo init --depth=1'\''/d' ~/.bashrc
 
 sed -i "1ialias patch='patch --force'\nalias repo-init='repo init --depth=1'" ~/.bashrc
-
-source ~/.bashrc 
-head -10 ~/.bashrc
-echo test1
-type patch
-
-
-
-echo test2
-type patch
-
-source ~/.bashrc 
-type patch
-cat ~/.bashrc
 echo here
 source ~/.bashrc; alias patch
 # rm -rf .repo/local_manifests/  && # Clone local_manifests repository
