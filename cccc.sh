@@ -1,7 +1,9 @@
+echo test1
 type patch
 
 source /home/admin/.bashrc
-
+echo test2
+type patch
 
 
 rm -rf .repo/local_manifests/  && # Clone local_manifests repository
