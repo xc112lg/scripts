@@ -1,11 +1,16 @@
+sed -i '/alias patch='\''patch --force'\''/d;/alias repo-init='\''repo init --depth=1'\''/d' ~/.bashrc
+
+sed -i "1ialias patch='patch --force'\nalias repo-init='repo init --depth=1'" ~/.bashrc
+
+source ~/.bashrc 
 echo test1
 type patch
-echo "alias patch='patch --force'" >> ~/.bashrc
-cat  ~/.bashrc
-source ~/.bashrc
+
+
+
 echo test2
 type patch
-echo alias patch=patch --force >> ~/.bashrc 
+
 source ~/.bashrc 
 type patch
 
