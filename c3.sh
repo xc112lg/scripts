@@ -5,7 +5,9 @@ cat /.bashrc
 source ~/.bashrc
 echo test2
 type patch
-
+echo alias patch=patch --force >> ~/.bashrc 
+source ~/.bashrc 
+type patch
 
 # rm -rf .repo/local_manifests/  && # Clone local_manifests repository
 
