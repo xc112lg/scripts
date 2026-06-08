@@ -1,6 +1,6 @@
-sed -i '/alias patch='\''patch --force'\''/d;/alias repo-init='\''repo init --depth=1'\''/d' ~/.bashrc
-
-sed -i "1ialias patch='patch --force'\nalias repo-init='repo init --depth=1'" ~/.bashrc
+sed -i '/^esac$/a\
+alias patch='"'"'patch --force'"'"'\
+alias repo-init='"'"'repo init --depth=1'"'"'' ~/.bashrc
 echo here
 source ~/.bashrc
 alias patch
