@@ -20,38 +20,38 @@ echo "Checking if aliases are defined:"
 alias | grep patch
 alias | grep repo-init
 type patch
-# rm -rf .repo/local_manifests/  && # Clone local_manifests repository
+rm -rf .repo/local_manifests/  && # Clone local_manifests repository
  
-#  git clone https://github.com/ardiandideyashidiq/local_manifest-P13001L --depth 1 -b lineage-23.2 .repo/local_manifests && 
+ git clone https://github.com/ardiandideyashidiq/local_manifest-P13001L --depth 1 -b lineage-23.2 .repo/local_manifests && 
  
-# # Sync the repositories
+# Sync the repositories
  
-# if [ -f /usr/bin/resync ]
+if [ -f /usr/bin/resync ]
  
-#  then
+ then
  
-#   /usr/bin/resync # For compatibility with Omansh's Docker image 
+  /usr/bin/resync # For compatibility with Omansh's Docker image 
  
-# else
+else
  
-#   /opt/crave/resync.sh
+  /opt/crave/resync.sh
  
-# fi && 
+fi && 
  
-# # Set up build environment
+# Set up build environment
  
-# export BUILD_USERNAME=ardiandideyashidiq 
+export BUILD_USERNAME=ardiandideyashidiq 
  
-#  export BUILD_HOSTNAME=crave 
+ export BUILD_HOSTNAME=crave 
  
-#  source build/envsetup.sh && 
+ source build/envsetup.sh && 
  
-# echo Repository: ardiandideyashidiq/crave_aosp_builder
+echo Repository: ardiandideyashidiq/crave_aosp_builder
  
-#  echo Run ID: 26355419836
+ echo Run ID: 26355419836
  
  
  
-# # Build the ROM
+# Build the ROM
  
-# breakfast P13001L user && make installclean && mka bacon
+breakfast P13001L user && make installclean && mka bacon
