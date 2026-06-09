@@ -1,8 +1,21 @@
 cat >> ~/.bashrc << 'EOF'
  
-# Custom patch function - always use --force
+# Smart patch function - uses --force only when patch prompts for yes/no
 patch() {
-  command patch --force "$@"
+  # Try patch normally first
+  local output
+  output=$(command patch "$@" 2>&1)
+  local exit_code=$?
+  
+  # If patch asks for input (contains "Apply hunk?" or similar), retry with --force
+  if echo "$output" | grep -qE "(Apply hunk|apply this hunk|\[y/n\]|Apply patch|Hunk|\?)" && [ $exit_code -ne 0 ]; then
+    echo "$output"
+    echo "Patch needs confirmation, retrying with --force..."
+    command patch --force "$@"
+  else
+    echo "$output"
+    return $exit_code
+  fi
 }
  
 # Custom repo function - use --depth=1 for init
