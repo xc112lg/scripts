@@ -1,27 +1,28 @@
-sed -i '/alias patch='\''patch --force'\''/d;/alias repo-init='\''repo init --depth=1'\''/d' ~/.bashrc
-sed -i '/^case $- in/,/^esac$/d' ~/.bashrc
- 
-echo "Non-interactive shell check removed from ~/.bashrc"
- 
-# Define aliases directly in current shell
-alias patch='patch --force'
-alias repo-init='repo init --depth=1'
- 
-# Also add to bashrc for future sessions
 cat >> ~/.bashrc << 'EOF'
  
-# Custom aliases
-alias patch='patch --force'
-alias repo-init='repo init --depth=1'
+# Custom patch function - always use --force
+patch() {
+  command patch --force "$@"
+}
+ 
+# Custom repo function - use --depth=1 for init
+repo() {
+  if [ "$1" = "init" ]; then
+    shift
+    command repo init --depth=1 "$@"
+  else
+    command repo "$@"
+  fi
+}
 EOF
  
-# Verify aliases are set
-echo "Checking if aliases are defined:"
-alias | grep patch
-alias | grep repo-init
-type patch
+source ~/.bashrc
 
-alias patch && bash -x -c "patch" 2>&1 | head -3
+# Verify functions are set
+echo "Functions configured:"
+declare -f patch | head -3
+declare -f repo | head -5
+type patch
 # rm -rf .repo/local_manifests/  && # Clone local_manifests repository
  
 #  git clone https://github.com/ardiandideyashidiq/local_manifest-P13001L --depth 1 -b lineage-23.2 .repo/local_manifests && 
