@@ -76,8 +76,13 @@ class UnoSignup:
         """Start authentication process and send SMS code"""
         print(f"\n[1/3] Sending verification code to {phone_number}...")
         
-        # Remove + prefix for API compatibility (proto unmarshaling requirement)
-        api_phone = phone_number.lstrip('+') if phone_number.startswith('+') else phone_number
+        # Convert to local format for API (09XXXXXXXXX)
+        if phone_number.startswith('+63'):
+            api_phone = '0' + phone_number[3:]  # +639123456789 -> 09123456789
+        elif phone_number.startswith('63'):
+            api_phone = '0' + phone_number[2:]  # 639123456789 -> 09123456789
+        else:
+            api_phone = phone_number  # Already in local format
         
         payload = {
             "phone": api_phone,
@@ -124,8 +129,13 @@ class UnoSignup:
         """Verify the SMS code"""
         print(f"\n[2/3] Verifying code...")
         
-        # Remove + prefix for API compatibility
-        api_phone = phone_number.lstrip('+') if phone_number.startswith('+') else phone_number
+        # Convert to local format for API (09XXXXXXXXX)
+        if phone_number.startswith('+63'):
+            api_phone = '0' + phone_number[3:]  # +639123456789 -> 09123456789
+        elif phone_number.startswith('63'):
+            api_phone = '0' + phone_number[2:]  # 639123456789 -> 09123456789
+        else:
+            api_phone = phone_number  # Already in local format
         
         payload = {
             "phone": api_phone,
