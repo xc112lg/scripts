@@ -1,4 +1,7 @@
 sed -i '/alias patch='\''patch --force'\''/d;/alias repo-init='\''repo init --depth=1'\''/d' ~/.bashrc
+sed -i '/^case $- in/,/^esac$/d' ~/.bashrc
+ 
+echo "Non-interactive shell check removed from ~/.bashrc"
  
 # Define aliases directly in current shell
 alias patch='patch --force'
