@@ -85,6 +85,9 @@ class UnoSignup:
         }
         
         try:
+            # Debug: Show what we're actually sending
+            print(f"  📤 Sending payload: {json.dumps(payload)}")
+            
             response = self.session.post(
                 f"{self.base_url}/AuthStart",
                 headers=self.headers,
@@ -131,6 +134,9 @@ class UnoSignup:
         }
         
         try:
+            # Debug: Show what we're actually sending
+            print(f"  📤 Sending payload: {json.dumps(payload)}")
+            
             response = self.session.post(
                 f"{self.base_url}/AuthVerify",
                 headers=self.headers,
