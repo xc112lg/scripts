@@ -7,11 +7,13 @@ Properly handles Philippine phone numbers
 import requests
 import json
 import re
+import uuid
 
 class UnoSignup:
     def __init__(self):
         self.session = requests.Session()
         self.base_url = "https://uno.global/api/standardeconomics.backend.v1.BackendService"
+        self.client_session_id = str(uuid.uuid4())  # Generate a unique session ID
         
         self.headers = {
             'accept': '*/*',
@@ -76,17 +78,13 @@ class UnoSignup:
         """Start authentication process and send SMS code"""
         print(f"\n[1/3] Sending verification code to {phone_number}...")
         
-        # Convert to local format for API (09XXXXXXXXX)
-        if phone_number.startswith('+63'):
-            api_phone = '0' + phone_number[3:]  # +639123456789 -> 09123456789
-        elif phone_number.startswith('63'):
-            api_phone = '0' + phone_number[2:]  # 639123456789 -> 09123456789
-        else:
-            api_phone = phone_number  # Already in local format
-        
+        # Use the correct payload structure that Uno expects
         payload = {
-            "phone": api_phone,
-            "method": "sms"
+            "phone": {
+                "number": phone_number,
+                "channel": "OTP_CHANNEL_SMS"
+            },
+            "clientSessionId": self.client_session_id
         }
         
         try:
@@ -129,18 +127,14 @@ class UnoSignup:
         """Verify the SMS code"""
         print(f"\n[2/3] Verifying code...")
         
-        # Convert to local format for API (09XXXXXXXXX)
-        if phone_number.startswith('+63'):
-            api_phone = '0' + phone_number[3:]  # +639123456789 -> 09123456789
-        elif phone_number.startswith('63'):
-            api_phone = '0' + phone_number[2:]  # 639123456789 -> 09123456789
-        else:
-            api_phone = phone_number  # Already in local format
-        
+        # Use the correct payload structure that Uno expects
         payload = {
-            "phone": api_phone,
-            "verification_code": verification_code,
-            "method": "sms"
+            "phone": {
+                "number": phone_number,
+                "channel": "OTP_CHANNEL_SMS"
+            },
+            "verificationCode": verification_code,
+            "clientSessionId": self.client_session_id
         }
         
         try:
