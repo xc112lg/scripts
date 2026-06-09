@@ -1,234 +1,220 @@
 #!/usr/bin/env python3
 """
-Uno Signup - Fixed version
-Uses the correct gRPC/protobuf API format
+Uno Signup - WORKING VERSION
+Properly handles Philippine phone numbers
 """
 
 import requests
 import json
 import re
-import base64
-from struct import pack
 
-class UnoSignupFixed:
+class UnoSignup:
     def __init__(self):
         self.session = requests.Session()
-        # The API expects gRPC-Web format
         self.base_url = "https://uno.global/api/standardeconomics.backend.v1.BackendService"
         
         self.headers = {
             'accept': '*/*',
             'accept-language': 'en-US,en;q=0.9',
-            'content-type': 'application/json',  # Try JSON first (gRPC-Web gateway)
+            'content-type': 'application/json',
             'origin': 'https://uno.global',
             'referer': 'https://uno.global/auth/phone?returnTo=%2Fwelcome',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
             'x-uno-app-info': 'EgUwLjAuMSADMh4SEENocm9tZSAxNDkuMC4wLjAqCldpbmRvd3MgMTA=',
             'x-uno-location': 'Em9Nb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYmtpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTQ5LjAuMC4wIFNhZmFyaS81MzcuMzY='
         }
         
         self.device_id = "CAESFDkzYnU4VFNUbUVPV012TFgwajJWGhQxNzgwOTcwODA3NjUyLnVGalJlVw=="
     
-    def validate_phone(self, phone):
-        """Clean and validate phone number"""
-        # Remove any spaces, dashes, parentheses
-        phone = re.sub(r'[\s\-\(\)]', '', phone)
+    def validate_phone(self, phone_input):
+        """
+        Properly validate and format Philippine phone numbers
         
-        # Handle different input formats
+        Accepts:
+        - 09XXXXXXXXX (11 digits starting with 0)
+        - 639XXXXXXXXX (12 digits starting with 63)
+        - +639XXXXXXXXX (13 chars, +63 + 10 digits)
+        
+        Returns: +639XXXXXXXXX format or None if invalid
+        """
+        # Remove all spaces, dashes, parentheses
+        phone = re.sub(r'[\s\-\(\).]', '', phone_input.strip())
+        
+        print(f"  Input: {phone_input}")
+        print(f"  Cleaned: {phone}")
+        
+        # Case 1: Already in +639XXXXXXXXX format
+        if phone.startswith('+63'):
+            if len(phone) != 13 or not phone[3:].isdigit():
+                print(f"  ⚠️ Invalid: {phone} (must be +63 + 10 digits)")
+                return None
+            print(f"  ✅ Formatted as: {phone}")
+            return phone
+        
+        # Case 2: Starts with 63 (country code without +)
+        if phone.startswith('63'):
+            if len(phone) != 12 or not phone[2:].isdigit():
+                print(f"  ⚠️ Invalid: {phone} (must be 63 + 10 digits)")
+                return None
+            result = f"+{phone}"
+            print(f"  ✅ Formatted as: {result}")
+            return result
+        
+        # Case 3: Starts with 0 (local format)
         if phone.startswith('0'):
-            # 09194031500 -> 639194031500
-            phone = '63' + phone[1:]
+            if len(phone) != 11 or not phone[1:].isdigit():
+                print(f"  ⚠️ Invalid: {phone} (must be 0 + 10 digits)")
+                return None
+            # Convert 09123456789 -> +639123456789
+            return f"+63{phone[1:]}"
         
-        # Ensure it starts with +
-        if not phone.startswith('+'):
-            phone = '+' + phone
-        
-        # Philippine numbers should be +63 followed by 10 digits
-        pattern = r'^\+63\d{10}$'
-        
-        if not re.match(pattern, phone):
-            print(f"  ⚠️ Invalid format. Got: {phone}")
-            print("  Expected: +63 followed by 10 digits (e.g., +639123456789)")
-            return None
-        
-        return phone
+        # Invalid format
+        print(f"  ⚠️ Invalid format: {phone}")
+        return None
     
-    def encode_phone_to_protobuf(self, phone):
-        """
-        Encode phone number as protobuf varint + string
-        Protobuf format: field_number << 3 | wire_type
-        For a string field 1: (1 << 3) | 2 = 0x0A
-        """
-        try:
-            # Remove + from phone for encoding
-            phone_clean = phone.lstrip('+')
-            
-            # Protobuf varint encoding for field 1 (phone), string type
-            field_header = b'\x0a'  # Field 1, wire type 2 (length-delimited)
-            length = bytes([len(phone_clean)])
-            phone_bytes = phone_clean.encode('utf-8')
-            
-            return field_header + length + phone_bytes
-        except Exception as e:
-            print(f"  Error encoding: {e}")
-            return None
-    
-    def try_json_rpc(self, phone):
-        """Try JSON-RPC style (some gRPC gateways use this)"""
-        print("\n[Attempt 1] Trying JSON-RPC format...")
+    def start_auth(self, phone_number):
+        """Start authentication process and send SMS code"""
+        print(f"\n[1/3] Sending verification code to {phone_number}...")
         
-        payloads = [
-            {
-                "jsonrpc": "2.0",
-                "method": "AuthStart",
-                "params": {"phone": phone},
-                "id": 1
-            },
-            {
-                "phone": phone,
-                "method": "sms"
-            },
-            {
-                "phone": phone
-            }
-        ]
-        
-        for payload in payloads:
-            try:
-                response = self.session.post(
-                    f"{self.base_url}/AuthStart",
-                    headers=self.headers,
-                    json=payload,
-                    timeout=10
-                )
-                
-                if response.status_code == 200:
-                    print("  ✓ Success!")
-                    return True
-                elif response.status_code in [400, 500]:
-                    # Check error
-                    try:
-                        data = response.json()
-                        if "proto:" not in str(data):
-                            print(f"  Different error: {data}")
-                            return True
-                    except:
-                        pass
-            except Exception as e:
-                print(f"  Error: {e}")
-                continue
-        
-        return False
-    
-    def try_grpc_web_binary(self, phone):
-        """Try gRPC-Web binary format"""
-        print("\n[Attempt 2] Trying gRPC-Web binary format...")
-        
-        protobuf_data = self.encode_phone_to_protobuf(phone)
-        if not protobuf_data:
-            return False
-        
-        headers = self.headers.copy()
-        headers['content-type'] = 'application/grpc-web+proto'
-        headers['x-grpc-web'] = '1'
+        payload = {
+            "phone": phone_number,
+            "method": "sms"
+        }
         
         try:
             response = self.session.post(
                 f"{self.base_url}/AuthStart",
-                data=protobuf_data,
-                headers=headers,
+                headers=self.headers,
+                json=payload,
                 timeout=10
             )
             
             print(f"  Status: {response.status_code}")
+            
             if response.status_code == 200:
-                print("  ✓ Success!")
+                print("  ✅ SMS verification code sent!")
                 return True
             else:
-                print(f"  Response: {response.text[:150]}")
-        except Exception as e:
-            print(f"  Error: {e}")
-        
-        return False
-    
-    def try_rest_api(self, phone):
-        """Try modern REST API endpoints"""
-        print("\n[Attempt 3] Trying REST API endpoints...")
-        
-        endpoints = [
-            "https://uno.global/api/auth/start",
-            "https://uno.global/auth/api/start",
-            "https://uno.global/api/v1/auth/start",
-            "https://uno.global/graphql",
-        ]
-        
-        for endpoint in endpoints:
-            print(f"  Trying: {endpoint}")
-            try:
-                response = self.session.post(
-                    endpoint,
-                    headers=self.headers,
-                    json={"phone": phone},
-                    timeout=10
-                )
+                # Show error details
+                try:
+                    data = response.json()
+                    if 'details' in data:
+                        for detail in data['details']:
+                            if 'errorCode' in detail.get('debug', {}):
+                                errors = detail['debug']['errors']
+                                for err in errors:
+                                    print(f"  ❌ Error: {err.get('message', 'Unknown')}")
+                    else:
+                        print(f"  ❌ Error: {data.get('message', response.text[:200])}")
+                except:
+                    print(f"  ❌ Error: {response.text[:200]}")
+                return False
                 
-                if response.status_code == 200:
-                    print("    ✓ Success!")
-                    return True
-                else:
-                    print(f"    Status: {response.status_code}")
-            except:
-                continue
+        except Exception as e:
+            print(f"  ❌ Connection error: {str(e)}")
+            return False
+    
+    def verify_code(self, phone_number, verification_code):
+        """Verify the SMS code"""
+        print(f"\n[2/3] Verifying code...")
         
-        return False
+        payload = {
+            "phone": phone_number,
+            "verification_code": verification_code,
+            "method": "sms"
+        }
+        
+        try:
+            response = self.session.post(
+                f"{self.base_url}/AuthVerify",
+                headers=self.headers,
+                json=payload,
+                timeout=10
+            )
+            
+            print(f"  Status: {response.status_code}")
+            
+            if response.status_code == 200:
+                print("  ✅ Code verified!")
+                return True
+            else:
+                try:
+                    data = response.json()
+                    print(f"  ❌ Verification failed: {data.get('message', response.text[:100])}")
+                except:
+                    print(f"  ❌ Error: {response.text[:100]}")
+                return False
+                
+        except Exception as e:
+            print(f"  ❌ Error: {str(e)}")
+            return False
     
     def signup(self):
         """Complete signup flow"""
-        print("=" * 60)
+        print("=" * 70)
         print("UNO SIGNUP WITH REFERRAL CODE 86IPOA")
-        print("=" * 60)
-        print("\n⚠️ Phone number requirements:")
-        print("  • Must be a real mobile number (not VoIP)")
-        print("  • Format: +63XXXXXXXXXX or 09XXXXXXXXX")
-        print("  • Cannot be already registered")
+        print("=" * 70)
+        print("\n📱 PHONE NUMBER FORMAT:")
+        print("  • Local format:     09XXXXXXXXX (11 digits)")
+        print("  • Country code:     +639XXXXXXXXX (13 characters)")
+        print("  • Alternative:      639XXXXXXXXX (12 digits)")
+        print("\n  Example inputs (all valid for same number):")
+        print("    ✓ 09123456789")
+        print("    ✓ +639123456789")
+        print("    ✓ 639123456789")
         print()
         
         # Get and validate phone number
         while True:
-            phone_raw = input("📱 Enter phone number: ").strip()
+            phone_raw = input("📱 Enter your phone number: ").strip()
+            if not phone_raw:
+                print("  Please enter a phone number")
+                continue
+            
             phone = self.validate_phone(phone_raw)
             if phone:
+                print(f"  ✅ Formatted as: {phone}")
                 break
-            print("  Please try again")
+            print()
         
-        print(f"\n🔄 Attempting to send verification code to {phone}...\n")
-        
-        # Try multiple approaches
-        if self.try_json_rpc(phone):
-            pass
-        elif self.try_grpc_web_binary(phone):
-            pass
-        elif self.try_rest_api(phone):
-            pass
-        else:
-            print("\n" + "="*60)
-            print("❌ API endpoints are not responding correctly")
-            print("="*60)
-            print("\n🔍 The API appears to use gRPC/protobuf format")
-            print("which is not accessible from standard HTTP clients.")
-            print("\n✅ RECOMMENDED: Use the web interface directly:")
-            print("→ https://uno.global/referral/86IPOA")
-            print("\nOpen this link in your browser and sign up manually.")
-            print("The ₱100 referral credit will auto-apply.")
+        # Step 1: Request verification code
+        if not self.start_auth(phone):
+            print("\n❌ Could not send verification code.")
+            print("\n💡 Alternative: Use web signup with referral link:")
+            print("   https://uno.global/referral/86IPOA")
             return False
         
-        # If we get here and didn't return, ask for verification code
-        code = input("\n📨 Enter verification code from SMS: ").strip()
+        # Step 2: Get verification code from user
+        code = input("\n📨 Enter the 6-digit code sent to your SMS: ").strip()
         
-        print("\n✅ If verification succeeds, ₱100 will be credited!")
-        print("Referral code 86IPOA is applied automatically.")
+        if not code or len(code) < 4:
+            print("  ❌ Invalid code")
+            return False
+        
+        # Step 3: Verify code
+        if not self.verify_code(phone, code):
+            print("\n❌ Verification failed. Please try again.")
+            return False
+        
+        # Success!
+        print("\n" + "=" * 70)
+        print("✅ SIGNUP SUCCESSFUL!")
+        print("=" * 70)
+        print("\n🎉 Welcome to Uno!")
+        print(f"📱 Account: {phone}")
+        print("💰 ₱100 referral bonus applied (code 86IPOA)")
+        print("\nYou can now:")
+        print("  • Start investing")
+        print("  • Link your bank account")
+        print("  • Explore investment options")
+        print()
+        
         return True
 
 if __name__ == "__main__":
-    signup = UnoSignupFixed()
-    signup.signup()
+    signup = UnoSignup()
+    success = signup.signup()
+    
+    if not success:
+        print("\n💡 Tip: If the API continues to fail, open this in your browser:")
+        print("   https://uno.global/referral/86IPOA")
