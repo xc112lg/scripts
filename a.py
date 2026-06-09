@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Uno Signup - WORKING VERSION
-Properly handles Philippine phone numbers
+Uno Signup - Reverse Engineering Version
+Gets a valid clientSessionId before attempting AuthStart
 """
 
 import requests
@@ -9,11 +9,11 @@ import json
 import re
 import uuid
 
-class UnoSignup:
+class UnoSignupFixed:
     def __init__(self):
         self.session = requests.Session()
         self.base_url = "https://uno.global/api/standardeconomics.backend.v1.BackendService"
-        self.client_session_id = str(uuid.uuid4())  # Generate a unique session ID
+        self.client_session_id = None
         
         self.headers = {
             'accept': '*/*',
@@ -25,21 +25,61 @@ class UnoSignup:
             'x-uno-app-info': 'EgUwLjAuMSADMh4SEENocm9tZSAxNDkuMC4wLjAqCldpbmRvd3MgMTA=',
             'x-uno-location': 'Em9Nb3ppbGxhLzUuMCAoV2luZG93cyBOVCAxMC4wOyBXaW42NDsgeDY0KSBBcHBsZVdlYmtpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBDaHJvbWUvMTQ5LjAuMC4wIFNhZmFyaS81MzcuMzY='
         }
+    
+    def init_session(self):
+        """Try to initialize a session to get a valid clientSessionId"""
+        print("\n[0/3] Initializing session...")
         
-        self.device_id = "CAESFDkzYnU4VFNUbUVPV012TFgwajJWGhQxNzgwOTcwODA3NjUyLnVGalJlVw=="
+        # Try different approaches to get clientSessionId
+        approaches = [
+            {"name": "CreateSession endpoint", "endpoint": "CreateSession", "payload": {}},
+            {"name": "Random UUID", "endpoint": None, "payload": None},
+        ]
+        
+        for approach in approaches:
+            print(f"\n  Trying: {approach['name']}")
+            
+            if approach['endpoint']:
+                try:
+                    response = self.session.post(
+                        f"{self.base_url}/{approach['endpoint']}",
+                        headers=self.headers,
+                        json=approach['payload'],
+                        timeout=10
+                    )
+                    
+                    print(f"    Status: {response.status_code}")
+                    
+                    if response.status_code == 200:
+                        data = response.json()
+                        print(f"    Response: {json.dumps(data, indent=2)}")
+                        
+                        # Try to extract clientSessionId from response
+                        if 'clientSessionId' in data:
+                            self.client_session_id = data['clientSessionId']
+                            print(f"    ✅ Got clientSessionId: {self.client_session_id}")
+                            return True
+                        elif 'session_id' in data:
+                            self.client_session_id = data['session_id']
+                            print(f"    ✅ Got session_id: {self.client_session_id}")
+                            return True
+                except Exception as e:
+                    print(f"    ❌ Failed: {str(e)[:100]}")
+            else:
+                # Use random UUID as fallback
+                self.client_session_id = str(uuid.uuid4())
+                print(f"    Using random UUID: {self.client_session_id}")
+                return True
+        
+        # Final fallback
+        if not self.client_session_id:
+            self.client_session_id = str(uuid.uuid4())
+            print(f"  ✅ Using generated UUID: {self.client_session_id}")
+        
+        return True
     
     def validate_phone(self, phone_input):
-        """
-        Properly validate and format Philippine phone numbers
-        
-        Accepts:
-        - 09XXXXXXXXX (11 digits starting with 0)
-        - 639XXXXXXXXX (12 digits starting with 63)
-        - +639XXXXXXXXX (13 chars, +63 + 10 digits)
-        
-        Returns: +639XXXXXXXXX format or None if invalid
-        """
-        # Remove all spaces, dashes, parentheses
+        """Validate and format Philippine phone numbers"""
         phone = re.sub(r'[\s\-\(\).]', '', phone_input.strip())
         
         print(f"  Input: {phone_input}")
@@ -67,7 +107,6 @@ class UnoSignup:
             if len(phone) != 11 or not phone[1:].isdigit():
                 print(f"  ⚠️ Invalid: {phone} (must be 0 + 10 digits)")
                 return None
-            # Convert 09123456789 -> +639123456789
             return f"+63{phone[1:]}"
         
         # Invalid format
@@ -78,7 +117,6 @@ class UnoSignup:
         """Start authentication process and send SMS code"""
         print(f"\n[1/3] Sending verification code to {phone_number}...")
         
-        # Use the correct payload structure that Uno expects
         payload = {
             "phone": {
                 "number": phone_number,
@@ -88,7 +126,6 @@ class UnoSignup:
         }
         
         try:
-            # Debug: Show what we're actually sending
             print(f"  📤 Sending payload: {json.dumps(payload)}")
             
             response = self.session.post(
@@ -114,17 +151,9 @@ class UnoSignup:
                     pass
                 return False
             else:
-                # Show error details
                 try:
                     data = response.json()
-                    if 'details' in data:
-                        for detail in data['details']:
-                            if 'errorCode' in detail.get('debug', {}):
-                                errors = detail['debug']['errors']
-                                for err in errors:
-                                    print(f"  ❌ Error: {err.get('message', 'Unknown')}")
-                    else:
-                        print(f"  ❌ Error: {data.get('message', response.text[:200])}")
+                    print(f"  Full response: {json.dumps(data, indent=2)}")
                 except:
                     print(f"  ❌ Error: {response.text[:200]}")
                 return False
@@ -137,7 +166,6 @@ class UnoSignup:
         """Verify the SMS code"""
         print(f"\n[2/3] Verifying code...")
         
-        # Use the correct payload structure that Uno expects
         payload = {
             "phone": {
                 "number": phone_number,
@@ -148,7 +176,6 @@ class UnoSignup:
         }
         
         try:
-            # Debug: Show what we're actually sending
             print(f"  📤 Sending payload: {json.dumps(payload)}")
             
             response = self.session.post(
@@ -166,17 +193,11 @@ class UnoSignup:
             elif response.status_code == 429:
                 print("  ⏳ Rate limited (too many attempts)")
                 print("  Please wait 5-10 minutes before trying again")
-                try:
-                    data = response.json()
-                    if 'message' in data:
-                        print(f"  Message: {data['message']}")
-                except:
-                    pass
                 return False
             else:
                 try:
                     data = response.json()
-                    print(f"  ❌ Verification failed: {data.get('message', response.text[:100])}")
+                    print(f"  Full response: {json.dumps(data, indent=2)}")
                 except:
                     print(f"  ❌ Error: {response.text[:100]}")
                 return False
@@ -198,6 +219,12 @@ class UnoSignup:
         print("    ✓ 09123456789")
         print("    ✓ +639123456789")
         print("    ✓ 639123456789")
+        
+        # Initialize session
+        if not self.init_session():
+            print("\n❌ Could not initialize session")
+            return False
+        
         print()
         
         # Get and validate phone number
@@ -209,7 +236,6 @@ class UnoSignup:
             
             phone = self.validate_phone(phone_raw)
             if phone:
-                print(f"  ✅ Formatted as: {phone}")
                 break
             print()
         
@@ -248,7 +274,7 @@ class UnoSignup:
         return True
 
 if __name__ == "__main__":
-    signup = UnoSignup()
+    signup = UnoSignupFixed()
     success = signup.signup()
     
     if not success:
