@@ -37,9 +37,9 @@ declare -f patch | head -3
 declare -f repo | head -5
 type patch
 rm -rf .repo/local_manifests/  && # Clone local_manifests repository
- 
+repo init -u https://github.com/Lunaris-AOSP/android -b 16.2 --git-lfs --depth=1
  git clone https://github.com/ardiandideyashidiq/local_manifest-P13001L --depth 1 -b lineage-23.2 .repo/local_manifests && 
- 
+repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 # Sync the repositories
  
 if [ -f /usr/bin/resync ]
