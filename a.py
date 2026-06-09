@@ -103,6 +103,16 @@ class UnoSignup:
             if response.status_code == 200:
                 print("  ✅ SMS verification code sent!")
                 return True
+            elif response.status_code == 429:
+                print("  ⏳ Rate limited (too many attempts)")
+                print("  Please wait 5-10 minutes before trying again")
+                try:
+                    data = response.json()
+                    if 'message' in data:
+                        print(f"  Message: {data['message']}")
+                except:
+                    pass
+                return False
             else:
                 # Show error details
                 try:
@@ -153,6 +163,16 @@ class UnoSignup:
             if response.status_code == 200:
                 print("  ✅ Code verified!")
                 return True
+            elif response.status_code == 429:
+                print("  ⏳ Rate limited (too many attempts)")
+                print("  Please wait 5-10 minutes before trying again")
+                try:
+                    data = response.json()
+                    if 'message' in data:
+                        print(f"  Message: {data['message']}")
+                except:
+                    pass
+                return False
             else:
                 try:
                     data = response.json()
