@@ -76,8 +76,11 @@ class UnoSignup:
         """Start authentication process and send SMS code"""
         print(f"\n[1/3] Sending verification code to {phone_number}...")
         
+        # Remove + prefix for API compatibility (proto unmarshaling requirement)
+        api_phone = phone_number.lstrip('+') if phone_number.startswith('+') else phone_number
+        
         payload = {
-            "phone": phone_number,
+            "phone": api_phone,
             "method": "sms"
         }
         
@@ -118,8 +121,11 @@ class UnoSignup:
         """Verify the SMS code"""
         print(f"\n[2/3] Verifying code...")
         
+        # Remove + prefix for API compatibility
+        api_phone = phone_number.lstrip('+') if phone_number.startswith('+') else phone_number
+        
         payload = {
-            "phone": phone_number,
+            "phone": api_phone,
             "verification_code": verification_code,
             "method": "sms"
         }
