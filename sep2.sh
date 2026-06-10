@@ -32,12 +32,16 @@ export CCACHE_DIR=tmp
 export USE_CCACHE=1
 . build/envsetup.sh
 export WITH_GMS=false
-# Add memory-saving flags
-export USE_NINJA=false  # Use Make instead of Ninja (more memory efficient)
-export ENABLE_CPUSTATS=false
+ Force the system to use only 2 parallel compilation threads 
+export NINJA_ARGS="-j2"
+
+# Aggressively cap the Java Heap for both the Soong builder and Metalava compiler
 export INTER_LOOP_GC=true
 export SOONG_JAVAC_MAX_HEAP_SIZE=2048M
 export USES_METALAVA=true
+
+# Trigger the build specifically targeting sepolicy instead of the whole Android image
+
 lunch lineage_blossom-bp4a-eng
 m installclean
 make sepolicy -j1
