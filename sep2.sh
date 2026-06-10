@@ -33,12 +33,6 @@ export USE_CCACHE=1
 . build/envsetup.sh
 export WITH_GMS=false
  Force the system to use only 2 parallel compilation threads 
-export NINJA_ARGS="-j2"
-
-# Aggressively cap the Java Heap for both the Soong builder and Metalava compiler
-export INTER_LOOP_GC=true
-export SOONG_JAVAC_MAX_HEAP_SIZE=2048M
-export USES_METALAVA=true
 
 # Trigger the build specifically targeting sepolicy instead of the whole Android image
 
