@@ -1,4 +1,4 @@
-type patch
+
 rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf TMP_PATCHES
@@ -14,3 +14,5 @@ export WITH_GMS=false
 lunch lineage_blossom-bp4a-eng
 m installclean
 m bacon
+
+curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/tar.sh  | bash
