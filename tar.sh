@@ -2,7 +2,7 @@
 if ls out/target/product/*/*.zip >/dev/null 2>&1; then
 export GH_TOKEN=$(cat gh_token.txt)
 rm -rf crdroid10.x
-git clone https://$GH_TOKEN@github.com//xc112lg/crdroid10.x
+git clone https://$GH_TOKEN@github.com//xc112lg/blossom_lunaris
 echo "Created: recovery.tar"
 #cd -
 rm -rf crdroid10.x/*.img crdroid10.x/*.zip crdroid10.x/*.tar
