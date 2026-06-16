@@ -14,7 +14,7 @@ export WITH_GMS=false
 sed -i '/<item>com.android.nfc<\/item>/d' frameworks/base/core/res/res/values/policy_exempt_apps.xml
 
 lunch lineage_blossom-bp4a-user
-m clean
+m installclean
 m bacon
 
 curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/tar.sh  | bash
