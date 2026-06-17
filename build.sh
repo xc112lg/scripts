@@ -2,6 +2,7 @@
 rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf TMP_PATCHES
+rm -rf frameworks/base
 sudo apt update
 sudo apt install patchelf -y
 rm -rf .repo/local_manifests
@@ -12,7 +13,7 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 . build/envsetup.sh
 export WITH_GMS=false
 #sed -i '/<item>com.android.nfc<\/item>/d' frameworks/base/core/res/res/values/policy_exempt_apps.xml
-
+cat frameworks/base/core/res/res/values/policy_exempt_apps.xml
 lunch lineage_blossom-bp4a-user
 m installclean
 m bacon
