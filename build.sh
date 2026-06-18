@@ -12,6 +12,7 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 /opt/crave/resync.sh
 . build/envsetup.sh
 export WITH_GMS=true
+sed -i 's|-include vendor/lineage-priv/keys/keys.mk|-include vendor/evolution-priv/keys/keys.mk|' device/xiaomi/blossom/lineage_blossom.mk
 #sed -i '/<item>com.android.nfc<\/item>/d' frameworks/base/core/res/res/values/policy_exempt_apps.xml
 #cat frameworks/base/core/res/res/values/policy_exempt_apps.xml
 lunch lineage_blossom-bp4a-user
