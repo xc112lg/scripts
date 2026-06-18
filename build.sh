@@ -11,7 +11,7 @@ git clone https://github.com/xc112lg/local_manifests.git -b lunaris .repo/local_
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 /opt/crave/resync.sh
 . build/envsetup.sh
-export WITH_GMS=false
+export WITH_GMS=true
 #sed -i '/<item>com.android.nfc<\/item>/d' frameworks/base/core/res/res/values/policy_exempt_apps.xml
 #cat frameworks/base/core/res/res/values/policy_exempt_apps.xml
 lunch lineage_blossom-bp4a-user
