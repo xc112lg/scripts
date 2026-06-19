@@ -16,6 +16,7 @@ export WITH_GMS_COMMS_SUITE := false
 export WITH_PIXEL_LAUNCHER := false
 export TARGET_USE_GPHOTOS := false
 export TARGET_USE_WALLPAPERS := false
+export TARGET_USES_PICO_GAPPS=true
 sed -i 's|-include vendor/lineage-priv/keys/keys.mk|-include vendor/evolution-priv/keys/keys.mk|' device/xiaomi/blossom/lineage_blossom.mk
 #sed -i '/<item>com.android.nfc<\/item>/d' frameworks/base/core/res/res/values/policy_exempt_apps.xml
 #cat frameworks/base/core/res/res/values/policy_exempt_apps.xml
