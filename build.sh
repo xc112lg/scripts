@@ -148,12 +148,12 @@ git clone https://github.com/xc112lg/local_manifests.git -b lunaris .repo/local_
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 /opt/crave/resync.sh
 . build/envsetup.sh
-export WITH_GMS=false
+export WITH_GMS=true
 # export WITH_GMS_COMMS_SUITE := false
 # export WITH_PIXEL_LAUNCHER := false
 # export TARGET_USE_GPHOTOS := false
 # export TARGET_USE_WALLPAPERS := false
-#export TARGET_USES_PICO_GAPPS=true
+export TARGET_USES_PICO_GAPPS=true
 sed -i 's|-include vendor/lineage-priv/keys/keys.mk|-include vendor/evolution-priv/keys/keys.mk|' device/xiaomi/blossom/lineage_blossom.mk
 sed -i '\|vendor/extras/prebuilt/product/fonts,\$(TARGET_COPY_OUT_PRODUCT)/fonts|d' vendor/extras/evolution.mk
 #sed -i '/<item>com.android.nfc<\/item>/d' frameworks/base/core/res/res/values/policy_exempt_apps.xml
