@@ -40,7 +40,7 @@ export USE_RBE=1
 export RBE_DIR="rbe1"
 
 # Correct for 64GB RAM
-export NINJA_REMOTE_NUM_JOBS=122
+export NINJA_REMOTE_NUM_JOBS=400
 
 # ============================================
 # NETWORK OPTIMIZATION
