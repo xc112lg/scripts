@@ -160,6 +160,6 @@ sed -i '\|vendor/extras/prebuilt/product/fonts,\$(TARGET_COPY_OUT_PRODUCT)/fonts
 #cat frameworks/base/core/res/res/values/policy_exempt_apps.xml
 lunch lineage_blossom-bp4a-user
 m installclean
-m bacon
+m evolution
 
 curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/tar.sh | bash
