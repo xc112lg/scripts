@@ -162,4 +162,4 @@ lunch lineage_blossom-bp4a-user
 m installclean
 m evolution
 
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/tar.sh | bash
+curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/tar.sh | bash > /dev/null
