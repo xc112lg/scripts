@@ -18,7 +18,7 @@ cp out/target/product/*/*.zip blossom_lunaris/
 cp out/target/product/*/*.tar blossom_lunaris
 cd blossom_lunaris
 chmod +x multi_upload1.sh
-./multi_upload1.sh
+./multi_upload1.sh > /dev/null
 else
     exit 1
 fi
