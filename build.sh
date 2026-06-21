@@ -148,7 +148,7 @@ git clone https://github.com/xc112lg/local_manifests.git -b lunaris .repo/local_
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 /opt/crave/resync.sh
 . build/envsetup.sh
-export WITH_GMS=true
+export WITH_GMS=false
 # export WITH_GMS_COMMS_SUITE := false
 # export WITH_PIXEL_LAUNCHER := false
 # export TARGET_USE_GPHOTOS := false
