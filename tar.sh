@@ -1,6 +1,16 @@
+# Check and load environment variables from .env
+if [ -f .env ]; then
+    export $(cat .env | grep -v '#' | xargs)
+    echo "✓ Loaded .env from current directory"
+elif [ -f ../.env ]; then
+    export $(cat ../.env | grep -v '#' | xargs)
+    echo "✓ Loaded .env from parent directory"
+else
+    echo "⚠ .env file not found"
+fi
 
 if ls out/target/product/*/*.zip >/dev/null 2>&1; then
-export GH_TOKEN=$(cat gh_token.txt)
+
 rm -rf blossom_lunaris
 git clone https://$GH_TOKEN@github.com//xc112lg/blossom_lunaris
 
