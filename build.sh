@@ -11,7 +11,7 @@ rm -rf TMP_PATCHES
 sudo apt update
 sudo apt install patchelf -y
 rm -rf .repo/local_manifests
-repo init -u https://github.com/Evolution-X/manifest -b bq2 --git-lfs --depth=1
+repo init -u https://github.com/Evolution-X/manifest -b bka --git-lfs --depth=1
 git clone https://github.com/xc112lg/local_manifests.git -b lunaris .repo/local_manifests
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 /opt/crave/resync.sh
