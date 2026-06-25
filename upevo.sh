@@ -11,13 +11,13 @@ fi
 
 if ls out/target/product/*/*.zip >/dev/null 2>&1; then
 
-rm -rf blossom_evolotion
-git clone https://$GH_TOKEN@github.com//xc112lg/blossom_evolotion
+rm -rf blossom_evolution
+git clone https://$GH_TOKEN@github.com//xc112lg/blossom_evolution
 
 #cd -
 #rm -rf blossom_lunaris/*.img blossom_lunaris/*.zip blossom_lunaris/*.tar
 #cp out/target/product/*/recovery.img blossom_lunaris
-cp out/target/product/*/*.zip blossom_evolotion/
+cp out/target/product/*/*.zip blossom_evolution/
 # echo "test" > blossom_lunaris/dummy.txt
 
 # Create the zip
@@ -25,8 +25,8 @@ cp out/target/product/*/*.zip blossom_evolotion/
 
 # Check size
 # ls -lh blossom_lunaris/test.zip
-cp out/target/product/*/*.tar blossom_evolotion
-cd blossom_evolotion
+cp out/target/product/*/*.tar blossom_evolution
+cd blossom_evolution
 chmod +x multi_upload2.sh
 ./multi_upload2.sh > /dev/null
 else
