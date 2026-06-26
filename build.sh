@@ -29,6 +29,10 @@ sed -i 's|-include vendor/lineage-priv/keys/keys.mk|-include vendor/evolution-pr
 sed -i '\|vendor/extras/prebuilt/product/fonts,\$(TARGET_COPY_OUT_PRODUCT)/fonts|d' vendor/extras/evolution.mk
 #sed -i '/<item>com.android.nfc<\/item>/d' frameworks/base/core/res/res/values/policy_exempt_apps.xml
 #cat frameworks/base/core/res/res/values/policy_exempt_apps.xml
+echo "USE_RBE=$USE_RBE"
+echo "RBE_service=$RBE_service"
+echo "RBE_instance=$RBE_instance"
+echo "RBE_remote_headers=$RBE_remote_headers"
 echo $RBE_service
 echo $RBE_remote_headers
 echo $RBE_instance
