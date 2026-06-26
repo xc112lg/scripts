@@ -1,11 +1,13 @@
 #!/bin/bash
-# RBE CONFIGURATION FOR YOUR BUILDBUDDY INSTANCE
+# ============================================================================
+# RBE CONFIGURATION FOR YOUR BUILDBUDDY INSTANCE (AOSP RECLIENT COMPATIBLE)
 # Based on your .bazelrc showing: app.buildbuddy.io and remote.buildbuddy.io
+# ============================================================================
 
 echo "=== Your BuildBuddy Configuration ==="
 echo ""
 echo "Instance: buildbuddy.io (self-hosted)"
-echo "Dashboard: https://app.buildbuddy.io"
+echo "Dashboard: https://buildbuddy.io"
 echo "RBE Backend: grpcs://remote.buildbuddy.io"
 echo ""
 
@@ -13,20 +15,27 @@ echo ""
 # BUILDBUDDY CONFIGURATION (YOUR SETUP)
 # ============================================
 
-# Your RBE service endpoint
-# Format: grpcs:// means gRPC with TLS
+# Your RBE service endpoint (gRPC with TLS)
 export RBE_service="remote.buildbuddy.io:443"
 
-# Your BuildBuddy API key
-# Get from: https://app.buildbuddy.io/settings/org/api-keys
-# CHANGE THIS to your actual key
-export RBE_remote_headers="x-buildbuddy-api-key=NF5nEUUyU7LIy2QkkIIe"
+# FIX: Reclient requires a comma ',' separating the key and value for headers
+export RBE_remote_headers="x-buildbuddy-api-key,NF5nEUUyU7LIy2QkkIIe"
 
-# TLS enabled (grpcs:// means secure connection)
+# TLS enabled
 export RBE_use_rpc_credentials=true
 
 # Require authentication
 export RBE_service_no_auth=false
+
+# ============================================
+# AOSP / BUILDBUDDY PLATFORM & BINARY MAPPINGS
+# ============================================
+
+# Informs BuildBuddy workers which environment container to pull for remote tasks
+export RBE_PLATFORM="container-image=docker://gcr.io/cloud-marketplace/google/rbe-ubuntu18-04@sha256:6346552230ab057cf5bc8da39b56f8742ca2c63f10f60710fc39c8901b0b72f4,OSFamily=Linux"
+
+# Tells the AOSP build system where your reclient binaries are stored
+export RBE_BIN_DIR="prebuilts/remoteexecution-client/live"
 
 # ============================================
 # RBE CORE SETTINGS (64GB RAM OPTIMIZED)
@@ -36,6 +45,14 @@ export RBE_DIR="rbe1"
 
 # Correct for 64GB RAM
 export NINJA_REMOTE_NUM_JOBS=400
+
+# Create isolation directories for local tracking state
+mkdir -p "${RBE_DIR}/logs"
+mkdir -p "${RBE_DIR}/cache"
+
+# Creates explicit runtime socket tracking paths for the reproxy background daemon
+export RBE_server_address="unix://${RBE_DIR}/reproxy.sock"
+export RBE_log_dir="${RBE_DIR}/logs"
 
 # ============================================
 # NETWORK OPTIMIZATION
@@ -111,23 +128,23 @@ export RBE_VERBOSE=0
 # ============================================
 echo "✓ Configuration for buildbuddy.io"
 echo "  RBE Service: ${RBE_service}"
-echo "  Dashboard: https://app.buildbuddy.io"
+echo "  Dashboard: https://buildbuddy.io"
 echo "  Parallel Jobs: ${NINJA_REMOTE_NUM_JOBS}"
 echo ""
 echo "⚠️  NEXT STEPS:"
-echo "  1. Replace YOUR_API_KEY with your actual API key"
-echo "     Get from: https://app.buildbuddy.io/settings/org/api-keys"
+echo "  1. Verify the paths match your workspace tree:"
+echo "     ls ${RBE_BIN_DIR}/reproxy"
 echo ""
-echo "  2. Set file descriptor limit:"
+echo "  2. Elevate your local file limits to match configuration:"
 echo "     ulimit -n 10000"
 echo ""
-echo "  3. Source this config:"
-echo "     source rbe_your_buildbuddy.sh"
+echo "  3. Source this configuration inside your terminal profile:"
+echo "     source $(basename "$BASH_SOURCE")"
 echo ""
-echo "  4. Test:"
+echo "  4. Execute compilation wrapper:"
 echo "     time m"
 echo ""
-echo "  5. View results:"
-echo "     https://app.buildbuddy.io/invocation/ (check your invocation)"
+echo "  5. Track your stream:"
+echo "     https://buildbuddy.io/invocation/"
 
 echo "✓ RBE optimized configuration loaded"
