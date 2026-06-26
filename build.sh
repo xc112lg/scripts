@@ -29,6 +29,11 @@ sed -i 's|-include vendor/lineage-priv/keys/keys.mk|-include vendor/evolution-pr
 sed -i '\|vendor/extras/prebuilt/product/fonts,\$(TARGET_COPY_OUT_PRODUCT)/fonts|d' vendor/extras/evolution.mk
 #sed -i '/<item>com.android.nfc<\/item>/d' frameworks/base/core/res/res/values/policy_exempt_apps.xml
 #cat frameworks/base/core/res/res/values/policy_exempt_apps.xml
+echo $RBE_service
+echo $RBE_remote_headers
+echo $RBE_instance
+echo $RBE_instance_name
+echo $USE_RBE
 lunch lineage_blossom-bp4a-eng
 m installclean
 m evolution
