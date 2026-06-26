@@ -34,7 +34,7 @@ sed -i '\|vendor/extras/prebuilt/product/fonts,\$(TARGET_COPY_OUT_PRODUCT)/fonts
 export RBE_LOG=DEBUG
 export RBE_VERBOSE=1
 
-lunch lineage_blossom-bp4a-eng
+lunch lineage_blossom-bp4a-user
 m installclean
 m clean #once
 m evolution
