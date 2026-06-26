@@ -33,6 +33,8 @@ echo "USE_RBE=$USE_RBE"
 echo "RBE_service=$RBE_service"
 echo "RBE_instance=$RBE_instance"
 echo "RBE_remote_headers=$RBE_remote_headers"
+export RBE_LOG=DEBUG
+export RBE_VERBOSE=1
 echo $RBE_service
 echo $RBE_remote_headers
 echo $RBE_instance
