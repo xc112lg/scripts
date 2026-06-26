@@ -6,6 +6,7 @@ git clone https://github.com/xc112lg/rbe1
 source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe.sh)
 rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
+rm -rf kernel/xiaomi/blossom
 rm -rf TMP_PATCHES
 #rm -rf frameworks/base
 sudo apt update
