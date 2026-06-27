@@ -1,16 +1,16 @@
   #!/bin/bash
 # --- Optimized RBE Configuration for AOSP Builds ---
 # Recommendations based on your current setup and performance best practices
-git clone https://github.com/xc112lg/rbe1
+git clone https://github.com/xc112lg/rbe1 >/dev/null 2>&1
 
-source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe.sh)
+source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe.sh) >/dev/null 2>&1
 rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf kernel/xiaomi/blossom
 rm -rf TMP_PATCHES
 #rm -rf frameworks/base
-sudo apt update
-sudo apt install patchelf -y
+sudo apt update >/dev/null 2>&1
+sudo apt install patchelf -y >/dev/null 2>&1
 rm -rf .repo/local_manifests
 repo init -u https://github.com/Evolution-X/manifest -b bka --git-lfs --depth=1
 git clone https://github.com/xc112lg/local_manifests.git -b lunaris .repo/local_manifests
