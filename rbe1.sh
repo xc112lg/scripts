@@ -180,13 +180,19 @@ check_binaries() {
         return 1
     fi
     
-    if [ ! -x "${RBE_BIN_DIR}/reclient" ]; then
-        print_error "reclient not found at ${RBE_BIN_DIR}/reclient"
+    # Check for rewrapper (Crave/Lineage 21-22) or reclient (generic AOSP)
+    local wrapper_bin=""
+    if [ -x "${RBE_BIN_DIR}/rewrapper" ]; then
+        wrapper_bin="rewrapper"
+    elif [ -x "${RBE_BIN_DIR}/reclient" ]; then
+        wrapper_bin="reclient"
+    else
+        print_error "wrapper not found (neither rewrapper nor reclient at ${RBE_BIN_DIR})"
         return 1
     fi
     
     print_success "reproxy: $(${RBE_BIN_DIR}/reproxy --version 2>/dev/null || echo 'version unknown')"
-    print_success "reclient: $(${RBE_BIN_DIR}/reclient --version 2>/dev/null || echo 'version unknown')"
+    print_success "$wrapper_bin: $(${RBE_BIN_DIR}/${wrapper_bin} --version 2>/dev/null || echo 'version unknown')"
     return 0
 }
 
@@ -196,13 +202,20 @@ check_api_key() {
     # Extract API key from header (format: "key,value")
     local api_key="${RBE_remote_headers##*,}"
     
-    if [ -z "$api_key" ] || [ "$api_key" = "NF5nEUUyU7LIy2QkkIIe" ]; then
-        print_warning "Using placeholder API key: $api_key"
-        print_warning "UPDATE THIS IN rbe.sh before using RBE!"
+    if [ -z "$api_key" ]; then
+        print_error "API key is empty!"
+        print_warning "Add your BuildBuddy API key to line 36 in rbe.sh"
         return 1
     fi
     
-    print_success "API key configured (length: ${#api_key})"
+    if [ "$api_key" = "NF5nEUUyU7LIy2QkkIIe" ]; then
+        print_warning "Using PLACEHOLDER API key"
+        print_warning "Update line 36 with your actual BuildBuddy API key:"
+        print_warning "  export RBE_remote_headers=\"x-buildbuddy-api-key,YOUR_KEY_HERE\""
+        return 1
+    fi
+    
+    print_success "API key configured (${#api_key} chars)"
     return 0
 }
 
@@ -399,9 +412,8 @@ main() {
     check_file_limits
     echo ""
     
-    if ! check_api_key; then
-        print_warning "API key looks like placeholder - update before using RBE"
-    fi
+    # Check API key but don't fail (warn only)
+    check_api_key || print_warning "Continuing with current configuration..."
     echo ""
     
     # Start reproxy
@@ -415,7 +427,7 @@ main() {
     print_diagnostics
     show_troubleshooting
     
-    print_success "RBE is ready! Run: time m -j\$(nproc)"
+    print_success "RBE is ready!"
     echo ""
 }
 
