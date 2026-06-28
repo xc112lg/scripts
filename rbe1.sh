@@ -4,7 +4,7 @@
 # Includes: startup verification, health checks, diagnostics, graceful shutdown
 # ============================================================================
 
-set -e  # Exit on error
+# Exit on error
 
 # Color output for clarity
 RED='\033[0;31m'
