@@ -3,7 +3,7 @@
 # Recommendations based on your current setup and performance best practices
 git clone https://github.com/xc112lg/rbe1 >/dev/null 2>&1
 
-source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe1.sh) >/dev/null 2>&1
+source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe1.sh)
 rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf kernel/xiaomi/blossom
