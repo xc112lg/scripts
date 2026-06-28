@@ -34,7 +34,7 @@ mkdir -p "${RBE_LOG_DIR}" "${RBE_CACHE_DIR}"
 export RBE_service="remote.buildbuddy.io:443"
 export RBE_remote_headers="x-buildbuddy-api-key,NF5nEUUyU7LIy2QkkIIe"
 export RBE_use_rpc_credentials=true
-export RBE_service_no_auth=false
+export RBE_service_no_auth=true  # Disable auth for testing with placeholder key
 
 # ============================================
 # RECLIENT BINARY DISCOVERY
@@ -260,11 +260,12 @@ start_reproxy() {
     
     # Start reproxy in background with minimal valid flags
     # Note: reproxy handles most config via environment variables, not command-line flags
-    # Only pass what's absolutely necessary: server_address, service, log_dir
+    # Only pass what's absolutely necessary: server_address, service, log_dir, service_no_auth
     RBE_API_KEY="${api_key}" \
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
         -service="${RBE_service}" \
+        -service_no_auth="${RBE_service_no_auth}" \
         -log_dir="${RBE_LOG_DIR}" \
         >> "${RBE_REPROXY_LOG}" 2>&1 &
     
