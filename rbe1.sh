@@ -255,14 +255,16 @@ start_reproxy() {
     # Remove stale socket
     rm -f "${RBE_SOCKET}"
     
-    # Start reproxy in background with full logging
-    # NOTE: reproxy uses single-dash flags (-flag), not double-dash (--flag)
+    # Extract API key from header for environment variable
+    local api_key="${RBE_remote_headers##*,}"
+    
+    # Start reproxy in background with minimal valid flags
+    # Note: reproxy handles most config via environment variables, not command-line flags
+    # Only pass what's absolutely necessary: server_address, service, log_dir
+    RBE_API_KEY="${api_key}" \
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
         -service="${RBE_service}" \
-        -api_key="${RBE_remote_headers##*,}" \
-        -use_unified_downloads="${RBE_use_unified_downloads}" \
-        -use_unified_uploads="${RBE_use_unified_uploads}" \
         -log_dir="${RBE_LOG_DIR}" \
         >> "${RBE_REPROXY_LOG}" 2>&1 &
     
