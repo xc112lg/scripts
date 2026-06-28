@@ -1,4 +1,6 @@
 #!/bin/bash
+git clone https://github.com/xc112lg/rbe1 >/dev/null 2>&1
+
 rm -rf .repo/local_manifests 
 git clone https://github.com/LG-G6/scripts.git -b lineage-21 
 mkdir .repo/local_manifests 
