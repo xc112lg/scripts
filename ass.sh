@@ -11,9 +11,9 @@ git clone https://github.com/xc112lg/rbe1 >/dev/null 2>&1
 export CLANG_TARGET_ARM32="--target=arm-linux-android"
 source build/envsetup.sh
 #make clean
-
-source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe1.sh)
 source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/test-reproxy.sh)
+source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe1.sh)
+
 #export WITH_GMS=false
 #rm -rf hardware/interfaces/biometrics/fingerprint/2.1/default
 
