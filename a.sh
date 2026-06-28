@@ -3,8 +3,7 @@ rm -rf .repo/local_manifests
 git clone https://github.com/LG-G6/scripts.git -b lineage-21 
 mkdir .repo/local_manifests 
 source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe.sh) >/dev/null 2>&1
-cp scripts/roomservice.xml 
-.repo/local_manifests/ 
+cp scripts/roomservice.xml .repo/local_manifests/ 
 . scripts/sync.sh
 export CLANG_TARGET_ARM32="--target=arm-linux-android"
 source build/envsetup.sh
