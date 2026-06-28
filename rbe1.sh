@@ -4,7 +4,7 @@
 # Includes: startup verification, health checks, diagnostics, graceful shutdown
 # ============================================================================
 
-# Exit on error
+set -e  # Exit on error
 
 # Color output for clarity
 RED='\033[0;31m'
@@ -256,15 +256,14 @@ start_reproxy() {
     rm -f "${RBE_SOCKET}"
     
     # Start reproxy in background with full logging
+    # NOTE: reproxy uses single-dash flags (-flag), not double-dash (--flag)
     "${RBE_BIN_DIR}/reproxy" \
-        --server_address="unix://${RBE_SOCKET}" \
-        --service="${RBE_service}" \
-        --api_key="${RBE_remote_headers##*,}" \
-        --enable_unified_downloads="${RBE_use_unified_downloads}" \
-        --enable_unified_uploads="${RBE_use_unified_uploads}" \
-        --invocation_id="aosp-local-$(date +%s)" \
-        --log_dir="${RBE_LOG_DIR}" \
-        --alsologtostderr \
+        -server_address="unix://${RBE_SOCKET}" \
+        -service="${RBE_service}" \
+        -api_key="${RBE_remote_headers##*,}" \
+        -use_unified_downloads="${RBE_use_unified_downloads}" \
+        -use_unified_uploads="${RBE_use_unified_uploads}" \
+        -log_dir="${RBE_LOG_DIR}" \
         >> "${RBE_REPROXY_LOG}" 2>&1 &
     
     local reproxy_pid=$!
