@@ -5,8 +5,8 @@ git clone https://github.com/xc112lg/rbe1 >/dev/null 2>&1
 # git clone https://github.com/LG-G6/scripts.git -b lineage-21 
 # mkdir .repo/local_manifests 
 # cp scripts/roomservice.xml .repo/local_manifests/ 
-repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
-/opt/crave/resync.sh
+#repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
+#/opt/crave/resync.sh
 
 export CLANG_TARGET_ARM32="--target=arm-linux-android"
 source build/envsetup.sh
