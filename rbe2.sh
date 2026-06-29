@@ -161,14 +161,15 @@ check_file_limits() {
 # ============================================
 start_reproxy() {
     print_status "Starting reproxy daemon..."
+    
+    # Pre-startup cleanup to prevent socket lockups
     if reproxy_running; then
         print_warning "reproxy already running for this socket context."
         return 0
     fi
-    
     rm -f "${RBE_SOCKET}"
     
-    # reproxy inherits the exported RBE_remote_headers / credentials automatically
+    # Fire up reproxy using inherited environment configurations
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
         -log_dir="${RBE_LOG_DIR}" \
@@ -176,15 +177,23 @@ start_reproxy() {
     
     local reproxy_pid=$!
     
-    # Wait for socket to populate
+    # Wait loop for unix socket registration
     local wait_count=0
     while [ ! -S "${RBE_SOCKET}" ] && [ $wait_count -lt 10 ]; do
         sleep 0.5
         ((wait_count++))
     done
     
+    # Verification block with automatic tail dumping on crash
     if [ ! -S "${RBE_SOCKET}" ] || ! reproxy_running; then
-        print_error "reproxy failed to start properly. Check logs: ${RBE_REPROXY_LOG}"
+        print_error "reproxy failed to start properly."
+        echo -e "${RED}==================== REPROXY CRASH LOG ====================${NC}"
+        if [ -f "${RBE_REPROXY_LOG}" ]; then
+            tail -n 50 "${RBE_REPROXY_LOG}"
+        else
+            echo "Log file not found at ${RBE_REPROXY_LOG}"
+        fi
+        echo -e "${RED}===========================================================${NC}"
         return 1
     fi
     
@@ -214,11 +223,18 @@ main_rbe() {
     echo ""
     if ! check_binaries; then return 1; fi
     check_file_limits
-    start_reproxy
-    echo ""
-    print_success "RBE environment sourced and ready for AOSP!"
-    print_status "To clean up after your build finishes, run: stop_rbe"
-    echo ""
+    
+    if start_reproxy; then
+        echo ""
+        print_success "RBE environment sourced and ready for AOSP!"
+        print_status "To clean up after your build finishes, run: stop_rbe"
+        echo ""
+    else
+        echo ""
+        print_error "RBE initialization failed. Resolve the log errors shown above before building."
+        echo ""
+        return 1
+    fi
 }
 
-main_rbe
+main_rbec
