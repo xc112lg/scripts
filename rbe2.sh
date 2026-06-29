@@ -237,4 +237,4 @@ main_rbe() {
     fi
 }
 
-main_rbec
+main_rbe
