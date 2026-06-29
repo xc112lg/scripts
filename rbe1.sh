@@ -35,7 +35,7 @@ export RBE_remote_cache_header="x-buildbuddy-api-key,NF5nEUUyU7LIy2QkkIIe"
 export RBE_service="remote.buildbuddy.io:443"
 export RBE_remote_headers="x-buildbuddy-api-key,NF5nEUUyU7LIy2QkkIIe"
 export RBE_use_rpc_credentials=true
-#export RBE_service_no_auth=true  # Production: auth enabled with real API key
+export RBE_service_no_auth=true  # Production: auth enabled with real API key
 
 # ============================================
 # RECLIENT BINARY DISCOVERY
