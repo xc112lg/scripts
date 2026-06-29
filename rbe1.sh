@@ -30,7 +30,8 @@ mkdir -p "${RBE_LOG_DIR}" "${RBE_CACHE_DIR}"
 # ============================================
 # BUILDBUDDY CONFIGURATION
 # ============================================
-
+export RBE_remote_cache="grpcs://remote.buildbuddy.io"
+export RBE_remote_cache_header="x-buildbuddy-api-key,NF5nEUUyU7LIy2QkkIIe"
 export RBE_service="remote.buildbuddy.io:443"
 export RBE_remote_headers="x-buildbuddy-api-key,NF5nEUUyU7LIy2QkkIIe"
 export RBE_use_rpc_credentials=true
