@@ -34,7 +34,7 @@ mkdir -p "${RBE_LOG_DIR}" "${RBE_CACHE_DIR}"
 export RBE_service="remote.buildbuddy.io:443"
 export RBE_remote_headers="x-buildbuddy-api-key,NF5nEUUyU7LIy2QkkIIe"
 export RBE_use_rpc_credentials=true
-export RBE_service_no_auth=true  # Disable auth for testing with placeholder key
+export RBE_service_no_auth=false  # Production: auth enabled with real API key
 
 # ============================================
 # RECLIENT BINARY DISCOVERY
