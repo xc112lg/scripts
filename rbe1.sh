@@ -69,7 +69,8 @@ export PATH="${RBE_BIN_DIR}:${PATH}"
 # PLATFORM & EXECUTION CONFIG
 # ============================================
 
-export RBE_PLATFORM="container-image=docker://gcr.io/cloud-marketplace/google/rbe-ubuntu22-04,OSFamily=Linux"
+#export RBE_PLATFORM="container-image=docker://gcr.io/cloud-marketplace/google/rbe-ubuntu22-04,OSFamily=Linux"
+export RBE_PLATFORM="container-image=docker://gcr.io/cloud-marketplace/google/rbe-ubuntu22-04,OSFamily=Linux,docker_network=off"
 
 export USE_RBE=1
 export NINJA_REMOTE_NUM_JOBS=500
