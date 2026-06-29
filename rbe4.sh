@@ -20,6 +20,7 @@ export RBE_CACHE_DIR="${RBE_DIR}/cache"
 export RBE_SOCKET="${RBE_DIR}/reproxy.sock"
 export RBE_REPROXY_LOG="${RBE_LOG_DIR}/reproxy.log"
 export RBE_RECLIENT_LOG="${RBE_LOG_DIR}/reclient.log"
+export RBE_CFG_FILE="${RBE_DIR}/reproxy.cfg"
 
 # Ensure directories exist
 mkdir -p "${RBE_LOG_DIR}" "${RBE_CACHE_DIR}"
@@ -169,13 +170,25 @@ start_reproxy() {
     fi
     rm -f "${RBE_SOCKET}"
     
-    # Explicitly pass authentication and service flags directly to the binary
+    # Dynamically generate configuration file to isolate network values from bash CLI bugs
+    cat << EOF > "${RBE_CFG_FILE}"
+service=${RBE_service}
+remote_headers=${RBE_remote_headers}
+remote_cache=${RBE_remote_cache}
+remote_cache_header=${RBE_remote_cache_header}
+use_rpc_credentials=${RBE_use_rpc_credentials}
+use_unified_downloads=${RBE_use_unified_downloads}
+use_unified_uploads=${RBE_use_unified_uploads}
+compression=${RBE_compression}
+compression_level=${RBE_compression_level}
+enable_local_cache=${RBE_enable_local_cache}
+EOF
+
+    # Start reproxy cleanly using the configuration file wrapper
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
         -log_dir="${RBE_LOG_DIR}" \
-        -service="${RBE_service}" \
-        -remote_headers="${RBE_remote_headers}" \
-        -use_rpc_credentials=${RBE_use_rpc_credentials} \
+        -cfg="${RBE_CFG_FILE}" \
         >> "${RBE_REPROXY_LOG}" 2>&1 &
     
     local reproxy_pid=$!
@@ -213,7 +226,7 @@ stop_rbe() {
     else
         print_warning "No reproxy daemon running for this socket context."
     fi
-    rm -f "${RBE_SOCKET}"
+    rm -f "${RBE_SOCKET}" "${RBE_CFG_FILE}"
 }
 
 # ============================================
