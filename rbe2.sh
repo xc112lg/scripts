@@ -169,17 +169,14 @@ start_reproxy() {
     fi
     rm -f "${RBE_SOCKET}"
     
-    # Explicitly force authentication via explicit command line flags
+    # Tell reclient to expect header-based auth rather than Google application credentials
+    export RBE_service_no_auth=true
+
+    # Start reproxy using only valid, strict CLI flags
+    # All other configurations are automatically inherited from the exported environment variables
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
         -log_dir="${RBE_LOG_DIR}" \
-        -service="${RBE_service}" \
-        -remote_headers="${RBE_remote_headers}" \
-        -remote_cache="${RBE_remote_cache}" \
-        -remote_cache_header="${RBE_remote_cache_header}" \
-        -use_rpc_credentials=true \
-        -use_unified_downloads=true \
-        -use_unified_uploads=true \
         >> "${RBE_REPROXY_LOG}" 2>&1 &
     
     local reproxy_pid=$!
