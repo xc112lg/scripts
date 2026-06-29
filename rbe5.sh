@@ -169,10 +169,13 @@ start_reproxy() {
     fi
     rm -f "${RBE_SOCKET}"
     
-    # Fire up reproxy using inherited environment configurations
+    # Explicitly pass authentication and service flags directly to the binary
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
         -log_dir="${RBE_LOG_DIR}" \
+        -service="${RBE_service}" \
+        -remote_headers="${RBE_remote_headers}" \
+        -use_rpc_credentials=${RBE_use_rpc_credentials} \
         >> "${RBE_REPROXY_LOG}" 2>&1 &
     
     local reproxy_pid=$!
