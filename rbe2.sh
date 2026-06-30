@@ -1,19 +1,21 @@
 #!/bin/bash
 # ============================================================================
-# ENHANCED RBE CONFIGURATION FOR BUILDBUDDY + REPROXY DAEMON MANAGEMENT
-# Includes: startup verification, health checks, diagnostics, graceful shutdown
+# AOSP RBE CONFIGURATION FOR CUSTOM BUILDBUDDY + REPROXY
+# Optimized for LineageOS/EvolutionX with xc112lg.buildbuddy.io instance
 # ============================================================================
 
-# Color output for clarity
+set -e
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
 # ============================================
-# CONFIGURATION PATHS & DIRECTORIES
+# PATHS & DIRECTORIES
 # ============================================
+
 export RBE_DIR="${RBE_DIR:-rbe1}"
 export RBE_LOG_DIR="${RBE_DIR}/logs"
 export RBE_CACHE_DIR="${RBE_DIR}/cache"
@@ -21,21 +23,28 @@ export RBE_SOCKET="${RBE_DIR}/reproxy.sock"
 export RBE_REPROXY_LOG="${RBE_LOG_DIR}/reproxy.log"
 export RBE_RECLIENT_LOG="${RBE_LOG_DIR}/reclient.log"
 
-# Ensure directories exist
 mkdir -p "${RBE_LOG_DIR}" "${RBE_CACHE_DIR}"
 
 # ============================================
-# BUILDBUDDY CONFIGURATION (Active API Key)
+# BUILDBUDDY - CUSTOM INSTANCE CONFIGURATION
 # ============================================
-export RBE_remote_cache="grpcs://remote.buildbuddy.io"
-export RBE_remote_cache_header="x-buildbuddy-api-key,NF5nEUUyU7LIy2QkkIIe"
-export RBE_service="remote.buildbuddy.io:443"
-export RBE_remote_headers="x-buildbuddy-api-key,NF5nEUUyU7LIy2QkkIIe"
+
+# Custom BuildBuddy instance (not public remote.buildbuddy.io)
+export RBE_remote_cache="grpcs://xc112lg.buildbuddy.io"
+export RBE_service="xc112lg.buildbuddy.io:443"
+
+# CRITICAL: Use = format (not ,) for header key=value pairs
+# This matches Bazel's --remote_header format and BuildBuddy's expectations
+export RBE_remote_cache_header="x-buildbuddy-api-key=D2SvmJdB1v8oM6KaNg6J"
+export RBE_remote_headers="x-buildbuddy-api-key=D2SvmJdB1v8oM6KaNg6J"
+
 export RBE_use_rpc_credentials=true
+export RBE_service_no_auth=true
 
 # ============================================
 # RECLIENT BINARY DISCOVERY
 # ============================================
+
 find_reclient_bin() {
     local search_paths=(
         "prebuilts/remoteexecution-client/live"
@@ -43,6 +52,7 @@ find_reclient_bin() {
         "out/soong/remoteexecution-client"
         "${PWD}/prebuilts/remoteexecution-client/live"
     )
+    
     for path in "${search_paths[@]}"; do
         if [ -x "${path}/reproxy" ] 2>/dev/null; then
             echo "${path}"
@@ -58,13 +68,15 @@ export PATH="${RBE_BIN_DIR}:${PATH}"
 # ============================================
 # PLATFORM & EXECUTION CONFIG
 # ============================================
+
 export RBE_PLATFORM="container-image=docker://gcr.io/cloud-marketplace/google/rbe-ubuntu22-04,OSFamily=Linux,docker_network=off"
 export USE_RBE=1
-export NINJA_REMOTE_NUM_JOBS=500
+export NINJA_REMOTE_NUM_JOBS=75
 
 # ============================================
 # RBE SOCKET & LOGGING
 # ============================================
+
 export RBE_server_address="unix://${RBE_SOCKET}"
 export RBE_log_dir="${RBE_LOG_DIR}"
 export RBE_LOG=INFO
@@ -73,6 +85,7 @@ export RBE_VERBOSE=0
 # ============================================
 # NETWORK OPTIMIZATION
 # ============================================
+
 export RBE_use_unified_downloads=true
 export RBE_use_unified_uploads=true
 export RBE_compression=gzip
@@ -80,8 +93,9 @@ export RBE_compression_level=6
 export RBE_max_open_files=10000
 
 # ============================================
-# EXECUTION STRATEGIES (with fallback safety)
+# EXECUTION STRATEGIES
 # ============================================
+
 export RBE_R8_EXEC_STRATEGY=remote_local_fallback
 export RBE_D8_EXEC_STRATEGY=remote_local_fallback
 export RBE_JAVAC_EXEC_STRATEGY=remote_local_fallback
@@ -99,6 +113,7 @@ export RBE_LINT_EXEC_STRATEGY=remote_local_fallback
 # ============================================
 # TOOL ENABLEMENT
 # ============================================
+
 export RBE_R8=1
 export RBE_D8=1
 export RBE_JAVAC=1
@@ -113,27 +128,36 @@ export RBE_CLANG_TIDY=1
 export RBE_METALAVA=1
 export RBE_LINT=1
 
+# ============================================
+# RESOURCE POOLS & TIMEOUTS
+# ============================================
+
 export RBE_JAVA_POOL=default
 export RBE_METALAVA_POOL=default
 export RBE_LINT_POOL=default
 export RBE_exec_timeout=20m
 export RBE_reclient_timeout=120m
 
+# ============================================
+# CACHING
+# ============================================
+
 export RBE_cache_dir="${RBE_CACHE_DIR}"
 export RBE_enable_local_cache=1
 export RBE_batch_downloads=true
 
 # ============================================
-# UTILITIES
+# HELPER FUNCTIONS
 # ============================================
+
 print_status() { echo -e "${BLUE}[RBE]${NC} $1"; }
 print_success() { echo -e "${GREEN}✓${NC} $1"; }
 print_error() { echo -e "${RED}✗${NC} $1"; }
 print_warning() { echo -e "${YELLOW}⚠${NC} $1"; }
 
-reproxy_running() {
-    [ -S "${RBE_SOCKET}" ] && [ ! -z "$(pgrep -f "reproxy.*server_address=unix://${RBE_SOCKET}" 2>/dev/null)" ]
-}
+# ============================================
+# CHECKS
+# ============================================
 
 check_binaries() {
     print_status "Checking reclient binaries..."
@@ -141,104 +165,205 @@ check_binaries() {
         print_error "reproxy not found at ${RBE_BIN_DIR}/reproxy"
         return 1
     fi
+    
+    local wrapper_bin=""
+    if [ -x "${RBE_BIN_DIR}/rewrapper" ]; then
+        wrapper_bin="rewrapper"
+    elif [ -x "${RBE_BIN_DIR}/reclient" ]; then
+        wrapper_bin="reclient"
+    else
+        print_error "wrapper not found"
+        return 1
+    fi
+    
+    print_success "reproxy: $(${RBE_BIN_DIR}/reproxy --version 2>/dev/null || echo 'version unknown')"
+    print_success "$wrapper_bin: $(${RBE_BIN_DIR}/${wrapper_bin} --version 2>/dev/null || echo 'version unknown')"
+    return 0
+}
+
+check_api_key() {
+    print_status "Validating API key..."
+    local api_key="${RBE_remote_headers##*=}"
+    
+    if [ -z "$api_key" ]; then
+        print_error "API key is empty"
+        return 1
+    fi
+    
+    if [ "$api_key" = "YOUR_API_KEY_HERE" ]; then
+        print_error "Placeholder API key - replace with real key"
+        return 1
+    fi
+    
+    print_success "API key configured (${#api_key} chars)"
     return 0
 }
 
 check_file_limits() {
     print_status "Checking file descriptor limits..."
     local current_limit=$(ulimit -n)
-    local required=10000
-    if [ "$current_limit" -lt "$required" ]; then
-        print_warning "Current limit: $current_limit (need $required)"
-        ulimit -n $required 2>/dev/null || print_warning "Failed to raise ulimit (may need sudo)"
+    
+    if [ "$current_limit" -lt 10000 ]; then
+        print_warning "Current: $current_limit (need 10000)"
+        ulimit -n 10000 2>/dev/null || print_warning "Failed to raise ulimit"
     else
         print_success "File limits OK: $current_limit"
     fi
 }
 
 # ============================================
-# REPROXY DAEMON STARTUP
+# REPROXY DAEMON
 # ============================================
+
+reproxy_running() {
+    [ -S "${RBE_SOCKET}" ] && [ ! -z "$(pgrep -f 'reproxy.*server_address' 2>/dev/null)" ]
+}
+
 start_reproxy() {
-    print_status "Starting reproxy daemon..."
+    print_status "Starting reproxy..."
     
-    # Pre-startup cleanup to prevent socket lockups
     if reproxy_running; then
-        print_warning "reproxy already running for this socket context."
-        return 0
+        print_warning "reproxy already running, restarting..."
+        pkill -f 'reproxy.*server_address' 2>/dev/null || true
+        sleep 1
     fi
+    
     rm -f "${RBE_SOCKET}"
     
-    # Tell reclient to expect header-based auth rather than Google application credentials
-    export RBE_service_no_auth=true
-
-    # Start reproxy using only valid, strict CLI flags
-    # All other configurations are automatically inherited from the exported environment variables
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
+        -service="${RBE_service}" \
+        -service_no_auth="${RBE_service_no_auth}" \
         -log_dir="${RBE_LOG_DIR}" \
         >> "${RBE_REPROXY_LOG}" 2>&1 &
     
     local reproxy_pid=$!
+    print_status "reproxy PID: $reproxy_pid"
     
-    # Wait loop for unix socket registration
+    # Wait for socket
+    print_status "Waiting for reproxy socket..."
     local wait_count=0
     while [ ! -S "${RBE_SOCKET}" ] && [ $wait_count -lt 10 ]; do
         sleep 0.5
         ((wait_count++))
     done
     
-    # Verification block with automatic tail dumping on crash
-    if [ ! -S "${RBE_SOCKET}" ] || ! reproxy_running; then
-        print_error "reproxy failed to start properly."
-        echo -e "${RED}==================== REPROXY CRASH LOG ====================${NC}"
-        if [ -f "${RBE_REPROXY_LOG}" ]; then
-            tail -n 50 "${RBE_REPROXY_LOG}"
-        else
-            echo "Log file not found at ${RBE_REPROXY_LOG}"
-        fi
-        echo -e "${RED}===========================================================${NC}"
+    if [ ! -S "${RBE_SOCKET}" ]; then
+        print_error "reproxy socket not created after 5s"
+        print_status "Last 30 lines of reproxy.log:"
+        tail -30 "${RBE_REPROXY_LOG}" 2>/dev/null || echo "(log unavailable)"
         return 1
     fi
     
-    print_success "reproxy daemon online (PID: $reproxy_pid)"
+    print_success "reproxy socket created: ${RBE_SOCKET}"
+    
+    sleep 1
+    if ! reproxy_running; then
+        print_error "reproxy exited unexpectedly"
+        print_status "Last 30 lines of reproxy.log:"
+        tail -30 "${RBE_REPROXY_LOG}" 2>/dev/null || echo "(log unavailable)"
+        return 1
+    fi
+    
+    print_success "reproxy online"
     return 0
 }
 
-# Tear down function called manually when done with the entire build environment
-stop_rbe() {
-    print_status "Stopping reproxy daemon..."
-    local pid=$(pgrep -f "reproxy.*server_address=unix://${RBE_SOCKET}")
-    if [ ! -z "$pid" ]; then
-        kill "$pid" && print_success "reproxy stopped."
-    else
-        print_warning "No reproxy daemon running for this socket context."
+stop_reproxy() {
+    print_status "Stopping reproxy..."
+    if reproxy_running; then
+        pkill -f 'reproxy.*server_address' 2>/dev/null || true
+        sleep 1
+        print_success "reproxy stopped"
     fi
     rm -f "${RBE_SOCKET}"
 }
 
 # ============================================
-# MAIN INITIALIZATION LOGIC
+# DIAGNOSTICS
 # ============================================
-main_rbe() {
+
+print_diagnostics() {
+    echo ""
     echo -e "${BLUE}╔════════════════════════════════════════════════╗${NC}"
-    echo -e "${BLUE}║  Enhanced RBE Configuration for BuildBuddy     ║${NC}"
+    echo -e "${BLUE}║  AOSP RBE CONFIGURATION${NC}"
     echo -e "${BLUE}╚════════════════════════════════════════════════╝${NC}"
     echo ""
-    if ! check_binaries; then return 1; fi
-    check_file_limits
     
-    if start_reproxy; then
-        echo ""
-        print_success "RBE environment sourced and ready for AOSP!"
-        print_status "To clean up after your build finishes, run: stop_rbe"
-        echo ""
+    echo -e "${BLUE}[RBE]${NC} BuildBuddy:"
+    echo "  Instance: xc112lg.buildbuddy.io"
+    echo "  Dashboard: https://xc112lg.buildbuddy.io/invocation/"
+    echo ""
+    
+    echo -e "${BLUE}[RBE]${NC} Configuration:"
+    echo "  Remote cache: ${RBE_remote_cache}"
+    echo "  Parallel jobs: ${NINJA_REMOTE_NUM_JOBS}"
+    echo "  Local cache: ${RBE_CACHE_DIR}"
+    echo ""
+    
+    echo -e "${BLUE}[RBE]${NC} Daemon:"
+    if reproxy_running; then
+        echo "  reproxy: ${GREEN}RUNNING${NC}"
+        echo "  Socket: ${GREEN}OK${NC}"
     else
-        echo ""
-        print_error "RBE initialization failed. Resolve the log errors shown above before building."
-        echo ""
-        return 1
+        echo "  reproxy: ${RED}STOPPED${NC}"
+        echo "  Socket: ${RED}MISSING${NC}"
     fi
+    echo ""
 }
 
-main_rbe
+show_tips() {
+    echo ""
+    echo -e "${YELLOW}Tips:${NC}"
+    echo "1. Monitor cache during build:"
+    echo "   tail -f ${RBE_REPROXY_LOG}"
+    echo ""
+    echo "2. Check BuildBuddy dashboard:"
+    echo "   https://xc112lg.buildbuddy.io/invocation/"
+    echo ""
+    echo "3. Expected output should show:"
+    echo "   RBE Stats: down X MB, up Y MB, 0-5 local fallbacks"
+    echo ""
+}
+
+# ============================================
+# MAIN
+# ============================================
+
+main() {
+    echo ""
+    echo -e "${BLUE}╔════════════════════════════════════════════════╗${NC}"
+    echo -e "${BLUE}║  AOSP RBE Setup for Custom BuildBuddy${NC}"
+    echo -e "${BLUE}╚════════════════════════════════════════════════╝${NC}"
+    echo ""
+    
+    if ! check_binaries; then
+        print_error "Reclient binaries not found"
+        return 1
+    fi
+    echo ""
+    
+    check_file_limits
+    echo ""
+    
+    if ! check_api_key; then
+        print_error "API key invalid"
+        return 1
+    fi
+    echo ""
+    
+    if ! start_reproxy; then
+        print_error "Failed to start reproxy"
+        return 1
+    fi
+    echo ""
+    
+    print_diagnostics
+    show_tips
+    
+    print_success "RBE ready - start your AOSP build now!"
+    echo ""
+}
+
+trap 'stop_reproxy' EXIT
+main "$@"
