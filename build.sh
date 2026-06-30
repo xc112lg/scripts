@@ -12,7 +12,7 @@ rm -rf TMP_PATCHES
 sudo apt update >/dev/null 2>&1
 sudo apt install patchelf -y >/dev/null 2>&1
 rm -rf .repo/local_manifests
-repo init -u https://github.com/Evolution-X/manifest -b bka --git-lfs --depth=1
+repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth=1
 git clone https://github.com/xc112lg/local_manifests.git -b lunaris .repo/local_manifests
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 /opt/crave/resync.sh
