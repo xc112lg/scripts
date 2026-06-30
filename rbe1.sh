@@ -31,11 +31,11 @@ mkdir -p "${RBE_LOG_DIR}" "${RBE_CACHE_DIR}"
 # BUILDBUDDY CONFIGURATION
 # ============================================
 export RBE_remote_cache="grpcs://remote.buildbuddy.io"
-export RBE_remote_cache_header="x-buildbuddy-api-key,NF5nEUUyU7LIy2QkkIIe"
+export RBE_remote_cache_header="x-buildbuddy-api-key,D2SvmJdB1v8oM6KaNg6J"
 export RBE_service="remote.buildbuddy.io:443"
-export RBE_remote_headers="x-buildbuddy-api-key,NF5nEUUyU7LIy2QkkIIe"
+export RBE_remote_headers="x-buildbuddy-api-key,D2SvmJdB1v8oM6KaNg6J"
 export RBE_use_rpc_credentials=true
-export RBE_service_no_auth=true  # Production: auth enabled with real API key
+export RBE_service_no_auth=false  # Enable authentication with real API key
 
 # ============================================
 # RECLIENT BINARY DISCOVERY
@@ -206,14 +206,18 @@ check_api_key() {
     
     if [ -z "$api_key" ]; then
         print_error "API key is empty!"
-        print_warning "Add your BuildBuddy API key to line 36 in rbe.sh"
+        print_warning "Add your BuildBuddy API key to lines 36-37 in rbe.sh"
         return 1
     fi
     
-    if [ "$api_key" = "NF5nEUUyU7LIy2QkkIIe" ]; then
-        print_warning "Using PLACEHOLDER API key"
-        print_warning "Update line 36 with your actual BuildBuddy API key:"
-        print_warning "  export RBE_remote_headers=\"x-buildbuddy-api-key,YOUR_KEY_HERE\""
+    if [ "$api_key" = "YOUR_API_KEY_HERE" ] || [ "$api_key" = "NF5nEUUyU7LIy2QkkIIe" ]; then
+        print_error "PLACEHOLDER API key detected!"
+        print_error "Cache uploads WILL FAIL without a valid BuildBuddy API key"
+        print_warning "Steps to fix:"
+        print_warning "  1. Go to https://buildbuddy.io/settings/"
+        print_warning "  2. Copy your API key (under 'API Settings' or 'Credentials')"
+        print_warning "  3. Replace YOUR_API_KEY_HERE on lines 36-37 with your real key"
+        print_warning "  4. Re-run this script"
         return 1
     fi
     
@@ -416,8 +420,12 @@ main() {
     check_file_limits
     echo ""
     
-    # Check API key but don't fail (warn only)
-    check_api_key || print_warning "Continuing with current configuration..."
+    # Check API key - REQUIRED for cache uploads
+    if ! check_api_key; then
+        print_error "Valid BuildBuddy API key is required. Cannot continue."
+        print_error "Cache uploads will silently fail without proper authentication."
+        return 1
+    fi
     echo ""
     
     # Start reproxy
