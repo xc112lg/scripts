@@ -25,6 +25,7 @@ export WITH_GMS=false
 # export WITH_PIXEL_LAUNCHER := false
 # export TARGET_USE_GPHOTOS := false
 # export TARGET_USE_WALLPAPERS := false
+export TEMPORARY_DISABLE_PATH_RESTRICTIONS=true
 export TARGET_USES_PICO_GAPPS=true
 export TARGET_INCLUDE_VIA=true
 export TARGET_INCLUDE_REVAMPED=true
