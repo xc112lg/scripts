@@ -40,6 +40,6 @@ export RBE_VERBOSE=1
 lunch lineage_blossom-bp4a-user
 m installclean
 #m clean #once
-m bacon -j48
+m bacon -j64
 
 curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom/upevo.sh | bash >/dev/null 2>&1
