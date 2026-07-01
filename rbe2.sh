@@ -71,7 +71,7 @@ export PATH="${RBE_BIN_DIR}:${PATH}"
 
 export RBE_PLATFORM="container-image=docker://gcr.io/cloud-marketplace/google/rbe-ubuntu22-04,OSFamily=Linux,docker_network=off"
 export USE_RBE=1
-export NINJA_REMOTE_NUM_JOBS=400
+export NINJA_REMOTE_NUM_JOBS=256
 
 # ============================================
 # RBE SOCKET & LOGGING
