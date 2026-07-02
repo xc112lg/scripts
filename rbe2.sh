@@ -16,7 +16,7 @@ NC='\033[0m'
 # PATHS & DIRECTORIES
 # ============================================
 
-export RBE_DIR="$(pwd)/${RBE_DIR:-rbe1}"
+export RBE_DIR="/tmp/src/android/rbe1"
 export RBE_LOG_DIR="${RBE_DIR}/logs"
 export RBE_CACHE_DIR="${RBE_DIR}/cache"
 export RBE_SOCKET="${RBE_DIR}/reproxy.sock"
