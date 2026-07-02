@@ -206,7 +206,7 @@ test_rbe_connection() {
     test_start_reproxy || return 1
 
     echo "[RBE TEST] Dispatching a single test action through rewrapper..."
-    "${RBE_DIR}/rewrapper" -server_address="unix://${RBE_TEST_SOCKET}" -labels=type=test -exec_root="$(pwd)" -- echo "rbe connection test"
+    "${RBE_DIR}/rewrapper" -server_address="unix://${RBE_TEST_SOCKET}" -exec_root="$(pwd)" -- echo "rbe connection test"
     local wrap_status=$?
     if [[ $wrap_status -eq 0 ]]; then
         echo "[RBE TEST] Test action dispatched successfully."
