@@ -235,42 +235,48 @@ start_reproxy() {
     
     rm -f "${RBE_SOCKET}"
     
-    # Note: For custom BuildBuddy instances, dependency scanner may not be available
-    # Adding flags to handle this gracefully
+    # Note: For custom BuildBuddy instances, reproxy dependency scanner may timeout
+    # Using minimal flags - most config comes from environment variables
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
         -service="${RBE_service}" \
         -service_no_auth="${RBE_service_no_auth}" \
         -log_dir="${RBE_LOG_DIR}" \
-        -enable_deps_scanner=false \
         >> "${RBE_REPROXY_LOG}" 2>&1 &
     
     local reproxy_pid=$!
     print_status "reproxy PID: $reproxy_pid"
     
-    # Wait for socket
-    print_status "Waiting for reproxy socket..."
+    # Wait for socket - reproxy's dependency scanner may timeout, need to wait longer
+    print_status "Waiting for reproxy socket (dependency scanner may take time)..."
     local wait_count=0
-    while [ ! -S "${RBE_SOCKET}" ] && [ $wait_count -lt 10 ]; do
+    local max_wait=60  # Wait up to 30 seconds (60 * 0.5s)
+    
+    while [ ! -S "${RBE_SOCKET}" ] && [ $wait_count -lt $max_wait ]; do
+        if [ $((wait_count % 20)) -eq 0 ] && [ $wait_count -gt 0 ]; then
+            print_status "Still waiting... (${wait_count} seconds elapsed)"
+        fi
         sleep 0.5
         ((wait_count++))
     done
     
     if [ ! -S "${RBE_SOCKET}" ]; then
-        print_error "reproxy socket not created after 5s"
-        print_status "Last 30 lines of reproxy.log:"
-        tail -30 "${RBE_REPROXY_LOG}" 2>/dev/null || echo "(log unavailable)"
+        print_error "reproxy socket not created after 30 seconds"
+        print_error "reproxy may have crashed or is still initializing"
+        print_status "Last 50 lines of reproxy.log:"
+        tail -50 "${RBE_REPROXY_LOG}" 2>/dev/null || echo "(log unavailable)"
         return 1
     fi
     
-    print_success "reproxy socket created: ${RBE_SOCKET}"
+    local elapsed=$((wait_count / 2))
+    print_success "reproxy socket created after ${elapsed}s: ${RBE_SOCKET}"
     
-    # Give reproxy more time to initialize with dependency scanner disabled
-    sleep 2
+    # Give reproxy final moment to fully initialize
+    sleep 1
     if ! reproxy_running; then
-        print_error "reproxy exited unexpectedly"
-        print_status "Last 30 lines of reproxy.log:"
-        tail -30 "${RBE_REPROXY_LOG}" 2>/dev/null || echo "(log unavailable)"
+        print_error "reproxy exited unexpectedly after socket creation"
+        print_status "Last 50 lines of reproxy.log:"
+        tail -50 "${RBE_REPROXY_LOG}" 2>/dev/null || echo "(log unavailable)"
         return 1
     fi
     
