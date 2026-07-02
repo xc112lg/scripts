@@ -85,9 +85,12 @@ def add_wrapper_flag(text: str, extra_flag: str) -> tuple[str, int]:
         stripped = line.rstrip("\n")
 
         # Makefile: RBE_WRAPPER := $(rbe_dir)/rewrapper
-        m1 = re.match(r"^(\s*RBE_WRAPPER\s*:=\s*\$\(rbe_dir\)/rewrapper)(\s*)$", stripped)
+        m1 = re.match(r"^(\s*)(RBE_WRAPPER\s*:=\s*\$\(rbe_dir\)/rewrapper)(\s*)$", stripped)
         if m1:
-            out_lines.append(f"{m1.group(1)} {extra_flag}\n")
+            indent = m1.group(1)
+            out_lines.append(f"{indent}# Some remote executors reject actions with working_directory=\".\".\n")
+            out_lines.append(f"{indent}# Canonicalizing the working dir helps once the client itself is patched.\n")
+            out_lines.append(f"{indent}{m1.group(2)} {extra_flag}\n")
             count += 1
             continue
 
@@ -135,9 +138,18 @@ def process_file(path: Path, old_dir_names: list[str], new_dir_name: str,
     return total_hits
 
 
-def git_diff(repo_dir: Path) -> str:
+def git_diff(repo_dir: Path, repo_rel_path: str) -> str:
+    # git diff normally prefixes paths as a/<path-within-repo> and
+    # b/<path-within-repo>, since it's run with cwd inside the repo.
+    # We override the prefixes so the emitted paths are relative to the
+    # AOSP root instead (e.g. a/build/make/core/rbe.mk), so the combined
+    # patch can be applied with `git apply -p1` from the AOSP root in a
+    # single shot rather than per-repo.
+    src_prefix = f"a/{repo_rel_path}/"
+    dst_prefix = f"b/{repo_rel_path}/"
     result = subprocess.run(
-        ["git", "diff", "--no-color"],
+        ["git", "diff", "--no-color",
+         f"--src-prefix={src_prefix}", f"--dst-prefix={dst_prefix}"],
         cwd=repo_dir,
         capture_output=True,
         text=True,
@@ -217,7 +229,7 @@ def main():
     patch_parts = []
     for repo in sorted(touched_repos):
         repo_dir = aosp_root / repo
-        diff_text = git_diff(repo_dir)
+        diff_text = git_diff(repo_dir, repo)
         if diff_text.strip():
             patch_parts.append(diff_text)
 
@@ -229,9 +241,10 @@ def main():
     print()
     print("Review it with:")
     print(f"  less {output_path}")
-    print("Apply it elsewhere with (run from aosp root, once per repo it touches):")
-    for repo in sorted(touched_repos):
-        print(f"  cd {repo} && git apply /path/to/{output_path.name}")
+    print("Apply it elsewhere with (run once from the AOSP root):")
+    print(f"  git apply -p1 {output_path}")
+    print("(If your AOSP root isn't itself a git repo, use `patch -p1` instead:")
+    print(f"  patch -p1 < {output_path})")
 
 
 if __name__ == "__main__":
