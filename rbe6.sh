@@ -34,8 +34,8 @@ export RBE_service="xc112lg.buildbuddy.io:443"
 export RBE_remote_cache_header="x-buildbuddy-api-key=D2SvmJdB1v8oM6KaNg6J"
 export RBE_remote_headers="x-buildbuddy-api-key=D2SvmJdB1v8oM6KaNg6J"
 
-export RBE_use_rpc_credentials=true
-export RBE_service_no_auth=true
+export RBE_use_rpc_credentials=false
+export RBE_service_no_auth=false
 
 # ============================================
 # RECLIENT BINARY DISCOVERY
@@ -375,5 +375,6 @@ main() {
 
 trap 'stop_reproxy' EXIT
 main "$@"
+
 
 cat rbe1/logs/reproxy.log
