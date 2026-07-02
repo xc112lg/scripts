@@ -107,8 +107,10 @@ test_rbe_connection() {
 
     pushd "${reproxy_dir}" >/dev/null || return 1
 
-    echo "[RBE TEST] 2/4 Starting reproxy via bootstrap..."
-    ./bootstrap --re_proxy=./reproxy
+    local LOCAL_SOCK="unix:///tmp/reproxy_test_$$.sock"
+
+    echo "[RBE TEST] 2/4 Starting reproxy via bootstrap (local socket: ${LOCAL_SOCK})..."
+    ./bootstrap --re_proxy=./reproxy --server_address="${LOCAL_SOCK}"
     local boot_status=$?
     if [[ $boot_status -ne 0 ]]; then
         echo "[RBE TEST] ERROR: bootstrap failed to start reproxy (exit $boot_status)."
@@ -120,7 +122,7 @@ test_rbe_connection() {
 
     echo "[RBE TEST] 3/4 Dispatching a single test action through rewrapper..."
     if [[ -x ./rewrapper ]]; then
-        ./rewrapper --labels=type=test --exec_root="$(pwd)" -- echo "rbe connection test"
+        ./rewrapper --server_address="${LOCAL_SOCK}" --labels=type=test --exec_root="$(pwd)" -- echo "rbe connection test"
         local wrap_status=$?
         if [[ $wrap_status -eq 0 ]]; then
             echo "[RBE TEST] Test action dispatched successfully."
@@ -133,7 +135,7 @@ test_rbe_connection() {
     fi
 
     echo "[RBE TEST] 4/4 Shutting down reproxy and checking logs..."
-    ./bootstrap --shutdown
+    ./bootstrap --shutdown --server_address="${LOCAL_SOCK}"
 
     local log_file
     log_file=$(ls -t reproxy_*.INFO 2>/dev/null | head -1)
