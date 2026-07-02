@@ -34,8 +34,8 @@ export RBE_service="xc112lg.buildbuddy.io:443"
 export RBE_remote_cache_header="x-buildbuddy-api-key=D2SvmJdB1v8oM6KaNg6J"
 export RBE_remote_headers="x-buildbuddy-api-key=D2SvmJdB1v8oM6KaNg6J"
 
-export RBE_use_rpc_credentials=true
-export RBE_service_no_auth=true
+export RBE_use_rpc_credentials=false
+export RBE_service_no_auth=false
 
 # ============================================
 # RECLIENT BINARY DISCOVERY
@@ -226,13 +226,15 @@ start_reproxy() {
     
     rm -f "${RBE_SOCKET}"
     
-    # Minimal flags - reproxy reads most config from environment variables
-    # NO custom flags to avoid compatibility issues with reproxy 0.132.0
+    # reproxy configuration  
+    # Custom BuildBuddy instances don't have dependency scanner service
+    # Setting depsscanner_address to empty string avoids scanner timeout
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
         -service="${RBE_service}" \
         -service_no_auth="${RBE_service_no_auth}" \
         -log_dir="${RBE_LOG_DIR}" \
+        -depsscanner_address="" \
         >> "${RBE_REPROXY_LOG}" 2>&1 &
     
     local reproxy_pid=$!
@@ -373,5 +375,6 @@ main() {
 
 trap 'stop_reproxy' EXIT
 main "$@"
+
 
 cat rbe1/logs/reproxy.log
