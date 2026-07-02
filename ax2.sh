@@ -13,7 +13,14 @@ source build/envsetup.sh
 #make clean
 git clone https://github.com/Rares6567/new_rbe_fix tutorial
 bash tutorial/scripts/build_patched_reclient.sh .
-patch -p1 < tutorial/patches/android-rbe-buildbuddyfix-defaults.patch
+
+PATCH_FILE="tutorial/patches/android-rbe-buildbuddyfix-defaults.patch"
+if patch -p1 --dry-run --forward < "$PATCH_FILE" >/dev/null 2>&1; then
+    echo "[PATCH] Not yet applied, applying now..."
+    patch -p1 < "$PATCH_FILE"
+else
+    echo "[PATCH] Already applied (or conflicts), skipping."
+fi
 
 export RBE_service="xc112lg.buildbuddy.io:443"        # BuildBuddy instance address (without grpcs://, add the port 443)
 export RBE_remote_headers="x-buildbuddy-api-key=D2SvmJdB1v8oM6KaNg6J"    # Your BuildBuddy API key
