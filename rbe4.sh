@@ -226,13 +226,15 @@ start_reproxy() {
     
     rm -f "${RBE_SOCKET}"
     
-    # Minimal flags - reproxy reads most config from environment variables
-    # NO custom flags to avoid compatibility issues with reproxy 0.132.0
+    # reproxy configuration  
+    # Custom BuildBuddy instances don't have dependency scanner service
+    # Setting depsscanner_address to empty string avoids scanner timeout
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
         -service="${RBE_service}" \
         -service_no_auth="${RBE_service_no_auth}" \
         -log_dir="${RBE_LOG_DIR}" \
+        -depsscanner_address="" \
         >> "${RBE_REPROXY_LOG}" 2>&1 &
     
     local reproxy_pid=$!
