@@ -34,8 +34,8 @@ export RBE_service="xc112lg.buildbuddy.io:443"
 export RBE_remote_cache_header="x-buildbuddy-api-key=D2SvmJdB1v8oM6KaNg6J"
 export RBE_remote_headers="x-buildbuddy-api-key=D2SvmJdB1v8oM6KaNg6J"
 
-export RBE_use_rpc_credentials=false
-export RBE_service_no_auth=false
+export RBE_use_rpc_credentials=true
+export RBE_service_no_auth=true
 
 # ============================================
 # RECLIENT BINARY DISCOVERY
@@ -226,15 +226,38 @@ start_reproxy() {
     
     rm -f "${RBE_SOCKET}"
     
-    # reproxy configuration  
-    # Custom BuildBuddy instances don't have dependency scanner service
-    # Setting depsscanner_address to empty string avoids scanner timeout
+    # ----------------------------------------------------------------------
+    # Dependency scanner configuration
+    #
+    # depsscanner_address="" tells reproxy to use its "internal" scanner,
+    # which spawns reproxy itself with -enable_deps_scanner. Some reproxy
+    # builds (e.g. 0.132.0.1a8ff94) don't implement that flag, which makes
+    # every C++ action wait out a 30s timeout and fall back to local
+    # execution instead of using RBE. Prefer the local scandeps_server
+    # binary shipped alongside reproxy (execrel://, the actual default)
+    # when it's present, and only fall back to the internal scanner if it
+    # isn't.
+    # ----------------------------------------------------------------------
+    local depsscanner_flag=()
+    local scandeps_bin="${RBE_BIN_DIR}/scandeps_server"
+    if [ -x "${scandeps_bin}" ]; then
+        print_success "scandeps_server found: ${scandeps_bin}"
+        depsscanner_flag=(-depsscanner_address="exec://${scandeps_bin}")
+    else
+        print_warning "scandeps_server not found in ${RBE_BIN_DIR}"
+        print_warning "Falling back to internal dependency scanner (-depsscanner_address=\"\")"
+        print_warning "If C++ actions repeatedly time out on 'dependency scanner service' in reproxy.log,"
+        print_warning "your reproxy build likely doesn't support the internal scanner (-enable_deps_scanner)."
+        print_warning "Fetch a matching scandeps_server binary for ${RBE_BIN_DIR}, or set RBE_CXX=0 to skip RBE for C++."
+        depsscanner_flag=(-depsscanner_address="")
+    fi
+
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
         -service="${RBE_service}" \
         -service_no_auth="${RBE_service_no_auth}" \
         -log_dir="${RBE_LOG_DIR}" \
-        -depsscanner_address="" \
+        "${depsscanner_flag[@]}" \
         >> "${RBE_REPROXY_LOG}" 2>&1 &
     
     local reproxy_pid=$!
@@ -375,6 +398,8 @@ main() {
 
 trap 'stop_reproxy' EXIT
 main "$@"
+
+cat rbe1/logs/reproxy.log
 
 
 cat rbe1/logs/reproxy.log
