@@ -217,60 +217,61 @@ reproxy_running() {
 
 start_reproxy() {
     print_status "Starting reproxy..."
-    
+
     if reproxy_running; then
         print_warning "reproxy already running, restarting..."
         pkill -f 'reproxy.*server_address' 2>/dev/null || true
         sleep 1
     fi
-    
+
     rm -f "${RBE_SOCKET}"
-    
-    # Minimal flags - reproxy reads most config from environment variables
-    # NO custom flags to avoid compatibility issues with reproxy 0.132.0
-    "${RBE_BIN_DIR}/reproxy" \
-        -server_address="unix://${RBE_SOCKET}" \
-        -service="${RBE_service}" \
-        -service_no_auth="${RBE_service_no_auth}" \
-        -log_dir="${RBE_LOG_DIR}" \
-        >> "${RBE_REPROXY_LOG}" 2>&1 &
-    
+
+    local args=(
+        -server_address="unix://${RBE_SOCKET}"
+        -service="${RBE_service}"
+        -log_dir="${RBE_LOG_DIR}"
+        -use_rpc_credentials=true
+        -service_no_auth=true
+    )
+
+    if [ -x "${RBE_BIN_DIR}/scandeps_server" ]; then
+        print_status "Using external dependency scanner"
+        args+=(-depsscanner_address="execrel://")
+    else
+        print_warning "Using internal dependency scanner"
+        args+=(-depsscanner_address="")
+    fi
+
+    "${RBE_BIN_DIR}/reproxy" "${args[@]}" >> "${RBE_REPROXY_LOG}" 2>&1 &
     local reproxy_pid=$!
-    print_status "reproxy PID: $reproxy_pid"
-    
-    # Wait for socket - reproxy will timeout on dependency scanner (~30 seconds)
-    print_status "Waiting for reproxy socket (may take up to 35 seconds)..."
-    local wait_count=0
-    local max_wait=70  # 35 seconds (70 * 0.5s)
-    
-    while [ ! -S "${RBE_SOCKET}" ] && [ $wait_count -lt $max_wait ]; do
-        if [ $((wait_count % 20)) -eq 0 ] && [ $wait_count -gt 0 ]; then
-            print_status "Still waiting... ($((wait_count / 2)) seconds elapsed)"
+
+    print_status "Waiting for reproxy socket..."
+
+    for _ in $(seq 1 70); do
+        [ -S "${RBE_SOCKET}" ] && break
+        if ! kill -0 "${reproxy_pid}" 2>/dev/null; then
+            print_error "reproxy exited during startup"
+            tail -100 "${RBE_REPROXY_LOG}"
+            return 1
         fi
         sleep 0.5
-        ((wait_count++))
     done
-    
+
     if [ ! -S "${RBE_SOCKET}" ]; then
-        print_error "reproxy socket not created after 35 seconds"
-        print_error "reproxy may have crashed. Check logs:"
-        print_status "Last 50 lines of reproxy.log:"
-        tail -50 "${RBE_REPROXY_LOG}" 2>/dev/null | tail -50
+        print_error "Socket not created"
+        tail -100 "${RBE_REPROXY_LOG}"
         return 1
     fi
-    
-    local elapsed=$((wait_count / 2))
-    print_success "reproxy socket created after ${elapsed}s: ${RBE_SOCKET}"
-    
-    sleep 1
-    if ! reproxy_running; then
+
+    sleep 35
+
+    if ! kill -0 "${reproxy_pid}" 2>/dev/null; then
         print_error "reproxy exited unexpectedly"
-        print_status "Last 50 lines of reproxy.log:"
-        tail -50 "${RBE_REPROXY_LOG}" 2>/dev/null | tail -50
+        tail -100 "${RBE_REPROXY_LOG}"
         return 1
     fi
-    
-    print_success "reproxy online"
+
+    print_success "reproxy fully initialized"
     return 0
 }
 
