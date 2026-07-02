@@ -18,7 +18,7 @@ What it does:
 
 Usage:
   python3 make_rbe_patch.py \
-      --aosp-root /path/to/aosp \
+      --aosp-root /tmp/src/android \
       --old-dir-name live \
       --new-dir-name buildbuddyfix \
       --extra-flag "-canonicalize_working_dir" \
