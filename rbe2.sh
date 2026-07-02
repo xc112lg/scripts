@@ -367,3 +367,6 @@ main() {
 
 trap 'stop_reproxy' EXIT
 main "$@"
+
+
+cat rbe1/logs/reproxy.log
