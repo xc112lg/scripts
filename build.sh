@@ -25,16 +25,10 @@ export WITH_GMS=false
 # export WITH_PIXEL_LAUNCHER := false
 # export TARGET_USE_GPHOTOS := false
 # export TARGET_USE_WALLPAPERS := false
-repo sync -c -j32 --force-sync --no-clone-bundle --no-tags build/make build/soong
+repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 
 # 1. Add the datetime import right after the contextlib import
-sed -i '/^import contextlib$/a import datetime' build/soong/scripts/gen_build_prop.py
 
-# 2. Replace the two subprocess-based date calls with pure-Python datetime
-sed -i \
-  -e 's|  config\["Date"\] = subprocess\.check_output(\["date", "-d", f"@{raw_date}"\], text=True)\.strip()|  dt = datetime.datetime.fromtimestamp(int(raw_date), tz=datetime.timezone.utc)\n  config["Date"] = dt.strftime("%a %b %e %H:%M:%S UTC %Y")|' \
-  -e 's|  config\["DateUtc"\] = subprocess\.check_output(\["date", "-d", f"@{raw_date}", "+%s"\], text=True)\.strip()|  config["DateUtc"] = str(int(raw_date))|' \
-  build/soong/scripts/gen_build_prop.py
 
 export TARGET_USES_PICO_GAPPS=true
 export TARGET_INCLUDE_VIA=true
