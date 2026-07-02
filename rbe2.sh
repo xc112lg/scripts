@@ -1,7 +1,7 @@
 #!/bin/bash
 # ============================================================================
 # AOSP RBE CONFIGURATION FOR CUSTOM BUILDBUDDY + REPROXY
-# Optimized for LineageOS/EvolutionX with xc112lg.buildbuddy.io instance
+# Minimal configuration - reproxy will timeout on dependency scanner gracefully
 # ============================================================================
 
 set -e
@@ -16,12 +16,9 @@ NC='\033[0m'
 # PATHS & DIRECTORIES
 # ============================================
 
-# Logs and cache go in working directory
 export RBE_DIR="/tmp/src/android/rbe1"
 export RBE_LOG_DIR="${RBE_DIR}/logs"
 export RBE_CACHE_DIR="${RBE_DIR}/cache"
-
-# Socket path should be simple and separate (avoid nested dirs that confuse gRPC parser)
 export RBE_SOCKET="/tmp/reproxy_aosp.sock"
 export RBE_REPROXY_LOG="${RBE_LOG_DIR}/reproxy.log"
 export RBE_RECLIENT_LOG="${RBE_LOG_DIR}/reclient.log"
@@ -29,15 +26,11 @@ export RBE_RECLIENT_LOG="${RBE_LOG_DIR}/reclient.log"
 mkdir -p "${RBE_LOG_DIR}" "${RBE_CACHE_DIR}"
 
 # ============================================
-# BUILDBUDDY - CUSTOM INSTANCE CONFIGURATION
+# BUILDBUDDY CONFIGURATION
 # ============================================
 
-# Custom BuildBuddy instance (not public remote.buildbuddy.io)
 export RBE_remote_cache="grpcs://xc112lg.buildbuddy.io"
 export RBE_service="xc112lg.buildbuddy.io:443"
-
-# CRITICAL: Use = format (not ,) for header key=value pairs
-# This matches Bazel's --remote_header format and BuildBuddy's expectations
 export RBE_remote_cache_header="x-buildbuddy-api-key=D2SvmJdB1v8oM6KaNg6J"
 export RBE_remote_headers="x-buildbuddy-api-key=D2SvmJdB1v8oM6KaNg6J"
 
@@ -74,8 +67,6 @@ export PATH="${RBE_BIN_DIR}:${PATH}"
 
 export RBE_PLATFORM="container-image=docker://gcr.io/cloud-marketplace/google/rbe-ubuntu22-04,OSFamily=Linux,docker_network=off"
 export USE_RBE=1
-# Conservative value for 16-core system (16 * 10 = 160)
-# Prevents network saturation and memory pressure during cache operations
 export NINJA_REMOTE_NUM_JOBS=160
 
 # ============================================
@@ -235,8 +226,8 @@ start_reproxy() {
     
     rm -f "${RBE_SOCKET}"
     
-    # Note: For custom BuildBuddy instances, reproxy dependency scanner may timeout
-    # Using minimal flags - most config comes from environment variables
+    # Minimal flags - reproxy reads most config from environment variables
+    # NO custom flags to avoid compatibility issues with reproxy 0.132.0
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
         -service="${RBE_service}" \
@@ -247,36 +238,35 @@ start_reproxy() {
     local reproxy_pid=$!
     print_status "reproxy PID: $reproxy_pid"
     
-    # Wait for socket - reproxy's dependency scanner may timeout, need to wait longer
-    print_status "Waiting for reproxy socket (dependency scanner may take time)..."
+    # Wait for socket - reproxy will timeout on dependency scanner (~30 seconds)
+    print_status "Waiting for reproxy socket (may take up to 35 seconds)..."
     local wait_count=0
-    local max_wait=60  # Wait up to 30 seconds (60 * 0.5s)
+    local max_wait=70  # 35 seconds (70 * 0.5s)
     
     while [ ! -S "${RBE_SOCKET}" ] && [ $wait_count -lt $max_wait ]; do
         if [ $((wait_count % 20)) -eq 0 ] && [ $wait_count -gt 0 ]; then
-            print_status "Still waiting... (${wait_count} seconds elapsed)"
+            print_status "Still waiting... ($((wait_count / 2)) seconds elapsed)"
         fi
         sleep 0.5
         ((wait_count++))
     done
     
     if [ ! -S "${RBE_SOCKET}" ]; then
-        print_error "reproxy socket not created after 30 seconds"
-        print_error "reproxy may have crashed or is still initializing"
+        print_error "reproxy socket not created after 35 seconds"
+        print_error "reproxy may have crashed. Check logs:"
         print_status "Last 50 lines of reproxy.log:"
-        tail -50 "${RBE_REPROXY_LOG}" 2>/dev/null || echo "(log unavailable)"
+        tail -50 "${RBE_REPROXY_LOG}" 2>/dev/null | tail -50
         return 1
     fi
     
     local elapsed=$((wait_count / 2))
     print_success "reproxy socket created after ${elapsed}s: ${RBE_SOCKET}"
     
-    # Give reproxy final moment to fully initialize
     sleep 1
     if ! reproxy_running; then
-        print_error "reproxy exited unexpectedly after socket creation"
+        print_error "reproxy exited unexpectedly"
         print_status "Last 50 lines of reproxy.log:"
-        tail -50 "${RBE_REPROXY_LOG}" 2>/dev/null || echo "(log unavailable)"
+        tail -50 "${RBE_REPROXY_LOG}" 2>/dev/null | tail -50
         return 1
     fi
     
@@ -337,7 +327,7 @@ show_tips() {
     echo "2. Check BuildBuddy dashboard:"
     echo "   https://xc112lg.buildbuddy.io/invocation/"
     echo ""
-    echo "3. Expected output should show:"
+    echo "3. Expected output after build:"
     echo "   RBE Stats: down X MB, up Y MB, 0-5 local fallbacks"
     echo ""
 }
