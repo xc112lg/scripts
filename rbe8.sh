@@ -28,11 +28,13 @@ export RBE_service_no_auth=true
 # --- Enable RBE and General Settings ---
 export USE_RBE=1
 export RBE_DIR="prebuilts/remoteexecution-client/buildbuddyfix"                     # Set this to the output folder produced by the fix script
-export NINJA_REMOTE_NUM_JOBS=256                        # Number of parallel remote jobs (adjust based on your RAM, AOSP default is 500)
+export NINJA_REMOTE_NUM_JOBS=512                        # Number of parallel remote jobs (adjust based on your RAM, AOSP default is 500)
 
 # --- Unified Downloads/Uploads (Recommended) ---
 export RBE_use_unified_downloads=true
 export RBE_use_unified_uploads=true
+export RBE_compression_algorithm=gzip                 # Faster network transfer
+export RBE_local_slow_threshold=100ms 
 
 # --- Execution Strategies (remote_local_fallback is generally best) ---
 export RBE_R8_EXEC_STRATEGY=remote_local_fallback
