@@ -16,10 +16,13 @@ NC='\033[0m'
 # PATHS & DIRECTORIES
 # ============================================
 
+# Logs and cache go in working directory
 export RBE_DIR="/tmp/src/android/rbe1"
 export RBE_LOG_DIR="${RBE_DIR}/logs"
 export RBE_CACHE_DIR="${RBE_DIR}/cache"
-export RBE_SOCKET="${RBE_DIR}/reproxy.sock"
+
+# Socket path should be simple and separate (avoid nested dirs that confuse gRPC parser)
+export RBE_SOCKET="/tmp/reproxy_aosp.sock"
 export RBE_REPROXY_LOG="${RBE_LOG_DIR}/reproxy.log"
 export RBE_RECLIENT_LOG="${RBE_LOG_DIR}/reclient.log"
 
@@ -71,7 +74,9 @@ export PATH="${RBE_BIN_DIR}:${PATH}"
 
 export RBE_PLATFORM="container-image=docker://gcr.io/cloud-marketplace/google/rbe-ubuntu22-04,OSFamily=Linux,docker_network=off"
 export USE_RBE=1
-export NINJA_REMOTE_NUM_JOBS=256
+# Conservative value for 16-core system (16 * 10 = 160)
+# Prevents network saturation and memory pressure during cache operations
+export NINJA_REMOTE_NUM_JOBS=160
 
 # ============================================
 # RBE SOCKET & LOGGING
@@ -230,11 +235,14 @@ start_reproxy() {
     
     rm -f "${RBE_SOCKET}"
     
+    # Note: For custom BuildBuddy instances, dependency scanner may not be available
+    # Adding flags to handle this gracefully
     "${RBE_BIN_DIR}/reproxy" \
         -server_address="unix://${RBE_SOCKET}" \
         -service="${RBE_service}" \
         -service_no_auth="${RBE_service_no_auth}" \
         -log_dir="${RBE_LOG_DIR}" \
+        -enable_deps_scanner=false \
         >> "${RBE_REPROXY_LOG}" 2>&1 &
     
     local reproxy_pid=$!
@@ -257,7 +265,8 @@ start_reproxy() {
     
     print_success "reproxy socket created: ${RBE_SOCKET}"
     
-    sleep 1
+    # Give reproxy more time to initialize with dependency scanner disabled
+    sleep 2
     if ! reproxy_running; then
         print_error "reproxy exited unexpectedly"
         print_status "Last 30 lines of reproxy.log:"
@@ -297,6 +306,7 @@ print_diagnostics() {
     
     echo -e "${BLUE}[RBE]${NC} Configuration:"
     echo "  Remote cache: ${RBE_remote_cache}"
+    echo "  Socket: ${RBE_SOCKET}"
     echo "  Parallel jobs: ${NINJA_REMOTE_NUM_JOBS}"
     echo "  Local cache: ${RBE_CACHE_DIR}"
     echo ""
@@ -367,6 +377,3 @@ main() {
 
 trap 'stop_reproxy' EXIT
 main "$@"
-
-
-cat rbe1/logs/reproxy.log
