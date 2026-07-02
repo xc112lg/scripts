@@ -1,7 +1,7 @@
   #!/bin/bash
 # --- Optimized RBE Configuration for AOSP Builds ---
 # Recommendations based on your current setup and performance best practices
-git clone https://github.com/xc112lg/rbe1 >/dev/null 2>&1
+rm -rf rbe1
 
 
 rm -rf .repo/local_manifests/
@@ -25,7 +25,7 @@ export WITH_GMS=false
 # export WITH_PIXEL_LAUNCHER := false
 # export TARGET_USE_GPHOTOS := false
 # export TARGET_USE_WALLPAPERS := false
-
+repo sync -c -j32 --force-sync --no-clone-bundle --no-tags build/make build/soong
 
 # 1. Add the datetime import right after the contextlib import
 sed -i '/^import contextlib$/a import datetime' build/soong/scripts/gen_build_prop.py
