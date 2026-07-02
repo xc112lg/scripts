@@ -48,14 +48,17 @@ TARGET_FILES = [
 ]
 
 
-def replace_dir_name(text: str, old_dir_name: str, new_dir_name: str) -> tuple[str, int]:
+def replace_dir_name(text: str, old_dir_names: list[str], new_dir_name: str) -> tuple[str, int]:
     """Replace occurrences of prebuilts/remoteexecution-client/<old>(/) with <new>.
 
-    Matches 'live', 'latest', or whatever old_dir_name is, immediately after
-    'prebuilts/remoteexecution-client/', with or without a trailing slash.
+    old_dir_names is a list of candidate directory names (e.g. ["live", "latest"]),
+    since different files in AOSP historically hardcode different names. Any of
+    them, immediately after 'prebuilts/remoteexecution-client/', with or without
+    a trailing slash, will be replaced.
     """
+    alternation = "|".join(re.escape(name) for name in old_dir_names)
     pattern = re.compile(
-        r"(prebuilts/remoteexecution-client/)" + re.escape(old_dir_name) + r"(/?)"
+        r"(prebuilts/remoteexecution-client/)(?:" + alternation + r")(/?)"
     )
     count = 0
 
@@ -103,7 +106,7 @@ def add_wrapper_flag(text: str, extra_flag: str) -> tuple[str, int]:
     return "".join(out_lines), count
 
 
-def process_file(path: Path, old_dir_name: str, new_dir_name: str,
+def process_file(path: Path, old_dir_names: list[str], new_dir_name: str,
                   extra_flag: str | None, dry_run: bool) -> int:
     if not path.exists():
         print(f"  [skip] {path} (not found)")
@@ -112,7 +115,7 @@ def process_file(path: Path, old_dir_name: str, new_dir_name: str,
     original = path.read_text()
     text = original
 
-    text, dir_hits = replace_dir_name(text, old_dir_name, new_dir_name)
+    text, dir_hits = replace_dir_name(text, old_dir_names, new_dir_name)
 
     flag_hits = 0
     if extra_flag:
@@ -152,10 +155,13 @@ def main():
                                       formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--aosp-root", required=True, type=Path,
                          help="Path to the root of your AOSP checkout")
-    parser.add_argument("--old-dir-name", default="live",
-                         help="Existing directory name under "
-                              "prebuilts/remoteexecution-client/ to replace "
-                              "(default: live)")
+    parser.add_argument("--old-dir-name", default="live,latest",
+                         help="Comma-separated list of existing directory names "
+                              "under prebuilts/remoteexecution-client/ to replace. "
+                              "AOSP files historically use different names in "
+                              "different places (e.g. rbe.mk uses 'live' while "
+                              "rbesetup.sh uses 'latest'), so all candidates are "
+                              "matched in a single pass (default: live,latest)")
     parser.add_argument("--new-dir-name", required=True,
                          help="Your replacement directory name, e.g. buildbuddyfix")
     parser.add_argument("--extra-flag", default=None,
@@ -171,8 +177,13 @@ def main():
     if not aosp_root.is_dir():
         sys.exit(f"error: {aosp_root} is not a directory")
 
+    old_dir_names = [name.strip() for name in args.old_dir_name.split(",") if name.strip()]
+    if not old_dir_names:
+        sys.exit("error: --old-dir-name must contain at least one non-empty name")
+
     print(f"AOSP root: {aosp_root}")
-    print(f"Replacing 'prebuilts/remoteexecution-client/{args.old_dir_name}' "
+    old_list_str = ", ".join(f"'prebuilts/remoteexecution-client/{n}'" for n in old_dir_names)
+    print(f"Replacing {old_list_str} "
           f"-> 'prebuilts/remoteexecution-client/{args.new_dir_name}'")
     if args.extra_flag:
         print(f"Appending flag to default rewrapper invocations: {args.extra_flag}")
@@ -183,7 +194,7 @@ def main():
 
     for rel_path, repo in TARGET_FILES:
         full_path = aosp_root / rel_path
-        hits = process_file(full_path, args.old_dir_name, args.new_dir_name,
+        hits = process_file(full_path, old_dir_names, args.new_dir_name,
                              args.extra_flag, args.dry_run)
         if hits:
             touched_repos.add(repo)
