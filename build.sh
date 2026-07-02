@@ -25,8 +25,7 @@ export WITH_GMS=false
 # export WITH_PIXEL_LAUNCHER := false
 # export TARGET_USE_GPHOTOS := false
 # export TARGET_USE_WALLPAPERS := false
-repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
-
+sed -i 's|tar xfp $PARAM_BOOTANIMATION_TAR -C $INTERMEDIATES|python3 << '"'"'EOF'"'"'\nimport tarfile\nwith tarfile.open("$PARAM_BOOTANIMATION_TAR") as tar:\n    tar.extractall(path="$INTERMEDIATES")\nEOF|' vendor/lineage/bootanimation/gen-bootanimation.sh
 # 1. Add the datetime import right after the contextlib import
 
 
