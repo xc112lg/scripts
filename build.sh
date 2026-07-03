@@ -20,6 +20,7 @@ repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe8.sh)  
 . build/envsetup.sh
 #export WITH_GMS=true
+
 export WITH_GMS=false
 # export WITH_GMS_COMMS_SUITE := false
 # export WITH_PIXEL_LAUNCHER := false
@@ -28,6 +29,8 @@ export WITH_GMS=false
 # 1. Add the datetime import right after the contextlib import
 
 sed -i 's|tar xfp $PARAM_BOOTANIMATION_TAR -C $INTERMEDIATES|python3 -c "import tarfile; tarfile.open(\\\"$PARAM_BOOTANIMATION_TAR\\\").extractall(path=\\\"$INTERMEDIATES\\\")"|' vendor/lineage/bootanimation/gen-bootanimation.sh
+sed -i '/Command:.*buildFlagInternal/c\            Command: `${buildFlagInternal} --maps-file ${in} --quiet --declarations-only get && : > ${out}`,' build/soong/aconfig/build_flags/init.go
+
 export TARGET_USES_PICO_GAPPS=true
 export TARGET_INCLUDE_VIA=true
 export TARGET_INCLUDE_REVAMPED=true
