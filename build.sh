@@ -43,9 +43,9 @@ sed -i '$a -include vendor/evolution-priv/keys/keys.mk' device/xiaomi/blossom/li
 export RBE_LOG=DEBUG
 export RBE_VERBOSE=1
 
-lunch lineage_blossom-bp4a-user
+lunch lineage_blossom-bp4a-eng
 m installclean
 #m clean #once
-m bacon -j64
-
-curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom/upevo.sh | bash >/dev/null 2>&1
+m bacon
+curl -sf https://raw.githubusercontent.com/xc112lg/blossom_lineage/refs/heads/main/upevo.sh  | bash >/dev/null 2>&1
+#curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/blossom/upevo.sh | bash >/dev/null 2>&1
