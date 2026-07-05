@@ -13,7 +13,7 @@ rm -rf android_device_xiaomi_blossom-kernel
 git clone https://github.com/zyexro/sashimi_kernel_xiaomi_blossom -b sashimi --depth 1
 cd sashimi_kernel_xiaomi_blossom 
 curl -L https://github.com/xc112lg/sashimi_kernel_xiaomi_blossom/commit/f8717ce1b4ec2c1195deccbe2365369379be538f.patch | git am
-
+curl -L https://github.com/xc112lg/sashimi_kernel_xiaomi_blossom/commit/ed4cf13defccb54cbb67567a578ed55207bb692d.patch | git am
 
 curl -L https://github.com/xc112lg/sashimi_kernel_xiaomi_blossom/commit/a571172d38b2f706f3b21a8a0e3543c42d4bd2a6.patch | git am
 wget -O buildneutron1.sh https://raw.githubusercontent.com/xc112lg/extremeNiigo/refs/heads/yoka_rb1/buildneutron1.sh
