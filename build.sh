@@ -1,9 +1,6 @@
   #!/bin/bash
 # --- Optimized RBE Configuration for AOSP Builds ---
 # Recommendations based on your current setup and performance best practices
-rm -rf rbe1
-
-
 rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf kernel/xiaomi/blossom
@@ -18,7 +15,7 @@ repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs 
 git clone https://github.com/xc112lg/local_manifests.git -b lunaris .repo/local_manifests
 repo sync -c -j32 --force-sync --no-clone-bundle --no-tags
 /opt/crave/resync.sh
-#source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe8.sh)  
+source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe8.sh)  >/dev/null 2>&1
 . build/envsetup.sh
 #export WITH_GMS=true
 
