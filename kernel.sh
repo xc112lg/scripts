@@ -12,7 +12,7 @@ rm -rf sashimi_kernel_xiaomi_blossom
 rm -rf android_device_xiaomi_blossom-kernel
 git clone https://github.com/zyexro/sashimi_kernel_xiaomi_blossom -b sashimi --depth 1
 cd sashimi_kernel_xiaomi_blossom 
-sed -i '/^extern unsigned int gCapturePriLayerEnable;/i\
+sed -i.backup '/^extern unsigned int gCapturePriLayerEnable;/i\
 /* Forward declaration and struct definition for dprec_logger_event */\
 struct dprec_logger {\
 \	unsigned long long period_frame;\
@@ -31,6 +31,11 @@ struct dprec_logger_event {\
 \	struct dprec_logger logger;\
 };\
 ' drivers/misc/mediatek/video/mt6765/dispsys/display_recorder.h
+
+grep -n "struct dprec_logger_event" \
+  drivers/misc/mediatek/video/mt6765/dispsys/display_recorder.h
+
+
 curl -L https://github.com/xc112lg/sashimi_kernel_xiaomi_blossom/commit/a571172d38b2f706f3b21a8a0e3543c42d4bd2a6.patch | git am
 wget -O buildneutron1.sh https://raw.githubusercontent.com/xc112lg/extremeNiigo/refs/heads/yoka_rb1/buildneutron1.sh
 chmod +x buildneutron1.sh
