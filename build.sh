@@ -8,7 +8,7 @@ rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf kernel/xiaomi/blossom
 rm -rf vendor/lineage
-rm -rf build
+#rm -rf build
 rm -rf TMP_PATCHES
 #rm -rf frameworks/base
 sudo apt update >/dev/null 2>&1
