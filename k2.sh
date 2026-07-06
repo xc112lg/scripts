@@ -66,6 +66,7 @@ package_anykernel3
 git clone  https://$GH_TOKEN@github.com/xc112lg/nn -b main
 mv sashimi_kernel_xiaomi_blossom/newkernel/dtb.img nn
 mv sashimi_kernel_xiaomi_blossom/newkernel/kernel nn
+mv *.zip nn
 cd nn
 git add .
 git commit -m "newkernel"
