@@ -29,6 +29,7 @@ package_anykernel3() {
         cd AnyKernel3 || exit 1
         rm -rf .git
         zip -r9 "../$KERNEL_ZIP_NAME" . -x ".git*"
+        cd -
     )
 
     if [ -f "$KERNEL_ZIP_NAME" ]; then
