@@ -49,7 +49,7 @@ else
     echo "⚠ .env file not found"
 fi
 rm -rf sashimi_kernel_xiaomi_blossom
-rm -rf android_device_xiaomi_blossom-kernel
+rm -rf nn
 git clone https://github.com/zyexro/sashimi_kernel_xiaomi_blossom -b sashimi --depth 1
 cd sashimi_kernel_xiaomi_blossom 
 curl -L https://github.com/xc112lg/sashimi_kernel_xiaomi_blossom/commit/f8717ce1b4ec2c1195deccbe2365369379be538f.patch | git am
@@ -63,10 +63,10 @@ cd ..
 
 package_anykernel3
 
-git clone  https://$GH_TOKEN@github.com/xc112lg/android_device_xiaomi_blossom-kernel -b main
-mv sashimi_kernel_xiaomi_blossom/newkernel/dtb.img android_device_xiaomi_blossom-kernel
-mv sashimi_kernel_xiaomi_blossom/newkernel/kernel android_device_xiaomi_blossom-kernel
-cd android_device_xiaomi_blossom-kernel
+git clone  https://$GH_TOKEN@github.com/xc112lg/nn -b main
+mv sashimi_kernel_xiaomi_blossom/newkernel/dtb.img nn
+mv sashimi_kernel_xiaomi_blossom/newkernel/kernel nn
+cd nn
 git add .
 git commit -m "newkernel"
 git push
