@@ -1,6 +1,17 @@
   #!/bin/bash
 # --- Optimized RBE Configuration for AOSP Builds ---
 # Recommendations based on your current setup and performance best practices
+if [ -f .env ]; then
+    export $(cat .env | grep -v '#' | xargs)
+    echo "✓ Loaded .env from current directory"
+elif [ -f ../.env ]; then
+    export $(cat ../.env | grep -v '#' | xargs)
+    echo "✓ Loaded .env from parent directory"
+else
+    echo "⚠ .env file not found"
+fi
+git config --global url."https://${GH_TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+
 rm -rf .repo/local_manifests/
 rm -rf device/xiaomi
 rm -rf kernel/xiaomi/blossom
@@ -37,8 +48,7 @@ sed -i '$a -include vendor/evolution-priv/keys/keys.mk' device/xiaomi/blossom/li
 #sed -i '/<item>com.android.nfc<\/item>/d' frameworks/base/core/res/res/values/policy_exempt_apps.xml
 #cat frameworks/base/core/res/res/values/policy_exempt_apps.xml
 
-export RBE_LOG=DEBUG
-export RBE_VERBOSE=1
+rm -rf hardware/mediatek/frameworks
 
 lunch lineage_blossom-bp4a-eng
 m installclean
