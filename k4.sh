@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ---- AnyKernel3 config (edit as needed for your device fork/branch) ----
-ANYKERNEL_REPO="https://github.com/osm0sis/AnyKernel3"
+ANYKERNEL_REPO="https://github.com/xc112lg/AnyKernel3"
 ANYKERNEL_BRANCH="master"
 KERNEL_ZIP_NAME="sashimi_kernel_blossom_$(date +%Y%m%d_%H%M).zip"
 
