@@ -20,7 +20,7 @@ wget -O buildneutron1.sh https://raw.githubusercontent.com/xc112lg/extremeNiigo/
 chmod +x buildneutron1.sh
 . buildneutron1.sh
 cd ..
-git clone  https://$GH_TOKEN@github.com/xc112lg/android_device_xiaomi_blossom-kernel -b main
+git clone  https://$GH_TOKEN@github.com/xc112lg/android_device_xiaomi_blossom-kernel -b lineage
 mv sashimi_kernel_xiaomi_blossom/newkernel/dtb.img android_device_xiaomi_blossom-kernel
 mv sashimi_kernel_xiaomi_blossom/newkernel/kernel android_device_xiaomi_blossom-kernel
 cd android_device_xiaomi_blossom-kernel
