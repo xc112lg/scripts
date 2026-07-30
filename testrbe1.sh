@@ -1,12 +1,15 @@
 cd /tmp/src/android
 
-# 1. Confirm rewrapper actually exists first
-ls -la prebuilts/remoteexecution-client/buildbuddyfix/rewrapper
+# Source it directly so the RBE_* vars stick around in this shell
+source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe8.sh)
+# (or if you have it saved locally: source rbe8.sh)
 
-# 2. Create a throwaway test file right here
+# Confirm the critical var is actually set now
+echo "RBE_service=$RBE_service"
+
+# Now retry the single-file test
 echo 'int main() { return 0; }' > rbe_test.c
 
-# 3. First run — should be a cache MISS (uploads)
 prebuilts/remoteexecution-client/buildbuddyfix/rewrapper \
   --canonicalize_working_dir \
   --labels=type=compile,lang=cpp,compiler=clang \
@@ -18,7 +21,6 @@ prebuilts/remoteexecution-client/buildbuddyfix/rewrapper \
 echo "--- First run done ---"
 ls -la rbe_test.o
 
-# 4. Delete output, run again — should be a cache HIT (fast)
 rm -f rbe_test.o
 time prebuilts/remoteexecution-client/buildbuddyfix/rewrapper \
   --canonicalize_working_dir \
@@ -29,6 +31,4 @@ time prebuilts/remoteexecution-client/buildbuddyfix/rewrapper \
   prebuilts/clang/host/linux-x86/clang-r536225/bin/clang++ -c rbe_test.c -o rbe_test.o
 
 ls -la rbe_test.o
-
-# 5. Clean up
 rm -f rbe_test.c rbe_test.o
