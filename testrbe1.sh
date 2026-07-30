@@ -14,7 +14,7 @@ rm -rf vendor/evolution-priv/keys
 repo init -u https://github.com/crdroidandroid/android.git -b 15.0 --git-lfs --depth=1
 git clone https://github.com/xc112lg/local_manifests --depth 1 -b lg .repo/local_manifests
 repo sync -c -j64 --force-sync --no-clone-bundle --no-tags
-/opt/crave/resync.sh
+#/opt/crave/resync.sh
 source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe8.sh)
 
 
