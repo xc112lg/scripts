@@ -1,0 +1,18 @@
+
+
+source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe8.sh)  >/dev/null 2>&1
+
+
+
+source build/envsetup.sh
+
+m libicui18n 2>&1 | tee /tmp/rbe_test.log
+
+# 3. Check the result
+if grep -q "Unauthenticated" /tmp/rbe_test.log; then
+  echo "❌ Still failing to authenticate with RBE"
+else
+  echo "✅ No auth errors — RBE is authenticating correctly"
+fi
+grep "RBE Stats" /tmp/rbe_test.log
+
