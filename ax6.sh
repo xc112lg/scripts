@@ -247,22 +247,49 @@ test_check_cache_status() {
 }
 
 test_rbe_connection() {
-    test_check_binaries || return 1
-    test_check_api_key || return 1
-    test_check_file_limits
+    local overall_status=0
 
     trap 'test_stop_reproxy' RETURN
 
-    test_start_reproxy || return 1
+    if ! test_check_binaries; then
+        echo "[RBE TEST] Binaries check FAILED — continuing anyway to show whatever logs/status exist."
+        overall_status=1
+    fi
 
-    echo "[RBE TEST] Dispatching a single test action through rewrapper..."
-    "${RBE_DIR}/rewrapper" -server_address="unix://${RBE_TEST_SOCKET}" -exec_root="$(pwd)" -- echo "rbe connection test"
-    local wrap_status=$?
-    if [[ $wrap_status -eq 0 ]]; then
-        echo "[RBE TEST] Test action dispatched successfully."
-        echo "[RBE TEST] Check https://xc112lg.buildbuddy.io/invocation/ to confirm it landed remotely."
+    if ! test_check_api_key; then
+        echo "[RBE TEST] API key check FAILED — continuing anyway to show whatever logs/status exist."
+        overall_status=1
+    fi
+
+    test_check_file_limits
+
+    local reproxy_up=1
+    if [[ -x "${RBE_DIR}/reproxy" ]]; then
+        if test_start_reproxy; then
+            reproxy_up=0
+        else
+            echo "[RBE TEST] reproxy failed to start — continuing anyway to show whatever logs/status exist."
+            overall_status=1
+        fi
     else
-        echo "[RBE TEST] WARNING: rewrapper test action failed (exit $wrap_status)."
+        echo "[RBE TEST] Skipping reproxy start (binary missing)."
+        overall_status=1
+    fi
+
+    local wrap_status=1
+    if [[ "${reproxy_up}" -eq 0 ]]; then
+        echo "[RBE TEST] Dispatching a single test action through rewrapper..."
+        "${RBE_DIR}/rewrapper" -server_address="unix://${RBE_TEST_SOCKET}" -exec_root="$(pwd)" -- echo "rbe connection test"
+        wrap_status=$?
+        if [[ $wrap_status -eq 0 ]]; then
+            echo "[RBE TEST] Test action dispatched successfully."
+            echo "[RBE TEST] Check https://xc112lg.buildbuddy.io/invocation/ to confirm it landed remotely."
+        else
+            echo "[RBE TEST] WARNING: rewrapper test action failed (exit $wrap_status)."
+            overall_status=1
+        fi
+    else
+        echo "[RBE TEST] Skipping test action dispatch (reproxy not running)."
     fi
 
     echo "[RBE TEST] --- last 30 lines of reproxy log ---"
@@ -272,7 +299,10 @@ test_rbe_connection() {
 
     test_check_cache_status
 
-    return $wrap_status
+    if [[ "${overall_status}" -ne 0 ]]; then
+        return "${overall_status}"
+    fi
+    return "${wrap_status}"
 }
 
 if [[ "$1" == "test" ]]; then
