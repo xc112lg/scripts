@@ -151,8 +151,12 @@ test_start_reproxy() {
         -log_dir="${RBE_TEST_LOG_DIR}"
         -use_rpc_credentials="${RBE_use_rpc_credentials:-false}"
         -service_no_auth="${RBE_service_no_auth:-true}"
+        -alsologtostderr
+        -v=2
     )
     [[ -n "${RBE_remote_headers}" ]] && args+=(-remote_headers="${RBE_remote_headers}")
+
+    echo "[DEBUG] reproxy args: ${args[@]}"
 
     "${RBE_DIR}/reproxy" "${args[@]}" >> "${RBE_TEST_LOG}" 2>&1 &
     local reproxy_pid=$!
