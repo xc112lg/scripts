@@ -1,9 +1,12 @@
 pkill -f reproxy 2>/dev/null
 sleep 1
-rm -f /tmp/reproxy.sock
+rm -f /tmp/reproxy.sock /tmp/depscan.sock
 
 cd /tmp/src/android
-source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe8.sh)
+source /tmp/rbe8.sh
+
+echo "CHECK 1: RBE_service = [$RBE_service]"
+echo "CHECK 2: RBE_remote_headers = [$RBE_remote_headers]"
 
 export RBE_server_address="unix:///tmp/reproxy.sock"
 
