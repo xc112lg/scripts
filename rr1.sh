@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+
 source <(curl -sf https://raw.githubusercontent.com/xc112lg/scripts/refs/heads/lunaris/rbe7.sh)
 echo "========== RBE Environment =========="
 
