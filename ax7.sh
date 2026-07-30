@@ -200,6 +200,52 @@ test_stop_reproxy() {
     rm -f "${RBE_TEST_SOCKET}"
 }
 
+test_check_cache_status() {
+    echo "[RBE TEST] --- Cache status ---"
+
+    if [[ ! -f "${RBE_TEST_LOG}" ]]; then
+        echo "[RBE TEST] No reproxy log found at ${RBE_TEST_LOG}, cannot check cache status."
+        return 1
+    fi
+
+    # CAS (Content Addressable Storage) traffic = actual byte upload/download
+    local cas_uploads cas_downloads
+    cas_uploads=$(grep -ciE "bytestream\.ByteStream/Write|UploadBlob|casUploads|cas_uploads" "${RBE_TEST_LOG}" 2>/dev/null)
+    cas_downloads=$(grep -ciE "bytestream\.ByteStream/Read|DownloadBlob|casDownloads|cas_downloads" "${RBE_TEST_LOG}" 2>/dev/null)
+
+    # Action Cache traffic = whether results are being looked up / stored
+    local ac_hits ac_misses ac_writes
+    ac_hits=$(grep -ciE "GetActionResult.*OK|action cache hit|cache[_ ]hit" "${RBE_TEST_LOG}" 2>/dev/null)
+    ac_misses=$(grep -ciE "GetActionResult.*NotFound|action cache miss|cache[_ ]miss" "${RBE_TEST_LOG}" 2>/dev/null)
+    ac_writes=$(grep -ciE "UpdateActionResult" "${RBE_TEST_LOG}" 2>/dev/null)
+
+    echo "[RBE TEST] CAS upload events (blob/bytestream writes) seen in log:   ${cas_uploads}"
+    echo "[RBE TEST] CAS download events (blob/bytestream reads) seen in log: ${cas_downloads}"
+    echo "[RBE TEST] Action Cache hits seen in log:   ${ac_hits}"
+    echo "[RBE TEST] Action Cache misses seen in log: ${ac_misses}"
+    echo "[RBE TEST] Action Cache writes seen in log: ${ac_writes}"
+
+    echo "[RBE TEST]"
+    if [[ "${cas_uploads}" -gt 0 || "${ac_writes}" -gt 0 ]]; then
+        echo "[RBE TEST] Upload cache:   WORKING (evidence of blob/result upload traffic)"
+    else
+        echo "[RBE TEST] Upload cache:   NOT DETECTED (no upload traffic seen — try with a real build action, a single 'echo' may not trigger uploads)"
+    fi
+
+    if [[ "${cas_downloads}" -gt 0 || "${ac_hits}" -gt 0 ]]; then
+        echo "[RBE TEST] Download cache: WORKING (evidence of blob/result download or cache-hit traffic)"
+    else
+        echo "[RBE TEST] Download cache: NOT DETECTED (nothing to download yet — normal on a first/cold run)"
+    fi
+
+    if [[ "${RBE_use_unified_uploads}" != "true" ]]; then
+        echo "[RBE TEST] NOTE: RBE_use_unified_uploads is not 'true' — unified uploads disabled."
+    fi
+    if [[ "${RBE_use_unified_downloads}" != "true" ]]; then
+        echo "[RBE TEST] NOTE: RBE_use_unified_downloads is not 'true' — unified downloads disabled."
+    fi
+}
+
 test_rbe_connection() {
     test_check_binaries || return 1
     test_check_api_key || return 1
@@ -223,6 +269,8 @@ test_rbe_connection() {
     tail -30 "${RBE_TEST_LOG}" 2>/dev/null
     echo "[RBE TEST] --- grep for errors/auth issues ---"
     grep -iE "error|fail|unauth|denied" "${RBE_TEST_LOG}" 2>/dev/null | tail -20
+
+    test_check_cache_status
 
     return $wrap_status
 }
