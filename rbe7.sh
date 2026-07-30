@@ -23,7 +23,7 @@ fi
 export RBE_service="xc112lg.buildbuddy.io:443"        # BuildBuddy instance address (without grpcs://, add the port 443)
 export RBE_remote_headers="x-buildbuddy-api-key=D2SvmJdB1v8oM6KaNg6J"    # Your BuildBuddy API key
 export RBE_use_rpc_credentials=false
-export RBE_service_no_auth=true
+export RBE_service_no_auth=false
 
 # --- Enable RBE and General Settings ---
 export USE_RBE=1
