@@ -68,7 +68,13 @@ if [ ! -d "sync" ]; then
     git clone https://gitlab.com/OrangeFox/sync.git -b master
 fi
 cd sync
-./orangefox_sync.sh --branch "${MANIFEST_BRANCH}" --path "${ORANGEFOX_ROOT}"
+
+if [ -f "${ORANGEFOX_ROOT}/build/core/Makefile" ]; then
+    echo "OrangeFox tree already synced at ${ORANGEFOX_ROOT}, skipping orangefox_sync.sh"
+    echo "(delete ${ORANGEFOX_ROOT} first if you want a clean re-sync)"
+else
+    ./orangefox_sync.sh --branch "${MANIFEST_BRANCH}" --path "${ORANGEFOX_ROOT}"
+fi
 
 # ============================================================
 # 3. Clone your device tree
