@@ -7,16 +7,20 @@
 # Run this on a machine that meets Android/OrangeFox build requirements
 # (Ubuntu 20.04/22.04 recommended, ~250GB free disk, 16GB+ RAM, fast internet).
 
-set -euo pipefail
+set -eo pipefail
+# Note: intentionally NOT using `set -u` (nounset).
+# Android's build/envsetup.sh and related build scripts reference variables
+# (e.g. TOP, ZSH_VERSION) that are expected to be unset/empty in a normal
+# shell, and `set -u` makes bash treat that as a fatal error.
 
 # ============================================================
 # CONFIGURATION - edit these to match your device tree
 # ============================================================
 MANIFEST_BRANCH="12.1"                                    # OrangeFox manifest branch
-DEVICE_TREE="https://github.com/xc112lg/android_device_lge_h872"   # Your recovery device tree repo
-DEVICE_TREE_BRANCH="main"                      # Branch of the device tree
-DEVICE_NAME="h872"                                        # PRODUCT_DEVICE codename
-DEVICE_PATH="device/lge/h872"                # DEVICE_PATH from BoardConfig.mk
+DEVICE_TREE="https://github.com/<username>/<repo_name>"   # Your recovery device tree repo
+DEVICE_TREE_BRANCH="your_branch_name"                      # Branch of the device tree
+DEVICE_NAME="7304X"                                        # PRODUCT_DEVICE codename
+DEVICE_PATH="device/device_company/Codename"                # DEVICE_PATH from BoardConfig.mk
 BUILD_TARGET="recovery"                                    # boot | recovery | vendorboot
 LDCHECK="false"                                             # true | false
 LDCHECKPATH="system/bin/qseecomd"                            # blob path to check if LDCHECK=true
@@ -34,7 +38,7 @@ RELEASE_DIR="$(pwd)/release_out"
 # ============================================================
 echo ">>> Installing base tools"
 sudo apt update
-sudo apt install -y ccache
+sudo apt install -y aria2 git
 
 echo ">>> Setting up Android build environment via OrangeFox scripts"
 mkdir -p "$(pwd)/scripts_setup"
