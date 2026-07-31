@@ -16,14 +16,14 @@ set -eo pipefail
 # ============================================================
 # CONFIGURATION - edit these to match your device tree
 # ============================================================
-MANIFEST_BRANCH="12.1"                                    # OrangeFox manifest branch
-DEVICE_TREE="https://github.com/<username>/<repo_name>"   # Your recovery device tree repo
-DEVICE_TREE_BRANCH="your_branch_name"                      # Branch of the device tree
-DEVICE_NAME="7304X"                                        # PRODUCT_DEVICE codename
-DEVICE_PATH="device/device_company/Codename"                # DEVICE_PATH from BoardConfig.mk
-BUILD_TARGET="recovery"                                    # boot | recovery | vendorboot
-LDCHECK="false"                                             # true | false
-LDCHECKPATH="system/bin/qseecomd"                            # blob path to check if LDCHECK=true
+MANIFEST_BRANCH="12.1"                                              # OrangeFox manifest branch
+DEVICE_TREE="https://github.com/xc112lg/android_device_lge_h872"    # Your recovery device tree repo
+DEVICE_TREE_BRANCH="main"                                           # Branch of the device tree
+DEVICE_NAME="h872"                                                  # PRODUCT_DEVICE codename
+DEVICE_PATH="device/lge/h872"                                       # DEVICE_PATH from BoardConfig.mk
+BUILD_TARGET="recovery"                                             # boot | recovery | vendorboot
+LDCHECK="false"                                                     # true | false
+LDCHECKPATH="system/bin/qseecomd"                                   # blob path to check if LDCHECK=true
 
 # Where everything will be built (equivalent to $GITHUB_WORKSPACE/OrangeFox)
 WORKSPACE="$(pwd)/OrangeFox"
