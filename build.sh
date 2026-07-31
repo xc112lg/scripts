@@ -34,7 +34,7 @@ RELEASE_DIR="$(pwd)/release_out"
 # ============================================================
 echo ">>> Installing base tools"
 sudo apt update
-sudo apt install -y aria2 git
+sudo apt install -y ccache
 
 echo ">>> Setting up Android build environment via OrangeFox scripts"
 mkdir -p "$(pwd)/scripts_setup"
