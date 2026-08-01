@@ -81,6 +81,7 @@ fi
 # ============================================================
 echo ">>> Cloning device tree"
 cd "${ORANGEFOX_ROOT}"
+rm -rf ${DEVICE_PATH}
 mkdir -p "$(dirname "${DEVICE_PATH}")"
 if [ ! -d "${DEVICE_PATH}" ]; then
     git clone "${DEVICE_TREE}" -b "${DEVICE_TREE_BRANCH}" "./${DEVICE_PATH}"
