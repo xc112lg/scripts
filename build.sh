@@ -102,7 +102,7 @@ source build/envsetup.sh
 set -e
 
 lunch "twrp_${DEVICE_NAME}-eng"
-make clean
+make installclean
 mka adbd "${BUILD_TARGET}image"
 popd
 
