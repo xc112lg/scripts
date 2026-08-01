@@ -38,7 +38,7 @@ RELEASE_DIR="$(pwd)/release_out"
 # ============================================================
 echo ">>> Installing base tools"
 sudo apt update
-sudo apt install -y ccache
+sudo apt install -y aria2 git
 
 echo ">>> Setting up Android build environment via OrangeFox scripts"
 mkdir -p "$(pwd)/scripts_setup"
@@ -81,7 +81,6 @@ fi
 # ============================================================
 echo ">>> Cloning device tree"
 cd "${ORANGEFOX_ROOT}"
-rm -rf ${DEVICE_PATH}
 mkdir -p "$(dirname "${DEVICE_PATH}")"
 if [ ! -d "${DEVICE_PATH}" ]; then
     git clone "${DEVICE_TREE}" -b "${DEVICE_TREE_BRANCH}" "./${DEVICE_PATH}"
